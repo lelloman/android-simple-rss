@@ -1,4 +1,4 @@
-package com.lelloman.read.model
+package com.lelloman.read.articleslist.model
 
 data class Article(
         val id: Long,
