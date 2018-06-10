@@ -20,7 +20,7 @@ class ArticleViewModel {
     var subtitle = ""
         private set
 
-    fun setArticle(article: Article) {
+    fun bind(article: Article) {
         title = article.title
         details = "${detailTimeFormat.format(article.time)} - ${article.sourceName}"
         hash = article.hashCode()

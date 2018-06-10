@@ -2,8 +2,8 @@ package com.lelloman.read.articleslist.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.lelloman.read.articleslist.blu.ArticlesRepository
 import com.lelloman.read.articleslist.model.Article
+import com.lelloman.read.articleslist.repository.ArticlesRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -15,15 +15,15 @@ class ArticlesListViewModel : ViewModel() {
     private val uiScheduler = AndroidSchedulers.mainThread()
     private val articlesRepository = ArticlesRepository()
 
-    val isLoading = MutableLiveData<Boolean>()
-
-    val articles by lazy {
-        MutableLiveData<List<Article>>().also {
-            loadArticles()
-        }
+    val isLoading by lazy {
+        MutableLiveData<Boolean>().also { subscribeIsLoading() }
     }
 
-    private fun loadArticles() {
+    val articles by lazy {
+        MutableLiveData<List<Article>>().also { subscribeArticles() }
+    }
+
+    private fun subscribeArticles() {
         subscriptions.add(
             articlesRepository.fetchArticles()
                 .subscribeOn(ioScheduler)
@@ -32,11 +32,13 @@ class ArticlesListViewModel : ViewModel() {
                     articles.value = it
                 }
         )
+    }
 
+    private fun subscribeIsLoading() {
         subscriptions.add(
             articlesRepository.loading
-                .observeOn(uiScheduler)
-                .subscribe { isLoading.value = it }
+                .subscribeOn(ioScheduler)
+                .subscribe { isLoading.postValue(it) }
         )
     }
 

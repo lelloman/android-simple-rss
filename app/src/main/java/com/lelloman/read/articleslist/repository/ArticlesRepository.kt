@@ -1,9 +1,10 @@
-package com.lelloman.read.articleslist.blu
+package com.lelloman.read.articleslist.repository
 
 import com.lelloman.read.articleslist.model.Article
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class ArticlesRepository {
 
@@ -33,5 +34,8 @@ class ArticlesRepository {
 
     fun fetchArticles(): Observable<List<Article>> {
         return Observable.just(listOf(randomArticle, randomArticle, randomArticle))
+            .delay(5, TimeUnit.SECONDS)
+            .doOnSubscribe { isLoading = true }
+            .doOnNext { isLoading = false }
     }
 }

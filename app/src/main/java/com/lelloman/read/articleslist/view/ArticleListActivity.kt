@@ -1,29 +1,32 @@
-package com.lelloman.read.articleslist.activity
+package com.lelloman.read.articleslist.view
 
 import android.arch.lifecycle.ViewModelProviders
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.lelloman.read.R
-import com.lelloman.read.articleslist.adapter.ArticlesAdapter
 import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModel
+import com.lelloman.read.databinding.ActivityArticlesListBinding
 
 class ArticleListActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityArticlesListBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_articles_list)
 
         val adapter = ArticlesAdapter()
-        val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.recyclerView.adapter = adapter
 
         val viewModel = ViewModelProviders.of(this)
-                .get(ArticlesListViewModel::class.java)
+            .get(ArticlesListViewModel::class.java)
 
+        binding.viewModel = viewModel
+        binding.setLifecycleOwner(this)
         viewModel.articles.observe(this, adapter)
-
     }
 }

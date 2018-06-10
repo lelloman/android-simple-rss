@@ -1,4 +1,4 @@
-package com.lelloman.read.articleslist.adapter
+package com.lelloman.read.articleslist.view
 
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
@@ -44,7 +44,7 @@ class ArticlesAdapter : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>(), Obse
         private val viewModel = ArticleViewModel()
 
         fun bind(article: Article) {
-            viewModel.setArticle(article)
+            viewModel.bind(article)
             binding.article = viewModel
             binding.executePendingBindings()
         }
