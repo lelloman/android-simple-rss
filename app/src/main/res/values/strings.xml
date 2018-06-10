@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Read</string>
+    <string name="title_activity_sources_list">SourcesListActivity</string>
+    <string name="sources">Sources</string>
 </resources>

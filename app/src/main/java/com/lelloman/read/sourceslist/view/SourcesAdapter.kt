@@ -1,4 +1,4 @@
-package com.lelloman.read.articleslist.view
+package com.lelloman.read.sourceslist.view
 
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
@@ -6,22 +6,22 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.read.R
-import com.lelloman.read.articleslist.model.Article
-import com.lelloman.read.articleslist.viewmodel.ArticleViewModel
-import com.lelloman.read.databinding.ListItemArticleBinding
+import com.lelloman.read.databinding.ListItemSourceBinding
+import com.lelloman.read.sourceslist.model.Source
+import com.lelloman.read.sourceslist.viewmodel.SourceViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 import javax.inject.Inject
 
-class ArticlesAdapter @Inject constructor()
-    : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>(), Observer<List<Article>> {
+class SourcesAdapter @Inject constructor()
+    : RecyclerView.Adapter<SourcesAdapter.ViewHolder>(), Observer<List<Source>> {
 
-    private var data = emptyList<Article>()
+    private var data = emptyList<Source>()
     private val listDiffCalculator = ModelWithIdListDiffCalculator()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = DataBindingUtil.inflate<ListItemArticleBinding>(
+        val binding = DataBindingUtil.inflate<ListItemSourceBinding>(
             LayoutInflater.from(parent.context),
-            R.layout.list_item_article,
+            R.layout.list_item_source,
             parent,
             false
         )
@@ -32,7 +32,7 @@ class ArticlesAdapter @Inject constructor()
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position])
 
-    override fun onChanged(newData: List<Article>?) {
+    override fun onChanged(newData: List<Source>?) {
         newData?.let {
             val diff = listDiffCalculator.computeDiff(data, newData)
             this.data = newData
@@ -40,16 +40,15 @@ class ArticlesAdapter @Inject constructor()
         }
     }
 
-    class ViewHolder(private val binding: ListItemArticleBinding)
+    class ViewHolder(private val binding: ListItemSourceBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = ArticleViewModel()
+        private val viewModel = SourceViewModel()
 
-        fun bind(article: Article) {
-            viewModel.bind(article)
-            binding.article = viewModel
+        fun bind(source: Source) {
+            viewModel.bind(source)
+            binding.source = viewModel
             binding.executePendingBindings()
         }
     }
-
 }

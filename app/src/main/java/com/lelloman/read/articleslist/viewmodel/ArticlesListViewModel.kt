@@ -35,9 +35,7 @@ class ArticlesListViewModel @Inject constructor(
             articlesRepository.fetchArticles()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
-                .subscribe {
-                    articles.value = it
-                }
+                .subscribe { articles.value = it }
         )
     }
 

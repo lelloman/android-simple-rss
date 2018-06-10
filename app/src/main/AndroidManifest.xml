@@ -3,20 +3,23 @@
     package="com.lelloman.read">
 
     <application
+        android:name=".core.ReadApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".core.ReadApplication">
-        <activity android:name="com.lelloman.read.articleslist.view.ArticleListActivity">
+        android:theme="@style/AppTheme">
+        <activity android:name=".articleslist.view.ArticlesListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".sourceslist.view.SourcesListActivity"
+            android:label="@string/title_activity_sources_list"/>
     </application>
 
 </manifest>
