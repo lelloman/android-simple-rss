@@ -3,7 +3,7 @@
     package="com.lelloman.read">
 
     <application
-        android:name=".core.ReadApplication"
+        android:name=".ReadApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,7 +19,7 @@
         </activity>
         <activity
             android:name=".sourceslist.view.SourcesListActivity"
-            android:label="@string/title_activity_sources_list"/>
+            android:label="@string/title_activity_sources_list" />
     </application>
 
 </manifest>

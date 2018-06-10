@@ -1,6 +1,6 @@
 package com.lelloman.read.core.di
 
-import com.lelloman.read.core.ReadApplication
+import com.lelloman.read.ReadApplication
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import javax.inject.Singleton

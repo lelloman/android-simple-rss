@@ -1,4 +1,4 @@
-package com.lelloman.read.core
+package com.lelloman.read
 
 import android.app.Activity
 import android.app.Application
@@ -10,7 +10,7 @@ import dagger.android.HasActivityInjector
 import javax.inject.Inject
 
 
-class ReadApplication : Application(), HasActivityInjector {
+open class ReadApplication : Application(), HasActivityInjector {
 
     @Inject
     lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -19,6 +19,10 @@ class ReadApplication : Application(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+        inject()
+    }
+
+    protected open fun inject(){
         DaggerAppComponent.builder()
             .appModule(AppModule(this))
             .build()
