@@ -12,12 +12,11 @@ import com.lelloman.read.databinding.ActivityArticlesListBinding
 class ArticleListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityArticlesListBinding
+    private val adapter = ArticlesAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_articles_list)
-
-        val adapter = ArticlesAdapter()
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
@@ -27,6 +26,11 @@ class ArticleListActivity : AppCompatActivity() {
 
         binding.viewModel = viewModel
         binding.setLifecycleOwner(this)
+
         viewModel.articles.observe(this, adapter)
+
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.refresh()
+        }
     }
 }

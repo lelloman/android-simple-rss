@@ -13,7 +13,7 @@ class ArticlesListViewModel : ViewModel() {
     private val subscriptions = CompositeDisposable()
     private val ioScheduler = Schedulers.io()
     private val uiScheduler = AndroidSchedulers.mainThread()
-    private val articlesRepository = ArticlesRepository()
+    private val articlesRepository = ArticlesRepository(ioScheduler)
 
     val isLoading by lazy {
         MutableLiveData<Boolean>().also { subscribeIsLoading() }
@@ -21,6 +21,10 @@ class ArticlesListViewModel : ViewModel() {
 
     val articles by lazy {
         MutableLiveData<List<Article>>().also { subscribeArticles() }
+    }
+
+    fun refresh() {
+        articlesRepository.refresh()
     }
 
     private fun subscribeArticles() {

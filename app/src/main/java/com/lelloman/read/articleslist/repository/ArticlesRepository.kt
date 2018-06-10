@@ -2,11 +2,12 @@ package com.lelloman.read.articleslist.repository
 
 import com.lelloman.read.articleslist.model.Article
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-class ArticlesRepository {
+class ArticlesRepository(private val ioScheduler: Scheduler) {
 
     private val loadingSubject = BehaviorSubject.create<Boolean>()
 
@@ -33,9 +34,25 @@ class ArticlesRepository {
         }
 
     fun fetchArticles(): Observable<List<Article>> {
+        return articlesSubject.hide()
+            .doOnSubscribe { refresh() }
+    }
+
+    fun refresh() {
+        if (isLoading) return
+
+        isLoading = true
+
+        makeArticleList()
+            .subscribeOn(ioScheduler)
+            .subscribe {
+                articlesSubject.onNext(it)
+                isLoading = false
+            }
+    }
+
+    private fun makeArticleList(): Observable<List<Article>> {
         return Observable.just(listOf(randomArticle, randomArticle, randomArticle))
-            .delay(5, TimeUnit.SECONDS)
-            .doOnSubscribe { isLoading = true }
-            .doOnNext { isLoading = false }
+            .delay(4, TimeUnit.SECONDS)
     }
 }
