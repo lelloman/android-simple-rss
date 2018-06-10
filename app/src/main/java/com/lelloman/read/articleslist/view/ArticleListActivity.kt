@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.lelloman.read.R
 import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModel
 import com.lelloman.read.databinding.ActivityArticlesListBinding
+import dagger.android.AndroidInjection
 
 class ArticleListActivity : AppCompatActivity() {
 
@@ -16,6 +17,7 @@ class ArticleListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AndroidInjection.inject(this)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_articles_list)
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)

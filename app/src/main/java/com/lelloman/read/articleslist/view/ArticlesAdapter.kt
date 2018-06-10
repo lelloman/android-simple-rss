@@ -10,18 +10,20 @@ import com.lelloman.read.articleslist.model.Article
 import com.lelloman.read.articleslist.viewmodel.ArticleViewModel
 import com.lelloman.read.databinding.ListItemArticleBinding
 import com.lelloman.read.utils.ArticleListDiffCalculator
+import javax.inject.Inject
 
-class ArticlesAdapter : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>(), Observer<List<Article>> {
+class ArticlesAdapter @Inject constructor()
+    : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>(), Observer<List<Article>> {
 
     private var data = emptyList<Article>()
     private val articleListDiffCalculator = ArticleListDiffCalculator()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = DataBindingUtil.inflate<ListItemArticleBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.list_item_article,
-                parent,
-                false
+            LayoutInflater.from(parent.context),
+            R.layout.list_item_article,
+            parent,
+            false
         )
         return ViewHolder(binding)
     }
