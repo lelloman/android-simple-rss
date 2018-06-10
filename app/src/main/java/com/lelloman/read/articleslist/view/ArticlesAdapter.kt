@@ -52,5 +52,4 @@ class ArticlesAdapter @Inject constructor()
         }
     }
 
-
 }

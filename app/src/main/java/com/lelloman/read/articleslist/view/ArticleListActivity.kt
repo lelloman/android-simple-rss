@@ -8,12 +8,17 @@ import android.support.v7.widget.LinearLayoutManager
 import com.lelloman.read.R
 import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModel
 import com.lelloman.read.databinding.ActivityArticlesListBinding
+import com.lelloman.read.core.ViewModelFactory
 import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 class ArticleListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityArticlesListBinding
     private val adapter = ArticlesAdapter()
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory<ArticlesListViewModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +28,7 @@ class ArticleListActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
-        val viewModel = ViewModelProviders.of(this)
+        val viewModel = ViewModelProviders.of(this, viewModelFactory)
             .get(ArticlesListViewModel::class.java)
 
         binding.viewModel = viewModel

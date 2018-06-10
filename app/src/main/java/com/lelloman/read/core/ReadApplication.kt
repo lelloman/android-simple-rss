@@ -1,8 +1,8 @@
-package com.lelloman.read
+package com.lelloman.read.core
 
 import android.app.Activity
 import android.app.Application
-import com.lelloman.read.di.DaggerAppComponent
+import com.lelloman.read.core.di.DaggerAppComponent
 import dagger.android.AndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.DispatchingAndroidInjector

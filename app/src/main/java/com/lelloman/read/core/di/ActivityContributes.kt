@@ -1,8 +1,7 @@
-package com.lelloman.read.di
+package com.lelloman.read.core.di
 
 import com.lelloman.read.articleslist.view.ArticleListActivity
 import dagger.Module
-import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 
 @Module

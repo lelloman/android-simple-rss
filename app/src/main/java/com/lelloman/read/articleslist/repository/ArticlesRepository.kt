@@ -1,13 +1,19 @@
 package com.lelloman.read.articleslist.repository
 
 import com.lelloman.read.articleslist.model.Article
+import com.lelloman.read.core.di.qualifiers.IoScheduler
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.subjects.BehaviorSubject
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class ArticlesRepository(private val ioScheduler: Scheduler) {
+@Singleton
+class ArticlesRepository @Inject constructor(
+    @IoScheduler private val ioScheduler: Scheduler
+) {
 
     private val loadingSubject = BehaviorSubject.create<Boolean>()
 

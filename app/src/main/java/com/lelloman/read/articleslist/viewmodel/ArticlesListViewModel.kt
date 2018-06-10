@@ -4,16 +4,19 @@ import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import com.lelloman.read.articleslist.model.Article
 import com.lelloman.read.articleslist.repository.ArticlesRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.lelloman.read.core.di.qualifiers.IoScheduler
+import com.lelloman.read.core.di.qualifiers.UiScheduler
+import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class ArticlesListViewModel : ViewModel() {
+class ArticlesListViewModel @Inject constructor(
+    @IoScheduler private val ioScheduler: Scheduler,
+    @UiScheduler private val uiScheduler: Scheduler,
+    private val articlesRepository: ArticlesRepository
+) : ViewModel() {
 
     private val subscriptions = CompositeDisposable()
-    private val ioScheduler = Schedulers.io()
-    private val uiScheduler = AndroidSchedulers.mainThread()
-    private val articlesRepository = ArticlesRepository(ioScheduler)
 
     val isLoading by lazy {
         MutableLiveData<Boolean>().also { subscribeIsLoading() }
