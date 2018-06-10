@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.databinding.ListItemSourceBinding
-import com.lelloman.read.sourceslist.model.Source
+import com.lelloman.read.persistence.model.Source
 import com.lelloman.read.sourceslist.viewmodel.SourceViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 import javax.inject.Inject

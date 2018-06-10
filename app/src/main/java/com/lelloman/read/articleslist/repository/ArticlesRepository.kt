@@ -1,6 +1,6 @@
 package com.lelloman.read.articleslist.repository
 
-import com.lelloman.read.articleslist.model.Article
+import com.lelloman.read.persistence.model.Article
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import io.reactivex.Observable
 import io.reactivex.Scheduler

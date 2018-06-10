@@ -1,5 +1,7 @@
 package com.lelloman.read.core.di
 
+import android.app.Application
+import android.content.Context
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import dagger.Module
@@ -10,7 +12,10 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+class AppModule(private val application: Application) {
+
+    @Provides
+    fun provideContext(): Context = application
 
     @Singleton
     @Provides

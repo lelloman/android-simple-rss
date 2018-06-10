@@ -2,7 +2,7 @@ package com.lelloman.read.articleslist.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.lelloman.read.articleslist.model.Article
+import com.lelloman.read.persistence.model.Article
 import com.lelloman.read.articleslist.repository.ArticlesRepository
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler

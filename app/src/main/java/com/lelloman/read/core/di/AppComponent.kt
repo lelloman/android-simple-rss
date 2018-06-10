@@ -9,7 +9,8 @@ import javax.inject.Singleton
 @Component(modules = [
     AndroidInjectionModule::class,
     AppModule::class,
-    ActivityContributes::class])
+    ActivityContributes::class,
+    PersistenceModule::class])
 interface AppComponent {
 
     fun inject(app: ReadApplication)

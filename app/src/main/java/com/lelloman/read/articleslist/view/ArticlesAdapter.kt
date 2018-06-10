@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.read.R
-import com.lelloman.read.articleslist.model.Article
+import com.lelloman.read.persistence.model.Article
 import com.lelloman.read.articleslist.viewmodel.ArticleViewModel
 import com.lelloman.read.databinding.ListItemArticleBinding
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator

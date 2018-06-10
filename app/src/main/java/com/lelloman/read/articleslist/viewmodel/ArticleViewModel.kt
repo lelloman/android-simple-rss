@@ -1,6 +1,6 @@
 package com.lelloman.read.articleslist.viewmodel
 
-import com.lelloman.read.articleslist.model.Article
+import com.lelloman.read.persistence.model.Article
 import java.text.SimpleDateFormat
 import java.util.*
 

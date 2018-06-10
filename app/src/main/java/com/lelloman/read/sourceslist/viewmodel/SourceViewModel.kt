@@ -1,6 +1,6 @@
 package com.lelloman.read.sourceslist.viewmodel
 
-import com.lelloman.read.sourceslist.model.Source
+import com.lelloman.read.persistence.model.Source
 
 class SourceViewModel {
 
