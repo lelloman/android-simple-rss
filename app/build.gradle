@@ -13,7 +13,7 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.lelloman.read.MockTestRunner"
+        testInstrumentationRunner "com.lelloman.read.testutils.MockTestRunner"
     }
 
     dataBinding {
@@ -70,9 +70,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
-//    androidTestImplementation 'org.mockito:mockito-android:2.18.3'
     androidTestImplementation "com.crittercism.dexmaker:dexmaker:1.4"
     androidTestImplementation "com.crittercism.dexmaker:dexmaker-dx:1.4"
     androidTestImplementation "com.crittercism.dexmaker:dexmaker-mockito:1.4"
-//    androidTestImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
 }

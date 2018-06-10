@@ -1,4 +1,4 @@
-package com.lelloman.read
+package com.lelloman.read.di
 
 import android.content.Context
 import com.lelloman.read.core.di.PersistenceModule

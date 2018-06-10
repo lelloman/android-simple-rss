@@ -1,4 +1,4 @@
-package com.lelloman.read
+package com.lelloman.read.testutils
 
 import android.app.Application
 import android.content.Context
