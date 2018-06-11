@@ -8,6 +8,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.lelloman.read.articleslist.view.ArticlesListActivity
 import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModel
+import com.lelloman.read.core.navigation.NavigationEvent
 import com.lelloman.read.persistence.model.Article
 import com.lelloman.read.testutils.TestApp
 import com.lelloman.read.testutils.checkIsSwipeRefreshing
@@ -20,6 +21,7 @@ import com.lelloman.read.testutils.rotateRight
 import com.lelloman.read.testutils.viewIsDisplayed
 import com.lelloman.read.testutils.wait
 import com.lelloman.read.testutils.whenever
+import com.lelloman.read.utils.SingleLiveData
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -39,6 +41,7 @@ class ArticlesListActivityTest {
 
     private lateinit var articlesLiveData: MutableLiveData<List<Article>>
     private lateinit var isLoadingLiveData: MutableLiveData<Boolean>
+    private lateinit var navigationLiveData: SingleLiveData<NavigationEvent>
 
     private val articles = Array(20, {
         Article(
@@ -56,10 +59,12 @@ class ArticlesListActivityTest {
         rotateNatural()
         articlesLiveData = MutableLiveData()
         isLoadingLiveData = MutableLiveData()
+        navigationLiveData = SingleLiveData()
 
         viewModel = TestApp.instance.viewModelModule.articlesListViewModel
         whenever(viewModel.articles).thenReturn(articlesLiveData)
         whenever(viewModel.isLoading).thenReturn(isLoadingLiveData)
+        whenever(viewModel.navigation).thenReturn(navigationLiveData)
 
         activityTestRule.launchActivity(null)
     }
@@ -147,4 +152,6 @@ class ArticlesListActivityTest {
         checkRecyclerViewCount(1)
         checkViewAtPositionHasText(0, article.title)
     }
+
+
 }

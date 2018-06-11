@@ -7,7 +7,7 @@
 
         <variable
             name="source"
-            type="com.lelloman.read.sourceslist.viewmodel.SourceViewModel" />
+            type="com.lelloman.read.sources.viewmodel.SourceViewModel" />
     </data>
 
     <android.support.v7.widget.CardView

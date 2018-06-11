@@ -1,5 +1,6 @@
 package com.lelloman.read.articleslist.view
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
@@ -10,8 +11,8 @@ import android.view.MenuItem
 import com.lelloman.read.R
 import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModel
 import com.lelloman.read.core.ViewModelFactory
+import com.lelloman.read.core.navigation.NavigationRouter
 import com.lelloman.read.databinding.ActivityArticlesListBinding
-import com.lelloman.read.sourceslist.view.SourcesListActivity
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -25,6 +26,11 @@ class ArticlesListActivity : AppCompatActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory<ArticlesListViewModel>
 
+    @Inject
+    lateinit var navigationRouter: NavigationRouter
+
+    private lateinit var viewModel: ArticlesListViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
@@ -34,7 +40,7 @@ class ArticlesListActivity : AppCompatActivity() {
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
 
-        ViewModelProviders.of(this, viewModelFactory).get(ArticlesListViewModel::class.java).let { viewModel ->
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(ArticlesListViewModel::class.java).also { viewModel ->
             binding.viewModel = viewModel
 
             viewModel.articles.observe(this, adapter)
@@ -42,6 +48,12 @@ class ArticlesListActivity : AppCompatActivity() {
             binding.swipeRefreshLayout.setOnRefreshListener {
                 viewModel.refresh()
             }
+
+            viewModel.navigation.observe(this, Observer {
+                it?.let {
+                    navigationRouter.onNavigationEvent(this, it)
+                }
+            })
         }
     }
 
@@ -52,7 +64,7 @@ class ArticlesListActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_sources -> {
-            SourcesListActivity.start(this)
+            viewModel.onSourcesClicked()
             true
         }
         else -> super.onOptionsItemSelected(item)

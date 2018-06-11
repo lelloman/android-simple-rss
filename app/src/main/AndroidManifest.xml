@@ -18,8 +18,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".sourceslist.view.SourcesListActivity"
+            android:name=".sources.view.SourcesListActivity"
             android:label="@string/title_activity_sources_list" />
+        <activity android:name=".sources.view.AddSourceActivity"></activity>
     </application>
 
 </manifest>

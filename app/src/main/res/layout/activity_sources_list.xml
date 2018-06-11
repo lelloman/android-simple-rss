@@ -5,14 +5,14 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.sourceslist.viewmodel.SourcesListViewModel" />
+            type="com.lelloman.read.sources.viewmodel.SourcesListViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".sourceslist.view.SourcesListActivity">
+        tools:context=".sources.view.SourcesListActivity">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"

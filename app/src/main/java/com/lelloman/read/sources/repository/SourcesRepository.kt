@@ -1,4 +1,4 @@
-package com.lelloman.read.sourceslist.repository
+package com.lelloman.read.sources.repository
 
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.persistence.SourcesDao

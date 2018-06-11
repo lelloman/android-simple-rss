@@ -1,4 +1,4 @@
-package com.lelloman.read.sourceslist.viewmodel
+package com.lelloman.read.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
@@ -6,7 +6,7 @@ import android.view.View
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.persistence.model.Source
-import com.lelloman.read.sourceslist.repository.SourcesRepository
+import com.lelloman.read.sources.repository.SourcesRepository
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import java.util.*

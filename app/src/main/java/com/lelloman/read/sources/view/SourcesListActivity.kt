@@ -1,4 +1,4 @@
-package com.lelloman.read.sourceslist.view
+package com.lelloman.read.sources.view
 
 import android.app.Activity
 import android.arch.lifecycle.ViewModelProviders
@@ -10,7 +10,7 @@ import android.support.v7.widget.LinearLayoutManager
 import com.lelloman.read.R
 import com.lelloman.read.core.ViewModelFactory
 import com.lelloman.read.databinding.ActivitySourcesListBinding
-import com.lelloman.read.sourceslist.viewmodel.SourcesListViewModel
+import com.lelloman.read.sources.viewmodel.SourcesListViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 

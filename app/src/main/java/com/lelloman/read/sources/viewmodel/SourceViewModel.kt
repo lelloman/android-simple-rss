@@ -1,4 +1,4 @@
-package com.lelloman.read.sourceslist.viewmodel
+package com.lelloman.read.sources.viewmodel
 
 import com.lelloman.read.persistence.model.Source
 

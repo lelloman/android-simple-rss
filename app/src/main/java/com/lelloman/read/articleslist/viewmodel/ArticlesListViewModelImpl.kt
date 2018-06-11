@@ -4,6 +4,8 @@ import android.arch.lifecycle.MutableLiveData
 import com.lelloman.read.articleslist.repository.ArticlesRepository
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
+import com.lelloman.read.core.navigation.NavigationScreen
+import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.persistence.model.Article
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -43,6 +45,10 @@ class ArticlesListViewModelImpl(
                 .subscribeOn(ioScheduler)
                 .subscribe { isLoading.postValue(it) }
         )
+    }
+
+    override fun onSourcesClicked() {
+        navigation.postValue(ScreenNavigationEvent(NavigationScreen.SOURCES_LIST))
     }
 
     override fun onCleared() {

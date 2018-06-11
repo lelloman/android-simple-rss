@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
+import com.lelloman.read.core.navigation.NavigationRouter
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -26,4 +27,7 @@ class AppModule(private val application: Application) {
     @Provides
     @UiScheduler
     fun provideUiScheduler(): Scheduler = AndroidSchedulers.mainThread()
+
+    @Provides
+    fun provideNavigationRouter() = NavigationRouter()
 }

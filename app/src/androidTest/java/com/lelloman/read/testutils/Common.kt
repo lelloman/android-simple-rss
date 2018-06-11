@@ -5,10 +5,8 @@ import android.support.test.InstrumentationRegistry.getInstrumentation
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.contrib.RecyclerViewActions.scrollToPosition
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.uiautomator.UiDevice
-import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.lelloman.read.R
 import com.lelloman.read.testutils.matcher.AtPositionMatcher
@@ -50,7 +48,6 @@ fun rotateRight() = UiDevice.getInstance(getInstrumentation()).setOrientationRig
 
 fun checkViewAtPositionHasText(position: Int, text: String, id: Int = R.id.recycler_view) {
     viewWithId(id)
-//        .perform(scrollToPosition<RecyclerView.ViewHolder>(position))
         .check(matches(AtPositionMatcher(position, hasDescendant(withText(text)))))
 
 }

@@ -1,4 +1,4 @@
-package com.lelloman.read.sourceslist.view
+package com.lelloman.read.sources.view
 
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.databinding.ListItemSourceBinding
 import com.lelloman.read.persistence.model.Source
-import com.lelloman.read.sourceslist.viewmodel.SourceViewModel
+import com.lelloman.read.sources.viewmodel.SourceViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 import javax.inject.Inject
 
