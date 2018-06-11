@@ -67,10 +67,11 @@ dependencies {
     testImplementation "android.arch.persistence.room:testing:$room_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
 
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
-    androidTestImplementation 'com.android.support.test:rules:1.0.2'
-    androidTestImplementation "com.crittercism.dexmaker:dexmaker:1.4"
-    androidTestImplementation "com.crittercism.dexmaker:dexmaker-dx:1.4"
-    androidTestImplementation "com.crittercism.dexmaker:dexmaker-mockito:1.4"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "com.android.support.test:runner:$test_support_version"
+    androidTestImplementation "com.android.support.test:rules:$test_support_version"
+    androidTestImplementation "com.crittercism.dexmaker:dexmaker:$dexmaker_version"
+    androidTestImplementation "com.crittercism.dexmaker:dexmaker-dx:$dexmaker_version"
+    androidTestImplementation "com.crittercism.dexmaker:dexmaker-mockito:$dexmaker_version"
+    androidTestImplementation "com.google.truth:truth:$truth_version"
 }
