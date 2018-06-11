@@ -11,6 +11,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".articleslist.view.ArticlesListActivity">
+
+        </activity>
+        <activity
+            android:name=".sources.view.SourcesListActivity"
+            android:label="@string/title_activity_sources_list" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,9 +23,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".sources.view.SourcesListActivity"
-            android:label="@string/title_activity_sources_list" />
-        <activity android:name=".sources.view.AddSourceActivity"></activity>
+            android:name=".sources.view.AddSourceActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

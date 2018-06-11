@@ -1,14 +1,10 @@
 package com.lelloman.read.articleslist.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import com.lelloman.read.core.navigation.NavigationEvent
+import com.lelloman.read.core.BaseViewModel
 import com.lelloman.read.persistence.model.Article
-import com.lelloman.read.utils.SingleLiveData
 
-abstract class ArticlesListViewModel : ViewModel() {
-
-    open val navigation = SingleLiveData<NavigationEvent>()
+abstract class ArticlesListViewModel : BaseViewModel() {
 
     abstract val isLoading: MutableLiveData<Boolean>
 

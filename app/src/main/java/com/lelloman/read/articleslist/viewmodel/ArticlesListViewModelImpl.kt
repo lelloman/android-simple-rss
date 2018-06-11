@@ -8,7 +8,6 @@ import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.persistence.model.Article
 import io.reactivex.Scheduler
-import io.reactivex.disposables.CompositeDisposable
 
 class ArticlesListViewModelImpl(
     @IoScheduler private val ioScheduler: Scheduler,
@@ -16,13 +15,11 @@ class ArticlesListViewModelImpl(
     private val articlesRepository: ArticlesRepository
 ) : ArticlesListViewModel() {
 
-    private val subscriptions = CompositeDisposable()
-
-    override val isLoading by lazy {
+    override val isLoading: MutableLiveData<Boolean> by lazy {
         MutableLiveData<Boolean>().also { subscribeIsLoading() }
     }
 
-    override val articles by lazy {
+    override val articles: MutableLiveData<List<Article>> by lazy {
         MutableLiveData<List<Article>>().also { subscribeArticles() }
     }
 
@@ -30,29 +27,21 @@ class ArticlesListViewModelImpl(
         articlesRepository.refresh()
     }
 
-    private fun subscribeArticles() {
-        subscriptions.add(
-            articlesRepository.fetchArticles()
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
-                .subscribe { articles.value = it }
-        )
+    private fun subscribeArticles() = subscribe {
+        articlesRepository.fetchArticles()
+            .subscribeOn(ioScheduler)
+            .observeOn(uiScheduler)
+            .subscribe { articles.value = it }
     }
 
-    private fun subscribeIsLoading() {
-        subscriptions.add(
-            articlesRepository.loading
-                .subscribeOn(ioScheduler)
-                .subscribe { isLoading.postValue(it) }
-        )
+    private fun subscribeIsLoading() = subscribe {
+        articlesRepository.loading
+            .subscribeOn(ioScheduler)
+            .subscribe { isLoading.postValue(it) }
     }
 
     override fun onSourcesClicked() {
         navigation.postValue(ScreenNavigationEvent(NavigationScreen.SOURCES_LIST))
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        subscriptions.dispose()
-    }
 }
