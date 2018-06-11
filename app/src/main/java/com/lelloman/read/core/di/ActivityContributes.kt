@@ -1,8 +1,8 @@
 package com.lelloman.read.core.di
 
 import com.lelloman.read.articleslist.view.ArticlesListActivity
-import com.lelloman.read.core.BaseActivity
 import com.lelloman.read.core.InjectableActivity
+import com.lelloman.read.sources.view.AddSourceActivity
 import com.lelloman.read.sources.view.SourcesListActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -11,11 +11,14 @@ import dagger.android.ContributesAndroidInjector
 interface ActivityContributes {
 
     @ContributesAndroidInjector
-    fun baseActivity(): InjectableActivity
+    fun contributeBaseActivity(): InjectableActivity
 
     @ContributesAndroidInjector
-    fun articlesListActivity(): ArticlesListActivity
+    fun contributeArticlesListActivity(): ArticlesListActivity
 
     @ContributesAndroidInjector
-    fun sourcesListActivity(): SourcesListActivity
+    fun contributeSourcesListActivity(): SourcesListActivity
+
+    @ContributesAndroidInjector
+    fun contributeAddSourceActivity(): AddSourceActivity
 }

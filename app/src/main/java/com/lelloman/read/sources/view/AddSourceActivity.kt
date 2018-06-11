@@ -8,8 +8,7 @@ import com.lelloman.read.core.BaseActivity
 import com.lelloman.read.databinding.ActivityAddSourceBinding
 import com.lelloman.read.sources.viewmodel.AddSourceViewModel
 
-class AddSourceActivity
-    : BaseActivity<AddSourceViewModel, ActivityAddSourceBinding>() {
+class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBinding>() {
 
     override fun getLayoutId() = R.layout.activity_add_source
 
@@ -20,7 +19,6 @@ class AddSourceActivity
     }
 
     companion object {
-
         fun start(activity: Activity) {
             activity.startActivity(Intent(activity, AddSourceActivity::class.java))
         }
