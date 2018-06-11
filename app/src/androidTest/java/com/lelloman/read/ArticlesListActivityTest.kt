@@ -10,18 +10,24 @@ import com.lelloman.read.articleslist.view.ArticlesListActivity
 import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModel
 import com.lelloman.read.persistence.model.Article
 import com.lelloman.read.testutils.TestApp
-import com.lelloman.read.testutils.assertRecyclerViewCount
 import com.lelloman.read.testutils.checkIsSwipeRefreshing
+import com.lelloman.read.testutils.checkRecyclerViewCount
+import com.lelloman.read.testutils.checkViewAtPositionHasText
 import com.lelloman.read.testutils.onUiThread
+import com.lelloman.read.testutils.rotateLeft
+import com.lelloman.read.testutils.rotateNatural
+import com.lelloman.read.testutils.rotateRight
 import com.lelloman.read.testutils.viewIsDisplayed
 import com.lelloman.read.testutils.wait
 import com.lelloman.read.testutils.whenever
+import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
+import java.util.*
 
 @RunWith(AndroidJUnit4::class)
 class ArticlesListActivityTest {
@@ -47,6 +53,7 @@ class ArticlesListActivityTest {
 
     @Before
     fun setUp() {
+        rotateNatural()
         articlesLiveData = MutableLiveData()
         isLoadingLiveData = MutableLiveData()
 
@@ -55,6 +62,11 @@ class ArticlesListActivityTest {
         whenever(viewModel.isLoading).thenReturn(isLoadingLiveData)
 
         activityTestRule.launchActivity(null)
+    }
+
+    @After
+    fun tearDown() {
+        rotateNatural()
     }
 
     @Test
@@ -81,12 +93,58 @@ class ArticlesListActivityTest {
     }
 
     @Test
-    fun showsArticles(){
-        assertRecyclerViewCount(0)
+    fun showsArticles() {
+        checkRecyclerViewCount(0)
 
         onUiThread { articlesLiveData.value = articles }
         wait(0.2)
 
-        assertRecyclerViewCount(articles.size)
+        checkRecyclerViewCount(articles.size)
+    }
+
+    @Test
+    fun retainsLoadingStateOnRotation() {
+        rotateNatural()
+        isLoadingLiveData.postValue(true)
+        wait(0.2)
+
+        checkIsSwipeRefreshing(true)
+        rotateLeft()
+        checkIsSwipeRefreshing(true)
+
+        rotateRight()
+        checkIsSwipeRefreshing(true)
+        isLoadingLiveData.postValue(false)
+        wait(0.2)
+        checkIsSwipeRefreshing(false)
+
+        rotateNatural()
+        checkIsSwipeRefreshing(false)
+    }
+
+    @Test
+    fun retainsArticleOnRotation() {
+        val random = Random()
+        val article = Article(
+            random.nextLong(),
+            random.nextLong().toString(),
+            random.nextLong().toString(),
+            random.nextLong(),
+            random.nextLong().toString(),
+            random.nextLong()
+        )
+        articlesLiveData.postValue(listOf(article))
+        wait(0.2)
+
+        checkRecyclerViewCount(1)
+        checkViewAtPositionHasText(0, article.title)
+
+        rotateLeft()
+        checkRecyclerViewCount(1)
+        checkViewAtPositionHasText(0, article.title)
+
+        rotateRight()
+        checkRecyclerViewCount(1)
+        checkViewAtPositionHasText(0, article.title)
     }
 }

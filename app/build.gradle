@@ -74,4 +74,6 @@ dependencies {
     androidTestImplementation "com.crittercism.dexmaker:dexmaker-dx:$dexmaker_version"
     androidTestImplementation "com.crittercism.dexmaker:dexmaker-mockito:$dexmaker_version"
     androidTestImplementation "com.google.truth:truth:$truth_version"
+    androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:$uiautomator_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
 }

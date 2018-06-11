@@ -1,13 +1,17 @@
 package com.lelloman.read.testutils
 
 import android.support.test.InstrumentationRegistry
+import android.support.test.InstrumentationRegistry.getInstrumentation
 import android.support.test.espresso.Espresso.onView
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withId
+import android.support.test.espresso.contrib.RecyclerViewActions.scrollToPosition
+import android.support.test.espresso.matcher.ViewMatchers.*
+import android.support.test.uiautomator.UiDevice
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.lelloman.read.R
+import com.lelloman.read.testutils.matcher.AtPositionMatcher
 import com.lelloman.read.testutils.matcher.RecyclerViewCountMatcher
 import com.lelloman.read.testutils.matcher.SwipeRefreshLayoutMatcher
 import org.hamcrest.Matcher
@@ -35,6 +39,18 @@ fun onUiThread(action: () -> Unit) = InstrumentationRegistry
 fun checkIsSwipeRefreshing(isRefreshing: Boolean, id: Int = R.id.swipe_refresh_layout)
     : ViewInteraction = viewWithId(id).checkMatches(SwipeRefreshLayoutMatcher(isRefreshing))
 
-fun assertRecyclerViewCount(count: Int, id: Int = R.id.recycler_view)
+fun checkRecyclerViewCount(count: Int, id: Int = R.id.recycler_view)
     : ViewInteraction = viewWithId(id).checkMatches(RecyclerViewCountMatcher(count))
 
+fun rotateNatural() = UiDevice.getInstance(getInstrumentation()).setOrientationNatural()
+
+fun rotateLeft() = UiDevice.getInstance(getInstrumentation()).setOrientationLeft()
+
+fun rotateRight() = UiDevice.getInstance(getInstrumentation()).setOrientationRight()
+
+fun checkViewAtPositionHasText(position: Int, text: String, id: Int = R.id.recycler_view) {
+    viewWithId(id)
+//        .perform(scrollToPosition<RecyclerView.ViewHolder>(position))
+        .check(matches(AtPositionMatcher(position, hasDescendant(withText(text)))))
+
+}
