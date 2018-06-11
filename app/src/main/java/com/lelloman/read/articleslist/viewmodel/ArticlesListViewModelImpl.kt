@@ -7,6 +7,7 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.persistence.model.Article
+import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Scheduler
 
 class ArticlesListViewModelImpl(
@@ -15,33 +16,24 @@ class ArticlesListViewModelImpl(
     private val articlesRepository: ArticlesRepository
 ) : ArticlesListViewModel() {
 
-    override val isLoading: MutableLiveData<Boolean> by lazy {
-        MutableLiveData<Boolean>().also { subscribeIsLoading() }
-    }
+    override val isLoading: MutableLiveData<Boolean> by LazyLiveData({
+        subscription {
+            articlesRepository.loading
+                .subscribeOn(ioScheduler)
+                .subscribe { isLoading.postValue(it) }
+        }
+    })
 
-    override val articles: MutableLiveData<List<Article>> by lazy {
-        MutableLiveData<List<Article>>().also { subscribeArticles() }
-    }
+    override val articles: MutableLiveData<List<Article>> by LazyLiveData({
+        subscription {
+            articlesRepository.fetchArticles()
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe { articles.value = it }
+        }
+    })
 
-    override fun refresh() {
-        articlesRepository.refresh()
-    }
+    override fun refresh() = articlesRepository.refresh()
 
-    private fun subscribeArticles() = subscribe {
-        articlesRepository.fetchArticles()
-            .subscribeOn(ioScheduler)
-            .observeOn(uiScheduler)
-            .subscribe { articles.value = it }
-    }
-
-    private fun subscribeIsLoading() = subscribe {
-        articlesRepository.loading
-            .subscribeOn(ioScheduler)
-            .subscribe { isLoading.postValue(it) }
-    }
-
-    override fun onSourcesClicked() {
-        navigation.postValue(ScreenNavigationEvent(NavigationScreen.SOURCES_LIST))
-    }
-
+    override fun onSourcesClicked() = navigate(ScreenNavigationEvent(NavigationScreen.SOURCES_LIST))
 }

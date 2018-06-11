@@ -14,7 +14,7 @@ abstract class BaseViewModel : ViewModel() {
 
     protected fun navigate(navigationEvent: NavigationEvent) = navigation.postValue(navigationEvent)
 
-    protected fun subscribe(action: () -> Disposable) {
+    protected fun subscription(action: () -> Disposable) {
         subscriptions.add(action.invoke())
     }
 

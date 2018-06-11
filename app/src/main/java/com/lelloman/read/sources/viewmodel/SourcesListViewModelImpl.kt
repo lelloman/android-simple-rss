@@ -8,6 +8,7 @@ import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.persistence.model.Source
 import com.lelloman.read.sources.repository.SourcesRepository
+import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Scheduler
 
 class SourcesListViewModelImpl(
@@ -16,16 +17,14 @@ class SourcesListViewModelImpl(
     private val sourcesRepository: SourcesRepository
 ) : SourcesListViewModel() {
 
-    override val sources: MutableLiveData<List<Source>> by lazy {
-        MutableLiveData<List<Source>>().also { subscribeSources() }
-    }
-
-    private fun subscribeSources() = subscribe {
-        sourcesRepository.fetchSources()
-            .subscribeOn(ioScheduler)
-            .observeOn(uiScheduler)
-            .subscribe { sources.value = it }
-    }
+    override val sources: MutableLiveData<List<Source>> by LazyLiveData({
+        subscription {
+            sourcesRepository.fetchSources()
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe { sources.value = it }
+        }
+    })
 
     override fun onFabClicked(view: View) =
         navigate(ScreenNavigationEvent(NavigationScreen.ADD_SOURCE))
