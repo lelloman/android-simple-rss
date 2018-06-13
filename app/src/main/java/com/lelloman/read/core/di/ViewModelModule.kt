@@ -7,6 +7,7 @@ import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.sources.repository.SourcesRepository
 import com.lelloman.read.sources.viewmodel.AddSourceViewModel
+import com.lelloman.read.sources.viewmodel.AddSourceViewModelImpl
 import com.lelloman.read.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.sources.viewmodel.SourcesListViewModelImpl
 import dagger.Module
@@ -41,5 +42,5 @@ open class ViewModelModule {
     @Provides
     open fun provideAddSourceViewModel(
 
-    ): AddSourceViewModel = AddSourceViewModel()
+    ): AddSourceViewModel = AddSourceViewModelImpl()
 }

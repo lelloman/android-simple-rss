@@ -16,6 +16,7 @@ class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBind
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding.viewModel = viewModel
     }
 
     companion object {
