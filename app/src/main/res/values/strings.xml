@@ -4,4 +4,9 @@
     <string name="title_activity_add_source">Add source</string>
     <string name="sources">Sources</string>
     <string name="SAVE">SAVE</string>
+    <string name="hint_source_name">Source name</string>
+    <string name="hint_source_url">Source url</string>
+    <string name="test_source">Test source</string>
+    <string name="error_add_source_name">Insert a valid name</string>
+    <string name="error_add_source_url">Insert a valid url</string>
 </resources>

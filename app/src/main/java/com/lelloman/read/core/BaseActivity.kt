@@ -6,6 +6,9 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.widget.Toast
+import com.lelloman.read.core.navigation.NavigationEvent
+import com.lelloman.read.core.view.ToastEvent
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     : InjectableActivity() {
@@ -20,11 +23,18 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
 
-        viewModel.navigation.observe(this, Observer {
-            it?.let {
-                navigationRouter.onNavigationEvent(this, it)
+        viewModel.viewActionEvents.observe(this, Observer {
+            when (it) {
+                is NavigationEvent -> navigationRouter.onNavigationEvent(this, it)
+                is ToastEvent -> showToast(it)
             }
         })
+        viewModel.inject(resourceProvider)
+    }
+
+    private fun showToast(event: ToastEvent) {
+        val text = getString(event.stringId, event.args)
+        Toast.makeText(this, text, event.duration).show()
     }
 
     @LayoutRes

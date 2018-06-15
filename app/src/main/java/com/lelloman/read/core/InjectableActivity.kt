@@ -15,6 +15,9 @@ abstract class InjectableActivity : AppCompatActivity() {
     @Inject
     lateinit var navigationRouter: NavigationRouter
 
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)

@@ -27,7 +27,7 @@ class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBind
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_add_source, menu)
         return true
     }

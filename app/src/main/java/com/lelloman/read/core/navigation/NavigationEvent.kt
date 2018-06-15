@@ -1,3 +1,5 @@
 package com.lelloman.read.core.navigation
 
-interface NavigationEvent
+import com.lelloman.read.core.view.ViewActionEvent
+
+interface NavigationEvent : ViewActionEvent
