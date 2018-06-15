@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Read</string>
-    <string name="title_activity_sources_list">SourcesListActivity</string>
+    <string name="title_activity_sources_list">Sources</string>
+    <string name="title_activity_add_source">Add source</string>
     <string name="sources">Sources</string>
     <string name="SAVE">SAVE</string>
 </resources>

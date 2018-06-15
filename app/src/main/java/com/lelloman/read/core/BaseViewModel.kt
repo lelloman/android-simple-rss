@@ -1,6 +1,7 @@
 package com.lelloman.read.core
 
 import android.arch.lifecycle.ViewModel
+import com.lelloman.read.core.navigation.BackNavigationEvent
 import com.lelloman.read.core.navigation.NavigationEvent
 import com.lelloman.read.utils.SingleLiveData
 import io.reactivex.disposables.CompositeDisposable
@@ -13,6 +14,8 @@ abstract class BaseViewModel : ViewModel() {
     open val navigation = SingleLiveData<NavigationEvent>()
 
     protected fun navigate(navigationEvent: NavigationEvent) = navigation.postValue(navigationEvent)
+
+    protected fun navigateBack() = navigate(BackNavigationEvent)
 
     protected fun subscription(action: () -> Disposable) {
         subscriptions.add(action.invoke())

@@ -24,6 +24,7 @@
         </activity>
         <activity
             android:name=".sources.view.AddSourceActivity"
+            android:label="@string/title_activity_add_source"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 

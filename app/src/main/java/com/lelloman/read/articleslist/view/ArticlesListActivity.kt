@@ -32,9 +32,7 @@ class ArticlesListActivity :
 
         viewModel.articles.observe(this, adapter)
 
-        binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.refresh()
-        }
+        binding.swipeRefreshLayout.setOnRefreshListener(viewModel::refresh)
 
     }
 

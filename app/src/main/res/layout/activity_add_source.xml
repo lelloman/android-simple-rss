@@ -26,34 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 android:background="?attr/colorPrimary"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                app:contentInsetStart="0dp"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_gravity="start|center_vertical"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:onClick="@{viewModel::onCloseClicked}"
-                        android:padding="8dp"
-                        android:src="@drawable/ic_close_white_24dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="?android:attr/actionBarSize"
-                        android:layout_gravity="end|center_vertical"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:gravity="center"
-                        android:onClick="@{viewModel::onSaveClicked}"
-                        android:paddingEnd="8dp"
-                        android:paddingStart="8dp"
-                        android:text="@string/SAVE"
-                        android:textSize="18dp" />
-                </FrameLayout>
-            </android.support.v7.widget.Toolbar>
         </android.support.design.widget.AppBarLayout>
 
     </android.support.constraint.ConstraintLayout>
