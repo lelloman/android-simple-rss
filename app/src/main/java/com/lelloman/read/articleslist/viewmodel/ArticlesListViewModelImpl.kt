@@ -2,8 +2,7 @@ package com.lelloman.read.articleslist.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.read.articleslist.repository.ArticlesRepository
-import com.lelloman.read.core.di.qualifiers.IoScheduler
-import com.lelloman.read.core.di.qualifiers.UiScheduler
+import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.persistence.model.Article
@@ -11,10 +10,11 @@ import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Scheduler
 
 class ArticlesListViewModelImpl(
-    @IoScheduler private val ioScheduler: Scheduler,
-    @UiScheduler private val uiScheduler: Scheduler,
-    private val articlesRepository: ArticlesRepository
-) : ArticlesListViewModel() {
+    private val ioScheduler: Scheduler,
+    private val uiScheduler: Scheduler,
+    private val articlesRepository: ArticlesRepository,
+    resourceProvider: ResourceProvider
+) : ArticlesListViewModel(resourceProvider) {
 
     override val isLoading: MutableLiveData<Boolean> by LazyLiveData({
         subscription {

@@ -8,6 +8,6 @@ import javax.inject.Singleton
 @Singleton
 class ResourceProvider @Inject constructor(private val context: Context) {
 
-    fun getString(@StringRes stringId: Int, args: Array<Any> = emptyArray()) =
+    fun getString(@StringRes stringId: Int, args: Array<Any> = emptyArray()): String =
         context.getString(stringId, args)
 }

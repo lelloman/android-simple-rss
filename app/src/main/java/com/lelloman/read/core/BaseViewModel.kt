@@ -11,17 +11,13 @@ import com.lelloman.read.utils.SingleLiveData
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseViewModel : ViewModel() {
+abstract class BaseViewModel(
+    private val resourceProvider: ResourceProvider
+) : ViewModel() {
 
     private val subscriptions = CompositeDisposable()
 
     open val viewActionEvents = SingleLiveData<ViewActionEvent>()
-
-    private lateinit var resourceProvider: ResourceProvider
-
-    fun inject(resourceProvider: ResourceProvider) {
-        this.resourceProvider = resourceProvider
-    }
 
     protected fun getString(@StringRes stringId: Int, args: Array<Any> = emptyArray()) =
         resourceProvider.getString(stringId, args)

@@ -29,7 +29,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 is ToastEvent -> showToast(it)
             }
         })
-        viewModel.inject(resourceProvider)
     }
 
     private fun showToast(event: ToastEvent) {

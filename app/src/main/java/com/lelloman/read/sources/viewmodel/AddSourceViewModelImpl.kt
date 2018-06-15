@@ -3,8 +3,11 @@ package com.lelloman.read.sources.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
 import com.lelloman.read.R
+import com.lelloman.read.core.ResourceProvider
 
-class AddSourceViewModelImpl : AddSourceViewModel() {
+class AddSourceViewModelImpl(
+    resourceProvider: ResourceProvider
+) : AddSourceViewModel(resourceProvider) {
 
     override val sourceName = ObservableField<String>()
     override val sourceNameError = MutableLiveData<String>()
