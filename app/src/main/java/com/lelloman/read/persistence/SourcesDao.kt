@@ -13,6 +13,9 @@ interface SourcesDao {
     @Query("SELECT * from $SOURCE_TABLE_NAME ORDER BY name ASC")
     fun getAll(): Flowable<List<Source>>
 
+    @Query("SELECT * from $SOURCE_TABLE_NAME WHERE isActive = \"true\" ORDER BY name ASC")
+    fun getActiveSources(): Flowable<List<Source>>
+
     @Insert
     fun insert(source: Source): Long
 }

@@ -36,5 +36,4 @@ class AppModule(private val application: Application) {
     @Singleton
     @Provides
     fun provideMap(): Map<Class<out ViewModel>, Provider<out ViewModel>> = mutableMapOf()
-
 }
