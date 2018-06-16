@@ -1,16 +1,16 @@
 package com.lelloman.read.core.di
 
-import com.lelloman.read.articleslist.repository.ArticlesRepository
-import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModel
-import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModelImpl
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
-import com.lelloman.read.sources.repository.SourcesRepository
-import com.lelloman.read.sources.viewmodel.AddSourceViewModel
-import com.lelloman.read.sources.viewmodel.AddSourceViewModelImpl
-import com.lelloman.read.sources.viewmodel.SourcesListViewModel
-import com.lelloman.read.sources.viewmodel.SourcesListViewModelImpl
+import com.lelloman.read.ui.articleslist.repository.ArticlesRepository
+import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModel
+import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModelImpl
+import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
+import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModelImpl
+import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
+import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModelImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler

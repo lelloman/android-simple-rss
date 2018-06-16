@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.sources.viewmodel.AddSourceViewModel" />
+            type="com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".sources.view.AddSourceActivity">
+        tools:context=".ui.sources.view.AddSourceActivity">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar_layout"

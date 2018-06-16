@@ -1,8 +1,8 @@
 package com.lelloman.read.di
 
 import android.content.Context
-import com.lelloman.read.core.di.PersistenceModule
 import com.lelloman.read.persistence.AppDatabase
+import com.lelloman.read.persistence.PersistenceModule
 import com.lelloman.read.persistence.SourcesDao
 import org.mockito.Mockito.mock
 

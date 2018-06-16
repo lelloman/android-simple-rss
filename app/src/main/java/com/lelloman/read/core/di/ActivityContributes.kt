@@ -1,9 +1,9 @@
 package com.lelloman.read.core.di
 
-import com.lelloman.read.articleslist.view.ArticlesListActivity
-import com.lelloman.read.core.InjectableActivity
-import com.lelloman.read.sources.view.AddSourceActivity
-import com.lelloman.read.sources.view.SourcesListActivity
+import com.lelloman.read.core.view.InjectableActivity
+import com.lelloman.read.ui.articleslist.view.ArticlesListActivity
+import com.lelloman.read.ui.sources.view.AddSourceActivity
+import com.lelloman.read.ui.sources.view.SourcesListActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

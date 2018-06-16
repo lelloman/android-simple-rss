@@ -2,10 +2,10 @@ package com.lelloman.read.core.di
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModel
-import com.lelloman.read.core.ViewModelFactory
-import com.lelloman.read.sources.viewmodel.AddSourceViewModel
-import com.lelloman.read.sources.viewmodel.SourcesListViewModel
+import com.lelloman.read.core.viewmodel.ViewModelFactory
+import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModel
+import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
+import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

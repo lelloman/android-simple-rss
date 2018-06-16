@@ -9,5 +9,6 @@ import com.lelloman.read.utils.Constants.SOURCE_TABLE_NAME
 data class Source(
     @PrimaryKey(autoGenerate = true) override val id: Long,
     val name: String,
-    val url: String
+    val url: String,
+    val lastFetched: Long
 ) : ModelWithId

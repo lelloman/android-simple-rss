@@ -10,7 +10,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".articleslist.view.ArticlesListActivity">
+        <activity android:name=".ui.articleslist.view.ArticlesListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,12 +18,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".sources.view.SourcesListActivity"
+            android:name=".ui.sources.view.SourcesListActivity"
             android:label="@string/title_activity_sources_list" >
 
         </activity>
         <activity
-            android:name=".sources.view.AddSourceActivity"
+            android:name=".ui.sources.view.AddSourceActivity"
             android:label="@string/title_activity_add_source"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>

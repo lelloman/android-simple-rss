@@ -6,8 +6,6 @@ import android.support.test.espresso.action.ViewActions.swipeDown
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.lelloman.read.articleslist.view.ArticlesListActivity
-import com.lelloman.read.articleslist.viewmodel.ArticlesListViewModel
 import com.lelloman.read.core.navigation.NavigationEvent
 import com.lelloman.read.persistence.model.Article
 import com.lelloman.read.testutils.TestApp
@@ -21,6 +19,8 @@ import com.lelloman.read.testutils.rotateRight
 import com.lelloman.read.testutils.viewIsDisplayed
 import com.lelloman.read.testutils.wait
 import com.lelloman.read.testutils.whenever
+import com.lelloman.read.ui.articleslist.view.ArticlesListActivity
+import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModel
 import com.lelloman.read.utils.SingleLiveData
 import org.junit.After
 import org.junit.Before

@@ -65,6 +65,8 @@ dependencies {
 
     implementation "com.github.lelloman:android-identicons:v9"
 
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.persistence.room:testing:$room_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
