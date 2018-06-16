@@ -26,6 +26,8 @@ class ArticlesRepository @Inject constructor(
             title = "article ${Math.abs(random.nextInt())}",
             subtitle = "bla bla bla bla",
             sourceName = "da source",
+            link = "www.staceppa.com",
+            content = "si grazie",
             sourceId = 0L,
             time = random.nextLong()
         )

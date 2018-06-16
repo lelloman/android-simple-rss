@@ -9,6 +9,8 @@ data class Article(
     @PrimaryKey override val id: Long,
     val title: String,
     val subtitle: String,
+    val content: String,
+    val link: String,
     val time: Long,
     val sourceName: String,
     val sourceId: Long

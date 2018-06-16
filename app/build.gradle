@@ -70,6 +70,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.persistence.room:testing:$room_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
+    testImplementation "org.robolectric:robolectric:$robolectric_version"
 
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "com.android.support.test:runner:$test_support_version"
