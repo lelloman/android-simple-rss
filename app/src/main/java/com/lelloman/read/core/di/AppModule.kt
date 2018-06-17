@@ -3,6 +3,7 @@ package com.lelloman.read.core.di
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.content.Context
+import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationRouter
@@ -36,4 +37,7 @@ class AppModule(private val application: Application) {
     @Singleton
     @Provides
     fun provideMap(): Map<Class<out ViewModel>, Provider<out ViewModel>> = mutableMapOf()
+
+    @Singleton
+    fun provideTimeProvider() = TimeProvider()
 }

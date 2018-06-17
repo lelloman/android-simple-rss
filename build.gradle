@@ -19,6 +19,7 @@ buildscript {
     ext.uiautomator_version = "2.1.3"
     ext.okhttp_version = "3.10.0"
     ext.robolectric_version = "3.8"
+    ext.truth_version = "0.41"
 
     repositories {
         google()
