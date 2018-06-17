@@ -16,22 +16,22 @@ class ArticlesListViewModelImpl(
     resourceProvider: ResourceProvider
 ) : ArticlesListViewModel(resourceProvider) {
 
-    override val isLoading: MutableLiveData<Boolean> by LazyLiveData({
+    override val isLoading: MutableLiveData<Boolean> by LazyLiveData {
         subscription {
             articlesRepository.loading
                 .subscribeOn(ioScheduler)
                 .subscribe { isLoading.postValue(it) }
         }
-    })
+    }
 
-    override val articles: MutableLiveData<List<Article>> by LazyLiveData({
+    override val articles: MutableLiveData<List<Article>> by LazyLiveData {
         subscription {
             articlesRepository.fetchArticles()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe { articles.value = it }
         }
-    })
+    }
 
     override fun refresh() = articlesRepository.refresh()
 

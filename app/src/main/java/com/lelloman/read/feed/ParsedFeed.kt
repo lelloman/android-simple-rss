@@ -1,6 +1,6 @@
 package com.lelloman.read.feed
 
-data class Feed(
+data class ParsedFeed(
     val title: String,
     val subtitle: String,
     val link: String,

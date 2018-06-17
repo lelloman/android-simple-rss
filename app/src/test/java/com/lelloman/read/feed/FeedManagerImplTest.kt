@@ -9,6 +9,7 @@ import com.nhaarman.mockito_kotlin.reset
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.BackpressureStrategy
+import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.junit.Test
@@ -23,6 +24,8 @@ class FeedManagerImplTest {
     private val dependencies = arrayOf(httpClient, feedParser, sourcesDao, articlesDao)
 
     private val tested = FeedManagerImpl(
+        ioScheduler = trampoline(),
+        newThreadScheduler = trampoline(),
         httpClient = httpClient,
         feedParser = feedParser,
         sourcesDao = sourcesDao,
@@ -69,6 +72,7 @@ class FeedManagerImplTest {
         tested.refresh()
         sourcesSubject.onNext(emptyList())
 
+        tester.awaitCount(3)
         tester.assertValues(false, true, false)
     }
 

@@ -17,11 +17,11 @@ class FeedParser @Inject constructor(
     private val pubDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
 
     @Throws(InvalidFeedTagException::class)
-    fun parseFeeds(xml: String): Single<List<Feed>> = Single
+    fun parseFeeds(xml: String): Single<List<ParsedFeed>> = Single
         .fromCallable {
             val parser = XmlPullParserFactory.newInstance().newPullParser()
 
-            val output = mutableListOf<Feed>()
+            val output = mutableListOf<ParsedFeed>()
             val inputStream = StringReader(xml)
             parser.setInput(inputStream)
 
@@ -64,7 +64,7 @@ class FeedParser @Inject constructor(
         }
     }
 
-    private fun parserItemTag(parser: XmlPullParser): Feed? {
+    private fun parserItemTag(parser: XmlPullParser): ParsedFeed? {
         var title: String? = null
         var link: String? = null
         var description: String? = null
@@ -94,7 +94,7 @@ class FeedParser @Inject constructor(
         }
 
         return if (title != null && link != null) {
-            Feed(
+            ParsedFeed(
                 title = title,
                 subtitle = description ?: "",
                 link = link,
@@ -116,11 +116,13 @@ class FeedParser @Inject constructor(
     }
 
     private fun findChannelTag(parser: XmlPullParser) {
-        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+        while (parser.eventType != XmlPullParser.END_DOCUMENT) {
+            println("findChannelTag() name ${parser.name} type ${parser.eventType}")
             if (parser.eventType == XmlPullParser.START_TAG && parser.name == "channel") {
                 parser.next()
                 break
             }
+            parser.next()
         }
     }
 

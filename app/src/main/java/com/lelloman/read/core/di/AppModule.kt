@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
+import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationRouter
 import dagger.Module
@@ -31,6 +32,11 @@ class AppModule(private val application: Application) {
     @UiScheduler
     fun provideUiScheduler(): Scheduler = AndroidSchedulers.mainThread()
 
+    @Singleton
+    @Provides
+    @NewThreadScheduler
+    fun provideNewThreadScheduler(): Scheduler = Schedulers.newThread()
+
     @Provides
     fun provideNavigationRouter() = NavigationRouter()
 
@@ -39,5 +45,6 @@ class AppModule(private val application: Application) {
     fun provideMap(): Map<Class<out ViewModel>, Provider<out ViewModel>> = mutableMapOf()
 
     @Singleton
+    @Provides
     fun provideTimeProvider() = TimeProvider()
 }

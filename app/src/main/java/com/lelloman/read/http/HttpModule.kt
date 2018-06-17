@@ -10,9 +10,10 @@ open class HttpModule {
 
     @Singleton
     @Provides
-    open fun provideOkHttpClient() = OkHttpClient
-        .Builder()
-        .build()
+    open fun provideOkHttpClient(): OkHttpClient =
+        OkHttpClient
+            .Builder()
+            .build()
 
     @Singleton
     @Provides

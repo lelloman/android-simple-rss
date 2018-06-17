@@ -3,10 +3,11 @@ package com.lelloman.read.persistence.model
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.lelloman.read.core.ModelWithId
+import com.lelloman.read.utils.Constants.ARTICLE_TABLE_NAME
 
-@Entity
+@Entity(tableName = ARTICLE_TABLE_NAME)
 data class Article(
-    @PrimaryKey override val id: Long,
+    @PrimaryKey(autoGenerate = true) override val id: Long,
     val title: String,
     val subtitle: String,
     val content: String,
