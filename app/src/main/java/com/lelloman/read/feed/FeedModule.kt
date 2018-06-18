@@ -1,5 +1,6 @@
 package com.lelloman.read.feed
 
+import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.http.HttpClient
@@ -23,7 +24,8 @@ class FeedModule {
         feedParser: FeedParser,
         sourcesDao: SourcesDao,
         articlesDao: ArticlesDao,
-        htmlParser: HtmlParser
+        htmlParser: HtmlParser,
+        timeProvider: TimeProvider
     ): FeedRefresher = FeedRefresherImpl(
         ioScheduler = ioScheduler,
         newThreadScheduler = newThreadScheduler,
@@ -31,7 +33,8 @@ class FeedModule {
         feedParser = feedParser,
         sourcesDao = sourcesDao,
         articlesDao = articlesDao,
-        htmlParser = htmlParser
+        htmlParser = htmlParser,
+        timeProvider = timeProvider
     )
 
     @Singleton

@@ -1,5 +1,6 @@
 package com.lelloman.read.feed
 
+import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.persistence.ArticlesDao
 import com.lelloman.read.persistence.SourcesDao
@@ -22,6 +23,7 @@ class FeedRefresherImplTest {
     private val sourcesDao: SourcesDao = mock()
     private val articlesDao: ArticlesDao = mock()
     private val htmlParser: HtmlParser = mock()
+    private val timeProvider: TimeProvider = mock()
 
     private val dependencies = arrayOf(httpClient, feedParser, sourcesDao, articlesDao)
 
@@ -32,7 +34,8 @@ class FeedRefresherImplTest {
         feedParser = feedParser,
         sourcesDao = sourcesDao,
         articlesDao = articlesDao,
-        htmlParser = htmlParser
+        htmlParser = htmlParser,
+        timeProvider = timeProvider
     )
 
     @Test

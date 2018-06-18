@@ -2,23 +2,27 @@ package com.lelloman.read
 
 import android.app.Activity
 import android.app.Application
+import android.content.BroadcastReceiver
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
 import com.lelloman.read.persistence.AppDatabase
 import com.lelloman.read.persistence.SourcesDao
 import com.lelloman.read.persistence.model.Source
-import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.HasBroadcastReceiverInjector
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 
-open class ReadApplication : Application(), HasActivityInjector {
+open class ReadApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector {
 
     @Inject
-    lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+    lateinit var dispatchingActivityAndroidInjector: DispatchingAndroidInjector<Activity>
+
+    @Inject
+    lateinit var dispatchingReceiverAndroidInjector: DispatchingAndroidInjector<BroadcastReceiver>
 
     @Inject
     lateinit var db: AppDatabase
@@ -26,7 +30,9 @@ open class ReadApplication : Application(), HasActivityInjector {
     @Inject
     lateinit var sourcesDao: SourcesDao
 
-    override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
+    override fun activityInjector() = dispatchingActivityAndroidInjector
+
+    override fun broadcastReceiverInjector() = dispatchingReceiverAndroidInjector
 
     override fun onCreate() {
         super.onCreate()

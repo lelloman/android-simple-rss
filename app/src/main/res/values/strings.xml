@@ -9,4 +9,12 @@
     <string name="test_source">Test source</string>
     <string name="error_add_source_name">Insert a valid name</string>
     <string name="error_add_source_url">Insert a valid url</string>
+
+    <string name="last_refresh">last refresh: %s</string>
+    <string name="never">never</string>
+
+    <string name="time_diff_seconds">%ss ago</string>
+    <string name="time_diff_minutes">%sm ago</string>
+    <string name="time_diff_hours">%sh ago</string>
+    <string name="time_diff_days">%sd ago</string>
 </resources>

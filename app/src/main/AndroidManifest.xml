@@ -28,6 +28,15 @@
             android:name=".ui.sources.view.AddSourceActivity"
             android:label="@string/title_activity_add_source"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <receiver
+            android:name=".feed.FeedRefreshBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.lelloman.read.feed.ACTION_TRIGGER_REFRESH" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

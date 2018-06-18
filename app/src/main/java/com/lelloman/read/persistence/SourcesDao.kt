@@ -18,4 +18,7 @@ interface SourcesDao {
 
     @Insert
     fun insert(source: Source): Long
+
+    @Query("UPDATE $SOURCE_TABLE_NAME SET lastFetched = :lastFetched WHERE id = :sourceId")
+    fun updateSourceLastFetched(sourceId: Long, lastFetched: Long)
 }

@@ -6,7 +6,7 @@
     <data>
 
         <variable
-            name="source"
+            name="viewModel"
             type="com.lelloman.read.ui.sources.viewmodel.SourceViewModel" />
     </data>
 
@@ -18,20 +18,26 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <com.lelloman.identicon.ClassicIdenticonView
                 android:id="@+id/image"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                app:hash="@{source.hash}" />
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="8dp"
+                app:hash="@{viewModel.hash}"
+                app:layout_constraintBottom_toTopOf="@+id/top_barrier"
+                app:layout_constraintEnd_toStartOf="@+id/text_view_name"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/text_view_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{source.name}"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:text="@{viewModel.name}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintBottom_toBottomOf="@+id/top_barrier"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image"
                 app:layout_constraintTop_toTopOf="parent"
@@ -48,12 +54,24 @@
                 android:id="@+id/text_view_url"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{source.url}"
+                android:text="@{viewModel.url}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:layout_constraintBottom_toTopOf="@+id/text_view_last_fetched"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_barrier"
+                tools:text="blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah " />
+
+            <TextView
+                android:id="@+id/text_view_last_fetched"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.lastFetched}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/top_barrier"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_url"
                 tools:text="blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah " />
 
         </android.support.constraint.ConstraintLayout>

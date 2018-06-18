@@ -1,5 +1,6 @@
 package com.lelloman.read.feed
 
+import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.http.HttpClient
@@ -20,7 +21,8 @@ class FeedRefresherImpl(
     private val feedParser: FeedParser,
     private val sourcesDao: SourcesDao,
     private val articlesDao: ArticlesDao,
-    private val htmlParser: HtmlParser
+    private val htmlParser: HtmlParser,
+    private val timeProvider: TimeProvider
 ) : FeedRefresher {
 
     private val isLoadingSubject = BehaviorSubject.create<Boolean>()
@@ -61,6 +63,7 @@ class FeedRefresherImpl(
             .subscribe { (source, articles) ->
                 articlesDao.delete(source.id)
                 articlesDao.insertAll(*articles.toTypedArray())
+                sourcesDao.updateSourceLastFetched(source.id, timeProvider.nowUtcMs())
             }
     }
 

@@ -10,6 +10,7 @@ data class Source(
     @PrimaryKey(autoGenerate = true) override val id: Long,
     val name: String,
     val url: String,
-    val lastFetched: Long,
-    val isActive: Boolean
+    var lastFetched: Long,
+    val isActive: Boolean,
+    val immutableHashCode: Int = name.hashCode() * url.hashCode()
 ) : ModelWithId

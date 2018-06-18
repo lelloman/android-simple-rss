@@ -6,14 +6,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.read.R
+import com.lelloman.read.core.ResourceProvider
+import com.lelloman.read.core.TimeDiffCalculator
 import com.lelloman.read.databinding.ListItemSourceBinding
 import com.lelloman.read.persistence.model.Source
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 import javax.inject.Inject
 
-class SourcesAdapter @Inject constructor()
-    : RecyclerView.Adapter<SourcesAdapter.ViewHolder>(), Observer<List<Source>> {
+class SourcesAdapter @Inject constructor(
+    private val timeDiffCalculator: TimeDiffCalculator,
+    private val resourceProvider: ResourceProvider
+) : RecyclerView.Adapter<SourcesAdapter.ViewHolder>(), Observer<List<Source>> {
 
     private var data = emptyList<Source>()
     private val listDiffCalculator = ModelWithIdListDiffCalculator()
@@ -40,14 +44,17 @@ class SourcesAdapter @Inject constructor()
         }
     }
 
-    class ViewHolder(private val binding: ListItemSourceBinding)
+    inner class ViewHolder(private val binding: ListItemSourceBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = SourceViewModel()
+        private val viewModel = SourceViewModel(
+            timeDiffCalculator = timeDiffCalculator,
+            resourceProvider = resourceProvider
+        )
 
         fun bind(source: Source) {
             viewModel.bind(source)
-            binding.source = viewModel
+            binding.viewModel = viewModel
             binding.executePendingBindings()
         }
     }
