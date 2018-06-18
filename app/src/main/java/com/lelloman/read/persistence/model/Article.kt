@@ -12,6 +12,7 @@ data class Article(
     val subtitle: String,
     val content: String,
     val link: String,
+    val imageUrl: String?,
     val time: Long,
     val sourceName: String,
     val sourceId: Long

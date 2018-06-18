@@ -5,6 +5,7 @@ import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.persistence.ArticlesDao
 import com.lelloman.read.persistence.SourcesDao
+import com.lelloman.read.utils.HtmlParser
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -22,7 +23,7 @@ class FeedModule {
         feedParser: FeedParser,
         sourcesDao: SourcesDao,
         articlesDao: ArticlesDao,
-        mapper: ParsedFeedToArticleMapper
+        htmlParser: HtmlParser
     ): FeedRefresher = FeedRefresherImpl(
         ioScheduler = ioScheduler,
         newThreadScheduler = newThreadScheduler,
@@ -30,10 +31,10 @@ class FeedModule {
         feedParser = feedParser,
         sourcesDao = sourcesDao,
         articlesDao = articlesDao,
-        mapper = mapper
+        htmlParser = htmlParser
     )
 
     @Singleton
     @Provides
-    fun provideParsedFeedToArticleMapper() = ParsedFeedToArticleMapper()
+    fun provideHtmlParser() = HtmlParser()
 }

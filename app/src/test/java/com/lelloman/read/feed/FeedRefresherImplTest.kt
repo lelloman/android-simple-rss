@@ -4,6 +4,7 @@ import com.lelloman.read.http.HttpClient
 import com.lelloman.read.persistence.ArticlesDao
 import com.lelloman.read.persistence.SourcesDao
 import com.lelloman.read.persistence.model.Source
+import com.lelloman.read.utils.HtmlParser
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.reset
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
@@ -20,7 +21,7 @@ class FeedRefresherImplTest {
     private val feedParser: FeedParser = mock()
     private val sourcesDao: SourcesDao = mock()
     private val articlesDao: ArticlesDao = mock()
-    private val mapper: ParsedFeedToArticleMapper = mock()
+    private val htmlParser: HtmlParser = mock()
 
     private val dependencies = arrayOf(httpClient, feedParser, sourcesDao, articlesDao)
 
@@ -31,7 +32,7 @@ class FeedRefresherImplTest {
         feedParser = feedParser,
         sourcesDao = sourcesDao,
         articlesDao = articlesDao,
-        mapper = mapper
+        htmlParser = htmlParser
     )
 
     @Test

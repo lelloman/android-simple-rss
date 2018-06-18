@@ -17,21 +17,19 @@
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:padding="16dp">
 
             <com.lelloman.identicon.ClassicIdenticonView
                 android:id="@+id/image"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
-                android:layout_margin="8dp"
                 app:hash="@{source.hash}" />
 
             <TextView
                 android:id="@+id/text_view_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:text="@{source.name}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -50,7 +48,6 @@
                 android:id="@+id/text_view_url"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:padding="4dp"
                 android:text="@{source.url}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
                 app:layout_constraintBottom_toBottomOf="parent"

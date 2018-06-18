@@ -48,14 +48,19 @@ object Xmls {
 
     val VICE_FEED_0 = ParsedFeed(
         title = "La verità sul video 'La verità su Aquarius e Saviano'",
-        subtitle = "Abbiamo analizzato punto per punto il video 'La verità su Aquarius e Saviano' di Luca Donadel.",
-        link = "https://www.vice.com/it/article/evk74m/la-verita-sul-video-la-verita-su-aquarius-e-saviano-donadel",
+        subtitle = "\n" +
+            "                Abbiamo analizzato punto per punto il video 'La verità su Aquarius e Saviano' di Luca Donadel.",
+        link = "\n" +
+            "                https://www.vice.com/it/article/evk74m/la-verita-sul-video-la-verita-su-aquarius-e-saviano-donadel\n" +
+            "            ",
         timestamp = 1529149073000
     )
 
     val VICE_FEED_1 = ParsedFeed(
-        title = "Come Salvini è diventato il premier fantasma di questo governo",
-        subtitle = "In questi giorni Salvini si è occupato di tutto. Ha fatto il ministro dell'Interno, delle Infrastrutture degli Esteri, e dell'Economia.",
+        title = "\n" +
+            "                Come Salvini è diventato il premier fantasma di questo governo",
+        subtitle = "\n" +
+            "                In questi giorni Salvini si è occupato di tutto. Ha fatto il ministro dell'Interno, delle Infrastrutture degli Esteri, e dell'Economia.",
         link = "https://www.vice.com/it/article/8xebbv/salvini-premier-governo",
         timestamp = 1529065934000
     )

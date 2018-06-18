@@ -4,9 +4,10 @@ import com.lelloman.read.persistence.model.Article
 import java.text.SimpleDateFormat
 import java.util.*
 
-private val detailTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
 
 class ArticleViewModel {
+
+    private val detailTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
 
     var title = ""
         private set
@@ -20,10 +21,22 @@ class ArticleViewModel {
     var subtitle = ""
         private set
 
+    var imageVisible = false
+        private set
+
+    var subtitleVisible = false
+        private set
+
+    var imageUrl: String? = null
+        private set
+
     fun bind(article: Article) {
         title = article.title
         details = "${detailTimeFormat.format(article.time)} - ${article.sourceName}"
         hash = article.hashCode()
         subtitle = article.subtitle
+        imageVisible = !article.imageUrl.isNullOrBlank()
+        subtitleVisible = article.subtitle.isNotEmpty()
+        imageUrl = article.imageUrl
     }
 }

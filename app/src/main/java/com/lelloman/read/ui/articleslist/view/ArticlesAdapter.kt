@@ -47,7 +47,7 @@ class ArticlesAdapter @Inject constructor()
 
         fun bind(article: Article) {
             viewModel.bind(article)
-            binding.article = viewModel
+            binding.viewModel = viewModel
             binding.executePendingBindings()
         }
     }

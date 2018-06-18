@@ -52,7 +52,8 @@ class ArticlesListActivityTest {
             link = "www.staceppa.com/$it",
             time = it.toLong(),
             sourceName = "Source",
-            sourceId = 0L
+            sourceId = 0L,
+            imageUrl = ""
         )
     }.toList()
 
@@ -140,7 +141,8 @@ class ArticlesListActivityTest {
             link = random.nextLong().toString(),
             time = random.nextLong(),
             sourceName = random.nextLong().toString(),
-            sourceId = random.nextLong()
+            sourceId = random.nextLong(),
+            imageUrl = random.nextLong().toString()
         )
         articlesLiveData.postValue(listOf(article))
         wait(0.2)

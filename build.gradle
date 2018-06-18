@@ -22,6 +22,7 @@ buildscript {
     ext.robolectric_version = "3.8"
     ext.truth_version = "0.41"
     ext.jsoup_version = "1.11.3"
+    ext.picasso_version = "2.71828"
 
     repositories {
         google()

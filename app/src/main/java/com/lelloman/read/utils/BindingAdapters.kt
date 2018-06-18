@@ -1,10 +1,13 @@
 package com.lelloman.read.utils
 
 import android.databinding.BindingAdapter
+import android.net.Uri
 import android.support.design.widget.TextInputLayout
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
+import android.widget.ImageView
 import com.lelloman.identicon.ClassicIdenticonView
+import com.squareup.picasso.Picasso
 
 object BindingAdapters {
 
@@ -31,5 +34,15 @@ object BindingAdapters {
     fun bindError(view: TextInputLayout, text: String?) {
         view.error = text
         view.isErrorEnabled = !text.isNullOrBlank()
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:imageUrl")
+    fun bindImageurl(view: ImageView, url: String?) {
+        url?.let {
+            Picasso.get()
+                .load(Uri.parse(url))
+                .into(view)
+        }
     }
 }

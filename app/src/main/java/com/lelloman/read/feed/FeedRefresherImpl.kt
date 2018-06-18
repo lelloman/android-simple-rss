@@ -6,6 +6,9 @@ import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.persistence.ArticlesDao
 import com.lelloman.read.persistence.SourcesDao
+import com.lelloman.read.persistence.model.Article
+import com.lelloman.read.persistence.model.Source
+import com.lelloman.read.utils.HtmlParser
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.subjects.BehaviorSubject
@@ -17,7 +20,7 @@ class FeedRefresherImpl(
     private val feedParser: FeedParser,
     private val sourcesDao: SourcesDao,
     private val articlesDao: ArticlesDao,
-    private val mapper: ParsedFeedToArticleMapper
+    private val htmlParser: HtmlParser
 ) : FeedRefresher {
 
     private val isLoadingSubject = BehaviorSubject.create<Boolean>()
@@ -47,7 +50,7 @@ class FeedRefresherImpl(
                     .flatMap { feedParser.parseFeeds(it.body).toMaybe() }
                     .map {
                         it.map {
-                            mapper.map(it, source)
+                            parsedFeedToArticle(source, it)
                         }
                     }
                     .map { source to it }
@@ -59,5 +62,28 @@ class FeedRefresherImpl(
                 articlesDao.delete(source.id)
                 articlesDao.insertAll(*articles.toTypedArray())
             }
+    }
+
+    private fun parsedFeedToArticle(source: Source, parsedFeed: ParsedFeed): Article {
+        val (title, imagesUrl1) = htmlParser.withHtml(parsedFeed.title)
+        val (subtitle, imagesUrl2) = htmlParser.withHtml(parsedFeed.subtitle)
+
+        val imageUrl = when {
+            imagesUrl1.isNotEmpty() -> imagesUrl1[0]
+            imagesUrl2.isNotEmpty() -> imagesUrl2[0]
+            else -> null
+        }
+
+        return Article(
+            id = 0L,
+            title = title,
+            subtitle = subtitle,
+            time = parsedFeed.timestamp,
+            link = parsedFeed.link,
+            content = "",
+            sourceName = source.name,
+            sourceId = source.id,
+            imageUrl = imageUrl
+        )
     }
 }
