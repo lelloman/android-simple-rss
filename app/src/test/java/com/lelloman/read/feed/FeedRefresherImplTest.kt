@@ -14,22 +14,24 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.junit.Test
 
-class FeedManagerImplTest {
+class FeedRefresherImplTest {
 
     private val httpClient: HttpClient = mock()
     private val feedParser: FeedParser = mock()
     private val sourcesDao: SourcesDao = mock()
     private val articlesDao: ArticlesDao = mock()
+    private val mapper: ParsedFeedToArticleMapper = mock()
 
     private val dependencies = arrayOf(httpClient, feedParser, sourcesDao, articlesDao)
 
-    private val tested = FeedManagerImpl(
+    private val tested = FeedRefresherImpl(
         ioScheduler = trampoline(),
         newThreadScheduler = trampoline(),
         httpClient = httpClient,
         feedParser = feedParser,
         sourcesDao = sourcesDao,
-        articlesDao = articlesDao
+        articlesDao = articlesDao,
+        mapper = mapper
     )
 
     @Test

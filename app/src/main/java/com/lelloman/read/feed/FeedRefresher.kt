@@ -2,7 +2,7 @@ package com.lelloman.read.feed
 
 import io.reactivex.Observable
 
-interface FeedManager {
+interface FeedRefresher {
 
     val isLoading: Observable<Boolean>
 

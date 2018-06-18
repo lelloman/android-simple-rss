@@ -6,7 +6,7 @@ import android.support.test.espresso.action.ViewActions.swipeDown
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.lelloman.read.core.navigation.NavigationEvent
+import com.lelloman.read.core.view.ViewActionEvent
 import com.lelloman.read.persistence.model.Article
 import com.lelloman.read.testutils.TestApp
 import com.lelloman.read.testutils.checkIsSwipeRefreshing
@@ -41,30 +41,32 @@ class ArticlesListActivityTest {
 
     private lateinit var articlesLiveData: MutableLiveData<List<Article>>
     private lateinit var isLoadingLiveData: MutableLiveData<Boolean>
-    private lateinit var navigationLiveData: SingleLiveData<NavigationEvent>
+    private lateinit var viewActionEvents: SingleLiveData<ViewActionEvent>
 
-    private val articles = Array(20, {
+    private val articles = Array(20) {
         Article(
-            it.toLong(),
-            "Article $it",
-            "Subtitle $it",
-            it.toLong(),
-            "Source",
-            0L
+            id = it.toLong(),
+            title = "Article $it",
+            subtitle = "Subtitle $it",
+            content = "",
+            link = "www.staceppa.com/$it",
+            time = it.toLong(),
+            sourceName = "Source",
+            sourceId = 0L
         )
-    }).toList()
+    }.toList()
 
     @Before
     fun setUp() {
         rotateNatural()
         articlesLiveData = MutableLiveData()
         isLoadingLiveData = MutableLiveData()
-        navigationLiveData = SingleLiveData()
+        viewActionEvents = SingleLiveData()
 
         viewModel = TestApp.instance.viewModelModule.articlesListViewModel
         whenever(viewModel.articles).thenReturn(articlesLiveData)
         whenever(viewModel.isLoading).thenReturn(isLoadingLiveData)
-        whenever(viewModel.navigation).thenReturn(navigationLiveData)
+        whenever(viewModel.viewActionEvents).thenReturn(viewActionEvents)
 
         activityTestRule.launchActivity(null)
     }
@@ -131,12 +133,14 @@ class ArticlesListActivityTest {
     fun retainsArticleOnRotation() {
         val random = Random()
         val article = Article(
-            random.nextLong(),
-            random.nextLong().toString(),
-            random.nextLong().toString(),
-            random.nextLong(),
-            random.nextLong().toString(),
-            random.nextLong()
+            id = random.nextLong(),
+            title = random.nextLong().toString(),
+            subtitle = random.nextLong().toString(),
+            content = random.nextLong().toString(),
+            link = random.nextLong().toString(),
+            time = random.nextLong(),
+            sourceName = random.nextLong().toString(),
+            sourceId = random.nextLong()
         )
         articlesLiveData.postValue(listOf(article))
         wait(0.2)

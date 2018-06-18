@@ -6,20 +6,19 @@ import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.persistence.ArticlesDao
 import com.lelloman.read.persistence.SourcesDao
-import com.lelloman.read.persistence.model.Article
 import io.reactivex.Observable
 import io.reactivex.Scheduler
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 
-class FeedManagerImpl(
+class FeedRefresherImpl(
     @IoScheduler private val ioScheduler: Scheduler,
     @NewThreadScheduler private val newThreadScheduler: Scheduler,
     private val httpClient: HttpClient,
     private val feedParser: FeedParser,
     private val sourcesDao: SourcesDao,
-    private val articlesDao: ArticlesDao
-) : FeedManager {
+    private val articlesDao: ArticlesDao,
+    private val mapper: ParsedFeedToArticleMapper
+) : FeedRefresher {
 
     private val isLoadingSubject = BehaviorSubject.create<Boolean>()
     override val isLoading: Observable<Boolean> = isLoadingSubject
@@ -48,20 +47,11 @@ class FeedManagerImpl(
                     .flatMap { feedParser.parseFeeds(it.body).toMaybe() }
                     .map {
                         it.map {
-                            Article(
-                                id = 0L,
-                                title = it.title,
-                                subtitle = it.subtitle,
-                                time = it.timestamp,
-                                link = it.link,
-                                content = "",
-                                sourceName = source.name,
-                                sourceId = source.id
-                            )
+                            mapper.map(it, source)
                         }
                     }
                     .map { source to it }
-                    .subscribeOn(Schedulers.newThread())
+                    .subscribeOn(newThreadScheduler)
             }
             .doAfterTerminate { isLoadingSubject.onNext(false) }
             .observeOn(ioScheduler)

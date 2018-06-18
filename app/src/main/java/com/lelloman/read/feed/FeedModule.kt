@@ -15,19 +15,25 @@ class FeedModule {
 
     @Singleton
     @Provides
-    fun provideFeedManager(
+    fun provideFeedRefresher(
         @IoScheduler ioScheduler: Scheduler,
         @NewThreadScheduler newThreadScheduler: Scheduler,
         httpClient: HttpClient,
         feedParser: FeedParser,
         sourcesDao: SourcesDao,
-        articlesDao: ArticlesDao
-    ): FeedManager = FeedManagerImpl(
+        articlesDao: ArticlesDao,
+        mapper: ParsedFeedToArticleMapper
+    ): FeedRefresher = FeedRefresherImpl(
         ioScheduler = ioScheduler,
         newThreadScheduler = newThreadScheduler,
         httpClient = httpClient,
         feedParser = feedParser,
         sourcesDao = sourcesDao,
-        articlesDao = articlesDao
+        articlesDao = articlesDao,
+        mapper = mapper
     )
+
+    @Singleton
+    @Provides
+    fun provideParsedFeedToArticleMapper() = ParsedFeedToArticleMapper()
 }

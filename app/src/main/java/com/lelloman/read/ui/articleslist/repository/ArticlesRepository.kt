@@ -1,7 +1,7 @@
 package com.lelloman.read.ui.articleslist.repository
 
 import com.lelloman.read.core.di.qualifiers.IoScheduler
-import com.lelloman.read.feed.FeedManager
+import com.lelloman.read.feed.FeedRefresher
 import com.lelloman.read.persistence.ArticlesDao
 import com.lelloman.read.persistence.model.Article
 import io.reactivex.Observable
@@ -13,16 +13,16 @@ import javax.inject.Singleton
 class ArticlesRepository @Inject constructor(
     @IoScheduler private val ioScheduler: Scheduler,
     private val articlesDao: ArticlesDao,
-    private val feedManager: FeedManager
+    private val feedRefresher: FeedRefresher
 ) {
 
-    val loading: Observable<Boolean> = feedManager.isLoading
+    val loading: Observable<Boolean> = feedRefresher.isLoading
 
     fun fetchArticles(): Observable<List<Article>> = articlesDao
         .getAll()
         .toObservable()
 
 
-    fun refresh() = feedManager.refresh()
+    fun refresh() = feedRefresher.refresh()
 
 }
