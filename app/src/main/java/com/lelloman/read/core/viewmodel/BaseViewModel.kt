@@ -20,7 +20,7 @@ abstract class BaseViewModel(
 
     open val viewActionEvents = SingleLiveData<ViewActionEvent>()
 
-    protected fun getString(@StringRes stringId: Int, args: Array<Any> = emptyArray()) =
+    protected fun getString(@StringRes stringId: Int, vararg args: Any = emptyArray()) =
         resourceProvider.getString(stringId, args)
 
     protected fun navigate(navigationEvent: NavigationEvent) = viewActionEvents.postValue(navigationEvent)

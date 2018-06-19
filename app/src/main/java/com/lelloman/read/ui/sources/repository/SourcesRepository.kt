@@ -25,6 +25,8 @@ class SourcesRepository @Inject constructor(
 
     fun insertSource(source: Source): Single<Long> = Single.fromCallable { dao.insert(source) }
 
+    fun getSource(sourceId: Long) = dao.getSource(sourceId)
+
     private fun loadSource() {
         if (isLoading) return
 
