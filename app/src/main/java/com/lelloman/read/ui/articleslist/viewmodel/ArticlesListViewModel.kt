@@ -3,7 +3,7 @@ package com.lelloman.read.ui.articleslist.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.viewmodel.BaseViewModel
-import com.lelloman.read.persistence.model.Article
+import com.lelloman.read.persistence.db.model.Article
 
 abstract class ArticlesListViewModel(
     resourceProvider: ResourceProvider

@@ -7,7 +7,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.lelloman.read.core.view.ViewActionEvent
-import com.lelloman.read.persistence.model.Article
+import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.testutils.TestApp
 import com.lelloman.read.testutils.checkIsSwipeRefreshing
 import com.lelloman.read.testutils.checkRecyclerViewCount

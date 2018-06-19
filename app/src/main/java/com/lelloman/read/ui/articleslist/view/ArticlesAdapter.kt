@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.databinding.ListItemArticleBinding
-import com.lelloman.read.persistence.model.Article
+import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.ui.articleslist.viewmodel.ArticleViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 import javax.inject.Inject

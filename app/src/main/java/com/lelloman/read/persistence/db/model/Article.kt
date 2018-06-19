@@ -1,4 +1,4 @@
-package com.lelloman.read.persistence.model
+package com.lelloman.read.persistence.db.model
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey

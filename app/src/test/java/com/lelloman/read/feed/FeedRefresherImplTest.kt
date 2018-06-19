@@ -2,9 +2,9 @@ package com.lelloman.read.feed
 
 import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.http.HttpClient
-import com.lelloman.read.persistence.ArticlesDao
-import com.lelloman.read.persistence.SourcesDao
-import com.lelloman.read.persistence.model.Source
+import com.lelloman.read.persistence.db.ArticlesDao
+import com.lelloman.read.persistence.db.SourcesDao
+import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.utils.HtmlParser
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.reset

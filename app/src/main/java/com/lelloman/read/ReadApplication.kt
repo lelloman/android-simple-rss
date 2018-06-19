@@ -5,9 +5,9 @@ import android.app.Application
 import android.content.BroadcastReceiver
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
-import com.lelloman.read.persistence.AppDatabase
-import com.lelloman.read.persistence.SourcesDao
-import com.lelloman.read.persistence.model.Source
+import com.lelloman.read.persistence.db.AppDatabase
+import com.lelloman.read.persistence.db.SourcesDao
+import com.lelloman.read.persistence.db.model.Source
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasBroadcastReceiverInjector

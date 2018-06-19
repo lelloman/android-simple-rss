@@ -1,10 +1,11 @@
 package com.lelloman.read.ui.sources.viewmodel
 
 import com.lelloman.read.core.TimeDiffCalculator
-import com.lelloman.read.persistence.model.Source
+import com.lelloman.read.persistence.db.model.Source
 
 class SourceListItemViewModel(
-    private val timeDiffCalculator: TimeDiffCalculator
+    private val timeDiffCalculator: TimeDiffCalculator,
+    private val onIsActiveChanged: (Boolean) -> Unit
 ) {
 
     var name = ""
@@ -19,10 +20,16 @@ class SourceListItemViewModel(
     var lastFetched = ""
         private set
 
+    var isActive = false
+        private set
+
     fun bind(source: Source) {
         name = source.name
         url = source.url
         hash = source.immutableHashCode
         lastFetched = timeDiffCalculator.getSourceLastFetchedString(source)
+        isActive = source.isActive
     }
+
+    fun onIsActiveChanged(isActive: Boolean) = onIsActiveChanged.invoke(isActive)
 }
