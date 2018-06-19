@@ -1,13 +1,10 @@
 package com.lelloman.read.ui.sources.viewmodel
 
-import com.lelloman.read.R
-import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.TimeDiffCalculator
 import com.lelloman.read.persistence.model.Source
 
 class SourceListItemViewModel(
-    private val timeDiffCalculator: TimeDiffCalculator,
-    private val resourceProvider: ResourceProvider
+    private val timeDiffCalculator: TimeDiffCalculator
 ) {
 
     var name = ""
@@ -26,13 +23,6 @@ class SourceListItemViewModel(
         name = source.name
         url = source.url
         hash = source.immutableHashCode
-
-        val lastFetchedValue = if (source.lastFetched <= 0L) {
-            resourceProvider.getString(R.string.never)
-        } else {
-            timeDiffCalculator.getTimeDiffString(source.lastFetched)
-        }
-
-        lastFetched = resourceProvider.getString(R.string.last_refresh, lastFetchedValue)
+        lastFetched = timeDiffCalculator.getSourceLastFetchedString(source)
     }
 }

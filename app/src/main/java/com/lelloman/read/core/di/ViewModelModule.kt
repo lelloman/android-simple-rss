@@ -1,6 +1,7 @@
 package com.lelloman.read.core.di
 
 import com.lelloman.read.core.ResourceProvider
+import com.lelloman.read.core.TimeDiffCalculator
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.ui.articleslist.repository.ArticlesRepository
@@ -53,9 +54,15 @@ open class ViewModelModule {
 
     @Provides
     open fun provideSourceViewModel(
+        @IoScheduler ioScheduler: Scheduler,
+        @UiScheduler uiScheduler: Scheduler,
+        timeDiffCalculator: TimeDiffCalculator,
         resourceProvider: ResourceProvider,
         sourcesRepository: SourcesRepository
     ): SourceViewModel = SourceViewModelImpl(
+        ioScheduler = ioScheduler,
+        uiScheduler = uiScheduler,
+        timeDiffCalculator = timeDiffCalculator,
         resourceProvider = resourceProvider,
         sourcesRepository = sourcesRepository
     )

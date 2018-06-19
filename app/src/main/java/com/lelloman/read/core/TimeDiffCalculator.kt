@@ -1,6 +1,7 @@
 package com.lelloman.read.core
 
 import com.lelloman.read.R
+import com.lelloman.read.persistence.model.Source
 
 class TimeDiffCalculator(
     private val timeProvider: TimeProvider,
@@ -39,5 +40,14 @@ class TimeDiffCalculator(
         }
 
         return resourceProvider.getString(stringId, value)
+    }
+
+    fun getSourceLastFetchedString(source: Source): String {
+        val lastFetchedValue = if (source.lastFetched <= 0L) {
+            resourceProvider.getString(R.string.never)
+        } else {
+            getTimeDiffString(source.lastFetched)
+        }
+        return resourceProvider.getString(R.string.last_refresh, lastFetchedValue)
     }
 }

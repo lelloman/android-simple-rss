@@ -21,4 +21,7 @@ interface SourcesDao {
 
     @Query("UPDATE $SOURCE_TABLE_NAME SET lastFetched = :lastFetched WHERE id = :sourceId")
     fun updateSourceLastFetched(sourceId: Long, lastFetched: Long)
+
+    @Query("SELECT * from $SOURCE_TABLE_NAME WHERE id = :sourceId LIMIT 1")
+    fun getSource(sourceId: Long): Flowable<Source>
 }

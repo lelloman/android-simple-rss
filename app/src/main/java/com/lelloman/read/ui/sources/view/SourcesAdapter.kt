@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.read.R
-import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.TimeDiffCalculator
 import com.lelloman.read.databinding.ListItemSourceBinding
 import com.lelloman.read.persistence.model.Source
@@ -15,7 +14,6 @@ import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 
 class SourcesAdapter(
     private val timeDiffCalculator: TimeDiffCalculator,
-    private val resourceProvider: ResourceProvider,
     private val sourceClickedListener: (sourceId: Long) -> Unit
 ) : RecyclerView.Adapter<SourcesAdapter.ViewHolder>(), Observer<List<Source>> {
 
@@ -50,8 +48,7 @@ class SourcesAdapter(
         private lateinit var source: Source
 
         private val viewModel = SourceListItemViewModel(
-            timeDiffCalculator = timeDiffCalculator,
-            resourceProvider = resourceProvider
+            timeDiffCalculator = timeDiffCalculator
         )
 
         init {

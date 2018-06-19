@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.lelloman.read.R
-import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.TimeDiffCalculator
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivitySourcesListBinding
@@ -21,9 +20,6 @@ class SourcesListActivity
     @Inject
     lateinit var timeDiffCalculator: TimeDiffCalculator
 
-    @Inject
-    lateinit var resourceProvider: ResourceProvider
-
     override fun getLayoutId() = R.layout.activity_sources_list
 
     override fun getViewModelClass() = SourcesListViewModel::class.java
@@ -34,7 +30,6 @@ class SourcesListActivity
 
         adapter = SourcesAdapter(
             timeDiffCalculator = timeDiffCalculator,
-            resourceProvider = resourceProvider,
             sourceClickedListener = viewModel::onSourceClicked
         )
 
