@@ -17,15 +17,18 @@ class SourcesListViewModelImpl(
     resourceProvider: ResourceProvider
 ) : SourcesListViewModel(resourceProvider) {
 
-    override val sources: MutableLiveData<List<Source>> by LazyLiveData({
+    override val sources: MutableLiveData<List<Source>> by LazyLiveData {
         subscription {
             sourcesRepository.fetchSources()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe { sources.value = it }
         }
-    })
+    }
 
     override fun onFabClicked(view: View) =
         navigate(ScreenNavigationEvent(NavigationScreen.ADD_SOURCE))
+
+    override fun onSourceClicked(sourceId: Long) =
+        navigate(ScreenNavigationEvent(NavigationScreen.SOURCE, arrayOf(sourceId)))
 }

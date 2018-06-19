@@ -28,6 +28,7 @@
             android:name=".ui.sources.view.AddSourceActivity"
             android:label="@string/title_activity_add_source"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.sources.view.SourceActivity" />
 
         <receiver
             android:name=".feed.FeedRefreshBroadcastReceiver"

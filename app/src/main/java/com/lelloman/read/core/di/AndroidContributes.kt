@@ -4,12 +4,13 @@ import com.lelloman.read.core.view.InjectableActivity
 import com.lelloman.read.feed.FeedRefreshBroadcastReceiver
 import com.lelloman.read.ui.articleslist.view.ArticlesListActivity
 import com.lelloman.read.ui.sources.view.AddSourceActivity
+import com.lelloman.read.ui.sources.view.SourceActivity
 import com.lelloman.read.ui.sources.view.SourcesListActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
 @Module
-interface ActivityContributes {
+interface AndroidContributes {
 
     @ContributesAndroidInjector
     fun contributeBaseActivity(): InjectableActivity
@@ -22,6 +23,10 @@ interface ActivityContributes {
 
     @ContributesAndroidInjector
     fun contributeAddSourceActivity(): AddSourceActivity
+
+    @ContributesAndroidInjector
+    fun contributeSourceActivity(): SourceActivity
+
 
     @ContributesAndroidInjector
     fun contributeFeedRefreshReceiver(): FeedRefreshBroadcastReceiver

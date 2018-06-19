@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    ActivityContributes::class,
+    AndroidContributes::class,
     AndroidInjectionModule::class,
     AppModule::class,
     FeedModule::class,

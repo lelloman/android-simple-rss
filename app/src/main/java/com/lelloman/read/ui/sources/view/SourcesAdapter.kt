@@ -10,13 +10,13 @@ import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.TimeDiffCalculator
 import com.lelloman.read.databinding.ListItemSourceBinding
 import com.lelloman.read.persistence.model.Source
-import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
+import com.lelloman.read.ui.sources.viewmodel.SourceListItemViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
-import javax.inject.Inject
 
-class SourcesAdapter @Inject constructor(
+class SourcesAdapter(
     private val timeDiffCalculator: TimeDiffCalculator,
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val sourceClickedListener: (sourceId: Long) -> Unit
 ) : RecyclerView.Adapter<SourcesAdapter.ViewHolder>(), Observer<List<Source>> {
 
     private var data = emptyList<Source>()
@@ -47,12 +47,19 @@ class SourcesAdapter @Inject constructor(
     inner class ViewHolder(private val binding: ListItemSourceBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = SourceViewModel(
+        private lateinit var source: Source
+
+        private val viewModel = SourceListItemViewModel(
             timeDiffCalculator = timeDiffCalculator,
             resourceProvider = resourceProvider
         )
 
+        init {
+            binding.root.setOnClickListener { sourceClickedListener.invoke(source.id) }
+        }
+
         fun bind(source: Source) {
+            this.source = source
             viewModel.bind(source)
             binding.viewModel = viewModel
             binding.executePendingBindings()

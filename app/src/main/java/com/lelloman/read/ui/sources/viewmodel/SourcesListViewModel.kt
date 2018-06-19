@@ -14,4 +14,5 @@ abstract class SourcesListViewModel(
 
     abstract fun onFabClicked(view: View)
 
+    abstract fun onSourceClicked(sourceId: Long)
 }

@@ -9,6 +9,8 @@ import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModelImpl
 import com.lelloman.read.ui.sources.repository.SourcesRepository
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModelImpl
+import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
+import com.lelloman.read.ui.sources.viewmodel.SourceViewModelImpl
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModelImpl
 import dagger.Module
@@ -48,4 +50,13 @@ open class ViewModelModule {
     open fun provideAddSourceViewModel(
         resourceProvider: ResourceProvider
     ): AddSourceViewModel = AddSourceViewModelImpl(resourceProvider)
+
+    @Provides
+    open fun provideSourceViewModel(
+        resourceProvider: ResourceProvider,
+        sourcesRepository: SourcesRepository
+    ): SourceViewModel = SourceViewModelImpl(
+        resourceProvider = resourceProvider,
+        sourcesRepository = sourcesRepository
+    )
 }
