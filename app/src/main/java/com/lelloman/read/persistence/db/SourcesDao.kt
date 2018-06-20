@@ -27,4 +27,7 @@ interface SourcesDao {
 
     @Query("UPDATE $SOURCE_TABLE_NAME SET isActive = :isActive WHERE id = :sourceId")
     fun setSourceIsActive(sourceId: Long, isActive: Boolean)
+
+    @Query("DELETE FROM $SOURCE_TABLE_NAME WHERE id = :sourceId")
+    fun delete(sourceId: Long)
 }

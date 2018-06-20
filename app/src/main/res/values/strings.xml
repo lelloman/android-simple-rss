@@ -27,5 +27,8 @@
     <string name="test_feed_http_error">A network error occurred</string>
     <string name="test_feed_xml_error">"Source doesn't return a valid rss xml"</string>
     <string name="test_feed_empty_error">"Source returned an empty feed"</string>
+
     <string name="refresh">Refresh</string>
+    <string name="source_deleted">%s deleted</string>
+    <string name="undo">UNDO</string>
 </resources>

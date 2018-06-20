@@ -76,7 +76,7 @@ class AddSourceViewModelImpl(
                     }
                 }, {
                     logger.w("Error while testing url $url", it)
-                    shortToast(R.string.something_went_wrong)
+                    shortToast(getString(R.string.something_went_wrong))
                 })
         }
     }
@@ -112,7 +112,7 @@ class AddSourceViewModelImpl(
                 .subscribe({
                     navigateBack()
                 }, {
-                    shortToast(R.string.something_went_wrong)
+                    shortToast(getString(R.string.something_went_wrong))
                 })
         } else {
             val nameErrorValue = if (hasValidName) "" else getString(R.string.error_add_source_name)

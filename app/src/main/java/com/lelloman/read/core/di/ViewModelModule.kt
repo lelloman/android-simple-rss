@@ -44,11 +44,13 @@ open class ViewModelModule {
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         sourcesRepository: SourcesRepository,
+        articlesRepository: ArticlesRepository,
         resourceProvider: ResourceProvider
     ): SourcesListViewModel = SourcesListViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         sourcesRepository = sourcesRepository,
+        articlesRepository = articlesRepository,
         resourceProvider = resourceProvider
     )
 

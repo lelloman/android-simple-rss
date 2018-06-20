@@ -17,4 +17,6 @@ abstract class SourcesListViewModel(
     abstract fun onSourceClicked(sourceId: Long)
 
     abstract fun onSourceIsActiveChanged(sourceId: Long, isActive: Boolean)
+
+    abstract fun onSourceSwiped(source: Source)
 }

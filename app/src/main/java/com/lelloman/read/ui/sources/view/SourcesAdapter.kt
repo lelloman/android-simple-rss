@@ -43,6 +43,8 @@ class SourcesAdapter(
         }
     }
 
+    fun getItem(position: Int) = data[position]
+
     inner class ViewHolder(private val binding: ListItemSourceBinding)
         : RecyclerView.ViewHolder(binding.root) {
 

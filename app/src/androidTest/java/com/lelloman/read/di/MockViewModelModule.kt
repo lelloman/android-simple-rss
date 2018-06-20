@@ -35,6 +35,7 @@ class MockViewModelModule : ViewModelModule() {
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         sourcesRepository: SourcesRepository,
+        articlesRepository: ArticlesRepository,
         resourceProvider: ResourceProvider
     ): SourcesListViewModel = sourcesListViewModel
 

@@ -9,8 +9,10 @@ import com.lelloman.read.core.TimeDiffCalculator
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivitySourcesListBinding
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
+import com.lelloman.read.utils.ItemSwipeListener
 import dagger.android.AndroidInjection
 import javax.inject.Inject
+
 
 class SourcesListActivity
     : BaseActivity<SourcesListViewModel, ActivitySourcesListBinding>() {
@@ -19,6 +21,7 @@ class SourcesListActivity
 
     @Inject
     lateinit var timeDiffCalculator: TimeDiffCalculator
+
 
     override fun getLayoutId() = R.layout.activity_sources_list
 
@@ -34,9 +37,10 @@ class SourcesListActivity
             onSourceIsActiveChangedListener = viewModel::onSourceIsActiveChanged
         )
 
+
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
-
+        ItemSwipeListener.set(binding.recyclerView) { viewModel.onSourceSwiped(adapter.getItem(it)) }
         binding.viewModel = viewModel
         viewModel.sources.observe(this, adapter)
     }
