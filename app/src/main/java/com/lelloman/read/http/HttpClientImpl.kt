@@ -10,23 +10,27 @@ class HttpClientImpl(
 ) : HttpClient {
 
     override fun request(request: HttpRequest): Single<HttpResponse> = Single.fromCallable {
-        val okRequest = Request.Builder()
-            .url(request.url)
-            .build()
+        try {
+            val okRequest = Request.Builder()
+                .url(request.url)
+                .build()
 
-        Log.d("OkHttp", "--> ${okRequest.method()} ${okRequest.url()} ${okRequest.headers()}")
+            Log.d("OkHttp", "--> ${okRequest.method()} ${okRequest.url()} ${okRequest.headers()}")
 
-        val t1 = System.currentTimeMillis()
-        val okResponse = okHttpClient.newCall(okRequest).execute()
-        val t2 = System.currentTimeMillis()
-        val body = okResponse.body()?.string() ?: ""
-        Log.d("OkHttp", "<-- ${okRequest.method()} ${okResponse.code()} ${okRequest.url()} in ${t2 - t1}ms ${okResponse.headers()}")
-        Log.d("OkHttp", "response length: ${body.length}")
+            val t1 = System.currentTimeMillis()
+            val okResponse = okHttpClient.newCall(okRequest).execute()
+            val t2 = System.currentTimeMillis()
+            val body = okResponse.body()?.string() ?: ""
+            Log.d("OkHttp", "<-- ${okRequest.method()} ${okResponse.code()} ${okRequest.url()} in ${t2 - t1}ms ${okResponse.headers()}")
+            Log.d("OkHttp", "response length: ${body.length}")
 
-        HttpResponse(
-            code = okResponse.code(),
-            isSuccessful = okResponse.isSuccessful,
-            body = body
-        )
+            HttpResponse(
+                code = okResponse.code(),
+                isSuccessful = okResponse.isSuccessful,
+                body = body
+            )
+        } catch (exception: Exception) {
+            throw HttpClientException(exception)
+        }
     }
 }

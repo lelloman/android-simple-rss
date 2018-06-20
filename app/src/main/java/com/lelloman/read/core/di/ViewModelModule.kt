@@ -4,6 +4,8 @@ import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.TimeDiffCalculator
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
+import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.read.feed.FeedFetcher
 import com.lelloman.read.ui.articleslist.repository.ArticlesRepository
 import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModel
 import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModelImpl
@@ -14,6 +16,7 @@ import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModelImpl
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModelImpl
+import com.lelloman.read.utils.UrlValidator
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -52,12 +55,18 @@ open class ViewModelModule {
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         sourcesRepository: SourcesRepository,
-        resourceProvider: ResourceProvider
+        resourceProvider: ResourceProvider,
+        feedFetcher: FeedFetcher,
+        loggerFactory: LoggerFactory,
+        urlValidator: UrlValidator
     ): AddSourceViewModel = AddSourceViewModelImpl(
         resourceProvider = resourceProvider,
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
-        sourcesRepository = sourcesRepository
+        sourcesRepository = sourcesRepository,
+        feedFetcher = feedFetcher,
+        loggerFactory = loggerFactory,
+        urlValidator = urlValidator
     )
 
     @Provides
