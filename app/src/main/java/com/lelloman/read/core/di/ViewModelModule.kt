@@ -6,9 +6,9 @@ import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedFetcher
-import com.lelloman.read.ui.articleslist.repository.ArticlesRepository
-import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModel
-import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModelImpl
+import com.lelloman.read.ui.articles.repository.ArticlesRepository
+import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
+import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModelImpl
 import com.lelloman.read.ui.sources.repository.SourcesRepository
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModelImpl
@@ -29,12 +29,14 @@ open class ViewModelModule {
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         articlesRepository: ArticlesRepository,
-        resourceProvider: ResourceProvider
+        resourceProvider: ResourceProvider,
+        sourcesRepository: SourcesRepository
     ): ArticlesListViewModel = ArticlesListViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         articlesRepository = articlesRepository,
-        resourceProvider = resourceProvider
+        resourceProvider = resourceProvider,
+        sourcesRepository = sourcesRepository
     )
 
     @Provides

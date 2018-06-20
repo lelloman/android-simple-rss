@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.articleslist.view
+package com.lelloman.read.ui.articles.view
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -7,7 +7,7 @@ import android.view.MenuItem
 import com.lelloman.read.R
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityArticlesListBinding
-import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModel
+import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
@@ -44,6 +44,10 @@ class ArticlesListActivity :
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_sources -> {
             viewModel.onSourcesClicked()
+            true
+        }
+        R.id.action_refresh -> {
+            viewModel.refresh()
             true
         }
         else -> super.onOptionsItemSelected(item)

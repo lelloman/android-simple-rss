@@ -3,7 +3,7 @@ package com.lelloman.read.core.di
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.lelloman.read.core.viewmodel.ViewModelFactory
-import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModel
+import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel

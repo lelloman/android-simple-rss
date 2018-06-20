@@ -10,6 +10,11 @@
     <string name="error_add_source_name">Insert a valid name</string>
     <string name="error_add_source_url">Insert a valid url</string>
     <string name="something_went_wrong">Something went wrong...</string>
+    <string name="enable_sources">Enable sources</string>
+    <string name="add_source">Add source</string>
+    <string name="empty_articles_no_source">"You haven't added any source yet"</string>
+    <string name="empty_articles_sources_disabled">All the sources are disabled</string>
+    <string name="empty_articles_must_refresh">No article available at the moment</string>
 
     <string name="last_refresh">last refresh: %s</string>
     <string name="never">never</string>
@@ -22,4 +27,5 @@
     <string name="test_feed_http_error">A network error occurred</string>
     <string name="test_feed_xml_error">"Source doesn't return a valid rss xml"</string>
     <string name="test_feed_empty_error">"Source returned an empty feed"</string>
+    <string name="refresh">Refresh</string>
 </resources>

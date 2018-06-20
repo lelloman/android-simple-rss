@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.articleslist.view
+package com.lelloman.read.ui.articles.view
 
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.databinding.ListItemArticleBinding
 import com.lelloman.read.persistence.db.model.Article
-import com.lelloman.read.ui.articleslist.viewmodel.ArticleViewModel
+import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 import javax.inject.Inject
 

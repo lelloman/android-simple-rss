@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.articleslist.repository
+package com.lelloman.read.ui.articles.repository
 
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.feed.FeedRefresher

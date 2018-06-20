@@ -5,14 +5,14 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModel" />
+            type="com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.articleslist.view.ArticlesListActivity">
+        tools:context=".ui.articles.view.ArticlesListActivity">
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
@@ -30,6 +30,33 @@
                 android:layout_height="match_parent"
                 android:scrollbars="vertical" />
         </android.support.v4.widget.SwipeRefreshLayout>
+
+        <TextView
+            android:id="@+id/text_view_empty_list"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="@{viewModel.emptyViewDescriptionText}"
+            app:layout_constraintBottom_toTopOf="@+id/button_empty_list"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:viewVisible="@{viewModel.emptyViewVisible}"
+            tools:text="EMPTY LIST" />
+
+        <Button
+            android:id="@+id/button_empty_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClickListener="@{(_) -> viewModel.onEmptyViewButtonClicked()}"
+            android:text="@{viewModel.emptyViewButtonText}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_empty_list"
+            app:viewVisible="@{viewModel.emptyViewVisible}" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

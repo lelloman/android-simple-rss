@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.articleslist.viewmodel
+package com.lelloman.read.ui.articles.viewmodel
 
 import com.lelloman.read.persistence.db.model.Article
 import java.text.SimpleDateFormat
