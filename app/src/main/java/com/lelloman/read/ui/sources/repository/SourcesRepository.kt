@@ -30,21 +30,8 @@ class SourcesRepository @Inject constructor(
 
     fun getSource(sourceId: Long) = sourcesDao.getSource(sourceId)
 
-    fun setSourceIsActive(sourceId: Long, isActive: Boolean): Completable = Completable
-        .fromCallable { sourcesDao.setSourceIsActive(sourceId, isActive) }
-        .andThen(
-            if (isActive) {
-                Completable.complete()
-            } else {
-                Completable
-                    .fromAction {
-                        articlesDao.deleteArticlesFromSource(sourceId)
-                        sourcesDao.updateSourceLastFetched(sourceId, 0L)
-                    }
-
-            }
-        )
-
+    fun setSourceIsActive(sourceId: Long, isActive: Boolean): Completable =
+        Completable.fromCallable { sourcesDao.setSourceIsActive(sourceId, isActive) }
 
     private fun loadSource() {
         if (isLoading) return

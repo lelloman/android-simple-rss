@@ -19,7 +19,7 @@ class ArticlesRepository @Inject constructor(
     val loading: Observable<Boolean> = feedRefresher.isLoading
 
     fun fetchArticles(): Observable<List<Article>> = articlesDao
-        .getAll()
+        .getAllFromActiveSources()
         .toObservable()
 
 

@@ -49,8 +49,16 @@ open class ViewModelModule {
 
     @Provides
     open fun provideAddSourceViewModel(
+        @IoScheduler ioScheduler: Scheduler,
+        @UiScheduler uiScheduler: Scheduler,
+        sourcesRepository: SourcesRepository,
         resourceProvider: ResourceProvider
-    ): AddSourceViewModel = AddSourceViewModelImpl(resourceProvider)
+    ): AddSourceViewModel = AddSourceViewModelImpl(
+        resourceProvider = resourceProvider,
+        ioScheduler = ioScheduler,
+        uiScheduler = uiScheduler,
+        sourcesRepository = sourcesRepository
+    )
 
     @Provides
     open fun provideSourceViewModel(
