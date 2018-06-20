@@ -22,4 +22,6 @@ abstract class ArticlesListViewModel(
     abstract fun onSourcesClicked()
 
     abstract fun onEmptyViewButtonClicked()
+
+    abstract fun onArticleClicked(article: Article)
 }

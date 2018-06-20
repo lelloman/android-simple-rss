@@ -89,4 +89,7 @@ class ArticlesListViewModelImpl(
         emptyViewAction?.invoke()
     }
 
+    override fun onArticleClicked(article: Article) {
+        navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, article))
+    }
 }

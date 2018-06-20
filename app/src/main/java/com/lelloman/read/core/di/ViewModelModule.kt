@@ -7,6 +7,8 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedFetcher
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
+import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
+import com.lelloman.read.ui.articles.viewmodel.ArticleViewModelImpl
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModelImpl
 import com.lelloman.read.ui.sources.repository.SourcesRepository
@@ -86,5 +88,12 @@ open class ViewModelModule {
         timeDiffCalculator = timeDiffCalculator,
         resourceProvider = resourceProvider,
         sourcesRepository = sourcesRepository
+    )
+
+    @Provides
+    open fun provideArticleViewModel(
+        resourceProvider: ResourceProvider
+    ): ArticleViewModel = ArticleViewModelImpl(
+        resourceProvider = resourceProvider
     )
 }

@@ -1,10 +1,9 @@
 package com.lelloman.read.ui.articles.viewmodel
 
 import com.lelloman.read.core.ResourceProvider
-import com.lelloman.read.core.viewmodel.BaseViewModel
 
-abstract class ArticleViewModel(
+class ArticleViewModelImpl(
     resourceProvider: ResourceProvider
-) : BaseViewModel(resourceProvider) {
+) : ArticleViewModel(resourceProvider) {
 
 }

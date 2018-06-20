@@ -2,6 +2,7 @@ package com.lelloman.read.core.di
 
 import com.lelloman.read.core.view.InjectableActivity
 import com.lelloman.read.feed.FeedRefreshBroadcastReceiver
+import com.lelloman.read.ui.articles.view.ArticleActivity
 import com.lelloman.read.ui.articles.view.ArticlesListActivity
 import com.lelloman.read.ui.sources.view.AddSourceActivity
 import com.lelloman.read.ui.sources.view.SourceActivity
@@ -27,6 +28,8 @@ interface AndroidContributes {
     @ContributesAndroidInjector
     fun contributeSourceActivity(): SourceActivity
 
+    @ContributesAndroidInjector
+    fun contributeArticleActivity(): ArticleActivity
 
     @ContributesAndroidInjector
     fun contributeFeedRefreshReceiver(): FeedRefreshBroadcastReceiver
