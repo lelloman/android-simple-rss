@@ -3,6 +3,7 @@ package com.lelloman.read.feed
 import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
+import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao
@@ -21,26 +22,35 @@ class FeedModule {
     fun provideFeedRefresher(
         @IoScheduler ioScheduler: Scheduler,
         @NewThreadScheduler newThreadScheduler: Scheduler,
-        httpClient: HttpClient,
-        feedParser: FeedParser,
         sourcesDao: SourcesDao,
         articlesDao: ArticlesDao,
-        htmlParser: HtmlParser,
         timeProvider: TimeProvider,
-        appSettings: AppSettings
+        appSettings: AppSettings,
+        loggerFactory: LoggerFactory,
+        feedFetcher: FeedFetcher
     ): FeedRefresher = FeedRefresherImpl(
         ioScheduler = ioScheduler,
         newThreadScheduler = newThreadScheduler,
-        httpClient = httpClient,
-        feedParser = feedParser,
         sourcesDao = sourcesDao,
         articlesDao = articlesDao,
-        htmlParser = htmlParser,
         timeProvider = timeProvider,
-        appSettings = appSettings
+        appSettings = appSettings,
+        loggerFactory = loggerFactory,
+        feedFetcher = feedFetcher
     )
 
     @Singleton
     @Provides
     fun provideHtmlParser() = HtmlParser()
+
+    @Provides
+    fun provideFeedFetcher(
+        httpClient: HttpClient,
+        feedParser: FeedParser,
+        htmlParser: HtmlParser
+    ) = FeedFetcher(
+        httpClient = httpClient,
+        feedParser = feedParser,
+        htmlParser = htmlParser
+    )
 }

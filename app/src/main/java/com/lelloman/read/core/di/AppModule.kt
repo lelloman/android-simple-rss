@@ -10,6 +10,8 @@ import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
+import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.core.navigation.NavigationRouter
 import dagger.Module
 import dagger.Provides
@@ -64,4 +66,8 @@ class AppModule(private val application: Application) {
         timeProvider = timeProvider,
         resourceProvider = resourceProvider
     )
+
+    @Singleton
+    @Provides
+    fun provideLoggerFactory(): LoggerFactory = LoggerFactoryImpl()
 }
