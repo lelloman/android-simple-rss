@@ -2,6 +2,9 @@ package com.lelloman.read.persistence
 
 import android.arch.persistence.room.Room
 import android.content.Context
+import com.lelloman.read.persistence.db.AppDatabase
+import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.read.persistence.settings.AppSettingsImpl
 import com.lelloman.read.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -23,4 +26,8 @@ open class PersistenceModule {
     @Singleton
     @Provides
     open fun provideArticlesDao(db: AppDatabase) = db.articlesDao()
+
+    @Singleton
+    @Provides
+    open fun provideAppSettings(context: Context): AppSettings = AppSettingsImpl(context)
 }

@@ -5,10 +5,11 @@ import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
-import com.lelloman.read.persistence.ArticlesDao
-import com.lelloman.read.persistence.SourcesDao
-import com.lelloman.read.persistence.model.Article
-import com.lelloman.read.persistence.model.Source
+import com.lelloman.read.persistence.db.ArticlesDao
+import com.lelloman.read.persistence.db.SourcesDao
+import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.HtmlParser
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -22,7 +23,8 @@ class FeedRefresherImpl(
     private val sourcesDao: SourcesDao,
     private val articlesDao: ArticlesDao,
     private val htmlParser: HtmlParser,
-    private val timeProvider: TimeProvider
+    private val timeProvider: TimeProvider,
+    private val appSettings: AppSettings
 ) : FeedRefresher {
 
     private val isLoadingSubject = BehaviorSubject.create<Boolean>()
@@ -45,6 +47,7 @@ class FeedRefresherImpl(
             .getActiveSources()
             .firstOrError()
             .flatMapObservable { Observable.fromIterable(it) }
+            .filter(::isSourceStale)
             .flatMapMaybe { source ->
                 httpClient
                     .request(HttpRequest(source.url))
@@ -61,11 +64,14 @@ class FeedRefresherImpl(
             .doAfterTerminate { isLoadingSubject.onNext(false) }
             .observeOn(ioScheduler)
             .subscribe { (source, articles) ->
-                articlesDao.delete(source.id)
+                articlesDao.deleteArticlesFromSource(source.id)
                 articlesDao.insertAll(*articles.toTypedArray())
                 sourcesDao.updateSourceLastFetched(source.id, timeProvider.nowUtcMs())
             }
     }
+
+    private fun isSourceStale(source: Source) =
+        (timeProvider.nowUtcMs() - source.lastFetched) > appSettings.sourceRefreshMinInterval.ms
 
     private fun parsedFeedToArticle(source: Source, parsedFeed: ParsedFeed): Article {
         val (title, imagesUrl1) = htmlParser.withHtml(parsedFeed.title)

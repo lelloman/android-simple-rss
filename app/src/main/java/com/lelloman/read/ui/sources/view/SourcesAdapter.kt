@@ -8,13 +8,14 @@ import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.core.TimeDiffCalculator
 import com.lelloman.read.databinding.ListItemSourceBinding
-import com.lelloman.read.persistence.model.Source
+import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.sources.viewmodel.SourceListItemViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 
 class SourcesAdapter(
     private val timeDiffCalculator: TimeDiffCalculator,
-    private val sourceClickedListener: (sourceId: Long) -> Unit
+    private val onSourceClickedListener: (sourceId: Long) -> Unit,
+    private val onSourceIsActiveChangedListener: (sourceId: Long, isActive: Boolean) -> Unit
 ) : RecyclerView.Adapter<SourcesAdapter.ViewHolder>(), Observer<List<Source>> {
 
     private var data = emptyList<Source>()
@@ -48,11 +49,12 @@ class SourcesAdapter(
         private lateinit var source: Source
 
         private val viewModel = SourceListItemViewModel(
-            timeDiffCalculator = timeDiffCalculator
+            timeDiffCalculator = timeDiffCalculator,
+            onIsActiveChanged = { onSourceIsActiveChangedListener.invoke(source.id, it) }
         )
 
         init {
-            binding.root.setOnClickListener { sourceClickedListener.invoke(source.id) }
+            binding.root.setOnClickListener { onSourceClickedListener.invoke(source.id) }
         }
 
         fun bind(source: Source) {

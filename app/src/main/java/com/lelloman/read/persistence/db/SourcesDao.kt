@@ -1,9 +1,9 @@
-package com.lelloman.read.persistence
+package com.lelloman.read.persistence.db
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import com.lelloman.read.persistence.model.Source
+import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.utils.Constants.SOURCE_TABLE_NAME
 import io.reactivex.Flowable
 
@@ -24,4 +24,7 @@ interface SourcesDao {
 
     @Query("SELECT * from $SOURCE_TABLE_NAME WHERE id = :sourceId LIMIT 1")
     fun getSource(sourceId: Long): Flowable<Source>
+
+    @Query("UPDATE $SOURCE_TABLE_NAME SET isActive = :isActive WHERE id = :sourceId")
+    fun setSourceIsActive(sourceId: Long, isActive: Boolean)
 }

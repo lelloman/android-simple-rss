@@ -30,7 +30,8 @@ class SourcesListActivity
 
         adapter = SourcesAdapter(
             timeDiffCalculator = timeDiffCalculator,
-            sourceClickedListener = viewModel::onSourceClicked
+            onSourceClickedListener = viewModel::onSourceClicked,
+            onSourceIsActiveChangedListener = viewModel::onSourceIsActiveChanged
         )
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)

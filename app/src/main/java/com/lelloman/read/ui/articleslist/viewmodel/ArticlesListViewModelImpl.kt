@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
-import com.lelloman.read.persistence.model.Article
+import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.ui.articleslist.repository.ArticlesRepository
 import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Scheduler

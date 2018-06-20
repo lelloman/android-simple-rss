@@ -4,8 +4,9 @@ import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.http.HttpClient
-import com.lelloman.read.persistence.ArticlesDao
-import com.lelloman.read.persistence.SourcesDao
+import com.lelloman.read.persistence.db.ArticlesDao
+import com.lelloman.read.persistence.db.SourcesDao
+import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.HtmlParser
 import dagger.Module
 import dagger.Provides
@@ -25,7 +26,8 @@ class FeedModule {
         sourcesDao: SourcesDao,
         articlesDao: ArticlesDao,
         htmlParser: HtmlParser,
-        timeProvider: TimeProvider
+        timeProvider: TimeProvider,
+        appSettings: AppSettings
     ): FeedRefresher = FeedRefresherImpl(
         ioScheduler = ioScheduler,
         newThreadScheduler = newThreadScheduler,
@@ -34,7 +36,8 @@ class FeedModule {
         sourcesDao = sourcesDao,
         articlesDao = articlesDao,
         htmlParser = htmlParser,
-        timeProvider = timeProvider
+        timeProvider = timeProvider,
+        appSettings = appSettings
     )
 
     @Singleton

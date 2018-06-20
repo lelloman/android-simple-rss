@@ -1,7 +1,7 @@
 package com.lelloman.read.core
 
 import com.lelloman.read.R
-import com.lelloman.read.persistence.model.Source
+import com.lelloman.read.persistence.db.model.Source
 
 class TimeDiffCalculator(
     private val timeProvider: TimeProvider,

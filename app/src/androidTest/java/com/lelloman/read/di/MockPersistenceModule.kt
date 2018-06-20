@@ -1,10 +1,10 @@
 package com.lelloman.read.di
 
 import android.content.Context
-import com.lelloman.read.persistence.AppDatabase
-import com.lelloman.read.persistence.ArticlesDao
 import com.lelloman.read.persistence.PersistenceModule
-import com.lelloman.read.persistence.SourcesDao
+import com.lelloman.read.persistence.db.AppDatabase
+import com.lelloman.read.persistence.db.ArticlesDao
+import com.lelloman.read.persistence.db.SourcesDao
 import org.mockito.Mockito.mock
 
 class MockPersistenceModule : PersistenceModule() {
