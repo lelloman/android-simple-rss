@@ -6,14 +6,14 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.read.R
-import com.lelloman.read.core.TimeDiffCalculator
+import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.databinding.ListItemSourceBinding
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.sources.viewmodel.SourceListItemViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 
 class SourcesAdapter(
-    private val timeDiffCalculator: TimeDiffCalculator,
+    private val semanticTimeProvider: SemanticTimeProvider,
     private val onSourceClickedListener: (sourceId: Long) -> Unit,
     private val onSourceIsActiveChangedListener: (sourceId: Long, isActive: Boolean) -> Unit
 ) : RecyclerView.Adapter<SourcesAdapter.ViewHolder>(), Observer<List<Source>> {
@@ -43,13 +43,15 @@ class SourcesAdapter(
         }
     }
 
+    fun getItem(position: Int) = data[position]
+
     inner class ViewHolder(private val binding: ListItemSourceBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var source: Source
 
         private val viewModel = SourceListItemViewModel(
-            timeDiffCalculator = timeDiffCalculator,
+            semanticTimeProvider = semanticTimeProvider,
             onIsActiveChanged = { onSourceIsActiveChangedListener.invoke(source.id, it) }
         )
 

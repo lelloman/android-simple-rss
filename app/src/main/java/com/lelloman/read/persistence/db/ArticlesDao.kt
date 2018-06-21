@@ -12,10 +12,10 @@ import io.reactivex.Flowable
 @Dao
 interface ArticlesDao {
 
-    @Query("SELECT * from $ARTICLE_TABLE_NAME ORDER BY time DESC")
+    @Query("SELECT * FROM $ARTICLE_TABLE_NAME ORDER BY time DESC")
     fun getAll(): Flowable<List<Article>>
 
-    @Query("""SELECT * from $ARTICLE_TABLE_NAME article
+    @Query("""SELECT * FROM $ARTICLE_TABLE_NAME article
                     LEFT JOIN $SOURCE_TABLE_NAME source
                     ON article.sourceId = source.id
                     WHERE source.isActive = 1
@@ -25,6 +25,9 @@ interface ArticlesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg article: Article): List<Long>
 
-    @Query("DELETE from $ARTICLE_TABLE_NAME WHERE sourceId = :sourceId")
+    @Query("DELETE FROM $ARTICLE_TABLE_NAME WHERE sourceId = :sourceId")
     fun deleteArticlesFromSource(sourceId: Long)
+
+    @Query("SELECT * FROM $ARTICLE_TABLE_NAME WhERE sourceId = :sourceId")
+    fun getAllFromSource(sourceId: Long): Flowable<List<Article>>
 }

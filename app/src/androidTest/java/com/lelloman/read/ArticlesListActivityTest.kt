@@ -19,8 +19,8 @@ import com.lelloman.read.testutils.rotateRight
 import com.lelloman.read.testutils.viewIsDisplayed
 import com.lelloman.read.testutils.wait
 import com.lelloman.read.testutils.whenever
-import com.lelloman.read.ui.articleslist.view.ArticlesListActivity
-import com.lelloman.read.ui.articleslist.viewmodel.ArticlesListViewModel
+import com.lelloman.read.ui.articles.view.ArticlesListActivity
+import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.read.utils.SingleLiveData
 import org.junit.After
 import org.junit.Before

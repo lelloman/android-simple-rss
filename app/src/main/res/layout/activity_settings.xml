@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.lelloman.read.ui.settings.viewmodel.SettingsViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/settings_divider"
+            android:orientation="vertical"
+            android:showDividers="middle">
+
+            <com.lelloman.read.ui.settings.view.SettingsItemView
+                style="@style/SettingsItemContainer"
+                app:description="@string/settings_refresh_interval_descr"
+                app:title="@string/settings_refresh_interval_title">
+
+                <Spinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp" />
+
+            </com.lelloman.read.ui.settings.view.SettingsItemView>
+
+            <com.lelloman.read.ui.settings.view.SettingsItemView
+                style="@style/SettingsItemContainer"
+                app:description="@string/settings_articles_images_descr"
+                app:title="@string/settings_articles_images_title">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp" />
+
+            </com.lelloman.read.ui.settings.view.SettingsItemView>
+
+            <com.lelloman.read.ui.settings.view.SettingsItemView
+                style="@style/SettingsItemContainer"
+                app:description="@string/settings_use_metered_networks_descr"
+                app:title="@string/settings_use_metered_networks_title">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp" />
+
+            </com.lelloman.read.ui.settings.view.SettingsItemView>
+
+        </LinearLayout>
+    </ScrollView>
+</layout>

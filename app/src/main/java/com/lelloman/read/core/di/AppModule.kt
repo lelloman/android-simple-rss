@@ -5,12 +5,15 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.ResourceProviderImpl
-import com.lelloman.read.core.TimeDiffCalculator
+import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
+import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.core.navigation.NavigationRouter
+import com.lelloman.read.utils.UrlValidator
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -57,11 +60,19 @@ class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun provideTimeDiffCalculator(
+    fun provideSemanticTimeProvider(
         timeProvider: TimeProvider,
         resourceProvider: ResourceProvider
-    ) = TimeDiffCalculator(
+    ) = SemanticTimeProvider(
         timeProvider = timeProvider,
         resourceProvider = resourceProvider
     )
+
+    @Singleton
+    @Provides
+    fun provideLoggerFactory(): LoggerFactory = LoggerFactoryImpl()
+
+    @Singleton
+    @Provides
+    fun provideUrlValidator() = UrlValidator()
 }

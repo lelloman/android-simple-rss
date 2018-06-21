@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.articleslist.viewmodel
+package com.lelloman.read.ui.articles.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.read.core.ResourceProvider
@@ -11,9 +11,19 @@ abstract class ArticlesListViewModel(
 
     abstract val isLoading: MutableLiveData<Boolean>
 
+    abstract val emptyViewVisible: MutableLiveData<Boolean>
+    abstract val emptyViewDescriptionText: MutableLiveData<String>
+    abstract val emptyViewButtonText: MutableLiveData<String>
+
     abstract val articles: MutableLiveData<List<Article>>
 
     abstract fun refresh()
 
     abstract fun onSourcesClicked()
+
+    abstract fun onEmptyViewButtonClicked()
+
+    abstract fun onArticleClicked(article: Article)
+
+    abstract fun onSettingsClicked()
 }

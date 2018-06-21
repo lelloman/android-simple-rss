@@ -14,8 +14,14 @@ abstract class AddSourceViewModel(
 
     abstract val sourceUrl: ObservableField<String>
     abstract val sourceUrlError: MutableLiveData<String>
+    abstract val sourceUrlDrwable: MutableLiveData<Int>
+
+    abstract val testingUrl: MutableLiveData<Boolean>
+
 
     abstract fun onCloseClicked()
 
     abstract fun onSaveClicked()
+
+    abstract fun onTestUrlClicked()
 }

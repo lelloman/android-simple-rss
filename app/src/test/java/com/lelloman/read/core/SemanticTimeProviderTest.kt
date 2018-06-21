@@ -3,7 +3,7 @@ package com.lelloman.read.core
 import com.lelloman.read.testutils.MockResourceProvider
 import com.nhaarman.mockito_kotlin.mock
 
-class TimeDiffCalculatorTest {
+class SemanticTimeProviderTest {
 
     private var now = 0L
 
@@ -11,7 +11,7 @@ class TimeDiffCalculatorTest {
         on { nowUtcMs() }.thenAnswer { now }
     }
 
-    private val tested = TimeDiffCalculator(
+    private val tested = SemanticTimeProvider(
         timeProvider = timeProvider,
         resourceProvider = MockResourceProvider()
     )

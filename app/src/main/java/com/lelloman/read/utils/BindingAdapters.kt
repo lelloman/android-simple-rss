@@ -5,6 +5,7 @@ import android.net.Uri
 import android.support.design.widget.TextInputLayout
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import com.lelloman.identicon.ClassicIdenticonView
 import com.squareup.picasso.Picasso
@@ -44,5 +45,11 @@ object BindingAdapters {
                 .load(Uri.parse(url))
                 .into(view)
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:editTextDrawable")
+    fun bindEditTextDrawable(editText: EditText, resId: Int) {
+        editText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, resId, 0)
     }
 }

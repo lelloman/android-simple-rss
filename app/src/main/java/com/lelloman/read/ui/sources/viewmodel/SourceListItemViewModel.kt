@@ -1,10 +1,10 @@
 package com.lelloman.read.ui.sources.viewmodel
 
-import com.lelloman.read.core.TimeDiffCalculator
+import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.persistence.db.model.Source
 
 class SourceListItemViewModel(
-    private val timeDiffCalculator: TimeDiffCalculator,
+    private val semanticTimeProvider: SemanticTimeProvider,
     private val onIsActiveChanged: (Boolean) -> Unit
 ) {
 
@@ -27,7 +27,7 @@ class SourceListItemViewModel(
         name = source.name
         url = source.url
         hash = source.immutableHashCode
-        lastFetched = timeDiffCalculator.getSourceLastFetchedString(source)
+        lastFetched = semanticTimeProvider.getSourceLastFetchedString(source)
         isActive = source.isActive
     }
 

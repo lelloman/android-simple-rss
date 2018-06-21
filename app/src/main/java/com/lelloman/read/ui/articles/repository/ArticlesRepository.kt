@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.articleslist.repository
+package com.lelloman.read.ui.articles.repository
 
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.feed.FeedRefresher
@@ -6,6 +6,7 @@ import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.model.Article
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,6 +23,9 @@ class ArticlesRepository @Inject constructor(
         .getAllFromActiveSources()
         .toObservable()
 
+    fun insertArticles(articles: List<Article>): Single<List<Long>> = Single.fromCallable {
+        articlesDao.insertAll(*articles.toTypedArray())
+    }
 
     fun refresh() = feedRefresher.refresh()
 

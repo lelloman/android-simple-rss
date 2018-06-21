@@ -1,11 +1,11 @@
-package com.lelloman.read.ui.articleslist.viewmodel
+package com.lelloman.read.ui.articles.viewmodel
 
 import com.lelloman.read.persistence.db.model.Article
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ArticleViewModel {
+class ArticleListItemViewModel {
 
     private val detailTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
 

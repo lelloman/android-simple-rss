@@ -4,6 +4,8 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.ForeignKey.CASCADE
 import android.arch.persistence.room.PrimaryKey
+import android.os.Parcel
+import android.os.Parcelable
 import com.lelloman.read.core.ModelWithId
 import com.lelloman.read.utils.Constants.ARTICLE_TABLE_NAME
 
@@ -23,4 +25,39 @@ data class Article(
     val time: Long,
     val sourceName: String,
     val sourceId: Long
-) : ModelWithId
+) : ModelWithId, Parcelable {
+
+    constructor(source: Parcel) : this(
+        source.readLong(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readString(),
+        source.readLong(),
+        source.readString(),
+        source.readLong()
+    )
+
+    override fun describeContents() = 0
+
+    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
+        writeLong(id)
+        writeString(title)
+        writeString(subtitle)
+        writeString(content)
+        writeString(link)
+        writeString(imageUrl)
+        writeLong(time)
+        writeString(sourceName)
+        writeLong(sourceId)
+    }
+
+    companion object {
+        @JvmField
+        val CREATOR: Parcelable.Creator<Article> = object : Parcelable.Creator<Article> {
+            override fun createFromParcel(source: Parcel): Article = Article(source)
+            override fun newArray(size: Int): Array<Article?> = arrayOfNulls(size)
+        }
+    }
+}
