@@ -2,14 +2,14 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.read.core.ResourceProvider
-import com.lelloman.read.core.TimeDiffCalculator
+import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.ui.sources.repository.SourcesRepository
 import io.reactivex.Scheduler
 
 class SourceViewModelImpl(
     private val ioScheduler: Scheduler,
     private val uiScheduler: Scheduler,
-    private val timeDiffCalculator: TimeDiffCalculator,
+    private val semanticTimeProvider: SemanticTimeProvider,
     resourceProvider: ResourceProvider,
     sourcesRepository: SourcesRepository
 ) : SourceViewModel(
@@ -37,7 +37,7 @@ class SourceViewModelImpl(
                 .subscribe {
                     sourceName.value = it.name
                     sourceUrl.value = it.url
-                    sourceLastFetched.value = timeDiffCalculator.getSourceLastFetchedString(it)
+                    sourceLastFetched.value = semanticTimeProvider.getSourceLastFetchedString(it)
                 }
         }
     }

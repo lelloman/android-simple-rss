@@ -12,6 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         tools:context=".ui.articles.view.ArticlesListActivity">
 
         <android.support.v4.widget.SwipeRefreshLayout

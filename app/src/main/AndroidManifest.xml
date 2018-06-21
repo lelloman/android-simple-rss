@@ -30,6 +30,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.sources.view.SourceActivity" />
         <activity android:name=".ui.articles.view.ArticleActivity" />
+        <activity
+            android:name=".ui.settings.view.SettingsActivity"
+            android:label="@string/settings" />
 
         <receiver
             android:name=".feed.FeedRefreshBroadcastReceiver"

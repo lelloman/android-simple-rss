@@ -1,7 +1,7 @@
 package com.lelloman.read.core.di
 
 import com.lelloman.read.core.ResourceProvider
-import com.lelloman.read.core.TimeDiffCalculator
+import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
@@ -11,6 +11,8 @@ import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModelImpl
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModelImpl
+import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
+import com.lelloman.read.ui.settings.viewmodel.SettingsViewModelImpl
 import com.lelloman.read.ui.sources.repository.SourcesRepository
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModelImpl
@@ -79,13 +81,13 @@ open class ViewModelModule {
     open fun provideSourceViewModel(
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
-        timeDiffCalculator: TimeDiffCalculator,
+        semanticTimeProvider: SemanticTimeProvider,
         resourceProvider: ResourceProvider,
         sourcesRepository: SourcesRepository
     ): SourceViewModel = SourceViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
-        timeDiffCalculator = timeDiffCalculator,
+        semanticTimeProvider = semanticTimeProvider,
         resourceProvider = resourceProvider,
         sourcesRepository = sourcesRepository
     )
@@ -94,6 +96,13 @@ open class ViewModelModule {
     open fun provideArticleViewModel(
         resourceProvider: ResourceProvider
     ): ArticleViewModel = ArticleViewModelImpl(
+        resourceProvider = resourceProvider
+    )
+
+    @Provides
+    open fun provideSettingsViewModel(
+        resourceProvider: ResourceProvider
+    ): SettingsViewModel = SettingsViewModelImpl(
         resourceProvider = resourceProvider
     )
 }

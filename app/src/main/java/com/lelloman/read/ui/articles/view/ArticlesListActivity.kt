@@ -50,6 +50,10 @@ class ArticlesListActivity :
             viewModel.refresh()
             true
         }
+        R.id.action_settings -> {
+            viewModel.onSettingsClicked()
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 }

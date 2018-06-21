@@ -3,7 +3,7 @@ package com.lelloman.read.core
 import com.lelloman.read.R
 import com.lelloman.read.persistence.db.model.Source
 
-class TimeDiffCalculator(
+class SemanticTimeProvider(
     private val timeProvider: TimeProvider,
     private val resourceProvider: ResourceProvider
 ) {
@@ -11,7 +11,7 @@ class TimeDiffCalculator(
     private val minutesThreshold = (60 * 60) - 1
     private val hoursThreshold = (60 * 60 * 24) - 1
 
-    fun getTimeDiffString(timeUtcMs: Long): String {
+    private fun getTimeDiffString(timeUtcMs: Long): String {
         var delta = (timeProvider.nowUtcMs() - timeUtcMs) / 1000
         if (delta < 0) {
             delta = 0

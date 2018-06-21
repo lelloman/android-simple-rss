@@ -92,4 +92,8 @@ class ArticlesListViewModelImpl(
     override fun onArticleClicked(article: Article) {
         navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, article))
     }
+
+    override fun onSettingsClicked() {
+        navigate(ScreenNavigationEvent(NavigationScreen.SETTINGS))
+    }
 }

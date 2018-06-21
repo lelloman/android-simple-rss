@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModel
 import android.content.Context
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.ResourceProviderImpl
-import com.lelloman.read.core.TimeDiffCalculator
+import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
@@ -60,10 +60,10 @@ class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun provideTimeDiffCalculator(
+    fun provideSemanticTimeProvider(
         timeProvider: TimeProvider,
         resourceProvider: ResourceProvider
-    ) = TimeDiffCalculator(
+    ) = SemanticTimeProvider(
         timeProvider = timeProvider,
         resourceProvider = resourceProvider
     )

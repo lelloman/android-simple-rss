@@ -31,4 +31,12 @@
     <string name="refresh">Refresh</string>
     <string name="source_deleted">%s deleted</string>
     <string name="undo">UNDO</string>
+    <string name="settings">Settings</string>
+
+    <string name="settings_refresh_interval_title">Source refresh interval</string>
+    <string name="settings_refresh_interval_descr">"Time interval after which a feed source will be considered out-dated."</string>
+    <string name="settings_articles_images_title">Articles images</string>
+    <string name="settings_articles_images_descr">Show images in article list screen, disable this option if you want to save network traffic.</string>
+    <string name="settings_use_metered_networks_title">Use metered networks</string>
+    <string name="settings_use_metered_networks_descr">If enabled, metered network can be used to download feeds and images. This option does not apply when opening an article, only for refreshing feed sources.</string>
 </resources>
