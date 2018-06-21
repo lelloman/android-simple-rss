@@ -10,6 +10,7 @@ import android.widget.ImageView
 import com.lelloman.identicon.ClassicIdenticonView
 import com.squareup.picasso.Picasso
 
+
 object BindingAdapters {
 
     @JvmStatic

@@ -9,6 +9,7 @@ import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
+import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.mock
@@ -20,6 +21,7 @@ import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -62,6 +64,7 @@ class FeedRefresherImplTest {
     @Test
     fun `starts loading when refresh is called`() {
         givenSourcesSubject()
+        givenHasDefaultMinRefreshInterval()
         val tester = tested.isLoading.test()
 
         tested.refresh()
@@ -72,6 +75,7 @@ class FeedRefresherImplTest {
     @Test
     fun `does nothing if refresh is called while loading`() {
         givenSourcesSubject()
+        givenHasDefaultMinRefreshInterval()
         val tester = tested.isLoading.test()
         tested.refresh()
         reset(*dependencies)
@@ -86,6 +90,7 @@ class FeedRefresherImplTest {
     fun `stops loading when finish refresh successfully`() {
         val sourcesSubject = givenSourcesSubject()
         val tester = tested.isLoading.test()
+        givenHasDefaultMinRefreshInterval()
 
         tested.refresh()
         sourcesSubject.onNext(emptyList())
@@ -98,6 +103,7 @@ class FeedRefresherImplTest {
     fun `stops loading when finish refresh with error`() {
         val sourcesSubject = givenSourcesSubject()
         val tester = tested.isLoading.test()
+        givenHasDefaultMinRefreshInterval()
 
         tested.refresh()
         sourcesSubject.onError(Exception("meow"))
@@ -150,6 +156,7 @@ class FeedRefresherImplTest {
 
     @Test
     fun `logs error when fetching active sources`() {
+        givenHasDefaultMinRefreshInterval()
         val error = Exception("crasc")
         whenever(sourcesDao.getActiveSources()).thenReturn(Flowable.error(error))
 
@@ -178,8 +185,12 @@ class FeedRefresherImplTest {
         verify(sourcesDao).updateSourceLastFetched(SOURCE_2.id, timeProvider.nowUtcMs())
     }
 
+    private fun givenHasDefaultMinRefreshInterval() {
+        whenever(appSettings.sourceRefreshMinInterval).thenReturn(Observable.just(DEFAULT_MIN_SOURCE_REFRESH_INTERVAL))
+    }
+
     private fun givenHasMinRefreshInterval(sourceRefreshInterval: SourceRefreshInterval) {
-        whenever(appSettings.sourceRefreshMinInterval).thenReturn(sourceRefreshInterval)
+        whenever(appSettings.sourceRefreshMinInterval).thenReturn(Observable.just(sourceRefreshInterval))
     }
 
     private fun givenHasActiveSources(vararg source: Source) {

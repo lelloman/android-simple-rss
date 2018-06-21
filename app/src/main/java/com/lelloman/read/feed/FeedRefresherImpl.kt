@@ -8,8 +8,11 @@ import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.read.persistence.settings.SourceRefreshInterval
 import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.BehaviorSubject
 
 class FeedRefresherImpl(
@@ -41,11 +44,25 @@ class FeedRefresherImpl(
         }
         isLoadingSubject.onNext(true)
 
-        sourcesDao
-            .getActiveSources()
-            .firstOrError()
-            .flatMapObservable { Observable.fromIterable(it) }
-            .filter(::isSourceStale)
+        Single
+            .zip(
+                sourcesDao
+                    .getActiveSources()
+                    .firstOrError(),
+                appSettings
+                    .sourceRefreshMinInterval
+                    .firstOrError(),
+                BiFunction<List<Source>, SourceRefreshInterval, Pair<List<Source>, SourceRefreshInterval>> { sources, minRefreshInterval ->
+                    sources to minRefreshInterval
+                }
+            )
+            .flatMapObservable { (sources, interval) ->
+                Observable.fromIterable(sources.map { it to interval })
+            }
+            .filter { (source, minRefreshInterval) ->
+                timeProvider.nowUtcMs() - source.lastFetched > minRefreshInterval.ms
+            }
+            .map { (source, _) -> source }
             .flatMapMaybe { source ->
                 feedFetcher.fetchFeed(source)
                     .subscribeOn(newThreadScheduler)
@@ -61,7 +78,4 @@ class FeedRefresherImpl(
                 logger.e("Something went wrong in refresh subscription", it)
             })
     }
-
-    private fun isSourceStale(source: Source) =
-        (timeProvider.nowUtcMs() - source.lastFetched) > appSettings.sourceRefreshMinInterval.ms
 }
