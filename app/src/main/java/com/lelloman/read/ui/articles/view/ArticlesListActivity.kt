@@ -32,7 +32,8 @@ class ArticlesListActivity :
         adapter = ArticlesAdapter(
             appSettings = appSettings,
             onArticleClickedListener = viewModel::onArticleClicked,
-            uiScheduler = AndroidSchedulers.mainThread()
+            uiScheduler = AndroidSchedulers.mainThread(),
+            lifecycle = lifecycle
         )
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)

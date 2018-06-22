@@ -1,6 +1,8 @@
 package com.lelloman.read.ui.articles.viewmodel
 
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
+import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.lelloman.read.BR
@@ -13,8 +15,9 @@ import java.util.*
 
 
 class ArticleListItemViewModel(
+    lifeCycle: Lifecycle,
     uiScheduler: Scheduler,
-    private val appSettings: AppSettings
+    appSettings: AppSettings
 ) : LifecycleObserver, BaseObservable() {
 
     private val detailTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
@@ -24,6 +27,7 @@ class ArticleListItemViewModel(
     private var imagesEnabled = false
 
     init {
+        lifeCycle.addObserver(this)
         subscription.add(appSettings
             .articleListImagesEnabled
             .observeOn(uiScheduler)
@@ -81,5 +85,10 @@ class ArticleListItemViewModel(
             imageVisible = false
             imageUrl = null
         }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    fun onDestroy() {
+        subscription.clear()
     }
 }

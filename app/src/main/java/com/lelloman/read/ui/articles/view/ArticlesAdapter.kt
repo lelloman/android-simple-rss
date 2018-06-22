@@ -1,5 +1,6 @@
 package com.lelloman.read.ui.articles.view
 
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
@@ -14,6 +15,7 @@ import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 import io.reactivex.Scheduler
 
 class ArticlesAdapter(
+    private val lifecycle: Lifecycle,
     private val uiScheduler: Scheduler,
     private val onArticleClickedListener: (Article) -> Unit,
     private val appSettings: AppSettings
@@ -49,7 +51,8 @@ class ArticlesAdapter(
 
         private val viewModel = ArticleListItemViewModel(
             appSettings = appSettings,
-            uiScheduler = uiScheduler
+            uiScheduler = uiScheduler,
+            lifeCycle = lifecycle
         )
         private lateinit var article: Article
 
