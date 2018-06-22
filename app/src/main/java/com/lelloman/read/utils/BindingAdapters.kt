@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import com.lelloman.identicon.ClassicIdenticonView
+import com.lelloman.read.R
 import com.squareup.picasso.Picasso
 
 
@@ -44,6 +45,7 @@ object BindingAdapters {
         url?.let {
             Picasso.get()
                 .load(Uri.parse(url))
+                .placeholder(R.drawable.ic_image_24dp)
                 .into(view)
         }
     }

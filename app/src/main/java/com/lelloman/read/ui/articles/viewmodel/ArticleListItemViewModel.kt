@@ -1,13 +1,46 @@
 package com.lelloman.read.ui.articles.viewmodel
 
+import android.arch.lifecycle.LifecycleObserver
+import android.databinding.BaseObservable
+import android.databinding.Bindable
+import com.lelloman.read.BR
 import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.settings.AppSettings
+import io.reactivex.Scheduler
+import io.reactivex.disposables.CompositeDisposable
 import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ArticleListItemViewModel {
+class ArticleListItemViewModel(
+    uiScheduler: Scheduler,
+    private val appSettings: AppSettings
+) : LifecycleObserver, BaseObservable() {
 
     private val detailTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+
+    private val subscription = CompositeDisposable()
+
+    private var imagesEnabled = false
+
+    init {
+        subscription.add(appSettings
+            .articleListImagesEnabled
+            .observeOn(uiScheduler)
+            .subscribe { imagesEnabled ->
+                this.imagesEnabled = imagesEnabled
+                if (imagesEnabled) {
+                    imageVisible = !articleImageUrl.isNullOrBlank()
+                    imageUrl = articleImageUrl
+                } else {
+                    imageVisible = false
+                    imageUrl = null
+                }
+                notifyPropertyChanged(BR.imageUrl)
+                notifyPropertyChanged(BR.imageVisible)
+            }
+        )
+    }
 
     var title = ""
         private set
@@ -21,13 +54,17 @@ class ArticleListItemViewModel {
     var subtitle = ""
         private set
 
+    @Bindable
     var imageVisible = false
         private set
 
-    var subtitleVisible = false
+    @Bindable
+    var imageUrl: String? = null
         private set
 
-    var imageUrl: String? = null
+    private var articleImageUrl: String? = null
+
+    var subtitleVisible = false
         private set
 
     fun bind(article: Article) {
@@ -35,8 +72,14 @@ class ArticleListItemViewModel {
         details = "${detailTimeFormat.format(article.time)} - ${article.sourceName}"
         hash = article.hashCode()
         subtitle = article.subtitle
-        imageVisible = !article.imageUrl.isNullOrBlank()
         subtitleVisible = article.subtitle.isNotEmpty()
-        imageUrl = article.imageUrl
+        articleImageUrl = article.imageUrl
+        if (imagesEnabled) {
+            imageVisible = !articleImageUrl.isNullOrBlank()
+            imageUrl = articleImageUrl
+        } else {
+            imageVisible = false
+            imageUrl = null
+        }
     }
 }
