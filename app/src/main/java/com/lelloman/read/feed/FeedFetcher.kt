@@ -56,8 +56,8 @@ class FeedFetcher(
     )
 
     private fun parsedFeedToArticle(source: Source, parsedFeed: ParsedFeed): Article {
-        val (title, imagesUrl1) = htmlParser.withHtml(parsedFeed.title)
-        val (subtitle, imagesUrl2) = htmlParser.withHtml(parsedFeed.subtitle)
+        val (title, imagesUrl1) = htmlParser.parseTextAndImagesUrls(parsedFeed.title)
+        val (subtitle, imagesUrl2) = htmlParser.parseTextAndImagesUrls(parsedFeed.subtitle)
 
         val imageUrl = when {
             imagesUrl1.isNotEmpty() -> imagesUrl1[0]

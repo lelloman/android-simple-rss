@@ -9,6 +9,7 @@ import com.lelloman.read.databinding.ActivitySettingsBinding
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
 
 class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding>() {
+
     override fun getLayoutId() = R.layout.activity_settings
 
     override fun getViewModelClass() = SettingsViewModel::class.java
@@ -19,6 +20,8 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
+
+        binding.viewModel = viewModel
     }
 
     override fun onSupportNavigateUp(): Boolean {

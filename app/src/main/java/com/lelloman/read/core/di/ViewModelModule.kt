@@ -6,6 +6,7 @@ import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedFetcher
+import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModelImpl
@@ -101,8 +102,16 @@ open class ViewModelModule {
 
     @Provides
     open fun provideSettingsViewModel(
-        resourceProvider: ResourceProvider
+        @IoScheduler ioScheduler: Scheduler,
+        @UiScheduler uiScheduler: Scheduler,
+        resourceProvider: ResourceProvider,
+        appSettings: AppSettings,
+        semanticTimeProvider: SemanticTimeProvider
     ): SettingsViewModel = SettingsViewModelImpl(
-        resourceProvider = resourceProvider
+        ioScheduler = ioScheduler,
+        uiScheduler = uiScheduler,
+        appSettings = appSettings,
+        resourceProvider = resourceProvider,
+        semanticTimeProvider = semanticTimeProvider
     )
 }

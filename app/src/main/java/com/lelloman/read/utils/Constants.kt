@@ -17,7 +17,7 @@ object Constants {
         val DEFAULT_MIN_SOURCE_REFRESH_INTERVAL = SourceRefreshInterval.NEUROTIC
 
         const val KEY_ARTICLE_LIST_IMAGES = "ArticleListImages"
-        const val DEFAULT_ARTICLES_LIST_IMaGES = true
+        const val DEFAULT_ARTICLES_LIST_IMAGES = true
 
         const val KEY_USE_METERED_NETWORK = "UseMeteredNetwork"
         const val DEFAULT_USE_METERED_NETWORK = true

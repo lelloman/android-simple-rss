@@ -79,6 +79,7 @@ dependencies {
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
     testImplementation "org.robolectric:robolectric:$robolectric_version"
     testImplementation "com.google.truth:truth:$truth_version"
+    testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version"
     androidTestImplementation "com.android.support.test:runner:$test_support_version"
@@ -88,4 +89,8 @@ dependencies {
     androidTestImplementation "com.crittercism.dexmaker:dexmaker-mockito:$dexmaker_version"
     androidTestImplementation "com.android.support.test.uiautomator:uiautomator-v18:$uiautomator_version"
     androidTestImplementation "com.android.support.test.espresso:espresso-contrib:$espresso_version"
+}
+task copyTestClasses(type: Copy) {
+    from "build/tmp/kotlin-classes/debug"
+    into "build/intermediates/classes/debug"
 }

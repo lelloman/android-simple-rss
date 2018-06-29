@@ -1,10 +1,18 @@
 package com.lelloman.read.persistence.settings
 
+import io.reactivex.Observable
+
 interface AppSettings {
 
-    var sourceRefreshMinInterval: SourceRefreshInterval
+    val sourceRefreshMinInterval: Observable<SourceRefreshInterval>
 
-    var articleListImages: Boolean
+    val articleListImagesEnabled: Observable<Boolean>
 
-    var useMeteredNetwork: Boolean
+    val useMeteredNetwork: Observable<Boolean>
+
+    fun setSourceRefreshMinInterval(interval: SourceRefreshInterval)
+
+    fun setArticlesListImagesEnabled(enabled: Boolean)
+
+    fun setUseMeteredNetwork(useMeteredNetwork: Boolean)
 }

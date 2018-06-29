@@ -5,7 +5,7 @@ import org.jsoup.nodes.Element
 
 class HtmlParser {
 
-    fun withHtml(text: String): Pair<String, List<String>> {
+    fun parseTextAndImagesUrls(text: String): Pair<String, List<String>> {
         val doc = Jsoup.parse(text)
         val plainText = doc.text()
         val imagesUrls = mutableListOf<String>()

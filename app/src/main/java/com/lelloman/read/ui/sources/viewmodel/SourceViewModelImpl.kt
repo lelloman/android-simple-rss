@@ -10,11 +10,10 @@ class SourceViewModelImpl(
     private val ioScheduler: Scheduler,
     private val uiScheduler: Scheduler,
     private val semanticTimeProvider: SemanticTimeProvider,
-    resourceProvider: ResourceProvider,
-    sourcesRepository: SourcesRepository
+    private val sourcesRepository: SourcesRepository,
+    resourceProvider: ResourceProvider
 ) : SourceViewModel(
-    resourceProvider = resourceProvider,
-    sourcesRepository = sourcesRepository
+    resourceProvider = resourceProvider
 ) {
 
     override val sourceName = MutableLiveData<String>()

@@ -47,8 +47,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_source_name"
-                android:lines="1"
-                android:text="@={viewModel.sourceName}" />
+                android:maxLines="1"
+                android:nextFocusForward="@+id/edit_text_source_url"
+                android:singleLine="true"
+                android:text="@={viewModel.sourceName}">
+
+                <requestFocus />
+            </EditText>
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -67,11 +72,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:enabled="@{!viewModel.testingUrl}"
-                app:editTextDrawable="@{viewModel.sourceUrlDrwable}"
                 android:hint="@string/hint_source_url"
+                android:imeOptions="actionNext"
                 android:inputType="textUri"
-                android:lines="1"
-                android:text="@={viewModel.sourceUrl}" />
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="@={viewModel.sourceUrl}"
+                app:editTextDrawable="@{viewModel.sourceUrlDrwable}" />
         </android.support.design.widget.TextInputLayout>
 
         <Button
@@ -79,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:enabled="@{!viewModel.testingUrl}"
+            android:inputType="textUri"
             android:onClickListener="@{(_) -> viewModel.onTestUrlClicked() }"
             android:text="@string/test_source"
             app:layout_constraintEnd_toEndOf="parent"

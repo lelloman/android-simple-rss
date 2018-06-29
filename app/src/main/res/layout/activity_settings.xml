@@ -25,10 +25,12 @@
                 app:description="@string/settings_refresh_interval_descr"
                 app:title="@string/settings_refresh_interval_title">
 
-                <Spinner
+                <android.support.v7.widget.AppCompatSpinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp" />
+                    android:layout_margin="8dp"
+                    android:entries="@{viewModel.minRefreshIntervals}"
+                    android:selectedItemPosition="@={viewModel.selectedMinRefreshInterval}" />
 
             </com.lelloman.read.ui.settings.view.SettingsItemView>
 
@@ -40,7 +42,9 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp" />
+                    android:layout_margin="8dp"
+                    android:checked="@{viewModel.articlesListImagesSelected}"
+                    android:onCheckedChanged="@{(_, isActive) -> viewModel.onArticleListImagesChanged(isActive) }" />
 
             </com.lelloman.read.ui.settings.view.SettingsItemView>
 
@@ -52,7 +56,9 @@
                 <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp" />
+                    android:layout_margin="8dp"
+                    android:checked="@{viewModel.useMeteredNetworkSelected}"
+                    android:onCheckedChanged="@{(_, isActive) -> viewModel.onUseMeteredNetworkChanged(isActive) }" />
 
             </com.lelloman.read.ui.settings.view.SettingsItemView>
 

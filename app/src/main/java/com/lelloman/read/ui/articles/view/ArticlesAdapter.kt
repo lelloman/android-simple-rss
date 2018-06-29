@@ -1,5 +1,6 @@
 package com.lelloman.read.ui.articles.view
 
+import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
 import android.support.v7.widget.RecyclerView
@@ -8,11 +9,16 @@ import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.databinding.ListItemArticleBinding
 import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticleListItemViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
+import io.reactivex.Scheduler
 
 class ArticlesAdapter(
-    private val onArticleClickedListener: (Article) -> Unit
+    private val lifecycle: Lifecycle,
+    private val uiScheduler: Scheduler,
+    private val onArticleClickedListener: (Article) -> Unit,
+    private val appSettings: AppSettings
 ) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>(), Observer<List<Article>> {
 
     private var data = emptyList<Article>()
@@ -43,7 +49,11 @@ class ArticlesAdapter(
     inner class ViewHolder(private val binding: ListItemArticleBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = ArticleListItemViewModel()
+        private val viewModel = ArticleListItemViewModel(
+            appSettings = appSettings,
+            uiScheduler = uiScheduler,
+            lifeCycle = lifecycle
+        )
         private lateinit var article: Article
 
         init {
