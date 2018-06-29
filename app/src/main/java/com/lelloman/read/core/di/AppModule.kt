@@ -28,14 +28,17 @@ class AppModule(private val application: Application) {
     @Provides
     fun provideContext(): Context = application
 
+    @Singleton
     @Provides
     @IoScheduler
     fun provideIoScheduler(): Scheduler = Schedulers.io()
 
+    @Singleton
     @Provides
     @UiScheduler
     fun provideUiScheduler(): Scheduler = AndroidSchedulers.mainThread()
 
+    @Singleton
     @Provides
     @NewThreadScheduler
     fun provideNewThreadScheduler(): Scheduler = Schedulers.newThread()

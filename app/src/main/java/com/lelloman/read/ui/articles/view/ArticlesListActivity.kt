@@ -5,12 +5,13 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.lelloman.read.R
+import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityArticlesListBinding
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import dagger.android.AndroidInjection
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.Scheduler
 import javax.inject.Inject
 
 class ArticlesListActivity :
@@ -20,6 +21,10 @@ class ArticlesListActivity :
 
     @Inject
     lateinit var appSettings: AppSettings
+
+    @Inject
+    @field:UiScheduler
+    lateinit var uiScheduler: Scheduler
 
     override fun getLayoutId() = R.layout.activity_articles_list
 
@@ -32,7 +37,7 @@ class ArticlesListActivity :
         adapter = ArticlesAdapter(
             appSettings = appSettings,
             onArticleClickedListener = viewModel::onArticleClicked,
-            uiScheduler = AndroidSchedulers.mainThread(),
+            uiScheduler = uiScheduler,
             lifecycle = lifecycle
         )
 
