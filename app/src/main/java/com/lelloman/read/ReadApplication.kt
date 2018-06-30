@@ -3,6 +3,7 @@ package com.lelloman.read
 import android.app.Activity
 import android.app.Application
 import android.content.BroadcastReceiver
+import com.lelloman.read.core.PicassoWrap
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
 import com.lelloman.read.persistence.db.AppDatabase
@@ -30,12 +31,16 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
     @Inject
     lateinit var sourcesDao: SourcesDao
 
+    @Inject
+    lateinit var picassoWrap: PicassoWrap
+
     override fun activityInjector() = dispatchingActivityAndroidInjector
 
     override fun broadcastReceiverInjector() = dispatchingReceiverAndroidInjector
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         inject()
 
         Completable
@@ -79,5 +84,12 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
             .appModule(AppModule(this))
             .build()
             .inject(this)
+    }
+
+    companion object {
+
+        private lateinit var instance: ReadApplication
+
+        fun getPicassoWrap() = instance.picassoWrap
     }
 }

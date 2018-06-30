@@ -1,7 +1,6 @@
 package com.lelloman.read.utils
 
 import android.databinding.BindingAdapter
-import android.net.Uri
 import android.support.design.widget.TextInputLayout
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
@@ -9,7 +8,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import com.lelloman.identicon.ClassicIdenticonView
 import com.lelloman.read.R
-import com.squareup.picasso.Picasso
+import com.lelloman.read.ReadApplication
 
 
 object BindingAdapters {
@@ -43,10 +42,12 @@ object BindingAdapters {
     @BindingAdapter("app:imageUrl")
     fun bindImageurl(view: ImageView, url: String?) {
         url?.let {
-            Picasso.get()
-                .load(Uri.parse(url))
-                .placeholder(R.drawable.ic_image_24dp)
-                .into(view)
+            ReadApplication.getPicassoWrap()
+                .loadUrlIntoImageView(
+                    url = url,
+                    view = view,
+                    placeHolderId = R.drawable.ic_image_24dp
+                )
         }
     }
 
