@@ -4,6 +4,4 @@ import com.lelloman.read.core.ResourceProvider
 
 class ArticleViewModelImpl(
     resourceProvider: ResourceProvider
-) : ArticleViewModel(resourceProvider) {
-
-}
+) : ArticleViewModel(resourceProvider)

@@ -5,6 +5,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.lelloman.read.R
+import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityArticlesListBinding
@@ -26,6 +27,9 @@ class ArticlesListActivity :
     @field:UiScheduler
     lateinit var uiScheduler: Scheduler
 
+    @Inject
+    lateinit var semanticTimeProvider: SemanticTimeProvider
+
     override fun getLayoutId() = R.layout.activity_articles_list
 
     override fun getViewModelClass() = ArticlesListViewModel::class.java
@@ -38,7 +42,8 @@ class ArticlesListActivity :
             appSettings = appSettings,
             onArticleClickedListener = viewModel::onArticleClicked,
             uiScheduler = uiScheduler,
-            lifecycle = lifecycle
+            lifecycle = lifecycle,
+            semanticTimeProvider = semanticTimeProvider
         )
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)

@@ -1,12 +1,12 @@
 package com.lelloman.read.ui.sources.viewmodel
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
 import com.lelloman.read.core.navigation.BackNavigationEvent
 import com.lelloman.read.core.view.ToastEvent
 import com.lelloman.read.feed.FeedFetcher
 import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockLoggerFactory
 import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.test
@@ -22,15 +22,9 @@ import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.SingleSubject
-import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
 
-class AddSourceViewModelImplTest {
-
-    @get:Rule
-    var rule: TestRule = InstantTaskExecutorRule()
+class AddSourceViewModelImplTest : AndroidArchTest() {
 
     private val sourcesRepository: SourcesRepository = mock()
     private val feedFetcher: FeedFetcher = mock()
@@ -38,8 +32,7 @@ class AddSourceViewModelImplTest {
 
     private lateinit var tested: AddSourceViewModelImpl
 
-    @Before
-    fun setUp() {
+    override fun setUp() {
         tested = AddSourceViewModelImpl(
             resourceProvider = MockResourceProvider(),
             sourcesRepository = sourcesRepository,

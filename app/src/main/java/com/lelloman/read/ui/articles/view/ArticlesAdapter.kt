@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.read.R
+import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.databinding.ListItemArticleBinding
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.settings.AppSettings
@@ -18,7 +19,8 @@ class ArticlesAdapter(
     private val lifecycle: Lifecycle,
     private val uiScheduler: Scheduler,
     private val onArticleClickedListener: (Article) -> Unit,
-    private val appSettings: AppSettings
+    private val appSettings: AppSettings,
+    private val semanticTimeProvider: SemanticTimeProvider
 ) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>(), Observer<List<Article>> {
 
     private var data = emptyList<Article>()
@@ -52,7 +54,8 @@ class ArticlesAdapter(
         private val viewModel = ArticleListItemViewModel(
             appSettings = appSettings,
             uiScheduler = uiScheduler,
-            lifeCycle = lifecycle
+            lifecycle = lifecycle,
+            semanticTimeProvider = semanticTimeProvider
         )
         private lateinit var article: Article
 

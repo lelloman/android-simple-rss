@@ -1,6 +1,5 @@
 package com.lelloman.read.ui.sources.viewmodel
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
@@ -13,6 +12,7 @@ import com.lelloman.read.core.view.ViewActionEvent
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.clear
+import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
@@ -31,28 +31,27 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
 
-class SourcesListViewModelImplTest {
-
-    @get:Rule
-    var rule: TestRule = InstantTaskExecutorRule()
+class SourcesListViewModelImplTest : AndroidArchTest() {
 
     private val sourcesRepository: SourcesRepository = mock()
     private val articlesRepository: ArticlesRepository = mock()
     private val resourceProvider = MockResourceProvider()
     private val actionTokenProvider: ActionTokenProvider = mock()
 
-    private val tested = SourcesListViewModelImpl(
-        ioScheduler = trampoline(),
-        uiScheduler = trampoline(),
-        sourcesRepository = sourcesRepository,
-        articlesRepository = articlesRepository,
-        resourceProvider = resourceProvider,
-        actionTokenProvider = actionTokenProvider
-    )
+    private lateinit var tested: SourcesListViewModelImpl
+
+    override fun setUp() {
+        tested = SourcesListViewModelImpl(
+            ioScheduler = trampoline(),
+            uiScheduler = trampoline(),
+            sourcesRepository = sourcesRepository,
+            articlesRepository = articlesRepository,
+            resourceProvider = resourceProvider,
+            actionTokenProvider = actionTokenProvider
+        )
+    }
 
     @Test
     fun `fetches sources`() {

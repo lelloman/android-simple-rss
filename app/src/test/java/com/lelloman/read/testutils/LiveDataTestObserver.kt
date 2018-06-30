@@ -25,5 +25,9 @@ class LiveDataTestObserver<T> : Observer<T> {
         assertThat(values).isEmpty()
     }
 
+    fun assertValuesCount(count: Int) {
+        assertThat(values).hasSize(count)
+    }
+
     fun resetValues() = mutableValues.clear()
 }

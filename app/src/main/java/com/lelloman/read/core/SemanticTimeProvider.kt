@@ -2,14 +2,20 @@ package com.lelloman.read.core
 
 import com.lelloman.read.R
 import com.lelloman.read.persistence.db.model.Source
+import java.text.SimpleDateFormat
+import java.util.*
 
 class SemanticTimeProvider(
     private val timeProvider: TimeProvider,
     private val resourceProvider: ResourceProvider
 ) {
 
+    private val dateTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+
     private val minutesThreshold = (60 * 60) - 1
     private val hoursThreshold = (60 * 60 * 24) - 1
+
+    fun getDateTimeString(time: Long = timeProvider.nowUtcMs()) = dateTimeFormat.format(time)
 
     fun getTimeQuantity(ms: Long): String {
         val totSeconds = ms / 1000

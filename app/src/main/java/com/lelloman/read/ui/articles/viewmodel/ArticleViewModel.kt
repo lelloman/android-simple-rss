@@ -5,6 +5,4 @@ import com.lelloman.read.core.viewmodel.BaseViewModel
 
 abstract class ArticleViewModel(
     resourceProvider: ResourceProvider
-) : BaseViewModel(resourceProvider) {
-
-}
+) : BaseViewModel(resourceProvider)

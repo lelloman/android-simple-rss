@@ -6,28 +6,26 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.lelloman.read.BR
+import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.settings.AppSettings
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class ArticleListItemViewModel(
-    lifeCycle: Lifecycle,
+    lifecycle: Lifecycle,
     uiScheduler: Scheduler,
-    appSettings: AppSettings
+    appSettings: AppSettings,
+    private val semanticTimeProvider: SemanticTimeProvider
 ) : LifecycleObserver, BaseObservable() {
-
-    private val detailTimeFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
 
     private val subscription = CompositeDisposable()
 
     private var imagesEnabled = false
 
     init {
-        lifeCycle.addObserver(this)
+        lifecycle.addObserver(this)
         subscription.add(appSettings
             .articleListImagesEnabled
             .observeOn(uiScheduler)
@@ -73,7 +71,7 @@ class ArticleListItemViewModel(
 
     fun bind(article: Article) {
         title = article.title
-        details = "${detailTimeFormat.format(article.time)} - ${article.sourceName}"
+        details = "${semanticTimeProvider.getDateTimeString(article.time)} - ${article.sourceName}"
         hash = article.hashCode()
         subtitle = article.subtitle
         subtitleVisible = article.subtitle.isNotEmpty()

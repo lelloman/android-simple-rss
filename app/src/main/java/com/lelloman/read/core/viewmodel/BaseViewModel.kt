@@ -24,9 +24,7 @@ abstract class BaseViewModel(
 
     open val viewActionEvents = SingleLiveData<ViewActionEvent>()
 
-    open fun onTokenAction(token: String) {
-
-    }
+    open fun onTokenAction(token: String) = Unit
 
     protected fun makeActionToken() = actionTokenProvider.makeActionToken()
 

@@ -1,10 +1,10 @@
 package com.lelloman.read.ui.sources.viewmodel
 
-import android.arch.core.executor.testing.InstantTaskExecutorRule
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.ui.sources.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -12,15 +12,10 @@ import com.nhaarman.mockito_kotlin.times
 import com.nhaarman.mockito_kotlin.verify
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers.trampoline
-import org.junit.Rule
 import org.junit.Test
-import org.junit.rules.TestRule
 
 
-class SourceViewModelImplTest {
-
-    @get:Rule
-    var rule: TestRule = InstantTaskExecutorRule()
+class SourceViewModelImplTest : AndroidArchTest() {
 
     private val semanticTimeProvider: SemanticTimeProvider = mock {
         on { getSourceLastFetchedString(any()) }.thenReturn(LAST_FETCHED_STRING)
@@ -31,13 +26,17 @@ class SourceViewModelImplTest {
         on { getSource(SOURCE_2.id) }.thenReturn(Flowable.just(SOURCE_2))
     }
 
-    private val tested = SourceViewModelImpl(
-        ioScheduler = trampoline(),
-        uiScheduler = trampoline(),
-        semanticTimeProvider = semanticTimeProvider,
-        sourcesRepository = sourcesRepository,
-        resourceProvider = resourceProvider
-    )
+    private lateinit var tested: SourceViewModelImpl
+
+    override fun setUp() {
+        tested = SourceViewModelImpl(
+            ioScheduler = trampoline(),
+            uiScheduler = trampoline(),
+            semanticTimeProvider = semanticTimeProvider,
+            sourcesRepository = sourcesRepository,
+            resourceProvider = resourceProvider
+        )
+    }
 
     @Test
     fun `all values are empty before loading source id`() {
