@@ -5,6 +5,7 @@ import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.HtmlParser
 import io.reactivex.Maybe
 import io.reactivex.Single
@@ -12,19 +13,26 @@ import io.reactivex.Single
 class FeedFetcher(
     private val httpClient: HttpClient,
     private val feedParser: FeedParser,
-    private val htmlParser: HtmlParser
+    private val htmlParser: HtmlParser,
+    private val meteredConnectionChecker: MeteredConnectionChecker,
+    private val appSettings: AppSettings
 ) {
 
-    fun fetchFeed(source: Source): Maybe<Pair<Source, List<Article>>> = httpClient
-        .request(HttpRequest(source.url))
-        .filter { it.isSuccessful }
-        .flatMap { feedParser.parseFeeds(it.body).toMaybe() }
-        .map {
-            it.map {
-                parsedFeedToArticle(source, it)
-            }
+    fun fetchFeed(source: Source): Maybe<Pair<Source, List<Article>>> =
+        if (!appSettings.useMeteredNetwork.blockingFirst(false) && meteredConnectionChecker.isNetworkMetered()) {
+            Maybe.empty()
+        } else {
+            httpClient
+                .request(HttpRequest(source.url))
+                .filter { it.isSuccessful }
+                .flatMap { feedParser.parseFeeds(it.body).toMaybe() }
+                .map {
+                    it.map {
+                        parsedFeedToArticle(source, it)
+                    }
+                }
+                .map { source to it }
         }
-        .map { source to it }
 
     fun testUrl(url: String): Single<TestResult> = httpClient
         .request(HttpRequest(url))

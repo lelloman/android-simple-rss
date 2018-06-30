@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.lelloman.read.R
 
-class SettingsItemView @JvmOverloads constructor(
+open class SettingsItemView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -17,7 +17,7 @@ class SettingsItemView @JvmOverloads constructor(
     private val textViewDescription by lazy { findViewById<TextView>(R.id.text_view_description) }
 
     init {
-        View.inflate(context, R.layout.view_settings_item, this)
+        View.inflate(context, getLayoutId(), this)
         orientation = VERTICAL
 
         attrs?.let {
@@ -36,4 +36,6 @@ class SettingsItemView @JvmOverloads constructor(
             }
         }
     }
+
+    protected open fun getLayoutId() = R.layout.view_settings_item
 }

@@ -4,4 +4,8 @@
         <attr name="title" format="string" />
         <attr name="description" format="string" />
     </declare-styleable>
+
+    <declare-styleable name="ToggleSettingItemView">
+        <attr name="checked" format="boolean" />
+    </declare-styleable>
 </resources>
