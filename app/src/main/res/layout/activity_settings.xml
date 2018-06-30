@@ -34,33 +34,19 @@
 
             </com.lelloman.read.ui.settings.view.SettingsItemView>
 
-            <com.lelloman.read.ui.settings.view.SettingsItemView
+            <com.lelloman.read.ui.settings.view.ToggleSettingItemView
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_articles_images_descr"
-                app:title="@string/settings_articles_images_title">
+                android:onCheckedChanged="@{(_, isActive) -> viewModel.onArticleListImagesChanged(isActive) }"
+                app:checked="@{viewModel.articlesListImagesSelected}"
+                app:title="@string/settings_articles_images_title" />
 
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:checked="@{viewModel.articlesListImagesSelected}"
-                    android:onCheckedChanged="@{(_, isActive) -> viewModel.onArticleListImagesChanged(isActive) }" />
-
-            </com.lelloman.read.ui.settings.view.SettingsItemView>
-
-            <com.lelloman.read.ui.settings.view.SettingsItemView
+            <com.lelloman.read.ui.settings.view.ToggleSettingItemView
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_use_metered_networks_descr"
-                app:title="@string/settings_use_metered_networks_title">
-
-                <CheckBox
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:checked="@{viewModel.useMeteredNetworkSelected}"
-                    android:onCheckedChanged="@{(_, isActive) -> viewModel.onUseMeteredNetworkChanged(isActive) }" />
-
-            </com.lelloman.read.ui.settings.view.SettingsItemView>
+                android:checked="@{viewModel.useMeteredNetworkSelected}"
+                android:onCheckedChanged="@{(_, isActive) -> viewModel.onUseMeteredNetworkChanged(isActive) }"
+                app:title="@string/settings_use_metered_networks_title" />
 
         </LinearLayout>
     </ScrollView>
