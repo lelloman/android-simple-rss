@@ -30,6 +30,7 @@ class ArticlesListViewModelImpl(
     override val isLoading: MutableLiveData<Boolean> by LazyLiveData {
         subscription {
             articlesRepository.loading
+                .distinctUntilChanged()
                 .subscribeOn(ioScheduler)
                 .subscribe { isLoading.postValue(it) }
         }
@@ -70,10 +71,10 @@ class ArticlesListViewModelImpl(
                 }
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
-                .doOnNext {
+                .subscribe {
+                    articles.value = it
                     emptyViewVisible.value = it.isEmpty()
                 }
-                .subscribe { articles.value = it }
         }
     }
 

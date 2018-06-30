@@ -97,7 +97,6 @@ class AddSourceViewModelImpl(
         if (hasValidName && hasValidUrl) {
             val url = urlValidator.maybePrependProtocol(inputUrl)
             sourceUrl.set(url)
-            navigateBack()
             sourceNameError.value = ""
             sourceUrlError.value = ""
             sourcesRepository
