@@ -5,12 +5,11 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
 import com.lelloman.read.core.navigation.BackNavigationEvent
 import com.lelloman.read.core.view.ToastEvent
-import com.lelloman.read.core.view.ViewActionEvent
 import com.lelloman.read.feed.FeedFetcher
 import com.lelloman.read.persistence.db.model.Source
-import com.lelloman.read.testutils.LiveDataTestObserver
 import com.lelloman.read.testutils.MockLoggerFactory
 import com.lelloman.read.testutils.MockResourceProvider
+import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.sources.repository.SourcesRepository
 import com.lelloman.read.utils.UrlValidator
 import com.nhaarman.mockito_kotlin.any
@@ -96,8 +95,7 @@ class AddSourceViewModelImplTest {
 
     @Test
     fun `if feed fetcher throws an error shows toast`() {
-        val actionEventsObserver = LiveDataTestObserver<ViewActionEvent>()
-        tested.viewActionEvents.observeForever(actionEventsObserver)
+        val actionEventsObserver = tested.viewActionEvents.test()
         whenever(feedFetcher.testUrl(any())).thenReturn(Single.error<FeedFetcher.TestResult>(Exception()))
         givenHasValidUrlSet()
 
@@ -179,8 +177,7 @@ class AddSourceViewModelImplTest {
 
     @Test
     fun `navigates back when click close`() {
-        val viewActionEventObserver = LiveDataTestObserver<ViewActionEvent>()
-        tested.viewActionEvents.observeForever(viewActionEventObserver)
+        val viewActionEventObserver = tested.viewActionEvents.test()
 
         tested.onCloseClicked()
 
@@ -228,8 +225,7 @@ class AddSourceViewModelImplTest {
 
     @Test
     fun `insert source into repository and navigates back when click on save and both name and url are valid`() {
-        val viewActionEventObserver = LiveDataTestObserver<ViewActionEvent>()
-        tested.viewActionEvents.observeForever(viewActionEventObserver)
+        val viewActionEventObserver = tested.viewActionEvents.test()
         val originalUrl = "not the url to be saved"
         val url = "the url to be saved"
         val name = "the name of the source"
@@ -268,8 +264,7 @@ class AddSourceViewModelImplTest {
 
     @Test
     fun `does not navigate back and shows toast if insert source fails`() {
-        val viewActionEventObserver = LiveDataTestObserver<ViewActionEvent>()
-        tested.viewActionEvents.observeForever(viewActionEventObserver)
+        val viewActionEventObserver = tested.viewActionEvents.test()
         tested.sourceName.set("the name")
         givenHasValidUrlSet()
         whenever(sourcesRepository.insertSource(any())).thenReturn(Single.error(Exception()))

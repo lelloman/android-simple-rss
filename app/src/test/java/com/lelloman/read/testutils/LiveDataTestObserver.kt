@@ -1,7 +1,12 @@
 package com.lelloman.read.testutils
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
+
+fun <T> LiveData<T>.test() = LiveDataTestObserver<T>().apply {
+    this@test.observeForever(this)
+}
 
 class LiveDataTestObserver<T> : Observer<T> {
 
@@ -19,4 +24,6 @@ class LiveDataTestObserver<T> : Observer<T> {
     fun assertNoValues() {
         assertThat(values).isEmpty()
     }
+
+    fun resetValues() = mutableValues.clear()
 }

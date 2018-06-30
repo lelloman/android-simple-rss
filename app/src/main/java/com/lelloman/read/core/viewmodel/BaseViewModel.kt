@@ -4,6 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.widget.Toast
+import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.BackNavigationEvent
 import com.lelloman.read.core.navigation.NavigationEvent
@@ -13,10 +14,10 @@ import com.lelloman.read.core.view.ViewActionEvent
 import com.lelloman.read.utils.SingleLiveData
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import java.util.*
 
 abstract class BaseViewModel(
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val actionTokenProvider: ActionTokenProvider = ActionTokenProvider()
 ) : ViewModel() {
 
     private val subscriptions = CompositeDisposable()
@@ -27,7 +28,7 @@ abstract class BaseViewModel(
 
     }
 
-    protected fun makeActionToken() = UUID.randomUUID().toString()
+    protected fun makeActionToken() = actionTokenProvider.makeActionToken()
 
     protected fun getString(@StringRes stringId: Int, vararg args: Any = emptyArray()) =
         resourceProvider.getString(stringId, *args)

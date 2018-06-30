@@ -7,7 +7,7 @@ class MockResourceProvider(
 ) : ResourceProvider {
 
     override fun getString(stringId: Int, vararg args: Any) =
-        "$stringId${args.joinToString(separator = "")}"
+        "$stringId${args.joinToString(separator = "") { ":$it" }}"
 
     override fun getStringArray(arrayId: Int) = Array(stringArrayLength) { "$it" }
 }

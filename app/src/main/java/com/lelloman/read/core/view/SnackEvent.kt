@@ -2,7 +2,7 @@ package com.lelloman.read.core.view
 
 import android.support.design.widget.Snackbar
 
-class SnackEvent(
+data class SnackEvent(
     val message: String,
     val actionLabel: String? = null,
     val actionToken: String? = null,

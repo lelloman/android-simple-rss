@@ -3,22 +3,31 @@ package com.lelloman.read.ui.sources.viewmodel
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.read.R
+import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.view.SnackEvent
+import com.lelloman.read.core.view.ToastEvent
 import com.lelloman.read.core.view.ViewActionEvent
+import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.clear
 import com.lelloman.read.testutils.MockResourceProvider
+import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
+import com.lelloman.read.ui.sources.repository.DeletedSource
 import com.lelloman.read.ui.sources.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argWhere
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -34,13 +43,15 @@ class SourcesListViewModelImplTest {
     private val sourcesRepository: SourcesRepository = mock()
     private val articlesRepository: ArticlesRepository = mock()
     private val resourceProvider = MockResourceProvider()
+    private val actionTokenProvider: ActionTokenProvider = mock()
 
     private val tested = SourcesListViewModelImpl(
         ioScheduler = trampoline(),
         uiScheduler = trampoline(),
         sourcesRepository = sourcesRepository,
         articlesRepository = articlesRepository,
-        resourceProvider = resourceProvider
+        resourceProvider = resourceProvider,
+        actionTokenProvider = actionTokenProvider
     )
 
     @Test
@@ -93,6 +104,145 @@ class SourcesListViewModelImplTest {
         tested.onSourceClicked(INACTIVE_SOURCE.id)
 
         verify(sourcesRepository).setSourceIsActive(INACTIVE_SOURCE.id, true)
+    }
+
+    @Test
+    fun `deletes source and shows snack from repository on source swiped`() {
+        val source = SOURCES[0]
+        val viewActions = tested.viewActionEvents.test()
+        whenever(sourcesRepository.deleteSource(any())).thenReturn(Single.just(mock()))
+        val token = "poppopopopopopop"
+        givenNextActionToken(token)
+
+        tested.onSourceSwiped(source)
+
+        verify(sourcesRepository).deleteSource(source)
+        viewActions.assertValues(SnackEvent(
+            message = "${R.string.source_deleted}:${source.name}",
+            actionLabel = "${R.string.undo}",
+            actionToken = token
+        ))
+    }
+
+    @Test
+    fun `shows toast if source deletion fails`() {
+        whenever(sourcesRepository.deleteSource(any())).thenReturn(Single.error(Exception()))
+        val viewActions = tested.viewActionEvents.test()
+
+        tested.onSourceSwiped(mock())
+
+        viewActions.assertValues(ToastEvent(message = "${R.string.something_went_wrong}"))
+    }
+
+    @Test
+    fun `re-insert source and articles on token action`() {
+        val recreatedSourceId = 2394870623
+        val deletedSource = DeletedSource(
+            source = SOURCES[0],
+            articles = listOf(
+                Article(
+                    id = 1L,
+                    title = "article 1",
+                    subtitle = "subtitle 1",
+                    content = "content 1",
+                    link = "link 1",
+                    imageUrl = "img url 1",
+                    time = 1L,
+                    sourceName = "source 1",
+                    sourceId = 0
+                ),
+                Article(
+                    id = 2L,
+                    title = "article 2",
+                    subtitle = "subtitle 2",
+                    content = "content 2",
+                    link = "link 2",
+                    imageUrl = "img url 2",
+                    time = 2L,
+                    sourceName = "source 2",
+                    sourceId = 0
+                )
+            )
+        )
+        givenCanDeleteSource(deletedSource)
+        val actionToken = "peppereppeppe"
+        givenNextActionToken(actionToken)
+        givenCanInsertSource(recreatedSourceId)
+        tested.onSourceSwiped(deletedSource.source)
+
+        tested.onTokenAction(actionToken)
+
+        verify(sourcesRepository).insertSource(deletedSource.source)
+        verify(articlesRepository).insertArticles(
+            deletedSource.articles.map {
+                it.copy(sourceId = recreatedSourceId)
+            }
+        )
+    }
+
+    @Test
+    fun `does nothing on non existing token action`() {
+        tested.onTokenAction("badum tssss")
+
+        verifyZeroInteractions(sourcesRepository, articlesRepository)
+    }
+
+    @Test
+    fun `shows toast if insert source fails`() {
+        val viewActions = tested.viewActionEvents.test()
+        val token = "asdomar"
+        val source = SOURCES[0]
+        givenCanDeleteSource(DeletedSource(source = source, articles = emptyList()))
+        givenNextActionToken(token)
+        givenCanInsertArticles()
+        whenever(sourcesRepository.insertSource(any())).thenReturn(Single.error(Exception()))
+        givenCanInsertArticles()
+        tested.onSourceSwiped(source)
+        viewActions.resetValues()
+
+        tested.onTokenAction(token)
+
+        viewActions.assertValues(
+            ToastEvent("${R.string.something_went_wrong}")
+        )
+    }
+
+    @Test
+    fun `shows toast if insert articles failes`() {
+        val viewActions = tested.viewActionEvents.test()
+        val token = "asdomar"
+        val source = SOURCES[0]
+        givenCanDeleteSource(DeletedSource(source = source, articles = emptyList()))
+        givenNextActionToken(token)
+        givenCanInsertSource(123)
+        whenever(articlesRepository.insertArticles(any())).thenReturn(Single.error(Exception()))
+        tested.onSourceSwiped(source)
+        viewActions.resetValues()
+
+        tested.onTokenAction(token)
+
+        viewActions.assertValues(
+            ToastEvent("${R.string.something_went_wrong}")
+        )
+    }
+
+    private fun givenCanInsertArticles() {
+        whenever(articlesRepository.insertArticles(any())).thenAnswer {
+            val nArticles = (it.arguments[0] as List<Article>).size
+            Single.just(Array(nArticles) { it.toLong() })
+        }
+    }
+
+    private fun givenCanDeleteSource(deletedSource: DeletedSource = mock()) {
+        whenever(sourcesRepository.deleteSource(any())).thenReturn(Single.just(deletedSource))
+    }
+
+    private fun givenCanInsertSource(newId: Long) {
+        whenever(sourcesRepository.insertSource(any())).thenReturn(Single.just(newId))
+    }
+
+    private fun givenNextActionToken(actionToken: String) {
+        whenever(actionTokenProvider.makeActionToken()).thenReturn(actionToken)
     }
 
     private fun givenSourcesSubject(): Subject<List<Source>> {
