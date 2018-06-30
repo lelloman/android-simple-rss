@@ -47,10 +47,14 @@ class FeedModule {
     fun provideFeedFetcher(
         httpClient: HttpClient,
         feedParser: FeedParser,
-        htmlParser: HtmlParser
+        htmlParser: HtmlParser,
+        appSettings: AppSettings,
+        meteredConnectionChecker: MeteredConnectionChecker
     ) = FeedFetcher(
         httpClient = httpClient,
         feedParser = feedParser,
-        htmlParser = htmlParser
+        htmlParser = htmlParser,
+        appSettings = appSettings,
+        meteredConnectionChecker = meteredConnectionChecker
     )
 }
