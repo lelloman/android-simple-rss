@@ -4,8 +4,10 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.dummyArticle
@@ -26,6 +28,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
     private val articlesRepository: ArticlesRepository = mock()
     private val sourcesRepository: SourcesRepository = mock()
     private val resourceProvider = MockResourceProvider()
+    private val appSettings: AppSettings = mock()
 
     private lateinit var tested: ArticlesListViewModelImpl
 
@@ -35,7 +38,8 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             uiScheduler = trampoline(),
             articlesRepository = articlesRepository,
             sourcesRepository = sourcesRepository,
-            resourceProvider = resourceProvider
+            resourceProvider = resourceProvider,
+            appSettings = appSettings
         )
     }
 
@@ -63,7 +67,8 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
     }
 
     @Test
-    fun `navigates to article screen when article is clicked`() {
+    fun `navigates to article screen when article is clicked and open in app setting is true`() {
+        givenOpenArticleInAppSettingEnabled()
         val viewActions = tested.viewActionEvents.test()
         val article: Article = mock()
 
@@ -78,6 +83,17 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
                 assertThat(targetClass).isEqualTo(NavigationScreen.ARTICLE)
             }
         }
+    }
+
+    @Test
+    fun `navigates to view intent when article is clicked and open in app setting is false`() {
+        val link = "asdasd"
+        givenOpenArticleInAppSettingDisabled()
+        val viewActions = tested.viewActionEvents.test()
+        val article = dummyArticle().copy(link = link)
+
+        tested.onArticleClicked(article)
+        viewActions.assertValues(ViewIntentNavigationEvent(link))
     }
 
     @Test
@@ -207,6 +223,14 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             isActive = true
         )
         whenever(sourcesRepository.fetchSources()).thenReturn(Observable.just(listOf(source)))
+    }
+
+    private fun givenOpenArticleInAppSettingDisabled() {
+        whenever(appSettings.openArticlesInApp).thenReturn(Observable.just(false))
+    }
+
+    private fun givenOpenArticleInAppSettingEnabled() {
+        whenever(appSettings.openArticlesInApp).thenReturn(Observable.just(true))
     }
 
     private fun givenNoActiveSources() {

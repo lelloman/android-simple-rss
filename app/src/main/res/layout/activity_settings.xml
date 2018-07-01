@@ -48,6 +48,13 @@
                 android:onCheckedChanged="@{(_, isActive) -> viewModel.onUseMeteredNetworkChanged(isActive) }"
                 app:title="@string/settings_use_metered_networks_title" />
 
+            <com.lelloman.read.ui.settings.view.ToggleSettingItemView
+                style="@style/SettingsItemContainer"
+                android:checked="@{viewModel.openArticlesInAppSelected}"
+                android:onCheckedChanged="@{(_, isActive) -> viewModel.onOpenArticlesInAppChanged(isActive) }"
+                app:description="@string/settings_opens_articles_in_app_descr"
+                app:title="@string/settings_opens_articles_in_app_title" />
+
         </LinearLayout>
     </ScrollView>
 </layout>

@@ -66,6 +66,14 @@ class SettingsViewModelImpl(
         }
     }
 
+    override val openArticlesInAppSelected: MutableLiveData<Boolean> by LazyLiveData {
+        subscription {
+            appSettings
+                .openArticlesInApp
+                .subscribe { openArticlesInAppSelected.value = it }
+        }
+    }
+
     override fun onSourceRefreshMinIntervalSelected(interval: SourceRefreshInterval) {
         subscription {
             appSettings
@@ -81,4 +89,7 @@ class SettingsViewModelImpl(
 
     override fun onUseMeteredNetworkChanged(isActive: Boolean) =
         appSettings.setUseMeteredNetwork(isActive)
+
+    override fun onOpenArticlesInAppChanged(isActive: Boolean) =
+        appSettings.setOpenArticlesInApp(isActive)
 }

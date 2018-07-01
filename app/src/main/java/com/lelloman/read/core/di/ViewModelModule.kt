@@ -35,13 +35,15 @@ open class ViewModelModule {
         @UiScheduler uiScheduler: Scheduler,
         articlesRepository: ArticlesRepository,
         resourceProvider: ResourceProvider,
-        sourcesRepository: SourcesRepository
+        sourcesRepository: SourcesRepository,
+        appSettings: AppSettings
     ): ArticlesListViewModel = ArticlesListViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         articlesRepository = articlesRepository,
         resourceProvider = resourceProvider,
-        sourcesRepository = sourcesRepository
+        sourcesRepository = sourcesRepository,
+        appSettings = appSettings
     )
 
     @Provides

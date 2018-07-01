@@ -10,9 +10,13 @@ interface AppSettings {
 
     val useMeteredNetwork: Observable<Boolean>
 
+    val openArticlesInApp: Observable<Boolean>
+
     fun setSourceRefreshMinInterval(interval: SourceRefreshInterval)
 
     fun setArticlesListImagesEnabled(enabled: Boolean)
 
     fun setUseMeteredNetwork(useMeteredNetwork: Boolean)
+
+    fun setOpenArticlesInApp(openInApp: Boolean)
 }

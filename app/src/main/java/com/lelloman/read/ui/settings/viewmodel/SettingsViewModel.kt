@@ -17,9 +17,13 @@ abstract class SettingsViewModel(
 
     abstract val useMeteredNetworkSelected: MutableLiveData<Boolean>
 
+    abstract val openArticlesInAppSelected: MutableLiveData<Boolean>
+
     abstract fun onSourceRefreshMinIntervalSelected(interval: SourceRefreshInterval)
 
     abstract fun onArticleListImagesChanged(isActive: Boolean)
 
     abstract fun onUseMeteredNetworkChanged(isActive: Boolean)
+
+    abstract fun onOpenArticlesInAppChanged(isActive: Boolean)
 }

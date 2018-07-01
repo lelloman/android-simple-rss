@@ -5,8 +5,10 @@ import com.lelloman.read.R
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
 import com.lelloman.read.ui.sources.repository.SourcesRepository
 import com.lelloman.read.utils.LazyLiveData
@@ -18,6 +20,7 @@ class ArticlesListViewModelImpl(
     private val uiScheduler: Scheduler,
     private val articlesRepository: ArticlesRepository,
     private val sourcesRepository: SourcesRepository,
+    private val appSettings: AppSettings,
     resourceProvider: ResourceProvider
 ) : ArticlesListViewModel(resourceProvider) {
 
@@ -91,7 +94,11 @@ class ArticlesListViewModelImpl(
     }
 
     override fun onArticleClicked(article: Article) {
-        navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, article))
+        if (appSettings.openArticlesInApp.blockingFirst()) {
+            navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, article))
+        } else {
+            navigate(ViewIntentNavigationEvent(article.link))
+        }
     }
 
     override fun onSettingsClicked() {

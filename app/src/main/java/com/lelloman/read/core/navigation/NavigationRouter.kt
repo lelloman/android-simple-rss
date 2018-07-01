@@ -1,12 +1,19 @@
 package com.lelloman.read.core.navigation
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 
 class NavigationRouter{
 
     fun onNavigationEvent(activity: Activity, navigationEvent: NavigationEvent) = when(navigationEvent){
         is ScreenNavigationEvent -> navigateToActivity(activity, navigationEvent)
         is BackNavigationEvent -> activity.onBackPressed()
+        is ViewIntentNavigationEvent -> {
+            val intent = Intent(Intent.ACTION_VIEW)
+                .setData(Uri.parse(navigationEvent.url))
+            activity.startActivity(intent)
+        }
         else -> {}
     }
 
