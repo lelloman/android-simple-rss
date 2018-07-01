@@ -21,6 +21,9 @@ object Constants {
 
         const val KEY_USE_METERED_NETWORK = "UseMeteredNetwork"
         const val DEFAULT_USE_METERED_NETWORK = true
+
+        const val KEY_OPEN_ARTICLES_IN_APP = "OpenArticlesInApp"
+        const val DEFAULT_OPEN_ARTICLES_IN_APP = false
     }
 
 }

@@ -3,9 +3,11 @@ package com.lelloman.read.persistence.settings
 import android.content.Context
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_OPEN_ARTICLES_IN_APP
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_USE_METERED_NETWORK
 import com.lelloman.read.utils.Constants.AppSettings.KEY_ARTICLE_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.KEY_MIN_SOURCE_REFRESH_INTERVAL
+import com.lelloman.read.utils.Constants.AppSettings.KEY_OPEN_ARTICLES_IN_APP
 import com.lelloman.read.utils.Constants.AppSettings.KEY_USE_METERED_NETWORK
 import com.lelloman.read.utils.Constants.AppSettings.SHARED_PREFS_NAME
 import io.reactivex.Observable
@@ -24,6 +26,8 @@ class AppSettingsImpl(
 
     private val useMeteredNetworkSubject: Subject<Boolean> = BehaviorSubject.create()
 
+    private val openArticlesInAppSubject: Subject<Boolean> = BehaviorSubject.create()
+
     override val sourceRefreshMinInterval: Observable<SourceRefreshInterval> =
         sourceRefreshMinIntervalSubject.hide()
 
@@ -32,6 +36,9 @@ class AppSettingsImpl(
 
     override val useMeteredNetwork: Observable<Boolean> =
         useMeteredNetworkSubject.hide()
+
+    override val openArticlesInApp: Observable<Boolean> =
+        openArticlesInAppSubject.hide()
 
     init {
         sourceRefreshMinIntervalSubject.onNext(
@@ -44,6 +51,9 @@ class AppSettingsImpl(
         )
         useMeteredNetworkSubject.onNext(
             prefs.getBoolean(KEY_USE_METERED_NETWORK, DEFAULT_USE_METERED_NETWORK)
+        )
+        openArticlesInAppSubject.onNext(
+            prefs.getBoolean(KEY_OPEN_ARTICLES_IN_APP, DEFAULT_OPEN_ARTICLES_IN_APP)
         )
     }
 
@@ -64,4 +74,10 @@ class AppSettingsImpl(
         .putBoolean(KEY_USE_METERED_NETWORK, useMeteredNetwork)
         .apply()
         .also { useMeteredNetworkSubject.onNext(useMeteredNetwork) }
+
+    override fun setOpenArticlesInApp(openInApp: Boolean) = prefs
+        .edit()
+        .putBoolean(KEY_OPEN_ARTICLES_IN_APP, openInApp)
+        .apply()
+        .also { openArticlesInAppSubject.onNext(openInApp) }
 }
