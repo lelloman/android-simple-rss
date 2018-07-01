@@ -1,7 +1,7 @@
 # android-read
 TODO:
 
-- add option to open article in webview or choose external app
+- <s>add option to open article in webview or choose external app</s>
 - add option to choose which external app is used to open articles
 - <s>fix settings checkbox ugliness</s>
 - add refresher background job
