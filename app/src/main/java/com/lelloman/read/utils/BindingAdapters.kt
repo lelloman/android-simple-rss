@@ -1,6 +1,7 @@
 package com.lelloman.read.utils
 
 import android.databinding.BindingAdapter
+import android.net.Uri
 import android.support.design.widget.TextInputLayout
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
@@ -44,7 +45,7 @@ object BindingAdapters {
         url?.let {
             ReadApplication.getPicassoWrap()
                 .loadUrlIntoImageView(
-                    url = url,
+                    uri = Uri.parse(url),
                     view = view,
                     placeHolderId = R.drawable.ic_image_24dp
                 )

@@ -7,22 +7,25 @@ import com.lelloman.read.feed.MeteredConnectionChecker
 import com.lelloman.read.persistence.settings.AppSettings
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
-import javax.inject.Inject
+import com.squareup.picasso.RequestCreator
 
-class PicassoWrap @Inject constructor(
+class PicassoWrap(
     private val appSettings: AppSettings,
-    private val meteredConnectionChecker: MeteredConnectionChecker
+    private val meteredConnectionChecker: MeteredConnectionChecker,
+    private val requestCreatorProvider: (uri: Uri) -> RequestCreator = {
+        Picasso.get()
+            .load(it)
+    }
 ) {
 
     fun loadUrlIntoImageView(
-        url: String,
+        uri: Uri,
         view: ImageView,
         @DrawableRes placeHolderId: Int? = null
     ) {
         val canUseNetwork = appSettings.useMeteredNetwork.blockingFirst() || !meteredConnectionChecker.isNetworkMetered()
 
-        var requestCreator = Picasso.get()
-            .load(Uri.parse(url))
+        var requestCreator = requestCreatorProvider.invoke(uri)
 
         placeHolderId?.let {
             requestCreator.placeholder(it)

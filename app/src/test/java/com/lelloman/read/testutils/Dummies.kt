@@ -1,6 +1,7 @@
 package com.lelloman.read.testutils
 
 import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.db.model.Source
 
 fun dummyArticle(index: Int = 1) = Article(
     id = index.toLong(),
@@ -12,4 +13,12 @@ fun dummyArticle(index: Int = 1) = Article(
     time = index.toLong(),
     sourceName = "source 1",
     sourceId = index.toLong()
+)
+
+fun dummySource(index: Int = 1) = Source(
+    id = index.toLong(),
+    name = "source $index",
+    url = "url $index",
+    lastFetched = 0L,
+    isActive = true
 )
