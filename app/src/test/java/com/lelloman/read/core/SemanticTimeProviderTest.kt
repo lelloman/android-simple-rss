@@ -20,7 +20,9 @@ class SemanticTimeProviderTest {
 
     val tested = SemanticTimeProvider(
         timeProvider = timeProvider,
-        resourceProvider = MockResourceProvider(),
+        resourceProvider = MockResourceProvider().apply {
+            registerStringArray(R.array.time_quantities, TIME_QUANTITIES)
+        },
         givenTimeZone = TimeZone.getTimeZone("UTC")
     )
 
@@ -122,32 +124,63 @@ class SemanticTimeProviderTest {
     }
 
     @Test
-    fun `returns seconds only quantity`(){
-        TODO("implement me")
+    fun `returns seconds only quantity`() {
+        val quantity = tested.getTimeQuantity(30_000)
+
+        assertThat(quantity).isEqualTo(SEC.format(30))
     }
 
     @Test
-    fun `returns seconds and minutes quantity`(){
-        TODO("implement me")
+    fun `returns seconds and minutes quantity`() {
+        val expected = "${SEC.format(30)} ${MIN.format(5)}"
+
+        val quantity = tested.getTimeQuantity(30_000 + 5 * 60_000)
+
+        assertThat(quantity).isEqualTo(expected)
     }
 
     @Test
-    fun `returns seconds minutes and hours quantity`(){
-        TODO("implement me")
+    fun `returns seconds minutes and hours quantity`() {
+        val expected = "${SEC.format(59)} ${MIN.format(59)} ${HOURS.format(3)}"
+
+        val quantity = tested.getTimeQuantity(59_000 + 59 * 60_000 + 3 * 60 * 60_000)
+
+        assertThat(quantity).isEqualTo(expected)
     }
 
     @Test
-    fun `returns seconds minutes hours and days quantity`(){
-        TODO("implement me")
+    fun `returns seconds minutes hours and days quantity`() {
+        val expected = "${SEC.format(59)} ${MIN.format(59)} ${HOURS.format(23)} ${DAYS.format(2)}"
+
+        val quantity = tested.getTimeQuantity(59_000 + 59 * 60_000 + 23 * 60 * 60_000 + 2 * 24 * 60 * 60_000)
+
+        assertThat(quantity).isEqualTo(expected)
     }
 
     @Test
-    fun `returns seconds and days quantity`(){
-        TODO("implement me")
+    fun `returns seconds and days quantity`() {
+        val expected = "${SEC.format(59)} ${DAYS.format(2)}"
+
+        val quantity = tested.getTimeQuantity(59_000 + 2 * 24 * 60 * 60_000L)
+
+        assertThat(quantity).isEqualTo(expected)
     }
 
     @Test
-    fun `returns minutes and hours quantity`(){
-        TODO("implement me")
+    fun `returns minutes and hours quantity`() {
+        val expected = "${MIN.format(59)} ${HOURS.format(1)}"
+
+        val quantity = tested.getTimeQuantity(59 * 60_000L + 1 * 60 * 60_000L)
+
+        assertThat(quantity).isEqualTo(expected)
+    }
+
+    private companion object {
+        const val SEC = "%ss"
+        const val MIN = "%sm"
+        const val HOURS = "%sh"
+        const val DAYS = "%sd"
+
+        val TIME_QUANTITIES = arrayOf(SEC, MIN, HOURS, DAYS)
     }
 }
