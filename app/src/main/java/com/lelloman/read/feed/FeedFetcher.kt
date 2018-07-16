@@ -1,12 +1,15 @@
 package com.lelloman.read.feed
 
+import com.lelloman.read.core.MeteredConnectionChecker
+import com.lelloman.read.feed.exception.InvalidFeedTagException
+import com.lelloman.read.feed.exception.MalformedXmlException
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.utils.HtmlParser
+import com.lelloman.read.html.HtmlParser
 import io.reactivex.Maybe
 import io.reactivex.Single
 

@@ -14,7 +14,7 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.core.navigation.NavigationRouter
-import com.lelloman.read.feed.MeteredConnectionChecker
+import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.UrlValidator
 import dagger.Module

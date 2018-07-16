@@ -1,6 +1,5 @@
 package com.lelloman.read.core
 
-import com.lelloman.read.feed.MeteredConnectionChecker
 import com.lelloman.read.persistence.settings.AppSettings
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
