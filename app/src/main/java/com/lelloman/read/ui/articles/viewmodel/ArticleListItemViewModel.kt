@@ -69,6 +69,9 @@ class ArticleListItemViewModel(
     var subtitleVisible = false
         private set
 
+    var faviconVisible = false
+        private set
+
     fun bind(article: Article) {
         title = article.title
         details = "${semanticTimeProvider.getDateTimeString(article.time)} - ${article.sourceName}"

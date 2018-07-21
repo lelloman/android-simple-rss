@@ -41,9 +41,9 @@
                 android:id="@+id/text_view_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.title}"
                 android:ellipsize="end"
                 android:maxLines="10"
+                android:text="@{viewModel.title}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/image"
@@ -57,6 +57,20 @@
                 app:barrierDirection="bottom"
                 app:constraint_referenced_ids="image, text_view_title" />
 
+            <ImageView
+                android:id="@+id/image_view_favicon"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginEnd="4dp"
+                android:layout_marginTop="4dp"
+                android:background="#ff0000"
+                app:layout_constraintBottom_toTopOf="@+id/text_view_subtitle"
+                app:layout_constraintEnd_toStartOf="@+id/text_view_details"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/top_barrier"
+                app:viewVisible="@{viewModel.faviconVisible}" />
+
             <TextView
                 android:id="@+id/text_view_details"
                 android:layout_width="0dp"
@@ -65,7 +79,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 app:layout_constraintBottom_toTopOf="@+id/text_view_subtitle"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/image_view_favicon"
                 app:layout_constraintTop_toBottomOf="@+id/top_barrier"
                 tools:text="1995-05-20 23:56 - some source" />
 

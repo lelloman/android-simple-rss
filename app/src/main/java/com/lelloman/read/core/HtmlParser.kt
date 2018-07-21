@@ -1,4 +1,4 @@
-package com.lelloman.read.html
+package com.lelloman.read.core
 
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element

@@ -47,25 +47,7 @@ class ArticlesListViewModelImpl(
                         sourcesRepository.fetchSources()
                             .first(emptyList())
                             .observeOn(uiScheduler)
-                            .doOnSuccess { sources ->
-                                when {
-                                    sources.isEmpty() -> {
-                                        emptyViewDescriptionText.value = getString(R.string.empty_articles_no_source)
-                                        emptyViewButtonText.value = getString(R.string.add_source)
-                                        emptyViewAction = { navigate(ScreenNavigationEvent(NavigationScreen.ADD_SOURCE)) }
-                                    }
-                                    !sources.any(Source::isActive) -> {
-                                        emptyViewDescriptionText.value = getString(R.string.empty_articles_sources_disabled)
-                                        emptyViewButtonText.value = getString(R.string.enable_sources)
-                                        emptyViewAction = { navigate(ScreenNavigationEvent(NavigationScreen.SOURCES_LIST)) }
-                                    }
-                                    else -> {
-                                        emptyViewDescriptionText.value = getString(R.string.empty_articles_must_refresh)
-                                        emptyViewButtonText.value = getString(R.string.refresh)
-                                        emptyViewAction = ::refresh
-                                    }
-                                }
-                            }
+                            .doOnSuccess(::setEmptyViewValues)
                             .map { articles }
                             .toObservable()
                     } else {
@@ -81,6 +63,8 @@ class ArticlesListViewModelImpl(
         }
     }
 
+    private val openArticlesInApp get() = appSettings.openArticlesInApp.blockingFirst()
+
     init {
         emptyViewVisible.value = false
     }
@@ -93,15 +77,31 @@ class ArticlesListViewModelImpl(
         emptyViewAction?.invoke()
     }
 
-    override fun onArticleClicked(article: Article) {
-        if (appSettings.openArticlesInApp.blockingFirst()) {
-            navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, article))
-        } else {
-            navigate(ViewIntentNavigationEvent(article.link))
-        }
+    override fun onArticleClicked(article: Article) = if (openArticlesInApp) {
+        navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, article))
+    } else {
+        navigate(ViewIntentNavigationEvent(article.link))
     }
 
-    override fun onSettingsClicked() {
-        navigate(ScreenNavigationEvent(NavigationScreen.SETTINGS))
+    override fun onSettingsClicked() = navigate(ScreenNavigationEvent(NavigationScreen.SETTINGS))
+
+    private fun setEmptyViewValues(sources: List<Source>) {
+        when {
+            sources.isEmpty() -> {
+                emptyViewDescriptionText.value = getString(R.string.empty_articles_no_source)
+                emptyViewButtonText.value = getString(R.string.add_source)
+                emptyViewAction = { navigate(ScreenNavigationEvent(NavigationScreen.ADD_SOURCE)) }
+            }
+            !sources.any(Source::isActive) -> {
+                emptyViewDescriptionText.value = getString(R.string.empty_articles_sources_disabled)
+                emptyViewButtonText.value = getString(R.string.enable_sources)
+                emptyViewAction = { navigate(ScreenNavigationEvent(NavigationScreen.SOURCES_LIST)) }
+            }
+            else -> {
+                emptyViewDescriptionText.value = getString(R.string.empty_articles_must_refresh)
+                emptyViewButtonText.value = getString(R.string.refresh)
+                emptyViewAction = ::refresh
+            }
+        }
     }
 }

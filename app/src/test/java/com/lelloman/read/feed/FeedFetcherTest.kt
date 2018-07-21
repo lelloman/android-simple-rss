@@ -9,7 +9,7 @@ import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.html.HtmlParser
+import com.lelloman.read.core.HtmlParser
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock

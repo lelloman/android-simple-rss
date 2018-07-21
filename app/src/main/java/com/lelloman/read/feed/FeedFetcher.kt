@@ -9,7 +9,7 @@ import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.html.HtmlParser
+import com.lelloman.read.core.HtmlParser
 import io.reactivex.Maybe
 import io.reactivex.Single
 
@@ -63,7 +63,8 @@ class FeedFetcher(
         name = "dummy",
         url = url,
         lastFetched = 0L,
-        isActive = true
+        isActive = true,
+        favicon = null
     )
 
     private fun parsedFeedToArticle(source: Source, parsedFeed: ParsedFeed): Article {

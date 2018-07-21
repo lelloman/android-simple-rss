@@ -9,7 +9,7 @@ import com.lelloman.read.http.HttpClient
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.html.HtmlParser
+import com.lelloman.read.core.HtmlParser
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -28,7 +28,8 @@ class FeedModule {
         timeProvider: TimeProvider,
         appSettings: AppSettings,
         loggerFactory: LoggerFactory,
-        feedFetcher: FeedFetcher
+        feedFetcher: FeedFetcher,
+        faviconFetcher: FaviconFetcher
     ): FeedRefresher = FeedRefresherImpl(
         ioScheduler = ioScheduler,
         newThreadScheduler = newThreadScheduler,
@@ -37,7 +38,8 @@ class FeedModule {
         timeProvider = timeProvider,
         appSettings = appSettings,
         loggerFactory = loggerFactory,
-        feedFetcher = feedFetcher
+        feedFetcher = feedFetcher,
+        faviconFetcher = faviconFetcher
     )
 
     @Singleton
@@ -58,4 +60,8 @@ class FeedModule {
         appSettings = appSettings,
         meteredConnectionChecker = meteredConnectionChecker
     )
+
+    @Singleton
+    @Provides
+    fun provideFaviconFetcher(httpClient: HttpClient) = FaviconFetcher(httpClient)
 }
