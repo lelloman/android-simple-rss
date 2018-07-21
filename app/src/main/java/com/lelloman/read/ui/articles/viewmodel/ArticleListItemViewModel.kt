@@ -9,6 +9,7 @@ import com.lelloman.read.BR
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.read.utils.ByteArrayWithId
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
@@ -72,12 +73,12 @@ class ArticleListItemViewModel(
     var faviconVisible = false
         private set
 
-    var favicon: ByteArray? = null
+    var favicon: ByteArrayWithId = ByteArrayWithId(null, -1)
         private set
 
     fun bind(article: SourceArticle) {
         title = article.title
-        details = "${semanticTimeProvider.getDateTimeString(article.time)} - ${article.name}"
+        details = "${semanticTimeProvider.getDateTimeString(article.time)} - ${article.sourceName}"
         hash = article.hashCode()
         subtitle = article.subtitle
         subtitleVisible = article.subtitle.isNotEmpty()
@@ -90,7 +91,7 @@ class ArticleListItemViewModel(
             imageUrl = null
         }
         faviconVisible = article.favicon != null
-        favicon = article.favicon
+        favicon = ByteArrayWithId(article.favicon, article.sourceId)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

@@ -3,6 +3,7 @@ package com.lelloman.read
 import android.app.Activity
 import android.app.Application
 import android.content.BroadcastReceiver
+import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.core.PicassoWrap
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
@@ -33,6 +34,9 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
 
     @Inject
     lateinit var picassoWrap: PicassoWrap
+
+    @Inject
+    lateinit var faviconBitmapProvider: FaviconBitmapProvider
 
     override fun activityInjector() = dispatchingActivityAndroidInjector
 
@@ -95,5 +99,7 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
         private lateinit var instance: ReadApplication
 
         fun getPicassoWrap() = instance.picassoWrap
+
+        fun getFaviconBitmapProvider() = instance.faviconBitmapProvider
     }
 }
