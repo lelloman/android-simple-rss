@@ -83,7 +83,7 @@ class HttpClientImplTest {
         val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
-        tester.assertValue { it.body == "" }
+        tester.assertValue { it.stringBody == "" }
     }
 
     @Test
@@ -96,21 +96,21 @@ class HttpClientImplTest {
         val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
-        tester.assertValue { it.body == "" }
+        tester.assertValue { it.stringBody == "" }
     }
 
     @Test
     fun `returns string body from ok http response`() {
         val body = "bo bo body"
         val responseBody: ResponseBody = mock {
-            on { string() }.thenReturn(body)
+            on { bytes() }.thenReturn(body.toByteArray())
         }
         whenever(okHttpResponse.body()).thenReturn(responseBody)
 
         val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
-        tester.assertValue { it.body == body }
+        tester.assertValue { it.stringBody == body }
     }
 
     @Test

@@ -16,7 +16,7 @@ class PicassoWrap(
         val picasso = Picasso.get()
         if (BuildConfig.DEBUG) {
             picasso.setIndicatorsEnabled(true)
-            picasso.isLoggingEnabled = true
+//            picasso.isLoggingEnabled = true
         }
         picasso.load(it)
     }

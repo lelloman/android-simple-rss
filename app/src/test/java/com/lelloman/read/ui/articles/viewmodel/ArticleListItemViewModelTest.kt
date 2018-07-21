@@ -3,7 +3,7 @@ package com.lelloman.read.ui.articles.viewmodel
 import android.arch.lifecycle.Lifecycle
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -68,7 +68,7 @@ class ArticleListItemViewModelTest {
 
         tested.apply {
             assertThat(title).isEqualTo(ARTICLE.title)
-            assertThat(details).isEqualTo("$dateTimeString - ${ARTICLE.sourceName}")
+            assertThat(details).isEqualTo("$dateTimeString - ${ARTICLE.name}")
             assertThat(hash).isEqualTo(ARTICLE.hashCode())
             assertThat(subtitle).isEqualTo(ARTICLE.subtitle)
             assertThat(subtitleVisible).isTrue()
@@ -102,7 +102,7 @@ class ArticleListItemViewModelTest {
     }
 
     private companion object {
-        val ARTICLE = Article(
+        val ARTICLE = SourceArticle(
             id = 123,
             title = "the article",
             subtitle = "the subtitle",
@@ -111,7 +111,8 @@ class ArticleListItemViewModelTest {
             imageUrl = "antonio",
             time = 321,
             sourceId = 456,
-            sourceName = "the source name"
+            name = "the name",
+            favicon = null
         )
     }
 }

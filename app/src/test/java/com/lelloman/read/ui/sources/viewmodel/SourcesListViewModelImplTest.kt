@@ -147,7 +147,6 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
                     link = "link 1",
                     imageUrl = "img url 1",
                     time = 1L,
-                    sourceName = "source 1",
                     sourceId = 0
                 ),
                 Article(
@@ -158,7 +157,6 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
                     link = "link 2",
                     imageUrl = "img url 2",
                     time = 2L,
-                    sourceName = "source 2",
                     sourceId = 0
                 )
             )

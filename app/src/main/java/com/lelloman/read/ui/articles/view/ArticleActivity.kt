@@ -11,7 +11,7 @@ import android.webkit.WebViewClient
 import com.lelloman.read.R
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityArticleBinding
-import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 
 class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>() {
@@ -23,7 +23,7 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val article = intent.getParcelableExtra<Article>(ARG_ARTICLE)
+        val article = intent.getParcelableExtra<SourceArticle>(ARG_ARTICLE)
         if (article == null) {
             finish()
         } else {
@@ -60,7 +60,7 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
 
         private const val ARG_ARTICLE = "Article"
 
-        fun start(activity: Activity, article: Article) {
+        fun start(activity: Activity, article: SourceArticle) {
             val intent = Intent(activity, ArticleActivity::class.java)
                 .putExtra(ARG_ARTICLE, article)
             activity.startActivity(intent)

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.databinding.ListItemArticleBinding
-import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticleListItemViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
@@ -18,12 +18,12 @@ import io.reactivex.Scheduler
 class ArticlesAdapter(
     private val lifecycle: Lifecycle,
     private val uiScheduler: Scheduler,
-    private val onArticleClickedListener: (Article) -> Unit,
+    private val onArticleClickedListener: (SourceArticle) -> Unit,
     private val appSettings: AppSettings,
     private val semanticTimeProvider: SemanticTimeProvider
-) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>(), Observer<List<Article>> {
+) : RecyclerView.Adapter<ArticlesAdapter.ViewHolder>(), Observer<List<SourceArticle>> {
 
-    private var data = emptyList<Article>()
+    private var data = emptyList<SourceArticle>()
     private val listDiffCalculator = ModelWithIdListDiffCalculator()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -40,7 +40,7 @@ class ArticlesAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(data[position])
 
-    override fun onChanged(newData: List<Article>?) {
+    override fun onChanged(newData: List<SourceArticle>?) {
         newData?.let {
             val diff = listDiffCalculator.computeDiff(data, newData)
             this.data = newData
@@ -57,13 +57,13 @@ class ArticlesAdapter(
             lifecycle = lifecycle,
             semanticTimeProvider = semanticTimeProvider
         )
-        private lateinit var article: Article
+        private lateinit var article: SourceArticle
 
         init {
             binding.root.setOnClickListener { onArticleClickedListener.invoke(article) }
         }
 
-        fun bind(article: Article) {
+        fun bind(article: SourceArticle) {
             this.article = article
             viewModel.bind(article)
             binding.viewModel = viewModel

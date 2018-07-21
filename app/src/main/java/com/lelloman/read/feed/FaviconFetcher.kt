@@ -22,9 +22,10 @@ class FaviconFetcher(private val httpClient: HttpClient) {
         .filter { response ->
             response.isSuccessful && response.body.isNotEmpty()
         }
-        .map { it.body.toByteArray() }
+        .map { it.body }
         .onErrorComplete()
 
-    private fun getGoogleS2FaviconUrl(baseUrl: String) = "http://www.google.com/s2/favicons?domain=$baseUrl"
+    @VisibleForTesting
+    fun getGoogleS2FaviconUrl(baseUrl: String) = "http://www.google.com/s2/favicons?domain=$baseUrl"
 
 }

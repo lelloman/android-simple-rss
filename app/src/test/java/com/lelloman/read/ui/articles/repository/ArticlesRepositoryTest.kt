@@ -3,6 +3,7 @@ package com.lelloman.read.ui.articles.repository
 import com.lelloman.read.feed.FeedRefresher
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.db.model.SourceArticle
 import com.nhaarman.mockito_kotlin.anyVararg
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -60,11 +61,11 @@ class ArticlesRepositoryTest {
 
     @Test
     fun `fetches articles from all active source through dao`() {
-        whenever(articlesDao.getAllFromActiveSources()).thenReturn(Flowable.just(ARTICLES))
+        whenever(articlesDao.getAllFromActiveSources()).thenReturn(Flowable.just(SOURCE_ARTICLES))
 
         val tester = tested.fetchArticles().test()
 
-        tester.assertValues(ARTICLES)
+        tester.assertValues(SOURCE_ARTICLES)
         verify(articlesDao).getAllFromActiveSources()
     }
 
@@ -77,5 +78,6 @@ class ArticlesRepositoryTest {
 
     private companion object {
         val ARTICLES = listOf<Article>(mock(), mock())
+        val SOURCE_ARTICLES = listOf<SourceArticle>(mock(), mock())
     }
 }

@@ -9,6 +9,7 @@ import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
+import com.lelloman.read.testutils.dummySource
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
@@ -38,6 +39,7 @@ class FeedRefresherImplTest {
         on { getLogger(any()) }.thenReturn(logger)
     }
     private val feedFetcher: FeedFetcher = mock()
+    private val faviconFetcher: FaviconFetcher = mock()
 
     private val dependencies = arrayOf(feedFetcher, sourcesDao, articlesDao)
 
@@ -49,7 +51,8 @@ class FeedRefresherImplTest {
         timeProvider = timeProvider,
         appSettings = appSettings,
         loggerFactory = loggerFactory,
-        feedFetcher = feedFetcher
+        feedFetcher = feedFetcher,
+        faviconFetcher = faviconFetcher
     )
 
     @Test
@@ -63,7 +66,8 @@ class FeedRefresherImplTest {
 
     @Test
     fun `starts loading when refresh is called`() {
-        givenSourcesSubject()
+        givenAllSourcesIsEmpty()
+        givenActiveSourcesSubject()
         givenHasDefaultMinRefreshInterval()
         val tester = tested.isLoading.test()
 
@@ -74,7 +78,8 @@ class FeedRefresherImplTest {
 
     @Test
     fun `does nothing if refresh is called while loading`() {
-        givenSourcesSubject()
+        givenAllSourcesIsEmpty()
+        givenActiveSourcesSubject()
         givenHasDefaultMinRefreshInterval()
         val tester = tested.isLoading.test()
         tested.refresh()
@@ -88,7 +93,8 @@ class FeedRefresherImplTest {
 
     @Test
     fun `stops loading when finish refresh successfully`() {
-        val sourcesSubject = givenSourcesSubject()
+        givenAllSourcesIsEmpty()
+        val sourcesSubject = givenActiveSourcesSubject()
         val tester = tested.isLoading.test()
         givenHasDefaultMinRefreshInterval()
 
@@ -101,7 +107,8 @@ class FeedRefresherImplTest {
 
     @Test
     fun `stops loading when finish refresh with error`() {
-        val sourcesSubject = givenSourcesSubject()
+        givenAllSourcesIsEmpty()
+        val sourcesSubject = givenActiveSourcesSubject()
         val tester = tested.isLoading.test()
         givenHasDefaultMinRefreshInterval()
 
@@ -113,6 +120,7 @@ class FeedRefresherImplTest {
 
     @Test
     fun `refreshes stale sources only`() {
+        givenAllSourcesIsEmpty()
         val now = 12345L
         val minRefreshInterval = SourceRefreshInterval.NEUROTIC
         givenHasMinRefreshInterval(minRefreshInterval)
@@ -144,6 +152,7 @@ class FeedRefresherImplTest {
 
     @Test
     fun `silently drops feed fetcher errors`() {
+        givenAllSourcesIsEmpty()
         whenever(feedFetcher.fetchFeed(any())).thenReturn(Maybe.error(Exception()))
         givenHasTime(Long.MAX_VALUE)
         givenHasMinRefreshInterval(SourceRefreshInterval.NEUROTIC)
@@ -156,6 +165,7 @@ class FeedRefresherImplTest {
 
     @Test
     fun `logs error when fetching active sources`() {
+        givenAllSourcesIsEmpty()
         givenHasDefaultMinRefreshInterval()
         val error = Exception("crasc")
         whenever(sourcesDao.getActiveSources()).thenReturn(Flowable.error(error))
@@ -167,6 +177,7 @@ class FeedRefresherImplTest {
 
     @Test
     fun `updates db when fetched feed successfully`() {
+        givenAllSourcesIsEmpty()
         givenHasActiveSources(SOURCE_1, SOURCE_2)
         givenHasTime(Long.MAX_VALUE)
         givenHasMinRefreshInterval(SourceRefreshInterval.NEUROTIC)
@@ -185,6 +196,23 @@ class FeedRefresherImplTest {
         verify(sourcesDao).updateSourceLastFetched(SOURCE_2.id, timeProvider.nowUtcMs())
     }
 
+    @Test
+    fun `downloads favicons on refresh`() {
+        givenHasActiveSources()
+        givenHasMinRefreshInterval(SourceRefreshInterval.NEUROTIC)
+        val allSources = listOf(
+            dummySource(index = 1).copy(favicon = ByteArray(0)),
+            dummySource(index = 2).copy(favicon = null)
+        )
+        whenever(sourcesDao.getAll()).thenReturn(Flowable.just(allSources))
+        val bytes = byteArrayOf(1, 2, 3)
+        whenever(faviconFetcher.getPngFavicon(any())).thenReturn(Maybe.just(bytes))
+
+        tested.refresh()
+
+        verify(faviconFetcher).getPngFavicon(allSources[1].url)
+    }
+
     private fun givenHasDefaultMinRefreshInterval() {
         whenever(appSettings.sourceRefreshMinInterval).thenReturn(Observable.just(DEFAULT_MIN_SOURCE_REFRESH_INTERVAL))
     }
@@ -201,15 +229,19 @@ class FeedRefresherImplTest {
         whenever(timeProvider.nowUtcMs()).thenReturn(time)
     }
 
-    private fun givenSourcesSubject(): Subject<List<Source>> {
+    private fun givenActiveSourcesSubject(): Subject<List<Source>> {
         val sourcesSubject = PublishSubject.create<List<Source>>()
         whenever(sourcesDao.getActiveSources()).thenReturn(sourcesSubject.toFlowable(BackpressureStrategy.DROP))
         return sourcesSubject
     }
 
+    private fun givenAllSourcesIsEmpty() {
+        whenever(sourcesDao.getAll()).thenReturn(Flowable.just(emptyList()))
+    }
+
     private companion object {
 
-        val GENERIC_ERR_MSG = "Something went wrong in refresh subscription"
+        const val GENERIC_ERR_MSG = "Something went wrong in refresh subscription"
 
         val SOURCE_1 = Source(
             id = 1,

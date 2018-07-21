@@ -6,8 +6,8 @@ import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
-import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
 import com.lelloman.read.ui.sources.repository.SourcesRepository
@@ -39,7 +39,7 @@ class ArticlesListViewModelImpl(
         }
     }
 
-    override val articles: MutableLiveData<List<Article>> by LazyLiveData {
+    override val articles: MutableLiveData<List<SourceArticle>> by LazyLiveData {
         subscription {
             articlesRepository.fetchArticles()
                 .flatMap { articles ->
@@ -77,7 +77,7 @@ class ArticlesListViewModelImpl(
         emptyViewAction?.invoke()
     }
 
-    override fun onArticleClicked(article: Article) = if (openArticlesInApp) {
+    override fun onArticleClicked(article: SourceArticle) = if (openArticlesInApp) {
         navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, article))
     } else {
         navigate(ViewIntentNavigationEvent(article.link))

@@ -5,12 +5,12 @@ import com.lelloman.read.R
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
-import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockResourceProvider
-import com.lelloman.read.testutils.dummyArticle
+import com.lelloman.read.testutils.dummySourceArticle
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
 import com.lelloman.read.ui.sources.repository.SourcesRepository
@@ -70,7 +70,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
     fun `navigates to article screen when article is clicked and open in app setting is true`() {
         givenOpenArticleInAppSettingEnabled()
         val viewActions = tested.viewActionEvents.test()
-        val article: Article = mock()
+        val article: SourceArticle = mock()
 
         tested.onArticleClicked(article)
 
@@ -90,7 +90,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         val link = "asdasd"
         givenOpenArticleInAppSettingDisabled()
         val viewActions = tested.viewActionEvents.test()
-        val article = dummyArticle().copy(link = link)
+        val article = dummySourceArticle().copy(link = link)
 
         tested.onArticleClicked(article)
         viewActions.assertValues(ViewIntentNavigationEvent(link))
@@ -249,11 +249,11 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
     private fun givenNoArticles() = givenHasArticles(emptyList())
 
-    private fun givenHasArticles(articles: List<Article> = ARTICLES) {
+    private fun givenHasArticles(articles: List<SourceArticle> = ARTICLES) {
         whenever(articlesRepository.fetchArticles()).thenReturn(Observable.just(articles))
     }
 
     private companion object {
-        val ARTICLES = Array(3) { dummyArticle(it) }.toList()
+        val ARTICLES = Array(3) { dummySourceArticle(it) }.toList()
     }
 }
