@@ -7,7 +7,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.lelloman.read.core.view.ViewActionEvent
-import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.testutils.TestApp
 import com.lelloman.read.testutils.checkIsSwipeRefreshing
 import com.lelloman.read.testutils.checkRecyclerViewCount
@@ -39,21 +39,22 @@ class ArticlesListActivityTest {
 
     private lateinit var viewModel: ArticlesListViewModel
 
-    private lateinit var articlesLiveData: MutableLiveData<List<Article>>
+    private lateinit var articlesLiveData: MutableLiveData<List<SourceArticle>>
     private lateinit var isLoadingLiveData: MutableLiveData<Boolean>
     private lateinit var viewActionEvents: SingleLiveData<ViewActionEvent>
 
     private val articles = Array(20) {
-        Article(
+        SourceArticle(
             id = it.toLong(),
             title = "Article $it",
             subtitle = "Subtitle $it",
             content = "",
             link = "www.staceppa.com/$it",
             time = it.toLong(),
-            sourceName = "Source",
+            name = "Source",
             sourceId = 0L,
-            imageUrl = ""
+            imageUrl = "",
+            favicon = null
         )
     }.toList()
 
@@ -133,14 +134,15 @@ class ArticlesListActivityTest {
     @Test
     fun retainsArticleOnRotation() {
         val random = Random()
-        val article = Article(
+        val article = SourceArticle(
             id = random.nextLong(),
             title = random.nextLong().toString(),
             subtitle = random.nextLong().toString(),
             content = random.nextLong().toString(),
             link = random.nextLong().toString(),
             time = random.nextLong(),
-            sourceName = random.nextLong().toString(),
+            name = random.nextLong().toString(),
+            favicon = null,
             sourceId = random.nextLong(),
             imageUrl = random.nextLong().toString()
         )

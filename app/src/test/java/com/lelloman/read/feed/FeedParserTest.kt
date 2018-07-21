@@ -2,6 +2,8 @@ package com.lelloman.read.feed
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.core.TimeProvider
+import com.lelloman.read.feed.exception.InvalidFeedTagException
+import com.lelloman.read.feed.exception.MalformedXmlException
 import com.lelloman.read.testutils.Xmls
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Observable

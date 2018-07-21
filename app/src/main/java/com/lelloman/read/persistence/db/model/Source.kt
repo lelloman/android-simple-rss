@@ -1,5 +1,6 @@
 package com.lelloman.read.persistence.db.model
 
+import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.lelloman.read.core.ModelWithId
@@ -12,5 +13,6 @@ data class Source(
     val url: String,
     var lastFetched: Long = 0L,
     val isActive: Boolean,
+    @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var favicon: ByteArray? = null,
     val immutableHashCode: Int = name.hashCode() * url.hashCode()
 ) : ModelWithId

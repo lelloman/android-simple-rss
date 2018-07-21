@@ -3,6 +3,7 @@ package com.lelloman.read.core.di
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.content.Context
+import com.lelloman.read.core.PicassoWrap
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.ResourceProviderImpl
 import com.lelloman.read.core.SemanticTimeProvider
@@ -13,6 +14,8 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.core.navigation.NavigationRouter
+import com.lelloman.read.core.MeteredConnectionChecker
+import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.UrlValidator
 import dagger.Module
 import dagger.Provides
@@ -75,4 +78,14 @@ class AppModule(private val application: Application) {
     @Singleton
     @Provides
     fun provideUrlValidator() = UrlValidator()
+
+    @Singleton
+    @Provides
+    fun providePicassoProvider(
+        appSettings: AppSettings,
+        meteredConnectionChecker: MeteredConnectionChecker
+    ) = PicassoWrap(
+        appSettings = appSettings,
+        meteredConnectionChecker = meteredConnectionChecker
+    )
 }

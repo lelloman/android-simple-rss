@@ -1,6 +1,7 @@
 package com.lelloman.read.utils
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.read.core.HtmlParser
 import org.junit.Test
 
 class HtmlParserTest {

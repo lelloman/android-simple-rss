@@ -3,7 +3,7 @@ package com.lelloman.read.ui.articles.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.viewmodel.BaseViewModel
-import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.db.model.SourceArticle
 
 abstract class ArticlesListViewModel(
     resourceProvider: ResourceProvider
@@ -15,7 +15,7 @@ abstract class ArticlesListViewModel(
     abstract val emptyViewDescriptionText: MutableLiveData<String>
     abstract val emptyViewButtonText: MutableLiveData<String>
 
-    abstract val articles: MutableLiveData<List<Article>>
+    abstract val articles: MutableLiveData<List<SourceArticle>>
 
     abstract fun refresh()
 
@@ -23,7 +23,7 @@ abstract class ArticlesListViewModel(
 
     abstract fun onEmptyViewButtonClicked()
 
-    abstract fun onArticleClicked(article: Article)
+    abstract fun onArticleClicked(article: SourceArticle)
 
     abstract fun onSettingsClicked()
 }

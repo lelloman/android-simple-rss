@@ -25,9 +25,9 @@ class HttpClientImpl(
             val t1 = timeProvider.nowUtcMs()
             val okResponse = okHttpClient.newCall(okRequest).execute()
             val t2 = timeProvider.nowUtcMs()
-            val body = okResponse.body()?.string() ?: ""
+            val body = okResponse.body()?.bytes() ?: ByteArray(0)
             logger.d("<-- ${okRequest.method()} ${okResponse.code()} ${okRequest.url()} in ${t2 - t1}ms ${okResponse.headers()}")
-            logger.d("response length: ${body.length}")
+            logger.d("response length: ${body.size}")
 
             HttpResponse(
                 code = okResponse.code(),

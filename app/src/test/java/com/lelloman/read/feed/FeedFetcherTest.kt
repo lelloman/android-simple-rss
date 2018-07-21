@@ -1,12 +1,15 @@
 package com.lelloman.read.feed
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.read.core.HtmlParser
+import com.lelloman.read.core.MeteredConnectionChecker
+import com.lelloman.read.feed.exception.InvalidFeedTagException
+import com.lelloman.read.feed.exception.MalformedXmlException
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.utils.HtmlParser
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock
@@ -49,7 +52,7 @@ class FeedFetcherTest {
 
         tested.fetchFeed(SOURCE).test()
 
-        verify(feedParser).parseFeeds(SUCCESSFUL_RESPONSE.body)
+        verify(feedParser).parseFeeds(SUCCESSFUL_RESPONSE.stringBody)
     }
 
     @Test
@@ -215,7 +218,7 @@ class FeedFetcherTest {
 
     private fun givenHttpUnsuccessfulResponse() {
         whenever(httpClient.request(any()))
-            .thenReturn(Single.just(HttpResponse(500, false, "")))
+            .thenReturn(Single.just(HttpResponse(500, false, ByteArray(0))))
     }
 
     private fun givenParsesFeed(feeds: List<ParsedFeed> = PARSED_FEED) {
@@ -237,7 +240,7 @@ class FeedFetcherTest {
             isActive = true
         )
 
-        val SUCCESSFUL_RESPONSE = HttpResponse(200, true, "the body")
+        val SUCCESSFUL_RESPONSE = HttpResponse(200, true, "the body".toByteArray())
 
         val PARSED_FEED = listOf(
             ParsedFeed(

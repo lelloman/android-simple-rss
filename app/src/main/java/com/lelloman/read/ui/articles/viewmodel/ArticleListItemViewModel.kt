@@ -7,7 +7,7 @@ import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.lelloman.read.BR
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.persistence.db.model.Article
+import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
@@ -69,9 +69,15 @@ class ArticleListItemViewModel(
     var subtitleVisible = false
         private set
 
-    fun bind(article: Article) {
+    var faviconVisible = false
+        private set
+
+    var favicon: ByteArray? = null
+        private set
+
+    fun bind(article: SourceArticle) {
         title = article.title
-        details = "${semanticTimeProvider.getDateTimeString(article.time)} - ${article.sourceName}"
+        details = "${semanticTimeProvider.getDateTimeString(article.time)} - ${article.name}"
         hash = article.hashCode()
         subtitle = article.subtitle
         subtitleVisible = article.subtitle.isNotEmpty()
@@ -83,6 +89,8 @@ class ArticleListItemViewModel(
             imageVisible = false
             imageUrl = null
         }
+        faviconVisible = article.favicon != null
+        favicon = article.favicon
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)

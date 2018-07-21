@@ -43,6 +43,10 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
         instance = this
         inject()
 
+        if(BuildConfig.DEBUG){
+            picassoWrap.enableImageSourceIndicator()
+        }
+
         Completable
             .fromAction {
                 db.clearAllTables()

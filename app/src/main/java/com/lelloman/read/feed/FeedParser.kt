@@ -1,6 +1,8 @@
 package com.lelloman.read.feed
 
 import com.lelloman.read.core.TimeProvider
+import com.lelloman.read.feed.exception.InvalidFeedTagException
+import com.lelloman.read.feed.exception.MalformedXmlException
 import io.reactivex.Single
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException

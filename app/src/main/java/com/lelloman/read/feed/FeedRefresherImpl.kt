@@ -9,6 +9,8 @@ import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
+import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -22,6 +24,7 @@ class FeedRefresherImpl(
     private val articlesDao: ArticlesDao,
     private val timeProvider: TimeProvider,
     private val appSettings: AppSettings,
+    private val faviconFetcher: FaviconFetcher,
     loggerFactory: LoggerFactory,
     private val feedFetcher: FeedFetcher
 ) : FeedRefresher {
@@ -77,5 +80,25 @@ class FeedRefresherImpl(
             }, {
                 logger.e("Something went wrong in refresh subscription", it)
             })
+
+        sourcesDao
+            .getAll()
+            .flatMap { Flowable.fromIterable(it) }
+            .filter { it.favicon == null }
+            .flatMapMaybe { source ->
+                faviconFetcher
+                    .getPngFavicon(source.url)
+                    .map { source to it }
+                    .subscribeOn(newThreadScheduler)
+                    .onErrorComplete()
+            }
+            .flatMapCompletable { (source, pngBytes) ->
+                Completable.fromAction {
+                    source.favicon = pngBytes
+                    sourcesDao.updateSource(source)
+                }
+            }
+            .subscribeOn(newThreadScheduler)
+            .subscribe()
     }
 }
