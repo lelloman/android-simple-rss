@@ -3,6 +3,7 @@ package com.lelloman.read.feed
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.http.HttpResponse
+import com.lelloman.read.utils.UrlValidator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -13,55 +14,12 @@ import org.junit.Test
 class FaviconFetcherTest {
 
     private val httpClient: HttpClient = mock()
+    private val urlValidator = UrlValidator()
 
-    private val tested = FaviconFetcher(httpClient)
-
-    @Test
-    fun `find base url 1`() {
-        val url = "http://www.staceppa.com"
-
-        val tester = tested.findBaseUrl(url).test()
-
-        tester.assertValues("www.staceppa.com")
-    }
-
-    @Test
-    fun `find base url 2`() {
-        val url = "https://www.staceppa.com/asdasdasd/12345"
-
-        val tester = tested.findBaseUrl(url).test()
-
-        tester.assertValues("www.staceppa.com")
-    }
-
-    @Test
-    fun `find base url 3`() {
-        val url = "http://www.staceppa.com/-_-/-_-/"
-
-        val tester = tested.findBaseUrl(url).test()
-
-        tester.assertValues("www.staceppa.com")
-    }
-
-    @Test
-    fun `does not find url with missing protocol`() {
-        val url = "www.staceppa.com"
-
-        val tester = tested.findBaseUrl(url).test()
-
-        tester.assertValues()
-        tester.assertComplete()
-    }
-
-    @Test
-    fun `does not find url with weird protocol 1`() {
-        val url = "theweirdprotocol://www.staceppa.com"
-
-        val tester = tested.findBaseUrl(url).test()
-
-        tester.assertValues()
-        tester.assertComplete()
-    }
+    private val tested = FaviconFetcher(
+        httpClient = httpClient,
+        urlValidator = urlValidator
+    )
 
     @Test
     fun `makes http to google s2 with base url`() {

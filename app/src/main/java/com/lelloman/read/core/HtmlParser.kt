@@ -5,6 +5,18 @@ import org.jsoup.nodes.Element
 
 class HtmlParser {
 
+    fun parseLinkTagsInHead(html: String) = Jsoup
+        .parse(html)
+        .head()
+        .select("link")
+        .filter { it.hasAttr("type") && it.hasAttr("href") }
+        .map {
+            Link(
+                type = it.attr("type"),
+                href = it.attr("href")
+            )
+        }
+
     fun parseTextAndImagesUrls(text: String): Pair<String, List<String>> {
         val doc = Jsoup.parse(text)
         val plainText = doc.text()
@@ -25,4 +37,9 @@ class HtmlParser {
 
         element.children().forEach { appendImgUrls(it, urls) }
     }
+
+    data class Link(
+        val type: String,
+        val href: String
+    )
 }

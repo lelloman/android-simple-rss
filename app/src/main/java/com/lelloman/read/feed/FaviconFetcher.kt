@@ -3,18 +3,15 @@ package com.lelloman.read.feed
 import android.support.annotation.VisibleForTesting
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
+import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Maybe
-import java.net.URL
 
+class FaviconFetcher(
+    private val httpClient: HttpClient,
+    private val urlValidator: UrlValidator
+) {
 
-class FaviconFetcher(private val httpClient: HttpClient) {
-
-    @VisibleForTesting
-    fun findBaseUrl(url: String): Maybe<String> = Maybe
-        .fromCallable { URL(url).host }
-        .onErrorComplete()
-
-    fun getPngFavicon(url: String): Maybe<ByteArray> = findBaseUrl(url)
+    fun getPngFavicon(url: String): Maybe<ByteArray> = urlValidator.findBaseUrlWithoutProtocol(url)
         .flatMapSingle { baseUrl ->
             httpClient
                 .request(HttpRequest(getGoogleS2FaviconUrl(baseUrl)))
