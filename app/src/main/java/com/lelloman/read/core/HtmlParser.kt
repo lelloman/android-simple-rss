@@ -17,14 +17,17 @@ class HtmlParser {
             )
         }
 
-    fun parseTextAndImagesUrls(text: String): Pair<String, List<String>> {
+    fun parseTextAndImagesUrls(text: String): TextAndImagesUrls {
         val doc = Jsoup.parse(text)
         val plainText = doc.text()
         val imagesUrls = mutableListOf<String>()
 
         doc.body().children().forEach { appendImgUrls(it, imagesUrls) }
 
-        return plainText to imagesUrls
+        return TextAndImagesUrls(
+            text = plainText,
+            imagesUrls = imagesUrls
+        )
     }
 
     private fun appendImgUrls(element: Element, urls: MutableList<String>) {
@@ -41,5 +44,10 @@ class HtmlParser {
     data class Link(
         val type: String,
         val href: String
+    )
+
+    data class TextAndImagesUrls(
+        val text: String,
+        val imagesUrls: List<String>
     )
 }

@@ -227,7 +227,10 @@ class FeedFetcherTest {
 
     private fun givenParsesHtml() {
         whenever(htmlParser.parseTextAndImagesUrls(any())).thenAnswer {
-            it.arguments[0] as String to emptyList<String>()
+            HtmlParser.TextAndImagesUrls(
+                it.arguments[0] as String,
+                emptyList()
+            )
         }
     }
 

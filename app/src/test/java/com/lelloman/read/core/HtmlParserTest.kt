@@ -1,7 +1,6 @@
-package com.lelloman.read.utils
+package com.lelloman.read.core
 
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.read.core.HtmlParser
 import org.junit.Test
 
 class HtmlParserTest {
@@ -46,5 +45,11 @@ class HtmlParserTest {
 
         assertThat(plainText).isEqualTo("meow 1234 5678")
         assertThat(imagesUrls).isEmpty()
+    }
+
+    @Test
+    fun `implement me`() {
+//        tested.parseLinkTagsInHead(html)
+        // TODO implement me")
     }
 }
