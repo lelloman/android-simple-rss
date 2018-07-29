@@ -204,4 +204,30 @@ class UrlValidatorTest {
 
         tester.assertValues("http://www.staceppa.com")
     }
+
+    @Test
+    fun `prepends base url`() {
+        val baseUrl = "www.asd.com"
+        val path = "/sta/ceppa"
+
+        val result = tested.maybePrependBaseUrl(
+            baseUrl = baseUrl,
+            path = path
+        )
+
+        assertThat(result).isEqualTo("www.asd.com/sta/ceppa")
+    }
+
+    @Test
+    fun `does not prepend base url`() {
+        val baseUrl = "www.asd.com"
+        val path = "www.staceppa.com/sta/ceppa"
+
+        val result = tested.maybePrependBaseUrl(
+            baseUrl = baseUrl,
+            path = path
+        )
+
+        assertThat(result).isEqualTo("www.staceppa.com/sta/ceppa")
+    }
 }

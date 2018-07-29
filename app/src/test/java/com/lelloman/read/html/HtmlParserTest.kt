@@ -2,8 +2,11 @@ package com.lelloman.read.html
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.html.element.ADocElement
+import com.lelloman.read.html.element.DocElement
+import com.lelloman.read.html.element.IrrelevantDocElement
 import com.lelloman.read.html.element.LinkDocElement
 import org.junit.Test
+import kotlin.reflect.KClass
 
 class HtmlParserTest {
 
@@ -84,6 +87,22 @@ class HtmlParserTest {
                 }
             }
         }
+    }
+
+    @Test
+    fun `iterates over all elements in simple html 1`() {
+        val doc = tested.parseDoc(SIMPLE_HTML_1)
+        val register = mutableMapOf<KClass<out DocElement>, Int>()
+
+        doc.iterate {
+            val clazz = it::class
+            val count = register.getOrDefault(clazz, 0)
+            register[clazz] = count + 1
+        }
+
+        assertThat(register).containsEntry(IrrelevantDocElement::class, 5)
+        assertThat(register).containsEntry(LinkDocElement::class, 2)
+        assertThat(register).containsEntry(ADocElement::class, 1)
     }
 
     private companion object {

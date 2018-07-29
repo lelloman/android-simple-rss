@@ -6,6 +6,12 @@ import java.net.URL
 
 class UrlValidator {
 
+    fun maybePrependBaseUrl(baseUrl: String, path: String) = if (path.startsWith("/")) {
+        baseUrl + path
+    } else {
+        path
+    }
+
     fun findBaseUrlWithoutProtocol(url: String): Maybe<String> = Maybe
         .fromCallable { URL(url).host }
         .onErrorComplete()

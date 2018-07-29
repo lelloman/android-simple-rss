@@ -3,7 +3,6 @@ package com.lelloman.read.ondemand
 import com.lelloman.read.feed.FeedFinder
 import com.lelloman.read.testutils.BagOfDependencies
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 
 class FeedFinderTest {
@@ -16,15 +15,15 @@ class FeedFinderTest {
         tested = dependencies.feedFinder
     }
 
-    @Ignore
+    //@Ignore
     @Test
     fun findsFanpageFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.fanpage.it").test()
 
-        tester.assertValueCount(3)
+        tester.assertValueCount(4)
     }
 
-    @Ignore
+    //@Ignore
     @Test
     fun findsRepubblicaFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.repubblica.it").test()
@@ -32,7 +31,7 @@ class FeedFinderTest {
         tester.assertValueCount(0)
     }
 
-    @Ignore
+    //@Ignore
     @Test
     fun findsAnsaFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.ansa.it").test()
@@ -40,7 +39,7 @@ class FeedFinderTest {
         tester.assertValueCount(0)
     }
 
-    @Ignore
+    //@Ignore
     @Test
     fun findsAndroidWeeklyFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.androidweekly.net").test()

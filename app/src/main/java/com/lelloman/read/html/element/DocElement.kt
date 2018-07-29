@@ -9,4 +9,9 @@ abstract class DocElement(
 ) {
     var children: List<DocElement> = emptyList()
         internal set
+
+    fun iterate(block: (DocElement) -> Unit) {
+        block.invoke(this)
+        children.forEach { it.iterate(block) }
+    }
 }
