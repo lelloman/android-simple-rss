@@ -68,7 +68,7 @@ class ArticleListItemViewModelTest {
 
         tested.apply {
             assertThat(title).isEqualTo(ARTICLE.title)
-            assertThat(details).isEqualTo("$dateTimeString - ${ARTICLE.name}")
+            assertThat(details).isEqualTo("$dateTimeString - ${ARTICLE.sourceName}")
             assertThat(hash).isEqualTo(ARTICLE.hashCode())
             assertThat(subtitle).isEqualTo(ARTICLE.subtitle)
             assertThat(subtitleVisible).isTrue()
@@ -111,7 +111,7 @@ class ArticleListItemViewModelTest {
             imageUrl = "antonio",
             time = 321,
             sourceId = 456,
-            name = "the name",
+            sourceName = "the sourceName",
             favicon = null
         )
     }

@@ -13,7 +13,11 @@ import io.reactivex.Flowable
 @Dao
 interface ArticlesDao {
 
-    @Query("""SELECT * FROM $ARTICLE_TABLE_NAME article
+    @Query("""SELECT
+                        article.*,
+                        favicon,
+                        name AS sourceName
+                    FROM $ARTICLE_TABLE_NAME article
                     LEFT JOIN $SOURCE_TABLE_NAME source
                     ON article.sourceId = source.id
                     WHERE source.isActive = 1

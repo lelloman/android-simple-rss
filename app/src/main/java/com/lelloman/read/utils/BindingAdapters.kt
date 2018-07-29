@@ -1,7 +1,6 @@
 package com.lelloman.read.utils
 
 import android.databinding.BindingAdapter
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.support.design.widget.TextInputLayout
 import android.support.v4.widget.SwipeRefreshLayout
@@ -55,10 +54,12 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("app:imageBytes")
-    fun bindImageBytes(view: ImageView, bytes: ByteArray?) {
-        bytes?.let {
-            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-            view.setImageBitmap(bitmap)
+    fun bindImageBytes(view: ImageView, byteArrayWithId: ByteArrayWithId) {
+        byteArrayWithId.byteArray?.let { bytes ->
+            ReadApplication
+                .getFaviconBitmapProvider()
+                .getFaviconBitmap(bytes, byteArrayWithId.id)
+                ?.let { view.setImageBitmap(it) }
         }
     }
 

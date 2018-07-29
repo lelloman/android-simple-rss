@@ -59,13 +59,13 @@ class FeedParserTest {
 
     @Test
     fun `parses feeds from sample xml`() {
-        val test = Xmls.readFile(Xmls.SAMPLE)
+        val tester = Xmls.readFile(Xmls.SAMPLE)
             .flatMap(tested::parseFeeds)
             .test()
 
-        test.assertNoErrors()
-        test.assertValueCount(1)
-        val feeds = test.values()[0]
+        tester.assertNoErrors()
+        tester.assertValueCount(1)
+        val feeds = tester.values()[0]
         assertThat(feeds[0]).isEqualTo(Xmls.SAMPLE_FEEDS[0])
         assertThat(feeds[1]).isEqualTo(Xmls.SAMPLE_FEEDS[1])
         assertThat(feeds[2]).isEqualTo(Xmls.SAMPLE_FEEDS[2])

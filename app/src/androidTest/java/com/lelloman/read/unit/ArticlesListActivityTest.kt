@@ -1,4 +1,4 @@
-package com.lelloman.read
+package com.lelloman.read.unit
 
 import android.arch.lifecycle.MutableLiveData
 import android.support.test.espresso.Espresso.onView
@@ -6,6 +6,7 @@ import android.support.test.espresso.action.ViewActions.swipeDown
 import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
+import com.lelloman.read.R
 import com.lelloman.read.core.view.ViewActionEvent
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.testutils.TestApp
@@ -51,7 +52,7 @@ class ArticlesListActivityTest {
             content = "",
             link = "www.staceppa.com/$it",
             time = it.toLong(),
-            name = "Source",
+            sourceName = "Source",
             sourceId = 0L,
             imageUrl = "",
             favicon = null
@@ -141,7 +142,7 @@ class ArticlesListActivityTest {
             content = random.nextLong().toString(),
             link = random.nextLong().toString(),
             time = random.nextLong(),
-            name = random.nextLong().toString(),
+            sourceName = random.nextLong().toString(),
             favicon = null,
             sourceId = random.nextLong(),
             imageUrl = random.nextLong().toString()

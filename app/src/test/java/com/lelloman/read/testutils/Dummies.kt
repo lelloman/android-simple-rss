@@ -24,7 +24,7 @@ fun dummySourceArticle(index: Int = 1) = SourceArticle(
     imageUrl = "image url $index",
     time = index.toLong(),
     sourceId = index.toLong(),
-    name = "name $index",
+    sourceName = "sourceName $index",
     favicon = null
 )
 

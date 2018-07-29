@@ -13,7 +13,7 @@ data class SourceArticle(
     val imageUrl: String?,
     val time: Long,
     val sourceId: Long,
-    val name: String,
+    val sourceName: String,
     val favicon: ByteArray?
 ) : ModelWithId, Parcelable {
 
@@ -41,7 +41,7 @@ data class SourceArticle(
         writeString(imageUrl)
         writeLong(time)
         writeLong(sourceId)
-        writeString(name)
+        writeString(sourceName)
         writeByteArray(favicon)
     }
 

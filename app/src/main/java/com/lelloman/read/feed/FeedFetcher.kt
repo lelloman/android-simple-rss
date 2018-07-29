@@ -1,9 +1,9 @@
 package com.lelloman.read.feed
 
-import com.lelloman.read.core.HtmlParser
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
+import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpRequest
@@ -21,14 +21,23 @@ class FeedFetcher(
     private val appSettings: AppSettings
 ) {
 
-    fun fetchFeed(source: Source): Maybe<Pair<Source, List<Article>>> =
-        if (!appSettings.useMeteredNetwork.blockingFirst(false) && meteredConnectionChecker.isNetworkMetered()) {
-            Maybe.empty()
-        } else {
+    fun fetchFeed(source: Source): Maybe<Pair<Source, List<Article>>> = appSettings
+        .useMeteredNetwork
+        .firstOrError()
+        .toMaybe()
+        .onErrorComplete()
+        .filter { useMeteredNetwork ->
+            useMeteredNetwork || !meteredConnectionChecker.isNetworkMetered()
+        }
+        .flatMap {
             httpClient
                 .request(HttpRequest(source.url))
                 .filter { it.isSuccessful }
-                .flatMap { feedParser.parseFeeds(it.stringBody).toMaybe() }
+                .flatMap {
+                    feedParser
+                        .parseFeeds(it.stringBody)
+                        .toMaybe()
+                }
                 .map {
                     it.map {
                         parsedFeedToArticle(source, it)

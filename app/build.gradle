@@ -35,7 +35,6 @@ kapt {
     generateStubs = true
 }
 
-// ViewModel and LiveData
 dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])

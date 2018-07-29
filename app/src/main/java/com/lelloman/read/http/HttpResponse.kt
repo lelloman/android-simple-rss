@@ -5,13 +5,5 @@ data class HttpResponse(
     val isSuccessful: Boolean,
     val body: ByteArray
 ) {
-    private var stringBodyValue: String? = null
-
-    val stringBody: String
-        get() {
-            if (stringBodyValue == null) {
-                stringBodyValue = String(body)
-            }
-            return stringBodyValue!!
-        }
+    val stringBody by lazy { String(body) }
 }

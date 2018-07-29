@@ -129,4 +129,105 @@ class UrlValidatorTest {
 
         assertThat(withProtocol).isEqualTo(original)
     }
+
+    @Test
+    fun `find base url 1 without protocol`() {
+        val url = "http://www.staceppa.com"
+
+        val tester = tested.findBaseUrlWithoutProtocol(url).test()
+
+        tester.assertValues("www.staceppa.com")
+    }
+
+    @Test
+    fun `find base url 2 without protocol`() {
+        val url = "https://www.staceppa.com/asdasdasd/12345"
+
+        val tester = tested.findBaseUrlWithoutProtocol(url).test()
+
+        tester.assertValues("www.staceppa.com")
+    }
+
+    @Test
+    fun `find base url 3 without protocol`() {
+        val url = "http://www.staceppa.com/-_-/-_-/"
+
+        val tester = tested.findBaseUrlWithoutProtocol(url).test()
+
+        tester.assertValues("www.staceppa.com")
+    }
+
+    @Test
+    fun `does not find url with missing protocol`() {
+        val url = "www.staceppa.com"
+
+        val tester = tested.findBaseUrlWithoutProtocol(url).test()
+
+        tester.assertValues()
+        tester.assertComplete()
+    }
+
+    @Test
+    fun `does not find url with weird protocol 1`() {
+        val url = "theweirdprotocol://www.staceppa.com"
+
+        val tester = tested.findBaseUrlWithoutProtocol(url).test()
+
+        tester.assertValues()
+        tester.assertComplete()
+    }
+
+
+    @Test
+    fun `find base url 1 with protocol`() {
+        val url = "http://www.staceppa.com"
+
+        val tester = tested.findBaseUrlWithProtocol(url).test()
+
+        tester.assertValues("http://www.staceppa.com")
+    }
+
+    @Test
+    fun `find base url 2 with protocol`() {
+        val url = "https://www.staceppa.com/asdasdasd/12345"
+
+        val tester = tested.findBaseUrlWithProtocol(url).test()
+
+        tester.assertValues("https://www.staceppa.com")
+    }
+
+    @Test
+    fun `find base url 3 with protocol`() {
+        val url = "http://www.staceppa.com/-_-/-_-/"
+
+        val tester = tested.findBaseUrlWithProtocol(url).test()
+
+        tester.assertValues("http://www.staceppa.com")
+    }
+
+    @Test
+    fun `prepends base url`() {
+        val baseUrl = "www.asd.com"
+        val path = "/sta/ceppa"
+
+        val result = tested.maybePrependBaseUrl(
+            baseUrl = baseUrl,
+            path = path
+        )
+
+        assertThat(result).isEqualTo("www.asd.com/sta/ceppa")
+    }
+
+    @Test
+    fun `does not prepend base url`() {
+        val baseUrl = "www.asd.com"
+        val path = "www.staceppa.com/sta/ceppa"
+
+        val result = tested.maybePrependBaseUrl(
+            baseUrl = baseUrl,
+            path = path
+        )
+
+        assertThat(result).isEqualTo("www.staceppa.com/sta/ceppa")
+    }
 }
