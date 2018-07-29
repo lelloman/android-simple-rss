@@ -1,6 +1,6 @@
 package com.lelloman.read.feed
 
-import com.lelloman.read.core.HtmlParser
+import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.http.HttpResponse
@@ -12,11 +12,12 @@ import io.reactivex.functions.BiFunction
 class FeedFinder(
     private val httpClient: HttpClient,
     private val urlValidator: UrlValidator,
-    private val htmlParser: HtmlParser
+    private val htmlParser: HtmlParser,
+    private val feedFetcher: FeedFetcher
 ) {
 
     fun findValidFeedUrls(url: String): Observable<String> = urlValidator
-        .findBaseUrlWithoutProtocol(url)
+        .findBaseUrlWithProtocol(url)
         .flatMapSingle { baseUrl ->
             Single.zip(
                 httpClient.request(HttpRequest(baseUrl)),
@@ -25,7 +26,6 @@ class FeedFinder(
                     Pair(httpResponse, baseUrl)
                 }
             )
-
         }
         .filter { (httpResponse, _) ->
             httpResponse.isSuccessful && httpResponse.body.isNotEmpty()
@@ -34,27 +34,29 @@ class FeedFinder(
             httpResponse.stringBody to baseUrl
         }
         .flatMapObservable { (stringBody, baseUrl) ->
-            findUrlCandidates(url = baseUrl, homeHtml = stringBody)
+            findCandidateUrls(url = baseUrl, homeHtml = stringBody)
         }
         .map { urlValidator.maybePrependProtocol(it) }
+        .flatMapMaybe { urlToTest ->
+            feedFetcher
+                .testUrl(urlToTest)
+                .filter { it == FeedFetcher.TestResult.SUCCESS }
+                .map { urlToTest }
+        }
 
-    private fun findUrlCandidates(url: String, homeHtml: String): Observable<String> = Single
+    private fun findCandidateUrls(url: String, homeHtml: String): Observable<String> = Single
         .fromCallable {
             mutableListOf("$url/feed").apply {
-                htmlParser
-                    .parseLinkTagsInHead(homeHtml)
-                    .forEach { (type, href) ->
-                        when (type) {
-                            "application/rss+xml",
-                            "text/xml",
-                            "application/atom+xml" -> add(href)
-                        }
-                    }
+                //                htmlParser
+//                    .parseLinkTagsInHead(homeHtml)
+//                    .forEach { (type, href) ->
+//                        when (type) {
+//                            "application/rss+xml",
+//                            "text/xml",
+//                            "application/atom+xml" -> add(href)
+//                        }
+//                    }
             }
-
-//            <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="https://www.fanpage.it/feed/" />
-//            <link rel="alternate" type="text/xml" title="RSS .92" href="https://www.fanpage.it/feed/rss/" />
-//            <link rel="alternate" type="application/atom+xml" title="Atom 0.3" href="https://www.fanpage.it/feed/atom/" />
         }
         .flatMapObservable { Observable.fromIterable(it) }
 }

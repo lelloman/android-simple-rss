@@ -1,6 +1,6 @@
 package com.lelloman.read.feed
 
-import com.lelloman.read.core.HtmlParser
+import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.utils.UrlValidator
@@ -15,11 +15,13 @@ class FeedFinderTest {
     private val httpClient: HttpClient = mock()
     private val urlValidator: UrlValidator = UrlValidator()
     private val htmlParser: HtmlParser = mock()
+    private val feedFetcher: FeedFetcher = mock()
 
     private val tested = FeedFinder(
         httpClient = httpClient,
         urlValidator = urlValidator,
-        htmlParser = htmlParser
+        htmlParser = htmlParser,
+        feedFetcher = feedFetcher
     )
 
     @Test

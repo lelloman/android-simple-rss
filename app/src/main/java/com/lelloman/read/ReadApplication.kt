@@ -81,6 +81,15 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
                         isActive = true
                     )
                 )
+                sourcesDao.insert(
+                    Source(
+                        id = 0L,
+                        name = "ilmattino",
+                        url = "http://www.ilmattino.it/rss.php",
+                        lastFetched = 0L,
+                        isActive = true
+                    )
+                )
             }
             .subscribeOn(Schedulers.io())
             .subscribe()

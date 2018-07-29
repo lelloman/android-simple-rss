@@ -1,15 +1,16 @@
 package com.lelloman.read.feed
 
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.read.core.HtmlParser
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
+import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.read.testutils.dummySource
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock
@@ -95,7 +96,7 @@ class FeedFetcherTest {
         givenCannotUseMeteredNetwork()
         givenMeteredNetwork()
 
-        val tester = tested.fetchFeed(mock()).test()
+        val tester = tested.fetchFeed(dummySource()).test()
 
         tester.assertComplete()
         tester.assertNoValues()
