@@ -5,8 +5,10 @@ import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.feed.FeedFetcher
-import com.lelloman.read.feed.FeedFinder
 import com.lelloman.read.feed.FeedParser
+import com.lelloman.read.feed.finder.FeedFinder
+import com.lelloman.read.feed.finder.FeedFinderHttpClient
+import com.lelloman.read.feed.finder.FeedFinderParser
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClientImpl
 import com.lelloman.read.persistence.settings.AppSettings
@@ -50,10 +52,19 @@ class BagOfDependencies {
             appSettings = appSettings
         )
 
-        feedFinder = FeedFinder(
+        val feedFinderHttpClient = FeedFinderHttpClient(
             httpClient = httpClient,
+            urlValidator = urlValidator
+        )
+
+        val feedFinderParser = FeedFinderParser(
             urlValidator = urlValidator,
-            htmlParser = htmlParser,
+            htmlParser = htmlParser
+        )
+
+        feedFinder = FeedFinder(
+            httpClient = feedFinderHttpClient,
+            parser = feedFinderParser,
             feedFetcher = feedFetcher
         )
     }

@@ -1,6 +1,6 @@
 package com.lelloman.read.ondemand
 
-import com.lelloman.read.feed.FeedFinder
+import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.testutils.BagOfDependencies
 import org.junit.Before
 import org.junit.Test
