@@ -54,7 +54,11 @@ class HtmlParserTest {
 
     @Test
     fun `parses simple html 1`() {
-        val doc = tested.parseDoc(url = URL_1, html = SIMPLE_HTML_1)
+        val doc = tested.parseDoc(
+            url = URL_1,
+            baseUrl = URL_1,
+            html = SIMPLE_HTML_1
+        )
 
         assertThat(doc.children).hasSize(1)
         doc.children[0].let { html ->
@@ -91,7 +95,11 @@ class HtmlParserTest {
 
     @Test
     fun `iterates over all elements in simple html 1`() {
-        val doc = tested.parseDoc(url = URL_1, html = SIMPLE_HTML_1)
+        val doc = tested.parseDoc(
+            url = URL_1,
+            baseUrl = URL_1,
+            html = SIMPLE_HTML_1
+        )
         val register = mutableMapOf<KClass<out DocElement>, Int>()
 
         doc.iterate {

@@ -1,5 +1,6 @@
 package com.lelloman.read.ui.articles.view
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
@@ -20,6 +21,7 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
 
     override fun getViewModelClass() = ArticleViewModel::class.java
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

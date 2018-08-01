@@ -9,7 +9,7 @@
     <string name="test_source">Test source</string>
     <string name="error_add_source_name">Insert a valid name</string>
     <string name="error_add_source_url">Insert a valid url</string>
-    <string name="something_went_wrong">Something went wrong...</string>
+    <string name="something_went_wrong">Something went wrong…</string>
     <string name="enable_sources">Enable sources</string>
     <string name="add_source">Add source</string>
     <string name="empty_articles_no_source">"You haven't added any source yet"</string>

@@ -5,12 +5,12 @@ import io.reactivex.Single
 import java.io.File
 
 object Xmls {
-    const val FANPAGE = "rss_fanpage.xml"
-    const val REPUBBLICA = "rss_repubblica.xml"
-    const val REPUBBLICA_ACTUAL = "rss_repubblica_actual.xml"
+    private const val FANPAGE = "rss_fanpage.xml"
+    private const val REPUBBLICA = "rss_repubblica.xml"
+    private const val REPUBBLICA_ACTUAL = "rss_repubblica_actual.xml"
     const val SAMPLE = "rss_sample2.0.xml"
     const val VICE = "rss_vice.xml"
-    const val WIRED = "rss_wired.xml"
+    private const val WIRED = "rss_wired.xml"
 
     val ALL_RSS = listOf(FANPAGE, REPUBBLICA, REPUBBLICA_ACTUAL, SAMPLE, VICE, WIRED)
 

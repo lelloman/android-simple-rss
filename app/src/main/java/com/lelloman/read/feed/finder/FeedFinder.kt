@@ -44,9 +44,9 @@ class FeedFinder(
         }
         .toList()
         .map { it.toSet() }
-        .doOnSuccess {
-            logger.d("gathered ${it.size} url candidates:")
-            it.forEach { logger.d("candidate: $it") }
+        .doOnSuccess { urlCandidates ->
+            logger.d("gathered ${urlCandidates.size} url candidates:")
+            urlCandidates.forEach { logger.d("candidate: $it") }
         }
         .flatMapObservable { Observable.fromIterable(it) }
         .flatMapMaybe { urlToTest ->

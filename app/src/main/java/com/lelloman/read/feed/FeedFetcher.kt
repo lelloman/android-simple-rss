@@ -33,7 +33,7 @@ class FeedFetcher(
         .filter { useMeteredNetwork ->
             useMeteredNetwork || !meteredConnectionChecker.isNetworkMetered()
         }
-        .flatMap {
+        .flatMap { _ ->
             httpClient
                 .request(HttpRequest(source.url))
                 .filter { it.isSuccessful }
@@ -42,8 +42,8 @@ class FeedFetcher(
                         .parseFeeds(it.stringBody)
                         .toMaybe()
                 }
-                .map {
-                    it.map {
+                .map { parsedFeeds ->
+                    parsedFeeds.map {
                         parsedFeedToArticle(source, it)
                     }
                 }

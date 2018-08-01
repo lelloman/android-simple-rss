@@ -20,8 +20,8 @@ import org.mockito.Mockito.mock
 class MockViewModelModule : ViewModelModule() {
 
     val articlesListViewModel: ArticlesListViewModel = mock(ArticlesListViewModel::class.java)
-    val sourcesListViewModel: SourcesListViewModel = mock(SourcesListViewModel::class.java)
-    val addSourceViewModel: AddSourceViewModel = mock(AddSourceViewModel::class.java)
+    private val sourcesListViewModel: SourcesListViewModel = mock(SourcesListViewModel::class.java)
+    private val addSourceViewModel: AddSourceViewModel = mock(AddSourceViewModel::class.java)
 
     override fun provideArticlesListViewModel(
         @IoScheduler ioScheduler: Scheduler,

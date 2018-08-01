@@ -9,7 +9,7 @@ import com.lelloman.read.di.MockViewModelModule
 class TestApp : ReadApplication() {
 
     val viewModelModule = MockViewModelModule()
-    val persistenceModule = MockPersistenceModule()
+    private val persistenceModule = MockPersistenceModule()
 
     override fun onCreate() {
         super.onCreate()

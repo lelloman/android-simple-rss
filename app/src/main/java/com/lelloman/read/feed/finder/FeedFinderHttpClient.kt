@@ -13,8 +13,8 @@ class FeedFinderHttpClient(
 
     fun requestStringBody(url: String): Maybe<String> = Single
         .just(urlValidator.maybePrependProtocol(url))
-        .flatMapMaybe {
-            httpClient.request(HttpRequest(url))
+        .flatMapMaybe { urlWithProtocol ->
+            httpClient.request(HttpRequest(urlWithProtocol))
                 .filter { it.isSuccessful && it.stringBody.isNotEmpty() }
                 .map { it.stringBody }
         }

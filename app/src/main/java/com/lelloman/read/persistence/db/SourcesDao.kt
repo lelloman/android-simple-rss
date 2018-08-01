@@ -6,7 +6,6 @@ import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.utils.Constants.SOURCE_TABLE_NAME
-import io.reactivex.Completable
 import io.reactivex.Flowable
 
 @Dao
