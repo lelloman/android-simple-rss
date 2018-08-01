@@ -2,6 +2,7 @@ package com.lelloman.read.core.di
 
 import com.lelloman.read.ReadApplication
 import com.lelloman.read.feed.FeedModule
+import com.lelloman.read.html.HtmlModule
 import com.lelloman.read.http.HttpModule
 import com.lelloman.read.persistence.PersistenceModule
 import dagger.Component
@@ -14,6 +15,7 @@ import javax.inject.Singleton
     AndroidInjectionModule::class,
     AppModule::class,
     FeedModule::class,
+    HtmlModule::class,
     HttpModule::class,
     PersistenceModule::class,
     ViewModelFactoryModule::class,

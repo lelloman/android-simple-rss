@@ -43,23 +43,21 @@ class FeedModule {
         faviconFetcher = faviconFetcher
     )
 
-    @Singleton
-    @Provides
-    fun provideHtmlParser() = HtmlParser()
-
     @Provides
     fun provideFeedFetcher(
         httpClient: HttpClient,
         feedParser: FeedParser,
         htmlParser: HtmlParser,
         appSettings: AppSettings,
-        meteredConnectionChecker: MeteredConnectionChecker
+        meteredConnectionChecker: MeteredConnectionChecker,
+        loggerFactory: LoggerFactory
     ) = FeedFetcher(
         httpClient = httpClient,
         feedParser = feedParser,
         htmlParser = htmlParser,
         appSettings = appSettings,
-        meteredConnectionChecker = meteredConnectionChecker
+        meteredConnectionChecker = meteredConnectionChecker,
+        loggerFactory = loggerFactory
     )
 
     @Singleton

@@ -49,7 +49,8 @@ class BagOfDependencies {
             feedParser = feedParser,
             htmlParser = htmlParser,
             meteredConnectionChecker = meteredConnectionChecker,
-            appSettings = appSettings
+            appSettings = appSettings,
+            loggerFactory = loggerFactory
         )
 
         val feedFinderHttpClient = FeedFinderHttpClient(
@@ -59,13 +60,15 @@ class BagOfDependencies {
 
         val feedFinderParser = FeedFinderParser(
             urlValidator = urlValidator,
-            htmlParser = htmlParser
+            htmlParser = htmlParser,
+            loggerFactory = loggerFactory
         )
 
         feedFinder = FeedFinder(
             httpClient = feedFinderHttpClient,
             parser = feedFinderParser,
-            feedFetcher = feedFetcher
+            feedFetcher = feedFetcher,
+            loggerFactory = loggerFactory
         )
     }
 }

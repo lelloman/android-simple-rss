@@ -119,7 +119,6 @@ class FeedParser @Inject constructor(
 
     private fun findChannelTag(parser: XmlPullParser) {
         while (parser.eventType != XmlPullParser.END_DOCUMENT) {
-            println("findChannelTag() name ${parser.name} type ${parser.eventType}")
             if (parser.eventType == XmlPullParser.START_TAG && parser.name == "channel") {
                 parser.next()
                 break
