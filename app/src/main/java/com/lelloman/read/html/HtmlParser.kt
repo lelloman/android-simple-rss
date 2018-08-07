@@ -10,10 +10,12 @@ import org.jsoup.select.Elements
 
 class HtmlParser {
 
-    fun parseDoc(html: String): Doc {
+    fun parseDoc(url: String,
+                 baseUrl: String,
+                 html: String): Doc {
         val jsoupDoc = Jsoup.parse(html)
 
-        return Doc().apply {
+        return Doc(url).apply {
             children = parseChildren(this, jsoupDoc.children())
         }
     }

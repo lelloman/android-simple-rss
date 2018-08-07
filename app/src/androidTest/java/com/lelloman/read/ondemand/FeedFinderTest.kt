@@ -20,7 +20,7 @@ class FeedFinderTest {
     fun findsFanpageFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.fanpage.it").test()
 
-        tester.assertValueCount(4)
+        tester.assertValueCount(3)
     }
 
     //@Ignore
@@ -36,7 +36,7 @@ class FeedFinderTest {
     fun findsAnsaFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.ansa.it").test()
 
-        tester.assertValueCount(0)
+        tester.assertValueCount(43)
     }
 
     //@Ignore
@@ -45,5 +45,37 @@ class FeedFinderTest {
         val tester = tested.findValidFeedUrls("http://www.androidweekly.net").test()
 
         tester.assertValueCount(1)
+    }
+
+    //@Ignore
+    @Test
+    fun findsIlMattinoFeedUrl() {
+        val tester = tested.findValidFeedUrls("http://www.ilmattino.it").test()
+
+        tester.assertValueCount(1)
+    }
+
+    //@Ignore
+    @Test
+    fun findsViceFeedUrl() {
+        val tester = tested.findValidFeedUrls("http://www.vice.com/it").test()
+
+        tester.assertValueCount(2)
+    }
+
+    //@Ignore
+    @Test
+    fun findsWiredFeedUrl() {
+        val tester = tested.findValidFeedUrls("http://www.wired.it").test()
+
+        tester.assertValueCount(2)
+    }
+
+    //@Ignore
+    @Test
+    fun findsAndroidDevBlogFeedUrl() {
+        val tester = tested.findValidFeedUrls("https://android-developers.googleblog.com").test()
+
+        tester.assertValueCount(0)
     }
 }

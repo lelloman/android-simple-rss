@@ -9,10 +9,10 @@ import org.mockito.Mockito.mock
 
 class MockPersistenceModule : PersistenceModule() {
 
-    val appDatabase: AppDatabase = mock(AppDatabase::class.java)
+    private val appDatabase: AppDatabase = mock(AppDatabase::class.java)
 
-    val sourcesDao: SourcesDao = mock(SourcesDao::class.java)
-    val articlesDao: ArticlesDao = mock(ArticlesDao::class.java)
+    private val sourcesDao: SourcesDao = mock(SourcesDao::class.java)
+    private val articlesDao: ArticlesDao = mock(ArticlesDao::class.java)
 
     override fun provideDatabase(context: Context) = appDatabase
 

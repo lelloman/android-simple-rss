@@ -1,6 +1,7 @@
 package com.lelloman.read.feed
 
 import com.lelloman.read.core.MeteredConnectionChecker
+import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
 import com.lelloman.read.html.HtmlParser
@@ -18,8 +19,11 @@ class FeedFetcher(
     private val feedParser: FeedParser,
     private val htmlParser: HtmlParser,
     private val meteredConnectionChecker: MeteredConnectionChecker,
-    private val appSettings: AppSettings
+    private val appSettings: AppSettings,
+    loggerFactory: LoggerFactory
 ) {
+
+    private val logger = loggerFactory.getLogger(javaClass.simpleName)
 
     fun fetchFeed(source: Source): Maybe<Pair<Source, List<Article>>> = appSettings
         .useMeteredNetwork
@@ -29,7 +33,7 @@ class FeedFetcher(
         .filter { useMeteredNetwork ->
             useMeteredNetwork || !meteredConnectionChecker.isNetworkMetered()
         }
-        .flatMap {
+        .flatMap { _ ->
             httpClient
                 .request(HttpRequest(source.url))
                 .filter { it.isSuccessful }
@@ -38,8 +42,8 @@ class FeedFetcher(
                         .parseFeeds(it.stringBody)
                         .toMaybe()
                 }
-                .map {
-                    it.map {
+                .map { parsedFeeds ->
+                    parsedFeeds.map {
                         parsedFeedToArticle(source, it)
                     }
                 }
@@ -65,6 +69,9 @@ class FeedFetcher(
                 else -> TestResult.UNKNOWN_ERROR
             }
             Single.just(result)
+        }
+        .doOnSuccess {
+            logger.d("testUrl() $url result $it")
         }
 
     private fun dummySource(url: String) = Source(

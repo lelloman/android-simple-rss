@@ -10,6 +10,7 @@ import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.read.testutils.MockLoggerFactory
 import com.lelloman.read.testutils.dummySource
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
@@ -27,13 +28,15 @@ class FeedFetcherTest {
     private val htmlParser: HtmlParser = mock()
     private val meteredConnectionChecker: MeteredConnectionChecker = mock()
     private val appSettings: AppSettings = mock()
+    private val loggerFactory = MockLoggerFactory()
 
     private val tested = FeedFetcher(
         httpClient = httpClient,
         feedParser = feedParser,
         htmlParser = htmlParser,
         meteredConnectionChecker = meteredConnectionChecker,
-        appSettings = appSettings
+        appSettings = appSettings,
+        loggerFactory = loggerFactory
     )
 
     @Test
@@ -106,9 +109,9 @@ class FeedFetcherTest {
     fun `fetches feed if cant user metered network and network is non un-metered`() {
         givenCannotUseMeteredNetwork()
         givenUnMeteredNetwork()
+        givenHttpSuccessfulResponse()
         givenParsesHtml()
         givenParsesFeed()
-        givenHttpSuccessfulResponse()
 
         val tester = tested.fetchFeed(SOURCE).test()
 
@@ -122,8 +125,8 @@ class FeedFetcherTest {
     @Test
     fun `returns successful url test result`() {
         givenHttpSuccessfulResponse()
-        givenParsesFeed()
         givenParsesHtml()
+        givenParsesFeed()
 
         val tester = tested.testUrl("asd").test()
 

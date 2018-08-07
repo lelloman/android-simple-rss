@@ -1,6 +1,6 @@
 package com.lelloman.read.feed.finder
 
-data class BaseUrlAndStringBody(
+data class StringBodyAndUrl(
     val stringBody: String,
-    val baseUrl: String
+    val url: String
 )

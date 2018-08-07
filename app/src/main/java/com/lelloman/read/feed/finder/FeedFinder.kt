@@ -1,26 +1,60 @@
 package com.lelloman.read.feed.finder
 
+import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedFetcher
 import io.reactivex.Observable
 
 class FeedFinder(
     private val httpClient: FeedFinderHttpClient,
     private val parser: FeedFinderParser,
-    private val feedFetcher: FeedFetcher
+    private val feedFetcher: FeedFetcher,
+    loggerFactory: LoggerFactory
 ) {
+
+    private val logger = loggerFactory.getLogger(javaClass.simpleName)
 
     fun findValidFeedUrls(url: String): Observable<String> = httpClient
         .requestStringBodyAndBaseUrl(url)
-        .flatMapObservable { (stringBody, baseUrl) ->
-            parser.findCandidateUrls(url = baseUrl, homeHtml = stringBody)
+        .flatMap { (stringBody, baseUrl) ->
+            logger.d("findValidFeedUrls() base url $baseUrl")
+            parser.parseDoc(
+                url = baseUrl,
+                html = stringBody
+            )
         }
-        .flatMapMaybe { urlToTest ->
-            feedFetcher
-                .testUrl(urlToTest)
-                .filter { it == FeedFetcher.TestResult.SUCCESS }
-                .map { urlToTest }
+        .flatMapObservable(parser::findCandidateUrls)
+        .flatMap { candidateUrl ->
+            httpClient
+                .requestStringBody(candidateUrl)
+                .flatMap {
+                    parser.parseDoc(
+                        url = url,
+                        html = it
+                    )
+                }
+                .flatMapObservable {
+                    Observable.merge(
+                        parser.findCandidateUrls(it),
+                        Observable.just(candidateUrl)
+                    )
+                }
         }
+        .toList()
+        .map { it.toSet() }
+        .flatMapObservable { urls ->
+            logger.d("found ${urls.size} urls to test")
+            Observable.fromIterable(urls)
+        }
+        .flatMapMaybe(::testUrl)
         .onErrorResumeNext { _: Throwable ->
             Observable.empty()
         }
+
+    private fun testUrl(urlToTest: String) = feedFetcher
+        .testUrl(urlToTest)
+        .filter { testResult ->
+            logger.d("tested url $urlToTest -> $testResult")
+            testResult == FeedFetcher.TestResult.SUCCESS
+        }
+        .map { urlToTest }
 }
