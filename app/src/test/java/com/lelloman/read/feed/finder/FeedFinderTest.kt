@@ -1,13 +1,14 @@
 package com.lelloman.read.feed.finder
 
-import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedFetcher
 import com.lelloman.read.html.Doc
+import com.lelloman.read.testutils.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import org.junit.Test
 
 class FeedFinderTest {
@@ -15,7 +16,7 @@ class FeedFinderTest {
     private val httpClient: FeedFinderHttpClient = mock()
     private val feedFetcher: FeedFetcher = mock()
     private val parser: FeedFinderParser = mock()
-    private val loggerFactory: LoggerFactory = mock()
+    private val loggerFactory = MockLoggerFactory()
 
     private val tested = FeedFinder(
         httpClient = httpClient,
@@ -25,7 +26,7 @@ class FeedFinderTest {
     )
 
     @Test
-    fun `finds candidates urls`() {
+    fun `finds candidates urls in first order url`() {
         val baseUrl = "http://www.staceppa.com"
         val doc = Doc()
         givenStringBodyAndBaseUrl(
@@ -33,6 +34,23 @@ class FeedFinderTest {
             stringBody = ""
         )
         whenever(parser.parseDoc(any(), any())).thenReturn(Maybe.just(doc))
+        whenever(parser.findCandidateUrls(any())).thenReturn(Observable.empty())
+
+        tested.findValidFeedUrls("").test()
+
+        verify(parser).findCandidateUrls(doc)
+    }
+
+    @Test
+    fun `finds candidates urls in second order urls`() {
+        val baseUrl = "http://www.staceppa.com"
+        val doc = Doc()
+        givenStringBodyAndBaseUrl(
+            baseUrl = baseUrl,
+            stringBody = ""
+        )
+        whenever(parser.parseDoc(baseUrl, "")).thenReturn(Maybe.just(doc))
+        whenever(parser.findCandidateUrls(any())).thenReturn(Observable.empty())
 
         tested.findValidFeedUrls("").test()
 

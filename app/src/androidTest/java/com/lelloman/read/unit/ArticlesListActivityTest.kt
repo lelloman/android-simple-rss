@@ -8,6 +8,7 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.lelloman.read.R
 import com.lelloman.read.core.view.ViewActionEvent
+import com.lelloman.read.di.MockViewModelModule
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.testutils.TestApp
 import com.lelloman.read.testutils.checkIsSwipeRefreshing
@@ -38,6 +39,7 @@ class ArticlesListActivityTest {
     @get:Rule
     val activityTestRule = ActivityTestRule<ArticlesListActivity>(ArticlesListActivity::class.java, true, false)
 
+    private val viewModelModule = MockViewModelModule()
     private lateinit var viewModel: ArticlesListViewModel
 
     private lateinit var articlesLiveData: MutableLiveData<List<SourceArticle>>
@@ -66,7 +68,8 @@ class ArticlesListActivityTest {
         isLoadingLiveData = MutableLiveData()
         viewActionEvents = SingleLiveData()
 
-        viewModel = TestApp.instance.viewModelModule.articlesListViewModel
+        TestApp.instance.viewModelModule = viewModelModule
+        viewModel = viewModelModule.articlesListViewModel
         whenever(viewModel.articles).thenReturn(articlesLiveData)
         whenever(viewModel.isLoading).thenReturn(isLoadingLiveData)
         whenever(viewModel.viewActionEvents).thenReturn(viewActionEvents)

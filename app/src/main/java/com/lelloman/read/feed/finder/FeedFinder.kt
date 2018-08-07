@@ -22,10 +22,7 @@ class FeedFinder(
                 html = stringBody
             )
         }
-        .flatMapObservable { doc ->
-            parser
-                .findCandidateUrls(doc)
-        }
+        .flatMapObservable(parser::findCandidateUrls)
         .flatMap { candidateUrl ->
             httpClient
                 .requestStringBody(candidateUrl)
@@ -44,19 +41,20 @@ class FeedFinder(
         }
         .toList()
         .map { it.toSet() }
-        .doOnSuccess { urlCandidates ->
-            logger.d("gathered ${urlCandidates.size} url candidates:")
-            urlCandidates.forEach { logger.d("candidate: $it") }
+        .flatMapObservable { urls ->
+            logger.d("found ${urls.size} urls to test")
+            Observable.fromIterable(urls)
         }
-        .flatMapObservable { Observable.fromIterable(it) }
-        .flatMapMaybe { urlToTest ->
-            logger.d("testing url candidate $urlToTest")
-            feedFetcher
-                .testUrl(urlToTest)
-                .filter { it == FeedFetcher.TestResult.SUCCESS }
-                .map { urlToTest }
-        }
+        .flatMapMaybe(::testUrl)
         .onErrorResumeNext { _: Throwable ->
             Observable.empty()
         }
+
+    private fun testUrl(urlToTest: String) = feedFetcher
+        .testUrl(urlToTest)
+        .filter { testResult ->
+            logger.d("tested url $urlToTest -> $testResult")
+            testResult == FeedFetcher.TestResult.SUCCESS
+        }
+        .map { urlToTest }
 }

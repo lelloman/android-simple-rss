@@ -3,13 +3,22 @@ package com.lelloman.read.testutils
 import com.lelloman.read.ReadApplication
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
-import com.lelloman.read.di.MockPersistenceModule
-import com.lelloman.read.di.MockViewModelModule
+import com.lelloman.read.core.di.ViewModelModule
+import com.lelloman.read.persistence.PersistenceModule
 
 class TestApp : ReadApplication() {
 
-    val viewModelModule = MockViewModelModule()
-    private val persistenceModule = MockPersistenceModule()
+    var viewModelModule = ViewModelModule()
+        set(value) {
+            field = value
+            inject()
+        }
+
+    var persistenceModule = PersistenceModule()
+        set(value) {
+            field = value
+            inject()
+        }
 
     override fun onCreate() {
         super.onCreate()

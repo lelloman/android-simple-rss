@@ -109,9 +109,9 @@ class FeedFetcherTest {
     fun `fetches feed if cant user metered network and network is non un-metered`() {
         givenCannotUseMeteredNetwork()
         givenUnMeteredNetwork()
+        givenHttpSuccessfulResponse()
         givenParsesHtml()
         givenParsesFeed()
-        givenHttpSuccessfulResponse()
 
         val tester = tested.fetchFeed(SOURCE).test()
 
@@ -125,8 +125,8 @@ class FeedFetcherTest {
     @Test
     fun `returns successful url test result`() {
         givenHttpSuccessfulResponse()
-        givenParsesFeed()
         givenParsesHtml()
+        givenParsesFeed()
 
         val tester = tested.testUrl("asd").test()
 

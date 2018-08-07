@@ -70,4 +70,12 @@ class FeedFinderTest {
 
         tester.assertValueCount(2)
     }
+
+    //@Ignore
+    @Test
+    fun findsAndroidDevBlogFeedUrl() {
+        val tester = tested.findValidFeedUrls("https://android-developers.googleblog.com").test()
+
+        tester.assertValueCount(0)
+    }
 }

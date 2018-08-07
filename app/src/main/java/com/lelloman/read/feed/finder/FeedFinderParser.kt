@@ -28,30 +28,10 @@ class FeedFinderParser(
                 )
             }
         }
-        .map {
-            logger.d("doc parsed $it")
-            it
-        }
-//        .onErrorComplete()
-
-    fun findAllLinks(doc: Doc): Observable<String> = Single
-        .fromCallable {
-            logger.d("findAllLinks for doc with url ${doc.url}")
-            doc
-                .all()
-                .filter { it is ADocElement }
-                .map { it as ADocElement }
-                .map { it.href }
-        }
-        .map {
-            logger.d("findAllLinks() doc url ${doc.url} found ${it.size} links")
-            it.toSet()
-        }
-        .flatMapObservable { Observable.fromIterable(it) }
+        .onErrorComplete()
 
     fun findCandidateUrls(doc: Doc): Observable<String> = Single
         .fromCallable {
-            logger.d("findCandidateUrls() doc url ${doc.url}")
             val output = if (doc.url != null) {
                 mutableListOf("${doc.url}/feed")
             } else {
@@ -79,7 +59,7 @@ class FeedFinderParser(
                 .map { url ->
                     logger.d("found url candidate $url")
                     urlValidator.maybePrependBaseUrl(
-                        baseUrl = doc.url ?: "",
+                        baseUrl = doc.baseUrl ?: "",
                         path = url
                     )
                 }
