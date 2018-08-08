@@ -5,7 +5,11 @@ import android.databinding.ObservableField
 import com.lelloman.read.R
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.logger.LoggerFactory
-import com.lelloman.read.feed.FeedFetcher
+import com.lelloman.read.feed.fetcher.EmptySource
+import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.feed.fetcher.HttpError
+import com.lelloman.read.feed.fetcher.Success
+import com.lelloman.read.feed.fetcher.XmlError
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.sources.repository.SourcesRepository
 import com.lelloman.read.utils.LazyLiveData
@@ -61,15 +65,15 @@ class AddSourceViewModelImpl(
                 .doAfterTerminate { testingUrl.value = false }
                 .subscribe({
                     logger.d("test result: $it")
-                    if (it == FeedFetcher.TestResult.SUCCESS) {
+                    if (it is Success) {
                         sourceUrlDrwable.value = R.drawable.ic_check_green_24dp
                         sourceUrlError.value = ""
                     } else {
                         sourceUrlDrwable.value = 0
                         val errorId = when (it) {
-                            FeedFetcher.TestResult.HTTP_ERROR -> R.string.test_feed_http_error
-                            FeedFetcher.TestResult.XML_ERROR -> R.string.test_feed_xml_error
-                            FeedFetcher.TestResult.EMPTY_SOURCE -> R.string.test_feed_empty_error
+                            HttpError -> R.string.test_feed_http_error
+                            XmlError -> R.string.test_feed_xml_error
+                            EmptySource -> R.string.test_feed_empty_error
                             else -> R.string.something_went_wrong
                         }
                         sourceUrlError.value = getString(errorId)

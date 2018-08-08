@@ -5,7 +5,7 @@ import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
-import com.lelloman.read.feed.FeedFetcher
+import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel

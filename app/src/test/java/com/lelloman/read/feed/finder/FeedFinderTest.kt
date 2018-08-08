@@ -1,6 +1,6 @@
 package com.lelloman.read.feed.finder
 
-import com.lelloman.read.feed.FeedFetcher
+import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.html.Doc
 import com.lelloman.read.testutils.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any

@@ -1,4 +1,4 @@
-package com.lelloman.read.feed
+package com.lelloman.read.feed.fetcher
 
 import android.support.annotation.VisibleForTesting
 import com.lelloman.read.http.HttpClient

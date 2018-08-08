@@ -4,7 +4,13 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
 import com.lelloman.read.core.navigation.BackNavigationEvent
 import com.lelloman.read.core.view.ToastEvent
-import com.lelloman.read.feed.FeedFetcher
+import com.lelloman.read.feed.fetcher.EmptySource
+import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.feed.fetcher.HttpError
+import com.lelloman.read.feed.fetcher.Success
+import com.lelloman.read.feed.fetcher.TestResult
+import com.lelloman.read.feed.fetcher.UnknownError
+import com.lelloman.read.feed.fetcher.XmlError
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockLoggerFactory
@@ -64,7 +70,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
         val originalUrl = "original url"
         val urlWithProtocol = "url with protocol"
         givenHasValidUrlSet(originalUrl, urlWithProtocol)
-        givenFeedFetcherTestsUrl(FeedFetcher.TestResult.EMPTY_SOURCE)
+        givenFeedFetcherTestsUrl(EmptySource)
 
         tested.onTestUrlClicked()
 
@@ -75,7 +81,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `if it is testing url does not triget url testing again`() {
         givenHasValidUrlSet()
-        val feedFetcherSubject = SingleSubject.create<FeedFetcher.TestResult>()
+        val feedFetcherSubject = SingleSubject.create<TestResult>()
         whenever(feedFetcher.testUrl(any())).thenReturn(feedFetcherSubject)
         tested.onTestUrlClicked()
         assertThat(tested.testingUrl.value).isTrue()
@@ -89,7 +95,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `if feed fetcher throws an error shows toast`() {
         val actionEventsObserver = tested.viewActionEvents.test()
-        whenever(feedFetcher.testUrl(any())).thenReturn(Single.error<FeedFetcher.TestResult>(Exception()))
+        whenever(feedFetcher.testUrl(any())).thenReturn(Single.error<TestResult>(Exception()))
         givenHasValidUrlSet()
 
         tested.onTestUrlClicked()
@@ -101,7 +107,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows green check and hides error message if feed fetcher test is successful`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(FeedFetcher.TestResult.SUCCESS)
+        givenFeedFetcherTestsUrl(Success(0))
 
         tested.onTestUrlClicked()
 
@@ -115,7 +121,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows error and hides green check if feed fetcher test result is http error`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(FeedFetcher.TestResult.HTTP_ERROR)
+        givenFeedFetcherTestsUrl(HttpError)
 
         tested.onTestUrlClicked()
 
@@ -129,7 +135,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows error and hides green check if feed fetcher test result is empty source`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(FeedFetcher.TestResult.EMPTY_SOURCE)
+        givenFeedFetcherTestsUrl(EmptySource)
 
         tested.onTestUrlClicked()
 
@@ -143,7 +149,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows error and hides green check if feed fetcher test result is xml error`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(FeedFetcher.TestResult.XML_ERROR)
+        givenFeedFetcherTestsUrl(XmlError)
 
         tested.onTestUrlClicked()
 
@@ -157,7 +163,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows error and hides green check if feed fetcher test result is unknown error`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(FeedFetcher.TestResult.UNKNOWN_ERROR)
+        givenFeedFetcherTestsUrl(UnknownError)
 
         tested.onTestUrlClicked()
 
@@ -286,7 +292,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
         whenever(urlValidator.isValidUrl(anyOrNull())).thenReturn(false)
     }
 
-    private fun givenFeedFetcherTestsUrl(testResult: FeedFetcher.TestResult) {
+    private fun givenFeedFetcherTestsUrl(testResult: TestResult) {
         whenever(feedFetcher.testUrl(any())).thenReturn(Single.just(testResult))
     }
 }

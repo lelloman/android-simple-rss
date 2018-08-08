@@ -1,7 +1,8 @@
 package com.lelloman.read.feed.finder
 
 import com.lelloman.read.core.logger.LoggerFactory
-import com.lelloman.read.feed.FeedFetcher
+import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.feed.fetcher.Success
 import io.reactivex.Observable
 
 class FeedFinder(
@@ -32,6 +33,7 @@ class FeedFinder(
                         html = it
                     )
                 }
+
                 .flatMapObservable {
                     Observable.merge(
                         parser.findCandidateUrls(it),
@@ -54,7 +56,7 @@ class FeedFinder(
         .testUrl(urlToTest)
         .filter { testResult ->
             logger.d("tested url $urlToTest -> $testResult")
-            testResult == FeedFetcher.TestResult.SUCCESS
+            testResult is Success
         }
         .map { urlToTest }
 }

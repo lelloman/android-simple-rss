@@ -4,6 +4,8 @@ import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.read.feed.fetcher.FaviconFetcher
+import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Source
