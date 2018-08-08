@@ -104,9 +104,9 @@ class FeedFinderIntegrationTest {
         tester.assertComplete()
         tester.assertValueCount(3)
         tester.values().apply {
-            assertThat(this).contains("$URL_1/feed")
-            assertThat(this).contains("$URL_1/somefeed")
-            assertThat(this).contains("http://www.staceppa.com")
+            assertThat(this).contains(FoundFeed("$URL_1/feed", 0))
+            assertThat(this).contains(FoundFeed("$URL_1/somefeed", 0))
+            assertThat(this).contains(FoundFeed("http://www.staceppa.com", 0))
         }
     }
 
@@ -123,9 +123,9 @@ class FeedFinderIntegrationTest {
         tester.assertComplete()
         tester.assertValueCount(3)
         tester.values().apply {
-            assertThat(this).contains("$URL_1/feed")
-            assertThat(this).contains("http://www.rsssomething.com")
-            assertThat(this).contains("http://www.staceppa2.com")
+            assertThat(this).contains(FoundFeed("$URL_1/feed", 0))
+            assertThat(this).contains(FoundFeed("http://www.rsssomething.com", 0))
+            assertThat(this).contains(FoundFeed("http://www.staceppa2.com", 0))
         }
     }
 

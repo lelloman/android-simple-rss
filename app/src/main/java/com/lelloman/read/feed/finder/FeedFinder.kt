@@ -14,7 +14,7 @@ class FeedFinder(
 
     private val logger = loggerFactory.getLogger(javaClass.simpleName)
 
-    fun findValidFeedUrls(url: String): Observable<String> = httpClient
+    fun findValidFeedUrls(url: String): Observable<FoundFeed> = httpClient
         .requestStringBodyAndBaseUrl(url)
         .flatMap { (stringBody, baseUrl) ->
             logger.d("findValidFeedUrls() base url $baseUrl")
@@ -33,7 +33,6 @@ class FeedFinder(
                         html = it
                     )
                 }
-
                 .flatMapObservable {
                     Observable.merge(
                         parser.findCandidateUrls(it),
@@ -58,5 +57,11 @@ class FeedFinder(
             logger.d("tested url $urlToTest -> $testResult")
             testResult is Success
         }
-        .map { urlToTest }
+        .map { it as Success }
+        .map {
+            FoundFeed(
+                url = urlToTest,
+                nArticles = it.nArticles
+            )
+        }
 }
