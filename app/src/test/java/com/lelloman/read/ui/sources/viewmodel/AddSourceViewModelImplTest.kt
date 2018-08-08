@@ -52,7 +52,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `source url drawable is not set upon instantiation`() {
-        assertThat(tested.sourceUrlDrwable.value).isEqualTo(0)
+        assertThat(tested.sourceUrlDrawable.value).isEqualTo(0)
     }
 
     @Test
@@ -113,7 +113,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
         tested.apply {
             assertThat(testingUrl.value).isFalse()
-            assertThat(sourceUrlDrwable.value).isEqualTo(R.drawable.ic_check_green_24dp)
+            assertThat(sourceUrlDrawable.value).isEqualTo(R.drawable.ic_check_green_24dp)
             assertThat(sourceUrlError.value).isEmpty()
         }
     }
@@ -126,7 +126,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
         tested.onTestUrlClicked()
 
         tested.apply {
-            assertThat(sourceUrlDrwable.value).isEqualTo(0)
+            assertThat(sourceUrlDrawable.value).isEqualTo(0)
             assertThat(sourceUrlError.value).isEqualTo("${R.string.test_feed_http_error}")
             assertThat(testingUrl.value).isFalse()
         }
@@ -140,7 +140,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
         tested.onTestUrlClicked()
 
         tested.apply {
-            assertThat(sourceUrlDrwable.value).isEqualTo(0)
+            assertThat(sourceUrlDrawable.value).isEqualTo(0)
             assertThat(sourceUrlError.value).isEqualTo("${R.string.test_feed_empty_error}")
             assertThat(testingUrl.value).isFalse()
         }
@@ -154,7 +154,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
         tested.onTestUrlClicked()
 
         tested.apply {
-            assertThat(sourceUrlDrwable.value).isEqualTo(0)
+            assertThat(sourceUrlDrawable.value).isEqualTo(0)
             assertThat(sourceUrlError.value).isEqualTo("${R.string.test_feed_xml_error}")
             assertThat(testingUrl.value).isFalse()
         }
@@ -168,7 +168,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
         tested.onTestUrlClicked()
 
         tested.apply {
-            assertThat(sourceUrlDrwable.value).isEqualTo(0)
+            assertThat(sourceUrlDrawable.value).isEqualTo(0)
             assertThat(sourceUrlError.value).isEqualTo("${R.string.something_went_wrong}")
             assertThat(testingUrl.value).isFalse()
         }

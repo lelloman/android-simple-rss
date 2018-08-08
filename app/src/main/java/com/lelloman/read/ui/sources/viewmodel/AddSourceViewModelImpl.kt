@@ -31,7 +31,7 @@ class AddSourceViewModelImpl(
 
     override val sourceUrl = ObservableField<String>()
     override val sourceUrlError = MutableLiveData<String>()
-    override val sourceUrlDrwable = MutableLiveData<Int>()
+    override val sourceUrlDrawable = MutableLiveData<Int>()
 
     private var saving = false
 
@@ -42,13 +42,13 @@ class AddSourceViewModelImpl(
     }
 
     init {
-        sourceUrlDrwable.value = 0
+        sourceUrlDrawable.value = 0
     }
 
     override fun onTestUrlClicked() {
         if (testingUrl.value == true) return
 
-        sourceUrlDrwable.value = 0
+        sourceUrlDrawable.value = 0
 
         val inputUrl = sourceUrl.get()
 
@@ -59,29 +59,31 @@ class AddSourceViewModelImpl(
             sourceUrl.set(url)
             sourceUrlError.value = ""
             testingUrl.value = true
-            feedFetcher.testUrl(url!!)
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
-                .doAfterTerminate { testingUrl.value = false }
-                .subscribe({
-                    logger.d("test result: $it")
-                    if (it is Success) {
-                        sourceUrlDrwable.value = R.drawable.ic_check_green_24dp
-                        sourceUrlError.value = ""
-                    } else {
-                        sourceUrlDrwable.value = 0
-                        val errorId = when (it) {
-                            HttpError -> R.string.test_feed_http_error
-                            XmlError -> R.string.test_feed_xml_error
-                            EmptySource -> R.string.test_feed_empty_error
-                            else -> R.string.something_went_wrong
+            subscription {
+                feedFetcher.testUrl(url!!)
+                    .subscribeOn(ioScheduler)
+                    .observeOn(uiScheduler)
+                    .doAfterTerminate { testingUrl.value = false }
+                    .subscribe({
+                        logger.d("test result: $it")
+                        if (it is Success) {
+                            sourceUrlDrawable.value = R.drawable.ic_check_green_24dp
+                            sourceUrlError.value = ""
+                        } else {
+                            sourceUrlDrawable.value = 0
+                            val errorId = when (it) {
+                                HttpError -> R.string.test_feed_http_error
+                                XmlError -> R.string.test_feed_xml_error
+                                EmptySource -> R.string.test_feed_empty_error
+                                else -> R.string.something_went_wrong
+                            }
+                            sourceUrlError.value = getString(errorId)
                         }
-                        sourceUrlError.value = getString(errorId)
-                    }
-                }, {
-                    logger.w("Error while testing url $url", it)
-                    shortToast(getString(R.string.something_went_wrong))
-                })
+                    }, {
+                        logger.w("Error while testing url $url", it)
+                        shortToast(getString(R.string.something_went_wrong))
+                    })
+            }
         }
     }
 

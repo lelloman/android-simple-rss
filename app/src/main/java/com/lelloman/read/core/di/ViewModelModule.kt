@@ -1,5 +1,6 @@
 package com.lelloman.read.core.di
 
+import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
@@ -21,6 +22,8 @@ import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModelImpl
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModelImpl
+import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
+import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModelImpl
 import com.lelloman.read.utils.UrlValidator
 import dagger.Module
 import dagger.Provides
@@ -115,5 +118,14 @@ open class ViewModelModule {
         appSettings = appSettings,
         resourceProvider = resourceProvider,
         semanticTimeProvider = semanticTimeProvider
+    )
+
+    @Provides
+    open fun provideWalkthroughViewModel(
+        resourceProvider: ResourceProvider,
+        actionTokenProvider: ActionTokenProvider
+    ): WalkthroughViewModel = WalkthroughViewModelImpl(
+        resourceProvider = resourceProvider,
+        actionTokenProvider = actionTokenProvider
     )
 }

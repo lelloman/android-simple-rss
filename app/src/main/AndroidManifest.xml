@@ -34,6 +34,7 @@
         <activity
             android:name=".ui.settings.view.SettingsActivity"
             android:label="@string/settings" />
+        <activity android:name=".ui.walkthrough.view.WalkthroughActivity" />
 
         <receiver
             android:name=".feed.FeedRefreshBroadcastReceiver"
