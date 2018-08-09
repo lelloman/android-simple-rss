@@ -37,6 +37,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 is SnackEvent -> showSnack(it)
             }
         })
+
+        viewModel.onCreate()
     }
 
     private fun showToast(event: ToastEvent) {

@@ -8,7 +8,7 @@ class NavigationRouter{
 
     fun onNavigationEvent(activity: Activity, navigationEvent: NavigationEvent) = when(navigationEvent){
         is ScreenNavigationEvent -> navigateToActivity(activity, navigationEvent)
-        is BackNavigationEvent -> activity.onBackPressed()
+        is CloseScreenNavigationEvent -> activity.finish()
         is ViewIntentNavigationEvent -> {
             val intent = Intent(Intent.ACTION_VIEW)
                 .setData(Uri.parse(navigationEvent.url))
@@ -20,6 +20,10 @@ class NavigationRouter{
     private fun navigateToActivity(activity: Activity, event: ScreenNavigationEvent){
         event.targetClass.starters.forEach {
             it.call(activity, *event.args)
+        }
+
+        if (event is ScreenAndCloseNavigationEvent) {
+            activity.finish()
         }
     }
 }

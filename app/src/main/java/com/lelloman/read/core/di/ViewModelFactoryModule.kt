@@ -5,10 +5,12 @@ import android.arch.lifecycle.ViewModelProvider
 import com.lelloman.read.core.viewmodel.ViewModelFactory
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
+import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModel
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
+import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -48,4 +50,14 @@ abstract class ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(SettingsViewModel::class)
     abstract fun bindSettingsViewModel(settingsViewModel: SettingsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(WalkthroughViewModel::class)
+    abstract fun bindWalkthroughViewModel(walkthroughViewModel: WalkthroughViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(LauncherViewModel::class)
+    abstract fun bindLauncherViewModel(launcherViewModel: LauncherViewModel): ViewModel
 }

@@ -1,6 +1,6 @@
 package com.lelloman.read.core.navigation
 
-class ScreenNavigationEvent(
+open class ScreenNavigationEvent(
     val targetClass: NavigationScreen,
-    vararg val args: Any = emptyArray()
+    val args: Array<Any> = emptyArray()
 ) : NavigationEvent

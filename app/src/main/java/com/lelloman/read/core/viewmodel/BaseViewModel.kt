@@ -6,7 +6,7 @@ import android.support.design.widget.Snackbar
 import android.widget.Toast
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.ResourceProvider
-import com.lelloman.read.core.navigation.BackNavigationEvent
+import com.lelloman.read.core.navigation.CloseScreenNavigationEvent
 import com.lelloman.read.core.navigation.NavigationEvent
 import com.lelloman.read.core.view.SnackEvent
 import com.lelloman.read.core.view.ToastEvent
@@ -26,6 +26,8 @@ abstract class BaseViewModel(
 
     open fun onTokenAction(token: String) = Unit
 
+    open fun onCreate() = Unit
+
     protected fun makeActionToken() = actionTokenProvider.makeActionToken()
 
     protected fun getString(@StringRes stringId: Int, vararg args: Any = emptyArray()) =
@@ -33,7 +35,7 @@ abstract class BaseViewModel(
 
     protected fun navigate(navigationEvent: NavigationEvent) = viewActionEvents.postValue(navigationEvent)
 
-    protected fun navigateBack() = navigate(BackNavigationEvent)
+    protected fun navigateBack() = navigate(CloseScreenNavigationEvent)
 
     protected fun shortToast(message: String) =
         viewActionEvents.postValue(ToastEvent(

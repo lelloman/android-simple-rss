@@ -5,13 +5,11 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel" />
+            type="com.lelloman.read.ui.launcher.viewmodel.LauncherViewModel" />
     </data>
 
-    <TextView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="walkthrough" />
+        android:layout_height="match_parent" />
 
 </layout>

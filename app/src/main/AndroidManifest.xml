@@ -13,13 +13,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.articles.view.ArticlesListActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".ui.articles.view.ArticlesListActivity" />
         <activity
             android:name=".ui.sources.view.SourcesListActivity"
             android:label="@string/title_activity_sources_list">
@@ -35,6 +29,12 @@
             android:name=".ui.settings.view.SettingsActivity"
             android:label="@string/settings" />
         <activity android:name=".ui.walkthrough.view.WalkthroughActivity" />
+        <activity android:name=".ui.launcher.view.LauncherActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <receiver
             android:name=".feed.FeedRefreshBroadcastReceiver"

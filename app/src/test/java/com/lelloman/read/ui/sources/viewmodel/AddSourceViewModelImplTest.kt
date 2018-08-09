@@ -2,7 +2,7 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.BackNavigationEvent
+import com.lelloman.read.core.navigation.CloseScreenNavigationEvent
 import com.lelloman.read.core.view.ToastEvent
 import com.lelloman.read.feed.fetcher.EmptySource
 import com.lelloman.read.feed.fetcher.FeedFetcher
@@ -180,7 +180,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
         tested.onCloseClicked()
 
-        viewActionEventObserver.assertValues(BackNavigationEvent)
+        viewActionEventObserver.assertValues(CloseScreenNavigationEvent)
     }
 
     @Test
@@ -239,7 +239,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
             url = url,
             isActive = true
         ))
-        viewActionEventObserver.assertValues(BackNavigationEvent)
+        viewActionEventObserver.assertValues(CloseScreenNavigationEvent)
         tested.apply {
             assertThat(sourceNameError.value).isEmpty()
             assertThat(sourceUrlError.value).isEmpty()

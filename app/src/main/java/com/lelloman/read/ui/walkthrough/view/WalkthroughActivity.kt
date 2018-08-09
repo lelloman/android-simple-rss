@@ -1,5 +1,7 @@
 package com.lelloman.read.ui.walkthrough.view
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.os.PersistableBundle
 import com.lelloman.read.R
@@ -19,5 +21,11 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
         AndroidInjection.inject(this)
 
         binding.viewModel = viewModel
+    }
+
+    companion object {
+        fun start(activity: Activity) {
+            activity.startActivity(Intent(activity, WalkthroughActivity::class.java))
+        }
     }
 }

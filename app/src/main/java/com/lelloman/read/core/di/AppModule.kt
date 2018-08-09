@@ -3,6 +3,7 @@ package com.lelloman.read.core.di
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.content.Context
+import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.core.PicassoWrap
@@ -97,4 +98,9 @@ class AppModule(private val application: Application) {
     ) = FaviconBitmapProvider(
         loggerFactory = loggerFactory
     )
+
+    @Singleton
+    @Provides
+    fun provideActionTokenProvider() = ActionTokenProvider()
+
 }

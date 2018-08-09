@@ -4,6 +4,7 @@ import com.lelloman.read.core.view.InjectableActivity
 import com.lelloman.read.feed.FeedRefreshBroadcastReceiver
 import com.lelloman.read.ui.articles.view.ArticleActivity
 import com.lelloman.read.ui.articles.view.ArticlesListActivity
+import com.lelloman.read.ui.launcher.view.LauncherActivity
 import com.lelloman.read.ui.settings.view.SettingsActivity
 import com.lelloman.read.ui.sources.view.AddSourceActivity
 import com.lelloman.read.ui.sources.view.SourceActivity
@@ -41,4 +42,7 @@ interface AndroidContributes {
 
     @ContributesAndroidInjector
     fun contributeWalkthroughActivity(): WalkthroughActivity
+
+    @ContributesAndroidInjector
+    fun contributeLauncherActivity(): LauncherActivity
 }

@@ -1,5 +1,7 @@
 package com.lelloman.read.ui.articles.view
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -76,5 +78,11 @@ class ArticlesListActivity :
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    companion object {
+        fun start(activity: Activity) {
+            activity.startActivity(Intent(activity, ArticlesListActivity::class.java))
+        }
     }
 }

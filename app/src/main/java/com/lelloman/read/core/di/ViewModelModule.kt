@@ -13,6 +13,8 @@ import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModelImpl
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModelImpl
+import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModel
+import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModelImpl
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModelImpl
 import com.lelloman.read.ui.sources.repository.SourcesRepository
@@ -127,5 +129,16 @@ open class ViewModelModule {
     ): WalkthroughViewModel = WalkthroughViewModelImpl(
         resourceProvider = resourceProvider,
         actionTokenProvider = actionTokenProvider
+    )
+
+    @Provides
+    open fun provideLauncherViewModel(
+        resourceProvider: ResourceProvider,
+        actionTokenProvider: ActionTokenProvider,
+        appSettings: AppSettings
+    ): LauncherViewModel = LauncherViewModelImpl(
+        resourceProvider = resourceProvider,
+        actionTokenProvider = actionTokenProvider,
+        appSettings = appSettings
     )
 }

@@ -78,7 +78,7 @@ class ArticlesListViewModelImpl(
     }
 
     override fun onArticleClicked(article: SourceArticle) = if (openArticlesInApp) {
-        navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, article))
+        navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, arrayOf(article)))
     } else {
         navigate(ViewIntentNavigationEvent(article.link))
     }
