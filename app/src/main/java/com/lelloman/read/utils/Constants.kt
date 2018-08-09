@@ -24,6 +24,9 @@ object Constants {
 
         const val KEY_OPEN_ARTICLES_IN_APP = "OpenArticlesInApp"
         const val DEFAULT_OPEN_ARTICLES_IN_APP = false
+
+        const val KEY_SHOULD_SHOW_WALKTHROUGH = "ShouldShowWalkthrough"
+        const val DEFAULT_SHOULD_SHOW_WALKTHROUGH = true
     }
 
 }

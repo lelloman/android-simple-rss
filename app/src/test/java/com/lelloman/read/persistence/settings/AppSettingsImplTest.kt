@@ -5,10 +5,12 @@ import android.content.SharedPreferences
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_OPEN_ARTICLES_IN_APP
+import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_SHOULD_SHOW_WALKTHROUGH
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_USE_METERED_NETWORK
 import com.lelloman.read.utils.Constants.AppSettings.KEY_ARTICLE_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.KEY_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.utils.Constants.AppSettings.KEY_OPEN_ARTICLES_IN_APP
+import com.lelloman.read.utils.Constants.AppSettings.KEY_SHOULD_SHOW_WALKTHROUGH
 import com.lelloman.read.utils.Constants.AppSettings.KEY_USE_METERED_NETWORK
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -23,6 +25,7 @@ class AppSettingsImplTest {
     private var prefArticlesImages = false
     private var prefUseMeteredNetwork = false
     private var prefOpenArticlesInApp = false
+    private var prefShouldShowWalkthrough = false
 
     private val sharedPrefsEditor: SharedPreferences.Editor = mock()
 
@@ -38,6 +41,9 @@ class AppSettingsImplTest {
 
         on { getBoolean(KEY_OPEN_ARTICLES_IN_APP, DEFAULT_OPEN_ARTICLES_IN_APP) }
             .thenAnswer { prefOpenArticlesInApp }
+
+        on { getBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, DEFAULT_SHOULD_SHOW_WALKTHROUGH) }
+            .thenAnswer { prefShouldShowWalkthrough }
 
         on { edit() }.thenReturn(sharedPrefsEditor)
     }
@@ -111,6 +117,21 @@ class AppSettingsImplTest {
         tested.setOpenArticlesInApp(true)
 
         verify(sharedPrefsEditor).putBoolean(KEY_OPEN_ARTICLES_IN_APP, true)
+        tester.assertValues(false, true)
+    }
+
+    @Test
+    fun `gets and sets should show walkthrough`() {
+        prefShouldShowWalkthrough = false
+        val tested = AppSettingsImpl(context)
+        val tester = tested.shouldShowWalkthrough.test()
+
+        tester.assertValues(false)
+
+        prefShouldShowWalkthrough = true
+        tested.setShouldShowWalkthtough(true)
+
+        verify(sharedPrefsEditor).putBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, true)
         tester.assertValues(false, true)
     }
 }
