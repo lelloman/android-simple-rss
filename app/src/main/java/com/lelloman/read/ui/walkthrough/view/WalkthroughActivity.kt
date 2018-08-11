@@ -3,7 +3,6 @@ package com.lelloman.read.ui.walkthrough.view
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import com.lelloman.read.R
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityWalkthroughBinding
@@ -12,15 +11,19 @@ import dagger.android.AndroidInjection
 
 class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthroughBinding>() {
 
+    private val viewPagerAdapter = WalkthroughPagerAdapter()
+
     override fun getLayoutId() = R.layout.activity_walkthrough
 
     override fun getViewModelClass() = WalkthroughViewModel::class.java
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
         binding.viewModel = viewModel
+        binding.viewPager.adapter = viewPagerAdapter
+        binding.pagerIndicator.viewPager = binding.viewPager
     }
 
     companion object {

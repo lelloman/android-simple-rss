@@ -20,7 +20,7 @@
             android:orientation="vertical"
             android:showDividers="middle">
 
-            <com.lelloman.read.ui.settings.view.SettingsItemView
+            <com.lelloman.read.widget.SettingsItemView
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_refresh_interval_descr"
                 app:title="@string/settings_refresh_interval_title">
@@ -32,23 +32,23 @@
                     android:entries="@{viewModel.minRefreshIntervals}"
                     android:selectedItemPosition="@={viewModel.selectedMinRefreshInterval}" />
 
-            </com.lelloman.read.ui.settings.view.SettingsItemView>
+            </com.lelloman.read.widget.SettingsItemView>
 
-            <com.lelloman.read.ui.settings.view.ToggleSettingItemView
+            <com.lelloman.read.widget.ToggleSettingItemView
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_articles_images_descr"
                 android:onCheckedChanged="@{(_, isActive) -> viewModel.onArticleListImagesChanged(isActive) }"
                 app:checked="@{viewModel.articlesListImagesSelected}"
                 app:title="@string/settings_articles_images_title" />
 
-            <com.lelloman.read.ui.settings.view.ToggleSettingItemView
+            <com.lelloman.read.widget.ToggleSettingItemView
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_use_metered_networks_descr"
                 android:checked="@{viewModel.useMeteredNetworkSelected}"
                 android:onCheckedChanged="@{(_, isActive) -> viewModel.onUseMeteredNetworkChanged(isActive) }"
                 app:title="@string/settings_use_metered_networks_title" />
 
-            <com.lelloman.read.ui.settings.view.ToggleSettingItemView
+            <com.lelloman.read.widget.ToggleSettingItemView
                 style="@style/SettingsItemContainer"
                 android:checked="@{viewModel.openArticlesInAppSelected}"
                 android:onCheckedChanged="@{(_, isActive) -> viewModel.onOpenArticlesInAppChanged(isActive) }"
