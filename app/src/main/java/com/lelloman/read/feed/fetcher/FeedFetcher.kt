@@ -55,12 +55,12 @@ class FeedFetcher(
     fun testUrl(url: String): Single<TestResult> = httpClient
         .request(HttpRequest(url))
         .flatMap { feedParser.parseFeeds(it.stringBody) }
-        .map {
-            val articles = it.map { parsedFeedToArticle(dummySource(url), it) }
+        .map { parsedFeeds ->
+            val articles = parsedFeeds.map { parsedFeedToArticle(dummySource(url), it) }
             if (articles.isEmpty()) {
                 EmptySource
             } else {
-                Success(0)
+                Success(articles.size, parsedFeeds.title)
             }
         }
         .onErrorResumeNext { error: Throwable ->

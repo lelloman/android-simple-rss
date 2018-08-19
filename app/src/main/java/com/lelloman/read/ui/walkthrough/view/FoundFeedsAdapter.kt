@@ -6,12 +6,15 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.read.R
+import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.databinding.ListItemDiscoverFoundFeedBinding
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListItemViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 
-class FoundFeedsAdapter : RecyclerView.Adapter<FoundFeedsAdapter.ViewHolder>(), Observer<List<FoundFeed>> {
+class FoundFeedsAdapter(
+    private val resourceProvider: ResourceProvider
+) : RecyclerView.Adapter<FoundFeedsAdapter.ViewHolder>(), Observer<List<FoundFeed>> {
 
     private var data = emptyList<FoundFeed>()
     private val listDiffCalculator = ModelWithIdListDiffCalculator()
@@ -41,7 +44,7 @@ class FoundFeedsAdapter : RecyclerView.Adapter<FoundFeedsAdapter.ViewHolder>(), 
     inner class ViewHolder(private val binding: ListItemDiscoverFoundFeedBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
-        private val viewModel = FoundFeedListItemViewModel()
+        private val viewModel = FoundFeedListItemViewModel(resourceProvider)
 
         fun bind(foundFeed: FoundFeed) {
             viewModel.bind(foundFeed)

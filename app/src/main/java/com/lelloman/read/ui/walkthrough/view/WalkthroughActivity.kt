@@ -4,16 +4,21 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.lelloman.read.R
+import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.view.AnimationViewActionEvent
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityWalkthroughBinding
 import com.lelloman.read.ui.walkthrough.viewmodel.DiscoverUrlSelectedAnimationEvent
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import dagger.android.AndroidInjection
+import javax.inject.Inject
 
 class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthroughBinding>() {
 
     private lateinit var viewPagerAdapter: WalkthroughPagerAdapter
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
 
     override fun getLayoutId() = R.layout.activity_walkthrough
 
@@ -26,7 +31,8 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
         viewPagerAdapter = WalkthroughPagerAdapter(
             context = this,
             lifecycleOwner = this,
-            walkthroughViewModel = viewModel
+            walkthroughViewModel = viewModel,
+            resourceProvider = resourceProvider
         )
         binding.viewModel = viewModel
         binding.viewPager.offscreenPageLimit = 20

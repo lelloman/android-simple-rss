@@ -107,7 +107,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows green check and hides error message if feed fetcher test is successful`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(Success(0))
+        givenFeedFetcherTestsUrl(Success(0, null))
 
         tested.onTestUrlClicked()
 

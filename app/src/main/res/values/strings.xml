@@ -56,4 +56,5 @@
     <string name="skip">Skip</string>
     <string name="type_in_url">Type in the URL</string>
     <string name="discover">Discover</string>
+    <string name="found_feed_n_articles">Found %d articles</string>
 </resources>

@@ -104,9 +104,9 @@ class FeedFinderIntegrationTest {
         tester.assertComplete()
         tester.assertValueCount(3)
         tester.values().apply {
-            assertThat(this).contains(FoundFeed("$URL_1/feed", 0))
-            assertThat(this).contains(FoundFeed("$URL_1/somefeed", 0))
-            assertThat(this).contains(FoundFeed("http://www.staceppa.com", 0))
+            assertThat(this).contains(FoundFeed(1, "$URL_1/feed", 1, "RSS di   - ANSA.it"))
+            assertThat(this).contains(FoundFeed(2, "http://www.staceppa.com", 1, "RSS di   - ANSA.it"))
+            assertThat(this).contains(FoundFeed(3, "$URL_1/somefeed", 1, "RSS di   - ANSA.it"))
         }
     }
 
@@ -123,9 +123,9 @@ class FeedFinderIntegrationTest {
         tester.assertComplete()
         tester.assertValueCount(3)
         tester.values().apply {
-            assertThat(this).contains(FoundFeed("$URL_1/feed", 0))
-            assertThat(this).contains(FoundFeed("http://www.rsssomething.com", 0))
-            assertThat(this).contains(FoundFeed("http://www.staceppa2.com", 0))
+            assertThat(this).contains(FoundFeed(1, "$URL_1/feed", 1, "RSS di   - ANSA.it"))
+            assertThat(this).contains(FoundFeed(2, "http://www.staceppa2.com", 1, "RSS di   - ANSA.it"))
+            assertThat(this).contains(FoundFeed(3, "http://www.rsssomething.com", 1, "RSS di   - ANSA.it"))
         }
     }
 
@@ -167,7 +167,7 @@ class FeedFinderIntegrationTest {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<atom:link rel="self" type="application/rss+xml" href="http://www.ansa.it/sito/ansait_rss.xml"></atom:link>
-		<title>RSS di   - ANSA.it</title>
+		<title>   RSS di   - ANSA.it      </title>
 		  <link>http://www.ansa.it/</link>
 		  <description>Updated every day - FOR PERSONAL USE ONLY</description>
 		<language>it</language>

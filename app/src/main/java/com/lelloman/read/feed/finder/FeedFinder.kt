@@ -81,7 +81,8 @@ class FeedFinder(
             FoundFeed(
                 id = nextId++,
                 url = urlToTest,
-                nArticles = it.nArticles
+                nArticles = it.nArticles,
+                name = it.title
             )
         }
 }

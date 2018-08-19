@@ -1,8 +1,12 @@
 package com.lelloman.read.ui.walkthrough.viewmodel
 
+import com.lelloman.read.R
+import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.feed.finder.FoundFeed
 
-class FoundFeedListItemViewModel {
+class FoundFeedListItemViewModel(
+    private val resourceProvider: ResourceProvider
+) {
 
     var feedName = ""
         private set
@@ -13,9 +17,13 @@ class FoundFeedListItemViewModel {
     var feedUrlVisible = false
         private set
 
+    var nArticles = ""
+        private set
+
     fun bind(foundFeed: FoundFeed) {
         feedUrlVisible = foundFeed.name != null
         feedName = foundFeed.name ?: foundFeed.url
         feedUrl = foundFeed.url
+        nArticles = resourceProvider.getString(R.string.found_feed_n_articles, foundFeed.nArticles)
     }
 }

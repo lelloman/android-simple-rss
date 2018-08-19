@@ -12,13 +12,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lelloman.read.R
+import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.databinding.PagerItemWalkthroughDiscoverBinding
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 
 class WalkthroughPagerAdapter(
     private val context: Context,
     private val lifecycleOwner: LifecycleOwner,
-    private val walkthroughViewModel: WalkthroughViewModel
+    private val walkthroughViewModel: WalkthroughViewModel,
+    private val resourceProvider: ResourceProvider
 ) : PagerAdapter() {
 
     private lateinit var discoverBinding: PagerItemWalkthroughDiscoverBinding
@@ -42,7 +44,7 @@ class WalkthroughPagerAdapter(
             R.layout.pager_item_walkthrough_discover -> {
                 discoverBinding = DataBindingUtil.bind(view)!!
                 discoverBinding.viewModel = walkthroughViewModel
-                val foundFeedsAdapter = FoundFeedsAdapter()
+                val foundFeedsAdapter = FoundFeedsAdapter(resourceProvider)
                 walkthroughViewModel.foundFeeds.observe(lifecycleOwner, foundFeedsAdapter)
                 discoverBinding.discoverRecyclerView.adapter = foundFeedsAdapter
                 discoverBinding.discoverRecyclerView.layoutManager = LinearLayoutManager(context)

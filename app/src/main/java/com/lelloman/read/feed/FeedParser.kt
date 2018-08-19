@@ -19,11 +19,11 @@ class FeedParser @Inject constructor(
     private val pubDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
 
     @Throws(InvalidFeedTagException::class)
-    fun parseFeeds(xml: String): Single<List<ParsedFeed>> = Single
+    fun parseFeeds(xml: String): Single<ParsedFeeds> = Single
         .fromCallable {
             val parser = XmlPullParserFactory.newInstance().newPullParser()
 
-            val output = mutableListOf<ParsedFeed>()
+            val output = ParsedFeeds()
             val inputStream = StringReader(xml)
             parser.setInput(inputStream)
 
@@ -32,12 +32,13 @@ class FeedParser @Inject constructor(
                 findChannelTag(parser)
                 while (parser.eventType != XmlPullParser.END_DOCUMENT) {
                     if (parser.eventType == XmlPullParser.START_TAG) {
-                        if (parser.name == "item") {
-                            val item = parserItemTag(parser)
-                            item?.let { output.add(it) }
-                        } else {
-                            skip(parser)
-
+                        when {
+                            parser.name == "item" -> {
+                                val item = parserItemTag(parser)
+                                item?.let { output.add(it) }
+                            }
+                            parser.name == "title" -> output.title = parseTitleTag(parser)
+                            else -> skip(parser)
                         }
                     } else {
                         parser.next()
@@ -64,6 +65,29 @@ class FeedParser @Inject constructor(
                 XmlPullParser.START_TAG -> depth++
             }
         }
+    }
+
+    @Throws(XmlPullParserException::class, IOException::class)
+    private fun parseTitleTag(parser: XmlPullParser) : String? {
+        if (parser.eventType != XmlPullParser.START_TAG) {
+            throw IllegalStateException()
+        }
+
+        var output: String? = null
+
+        while (parser.eventType != XmlPullParser.END_DOCUMENT) {
+            if (parser.eventType == XmlPullParser.END_TAG && parser.name == "title") {
+                break
+            }
+
+            if (parser.eventType == XmlPullParser.START_TAG && output == null) {
+                output = readText(parser).trim()
+            } else {
+                parser.next()
+            }
+        }
+
+        return output
     }
 
     private fun parserItemTag(parser: XmlPullParser): ParsedFeed? {

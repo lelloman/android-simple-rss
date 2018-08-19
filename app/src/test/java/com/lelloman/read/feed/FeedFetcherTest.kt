@@ -138,13 +138,13 @@ class FeedFetcherTest {
 
         tester.assertComplete()
         tester.assertValueCount(1)
-        tester.assertValueAt(0) { it is Success && it.nArticles == 0 }
+        tester.assertValueAt(0) { it is Success && it.nArticles == PARSED_FEED.size }
     }
 
     @Test
     fun `returns empty source url test result`() {
         givenHttpSuccessfulResponse()
-        givenParsesFeed(emptyList())
+        givenParsesFeed(ParsedFeeds())
 
         val tester = tested.testUrl("asd").test()
 
@@ -232,7 +232,7 @@ class FeedFetcherTest {
             .thenReturn(Single.just(HttpResponse(500, false, ByteArray(0))))
     }
 
-    private fun givenParsesFeed(feeds: List<ParsedFeed> = PARSED_FEED) {
+    private fun givenParsesFeed(feeds: ParsedFeeds = PARSED_FEED) {
         whenever(feedParser.parseFeeds(any())).thenReturn(Single.just(feeds))
     }
 
@@ -256,7 +256,7 @@ class FeedFetcherTest {
 
         val SUCCESSFUL_RESPONSE = HttpResponse(200, true, "the body".toByteArray())
 
-        val PARSED_FEED = listOf(
+        val PARSED_FEED = ParsedFeeds(mutableListOf(
             ParsedFeed(
                 title = "title 1",
                 subtitle = "subtitle 1",
@@ -269,6 +269,6 @@ class FeedFetcherTest {
                 link = "link 2",
                 timestamp = 2L
             )
-        )
+        ))
     }
 }
