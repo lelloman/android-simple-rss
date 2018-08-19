@@ -35,10 +35,15 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 is NavigationEvent -> navigationRouter.onNavigationEvent(this, it)
                 is ToastEvent -> showToast(it)
                 is SnackEvent -> showSnack(it)
+                is AnimationViewActionEvent -> onAnimationViewActionEvent(it)
             }
         })
 
         viewModel.onCreate()
+    }
+
+    protected open fun onAnimationViewActionEvent(animationViewActionEvent: AnimationViewActionEvent) {
+
     }
 
     private fun showToast(event: ToastEvent) {

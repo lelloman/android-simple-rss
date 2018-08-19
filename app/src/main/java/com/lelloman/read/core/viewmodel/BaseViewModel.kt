@@ -8,6 +8,7 @@ import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.CloseScreenNavigationEvent
 import com.lelloman.read.core.navigation.NavigationEvent
+import com.lelloman.read.core.view.AnimationViewActionEvent
 import com.lelloman.read.core.view.SnackEvent
 import com.lelloman.read.core.view.ToastEvent
 import com.lelloman.read.core.view.ViewActionEvent
@@ -36,6 +37,10 @@ abstract class BaseViewModel(
     protected fun navigate(navigationEvent: NavigationEvent) = viewActionEvents.postValue(navigationEvent)
 
     protected fun navigateBack() = navigate(CloseScreenNavigationEvent)
+
+    protected fun animate(animationViewActionEvent: AnimationViewActionEvent) {
+        viewActionEvents.postValue(animationViewActionEvent)
+    }
 
     protected fun shortToast(message: String) =
         viewActionEvents.postValue(ToastEvent(

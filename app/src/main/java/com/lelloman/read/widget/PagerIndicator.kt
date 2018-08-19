@@ -52,6 +52,10 @@ class PagerIndicator @JvmOverloads constructor(
 
     init {
 
+        if (isInEditMode) {
+            nIndicators = 4
+        }
+
         val density = context.resources.displayMetrics.density
         val defaultCircleRadius = Math.round(density * DEFAULT_CIRCLE_RADIUS_DP)
         val defaultCircleMargin = Math.round(density * DEFAULT_CIRCLE_MARGIN_DP)

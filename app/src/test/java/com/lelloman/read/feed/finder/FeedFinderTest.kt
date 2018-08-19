@@ -9,6 +9,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Maybe
 import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 
 class FeedFinderTest {
@@ -67,6 +68,23 @@ class FeedFinderTest {
         tester.assertValueCount(0)
         tester.assertNoErrors()
         tester.assertComplete()
+    }
+
+    @Test
+    fun `fires loading events`() {
+        givenStringBodyAndBaseUrl("", "")
+        whenever(parser.parseDoc("", "")).thenReturn(Maybe.just(Doc()))
+        val candidatesSubject = PublishSubject.create<String>()
+        whenever(parser.findCandidateUrls(any())).thenReturn(candidatesSubject.hide())
+
+        val tester = tested.loading.test()
+        tester.assertValues(false)
+
+        tested.findValidFeedUrls("").test()
+        tester.assertValues(false, true)
+
+        candidatesSubject.onComplete()
+        tester.assertValues(false, true, false)
     }
 
     private fun givenStringBodyAndBaseUrl(baseUrl: String, stringBody: String) {

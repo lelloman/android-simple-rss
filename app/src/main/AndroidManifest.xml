@@ -30,7 +30,7 @@
             android:label="@string/settings" />
         <activity
             android:name=".ui.walkthrough.view.WalkthroughActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar.Inverse" />
         <activity android:name=".ui.launcher.view.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

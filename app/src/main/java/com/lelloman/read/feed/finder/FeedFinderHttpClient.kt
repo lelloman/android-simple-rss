@@ -11,14 +11,6 @@ class FeedFinderHttpClient(
     private val urlValidator: UrlValidator
 ) {
 
-    fun requestStringBody(url: String): Maybe<String> = Single
-        .just(urlValidator.maybePrependProtocol(url))
-        .flatMapMaybe { urlWithProtocol ->
-            httpClient.request(HttpRequest(urlWithProtocol))
-                .filter { it.isSuccessful && it.stringBody.isNotEmpty() }
-                .map { it.stringBody }
-        }
-
     fun requestStringBodyAndBaseUrl(url: String): Maybe<StringBodyAndUrl> = urlValidator
         .findBaseUrlWithProtocol(url)
         .flatMapSingle { baseUrl ->
@@ -36,4 +28,12 @@ class FeedFinderHttpClient(
             )
         }
         .onErrorComplete()
+
+    fun requestStringBody(url: String): Maybe<String> = Single
+        .just(urlValidator.maybePrependProtocol(url))
+        .flatMapMaybe { urlWithProtocol ->
+            httpClient.request(HttpRequest(urlWithProtocol))
+                .filter { it.isSuccessful && it.stringBody.isNotEmpty() }
+                .map { it.stringBody }
+        }
 }

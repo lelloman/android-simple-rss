@@ -53,4 +53,7 @@
     <string name="settings_use_metered_networks_descr">If enabled, metered network can be used to download feeds and images. This option does not apply when opening an article, only for refreshing feed sources.</string>
     <string name="settings_opens_articles_in_app_title">Open articles in-app</string>
     <string name="settings_opens_articles_in_app_descr">If selected, articles will be opened within the app in a WebView.</string>
+    <string name="skip">Skip</string>
+    <string name="type_in_url">Type in the URL</string>
+    <string name="discover">Discover</string>
 </resources>

@@ -7,6 +7,7 @@ import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
@@ -124,11 +125,21 @@ open class ViewModelModule {
 
     @Provides
     open fun provideWalkthroughViewModel(
+        @UiScheduler uiScheduler: Scheduler,
+        @IoScheduler ioScheduler: Scheduler,
+        feedFinder: FeedFinder,
         resourceProvider: ResourceProvider,
-        actionTokenProvider: ActionTokenProvider
+        actionTokenProvider: ActionTokenProvider,
+        appSettings: AppSettings,
+        urlValidator: UrlValidator
     ): WalkthroughViewModel = WalkthroughViewModelImpl(
         resourceProvider = resourceProvider,
-        actionTokenProvider = actionTokenProvider
+        actionTokenProvider = actionTokenProvider,
+        appSettings = appSettings,
+        ioScheduler = ioScheduler,
+        uiScheduler = uiScheduler,
+        feedFinder = feedFinder,
+        urlValidator = urlValidator
     )
 
     @Provides
