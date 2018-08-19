@@ -32,7 +32,8 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
             context = this,
             lifecycleOwner = this,
             walkthroughViewModel = viewModel,
-            resourceProvider = resourceProvider
+            resourceProvider = resourceProvider,
+            onFoundFeedClickListener = viewModel::onFoundFeedClicked
         )
         binding.viewModel = viewModel
         binding.viewPager.offscreenPageLimit = 20

@@ -4,6 +4,6 @@ class ScreenAndCloseNavigationEvent(
     targetClass: NavigationScreen,
     args: Array<Any> = emptyArray()
 ) : ScreenNavigationEvent(
-    targetClass = targetClass,
+    screen = targetClass,
     args = args
 )

@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.annotation.LayoutRes
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -44,6 +45,16 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected open fun onAnimationViewActionEvent(animationViewActionEvent: AnimationViewActionEvent) {
 
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        viewModel.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        viewModel.onRestoreInstanceState(savedInstanceState)
     }
 
     private fun showToast(event: ToastEvent) {

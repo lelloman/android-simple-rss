@@ -24,5 +24,6 @@ abstract class WalkthroughViewModel(
     abstract val foundFeeds: MutableLiveData<List<FoundFeed>>
 
     abstract fun onDiscoverClicked(view: View)
+    abstract fun onFoundFeedClicked(foundFeed: FoundFeed)
     // discover page
 }

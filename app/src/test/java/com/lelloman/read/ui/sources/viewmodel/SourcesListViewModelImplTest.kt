@@ -81,7 +81,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         tested.onFabClicked(mock())
 
         verify(viewActionObserver).onChanged(argWhere {
-            it is ScreenNavigationEvent && it.targetClass == NavigationScreen.ADD_SOURCE
+            it is ScreenNavigationEvent && it.screen == NavigationScreen.ADD_SOURCE
         })
     }
 

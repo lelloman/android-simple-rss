@@ -1,6 +1,7 @@
 package com.lelloman.read.core.viewmodel
 
 import android.arch.lifecycle.ViewModel
+import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.widget.Toast
@@ -28,6 +29,10 @@ abstract class BaseViewModel(
     open fun onTokenAction(token: String) = Unit
 
     open fun onCreate() = Unit
+
+    open fun onSaveInstanceState(bundle: Bundle) = Unit
+
+    open fun onRestoreInstanceState(bundle: Bundle) = Unit
 
     protected fun makeActionToken() = actionTokenProvider.makeActionToken()
 

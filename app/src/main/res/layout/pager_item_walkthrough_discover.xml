@@ -38,6 +38,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
+            android:singleLine="true"
             android:enabled="@{!viewModel.isFeedDiscoverLoading()}"
             android:text="@={viewModel.discoverUrl}"
             app:layout_constraintBottom_toTopOf="@+id/button_and_progress_container"

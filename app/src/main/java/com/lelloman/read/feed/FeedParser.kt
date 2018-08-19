@@ -49,7 +49,6 @@ class FeedParser @Inject constructor(
             } catch (exception: Exception) {
                 throw MalformedXmlException(exception)
             }
-
             output
         }
 

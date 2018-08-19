@@ -2,6 +2,7 @@ package com.lelloman.read.ui.walkthrough.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
+import android.os.Bundle
 import android.view.View
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.ResourceProvider
@@ -9,14 +10,13 @@ import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
+import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
-import io.reactivex.Observable
 import io.reactivex.Scheduler
-import java.util.concurrent.TimeUnit
 
 class WalkthroughViewModelImpl(
     @UiScheduler private val uiScheduler: Scheduler,
@@ -43,15 +43,42 @@ class WalkthroughViewModelImpl(
         }
     }
 
-    private val foundFeedsInternal = mutableListOf<FoundFeed>()
+    private val foundFeedsInternal = ArrayList<FoundFeed>()
 
     override val foundFeeds: MutableLiveData<List<FoundFeed>> by LazyLiveData {
         foundFeeds.postValue(foundFeedsInternal)
     }
 
+    override fun onSaveInstanceState(bundle: Bundle) {
+        super.onSaveInstanceState(bundle)
+        bundle.putString(ARG_URL, discoverUrl.get())
+        bundle.putParcelableArrayList(ARG_FOUND_FEEDS, foundFeedsInternal)
+    }
+
+    override fun onRestoreInstanceState(bundle: Bundle) {
+        super.onRestoreInstanceState(bundle)
+        bundle.getString(ARG_URL)?.let { discoverUrl.set(it) }
+        bundle.getParcelableArrayList<FoundFeed>(ARG_FOUND_FEEDS)?.let {
+            foundFeedsInternal.addAll(it)
+            foundFeeds.postValue(foundFeedsInternal)
+        }
+    }
+
     override fun onSkipClicked(view: View) {
         appSettings.setShouldShowWalkthtough(false)
         navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
+    }
+
+    override fun onFoundFeedClicked(foundFeed: FoundFeed) {
+        navigate(
+            ScreenNavigationEvent(
+                NavigationScreen.ADD_SOURCE,
+                arrayOf(
+                    foundFeed.name ?: foundFeed.url,
+                    foundFeed.url
+                )
+            )
+        )
     }
 
     override fun onDiscoverClicked(view: View) {
@@ -61,7 +88,7 @@ class WalkthroughViewModelImpl(
             foundFeedsInternal.clear()
             foundFeeds.postValue(foundFeedsInternal)
             subscription {
-//                val founds = Array(50) {
+                //                val founds = Array(50) {
 //                    FoundFeed(it.toLong(), "aaaaaaaaaaaaaaaa", 400, "aaaaaaaaaaaaa")
 //                }
 //                Observable
@@ -78,10 +105,15 @@ class WalkthroughViewModelImpl(
                     .subscribeOn(ioScheduler)
                     .observeOn(uiScheduler)
                     .subscribe {
-                        foundFeedsInternal.add( it)
+                        foundFeedsInternal.add(it)
                         foundFeeds.postValue(ArrayList(foundFeedsInternal))
                     }
             }
         }
+    }
+
+    private companion object {
+        const val ARG_URL = "Url"
+        const val ARG_FOUND_FEEDS = "FoundFeeds"
     }
 }

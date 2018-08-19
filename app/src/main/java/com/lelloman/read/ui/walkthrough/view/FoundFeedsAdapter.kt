@@ -13,7 +13,8 @@ import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListItemViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 
 class FoundFeedsAdapter(
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val onFoundFeedClickListener: (FoundFeed) -> Unit
 ) : RecyclerView.Adapter<FoundFeedsAdapter.ViewHolder>(), Observer<List<FoundFeed>> {
 
     private var data = emptyList<FoundFeed>()
@@ -45,8 +46,14 @@ class FoundFeedsAdapter(
         : RecyclerView.ViewHolder(binding.root) {
 
         private val viewModel = FoundFeedListItemViewModel(resourceProvider)
+        private lateinit var foundFeed: FoundFeed
+
+        init {
+            binding.root.setOnClickListener { onFoundFeedClickListener.invoke(foundFeed) }
+        }
 
         fun bind(foundFeed: FoundFeed) {
+            this.foundFeed = foundFeed
             viewModel.bind(foundFeed)
             binding.viewModel = viewModel
             binding.executePendingBindings()
