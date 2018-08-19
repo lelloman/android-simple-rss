@@ -12,6 +12,8 @@ interface AppSettings {
 
     val openArticlesInApp: Observable<Boolean>
 
+    val shouldShowWalkthrough: Observable<Boolean>
+
     fun setSourceRefreshMinInterval(interval: SourceRefreshInterval)
 
     fun setArticlesListImagesEnabled(enabled: Boolean)
@@ -19,4 +21,6 @@ interface AppSettings {
     fun setUseMeteredNetwork(useMeteredNetwork: Boolean)
 
     fun setOpenArticlesInApp(openInApp: Boolean)
+
+    fun setShouldShowWalkthtough(shouldShowWalkthrough: Boolean)
 }

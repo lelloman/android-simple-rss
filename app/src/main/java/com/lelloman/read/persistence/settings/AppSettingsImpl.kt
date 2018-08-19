@@ -4,10 +4,12 @@ import android.content.Context
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_OPEN_ARTICLES_IN_APP
+import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_SHOULD_SHOW_WALKTHROUGH
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_USE_METERED_NETWORK
 import com.lelloman.read.utils.Constants.AppSettings.KEY_ARTICLE_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.KEY_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.utils.Constants.AppSettings.KEY_OPEN_ARTICLES_IN_APP
+import com.lelloman.read.utils.Constants.AppSettings.KEY_SHOULD_SHOW_WALKTHROUGH
 import com.lelloman.read.utils.Constants.AppSettings.KEY_USE_METERED_NETWORK
 import com.lelloman.read.utils.Constants.AppSettings.SHARED_PREFS_NAME
 import io.reactivex.Observable
@@ -28,6 +30,8 @@ class AppSettingsImpl(
 
     private val openArticlesInAppSubject: Subject<Boolean> = BehaviorSubject.create()
 
+    private val shouldShowWalkthroughSubject: Subject<Boolean> = BehaviorSubject.create()
+
     override val sourceRefreshMinInterval: Observable<SourceRefreshInterval> =
         sourceRefreshMinIntervalSubject.hide()
 
@@ -39,6 +43,9 @@ class AppSettingsImpl(
 
     override val openArticlesInApp: Observable<Boolean> =
         openArticlesInAppSubject.hide()
+
+    override val shouldShowWalkthrough: Observable<Boolean> =
+        shouldShowWalkthroughSubject.hide()
 
     init {
         sourceRefreshMinIntervalSubject.onNext(
@@ -54,6 +61,10 @@ class AppSettingsImpl(
         )
         openArticlesInAppSubject.onNext(
             prefs.getBoolean(KEY_OPEN_ARTICLES_IN_APP, DEFAULT_OPEN_ARTICLES_IN_APP)
+        )
+
+        shouldShowWalkthroughSubject.onNext(
+            prefs.getBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, DEFAULT_SHOULD_SHOW_WALKTHROUGH)
         )
     }
 
@@ -80,4 +91,10 @@ class AppSettingsImpl(
         .putBoolean(KEY_OPEN_ARTICLES_IN_APP, openInApp)
         .apply()
         .also { openArticlesInAppSubject.onNext(openInApp) }
+
+    override fun setShouldShowWalkthtough(shouldShowWalkthrough: Boolean) = prefs
+        .edit()
+        .putBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, shouldShowWalkthrough)
+        .apply()
+        .also { shouldShowWalkthroughSubject.onNext(shouldShowWalkthrough) }
 }

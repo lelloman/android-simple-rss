@@ -5,6 +5,11 @@ import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.read.feed.fetcher.FaviconFetcher
+import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.feed.finder.FeedFinder
+import com.lelloman.read.feed.finder.FeedFinderHttpClient
+import com.lelloman.read.feed.finder.FeedFinderParser
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.persistence.db.ArticlesDao
@@ -68,5 +73,38 @@ class FeedModule {
     ) = FaviconFetcher(
         httpClient = httpClient,
         urlValidator = urlValidator
+    )
+
+    @Provides
+    fun provideFeedFinderHttpClient(
+        httpClient: HttpClient,
+        urlValidator: UrlValidator
+    ) = FeedFinderHttpClient(
+        httpClient = httpClient,
+        urlValidator = urlValidator
+    )
+
+    @Provides
+    fun provideFeedFinderParser(
+        urlValidator: UrlValidator,
+        htmlParser: HtmlParser,
+        loggerFactory: LoggerFactory
+    ) = FeedFinderParser(
+        urlValidator = urlValidator,
+        htmlParser = htmlParser,
+        loggerFactory = loggerFactory
+    )
+
+    @Provides
+    fun provideFeedFinder(
+        httpClient: FeedFinderHttpClient,
+        parser: FeedFinderParser,
+        feedFetcher: FeedFetcher,
+        loggerFactory: LoggerFactory
+    ) = FeedFinder(
+        httpClient = httpClient,
+        parser = parser,
+        feedFetcher = feedFetcher,
+        loggerFactory = loggerFactory
     )
 }

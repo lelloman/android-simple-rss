@@ -4,6 +4,12 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
+import com.lelloman.read.feed.fetcher.EmptySource
+import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.feed.fetcher.HttpError
+import com.lelloman.read.feed.fetcher.Success
+import com.lelloman.read.feed.fetcher.UnknownError
+import com.lelloman.read.feed.fetcher.XmlError
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpClientException
@@ -131,18 +137,19 @@ class FeedFetcherTest {
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(FeedFetcher.TestResult.SUCCESS)
+        tester.assertValueCount(1)
+        tester.assertValueAt(0) { it is Success && it.nArticles == PARSED_FEED.size }
     }
 
     @Test
     fun `returns empty source url test result`() {
         givenHttpSuccessfulResponse()
-        givenParsesFeed(emptyList())
+        givenParsesFeed(ParsedFeeds())
 
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(FeedFetcher.TestResult.EMPTY_SOURCE)
+        tester.assertValues(EmptySource)
     }
 
     @Test
@@ -153,7 +160,7 @@ class FeedFetcherTest {
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(FeedFetcher.TestResult.XML_ERROR)
+        tester.assertValues(XmlError)
     }
 
 
@@ -165,7 +172,7 @@ class FeedFetcherTest {
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(FeedFetcher.TestResult.XML_ERROR)
+        tester.assertValues(XmlError)
     }
 
     @Test
@@ -175,7 +182,7 @@ class FeedFetcherTest {
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(FeedFetcher.TestResult.HTTP_ERROR)
+        tester.assertValues(HttpError)
     }
 
     @Test
@@ -186,7 +193,7 @@ class FeedFetcherTest {
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(FeedFetcher.TestResult.UNKNOWN_ERROR)
+        tester.assertValues(UnknownError)
     }
 
     @Test
@@ -197,7 +204,7 @@ class FeedFetcherTest {
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(FeedFetcher.TestResult.UNKNOWN_ERROR)
+        tester.assertValues(UnknownError)
     }
 
     private fun givenUnMeteredNetwork() {
@@ -225,7 +232,7 @@ class FeedFetcherTest {
             .thenReturn(Single.just(HttpResponse(500, false, ByteArray(0))))
     }
 
-    private fun givenParsesFeed(feeds: List<ParsedFeed> = PARSED_FEED) {
+    private fun givenParsesFeed(feeds: ParsedFeeds = PARSED_FEED) {
         whenever(feedParser.parseFeeds(any())).thenReturn(Single.just(feeds))
     }
 
@@ -249,7 +256,7 @@ class FeedFetcherTest {
 
         val SUCCESSFUL_RESPONSE = HttpResponse(200, true, "the body".toByteArray())
 
-        val PARSED_FEED = listOf(
+        val PARSED_FEED = ParsedFeeds(mutableListOf(
             ParsedFeed(
                 title = "title 1",
                 subtitle = "subtitle 1",
@@ -262,6 +269,6 @@ class FeedFetcherTest {
                 link = "link 2",
                 timestamp = 2L
             )
-        )
+        ))
     }
 }

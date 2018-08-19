@@ -61,7 +61,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             assertThat(this).isInstanceOf(ScreenNavigationEvent::class.java)
             (this as ScreenNavigationEvent).apply {
                 assertThat(args).isEmpty()
-                assertThat(targetClass).isEqualTo(NavigationScreen.SOURCES_LIST)
+                assertThat(screen).isEqualTo(NavigationScreen.SOURCES_LIST)
             }
         }
     }
@@ -80,7 +80,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             (this as ScreenNavigationEvent).apply {
                 assertThat(args).hasLength(1)
                 assertThat(args[0]).isEqualTo(article)
-                assertThat(targetClass).isEqualTo(NavigationScreen.ARTICLE)
+                assertThat(screen).isEqualTo(NavigationScreen.ARTICLE)
             }
         }
     }
@@ -107,7 +107,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             assertThat(this).isInstanceOf(ScreenNavigationEvent::class.java)
             (this as ScreenNavigationEvent).apply {
                 assertThat(args).isEmpty()
-                assertThat(targetClass).isEqualTo(NavigationScreen.SETTINGS)
+                assertThat(screen).isEqualTo(NavigationScreen.SETTINGS)
             }
         }
     }
@@ -163,7 +163,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             assertThat(this).isInstanceOf(ScreenNavigationEvent::class.java)
             (this as ScreenNavigationEvent).apply {
                 assertThat(args).isEmpty()
-                assertThat(targetClass).isEqualTo(NavigationScreen.ADD_SOURCE)
+                assertThat(screen).isEqualTo(NavigationScreen.ADD_SOURCE)
             }
         }
     }
@@ -189,7 +189,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             assertThat(this).isInstanceOf(ScreenNavigationEvent::class.java)
             (this as ScreenNavigationEvent).apply {
                 assertThat(args).isEmpty()
-                assertThat(targetClass).isEqualTo(NavigationScreen.SOURCES_LIST)
+                assertThat(screen).isEqualTo(NavigationScreen.SOURCES_LIST)
             }
         }
     }

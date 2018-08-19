@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListItemViewModel" />
+    </data>
+
+    <com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardElevation="12dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <TextView
+                android:id="@+id/text_view_feed_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="@{viewModel.feedName}"
+                android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+                app:layout_constraintBottom_toTopOf="@+id/text_view_url"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="THE TITLE OF THE FEED bla bla bla bla bla bla bla bla bla" />
+
+            <TextView
+                android:id="@+id/text_view_url"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.feedUrl}"
+                app:layout_constraintBottom_toTopOf="@+id/text_view_n_articles"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_feed_name"
+                app:viewVisible="@{viewModel.feedUrlVisible}"
+                tools:text="https://www.somestupidwebsite/feed/bla/bla/bla/bla/bla/bla" />
+
+            <TextView
+                android:id="@+id/text_view_n_articles"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.nArticles}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view_url"
+                tools:text="Found 999 articles" />
+
+        </android.support.constraint.ConstraintLayout>
+    </com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollCardView>
+</layout>

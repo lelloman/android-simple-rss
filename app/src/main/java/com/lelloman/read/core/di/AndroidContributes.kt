@@ -4,10 +4,12 @@ import com.lelloman.read.core.view.InjectableActivity
 import com.lelloman.read.feed.FeedRefreshBroadcastReceiver
 import com.lelloman.read.ui.articles.view.ArticleActivity
 import com.lelloman.read.ui.articles.view.ArticlesListActivity
+import com.lelloman.read.ui.launcher.view.LauncherActivity
 import com.lelloman.read.ui.settings.view.SettingsActivity
 import com.lelloman.read.ui.sources.view.AddSourceActivity
 import com.lelloman.read.ui.sources.view.SourceActivity
 import com.lelloman.read.ui.sources.view.SourcesListActivity
+import com.lelloman.read.ui.walkthrough.view.WalkthroughActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -37,4 +39,10 @@ interface AndroidContributes {
 
     @ContributesAndroidInjector
     fun contributeSettingsActivity(): SettingsActivity
+
+    @ContributesAndroidInjector
+    fun contributeWalkthroughActivity(): WalkthroughActivity
+
+    @ContributesAndroidInjector
+    fun contributeLauncherActivity(): LauncherActivity
 }

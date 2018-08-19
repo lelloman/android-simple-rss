@@ -1,7 +1,9 @@
-package com.lelloman.read.feed
+package com.lelloman.read.feed.fetcher
 
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.read.feed.FeedParser
+import com.lelloman.read.feed.ParsedFeed
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
 import com.lelloman.read.html.HtmlParser
@@ -53,20 +55,20 @@ class FeedFetcher(
     fun testUrl(url: String): Single<TestResult> = httpClient
         .request(HttpRequest(url))
         .flatMap { feedParser.parseFeeds(it.stringBody) }
-        .map {
-            val articles = it.map { parsedFeedToArticle(dummySource(url), it) }
+        .map { parsedFeeds ->
+            val articles = parsedFeeds.map { parsedFeedToArticle(dummySource(url), it) }
             if (articles.isEmpty()) {
-                TestResult.EMPTY_SOURCE
+                EmptySource
             } else {
-                TestResult.SUCCESS
+                Success(articles.size, parsedFeeds.title)
             }
         }
         .onErrorResumeNext { error: Throwable ->
             val result = when (error) {
                 is InvalidFeedTagException,
-                is MalformedXmlException -> TestResult.XML_ERROR
-                is HttpClientException -> TestResult.HTTP_ERROR
-                else -> TestResult.UNKNOWN_ERROR
+                is MalformedXmlException -> XmlError
+                is HttpClientException -> HttpError
+                else -> UnknownError
             }
             Single.just(result)
         }
@@ -103,13 +105,5 @@ class FeedFetcher(
             sourceId = source.id,
             imageUrl = imageUrl
         )
-    }
-
-    enum class TestResult {
-        HTTP_ERROR,
-        XML_ERROR,
-        EMPTY_SOURCE,
-        UNKNOWN_ERROR,
-        SUCCESS
     }
 }

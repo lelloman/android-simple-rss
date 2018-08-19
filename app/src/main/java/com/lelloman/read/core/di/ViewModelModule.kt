@@ -1,17 +1,21 @@
 package com.lelloman.read.core.di
 
+import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
-import com.lelloman.read.feed.FeedFetcher
+import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.repository.ArticlesRepository
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModelImpl
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModelImpl
+import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModel
+import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModelImpl
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModelImpl
 import com.lelloman.read.ui.sources.repository.SourcesRepository
@@ -21,6 +25,8 @@ import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModelImpl
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModelImpl
+import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
+import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModelImpl
 import com.lelloman.read.utils.UrlValidator
 import dagger.Module
 import dagger.Provides
@@ -115,5 +121,35 @@ open class ViewModelModule {
         appSettings = appSettings,
         resourceProvider = resourceProvider,
         semanticTimeProvider = semanticTimeProvider
+    )
+
+    @Provides
+    open fun provideWalkthroughViewModel(
+        @UiScheduler uiScheduler: Scheduler,
+        @IoScheduler ioScheduler: Scheduler,
+        feedFinder: FeedFinder,
+        resourceProvider: ResourceProvider,
+        actionTokenProvider: ActionTokenProvider,
+        appSettings: AppSettings,
+        urlValidator: UrlValidator
+    ): WalkthroughViewModel = WalkthroughViewModelImpl(
+        resourceProvider = resourceProvider,
+        actionTokenProvider = actionTokenProvider,
+        appSettings = appSettings,
+        ioScheduler = ioScheduler,
+        uiScheduler = uiScheduler,
+        feedFinder = feedFinder,
+        urlValidator = urlValidator
+    )
+
+    @Provides
+    open fun provideLauncherViewModel(
+        resourceProvider: ResourceProvider,
+        actionTokenProvider: ActionTokenProvider,
+        appSettings: AppSettings
+    ): LauncherViewModel = LauncherViewModelImpl(
+        resourceProvider = resourceProvider,
+        actionTokenProvider = actionTokenProvider,
+        appSettings = appSettings
     )
 }

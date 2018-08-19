@@ -4,8 +4,8 @@ import android.support.test.InstrumentationRegistry
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.logger.LoggerFactoryImpl
-import com.lelloman.read.feed.FeedFetcher
 import com.lelloman.read.feed.FeedParser
+import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FeedFinderHttpClient
 import com.lelloman.read.feed.finder.FeedFinderParser

@@ -32,9 +32,9 @@ class SourceActivity : BaseActivity<SourceViewModel, ActivitySourceBinding>() {
 
         private const val ARG_SOURCE_ID = "SourceId"
 
-        fun start(activity: Activity, sourceId: Long) {
+        fun start(activity: Activity, sourceId: Long?) {
             val intent = Intent(activity, SourceActivity::class.java)
-                .putExtra(ARG_SOURCE_ID, sourceId)
+                .putExtra(ARG_SOURCE_ID, sourceId!!)
             activity.startActivity(intent)
         }
     }

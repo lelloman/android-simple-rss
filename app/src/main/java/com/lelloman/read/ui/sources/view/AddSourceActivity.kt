@@ -25,6 +25,14 @@ class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBind
             setDisplayHomeAsUpEnabled(true)
             setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
         }
+        intent?.getStringExtra(ARG_SOURCE_NAME)?.let {
+            viewModel.sourceName.set(it)
+            intent.removeExtra(ARG_SOURCE_NAME)
+        }
+        intent?.getStringExtra(ARG_SOURCE_URL)?.let {
+            viewModel.sourceUrl.set(it)
+            intent.removeExtra(ARG_SOURCE_URL)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -45,8 +53,20 @@ class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBind
     }
 
     companion object {
+
+        private const val ARG_SOURCE_NAME = "SourceName"
+        private const val ARG_SOURCE_URL = "SourceUrl"
+
         fun start(activity: Activity) {
             activity.startActivity(Intent(activity, AddSourceActivity::class.java))
+        }
+
+        fun startWithPrefill(activity: Activity, sourceName: String, sourceUrl: String) {
+            activity.startActivity(
+                Intent(activity, AddSourceActivity::class.java)
+                    .putExtra(ARG_SOURCE_NAME, sourceName)
+                    .putExtra(ARG_SOURCE_URL, sourceUrl)
+            )
         }
     }
 }

@@ -6,8 +6,8 @@ import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
-import com.lelloman.read.feed.FeedFetcher
 import com.lelloman.read.feed.FeedParser
+import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
@@ -104,9 +104,9 @@ class FeedFinderIntegrationTest {
         tester.assertComplete()
         tester.assertValueCount(3)
         tester.values().apply {
-            assertThat(this).contains("$URL_1/feed")
-            assertThat(this).contains("$URL_1/somefeed")
-            assertThat(this).contains("http://www.staceppa.com")
+            assertThat(this).contains(FoundFeed(1, "$URL_1/feed", 1, "RSS di   - ANSA.it"))
+            assertThat(this).contains(FoundFeed(2, "http://www.staceppa.com", 1, "RSS di   - ANSA.it"))
+            assertThat(this).contains(FoundFeed(3, "$URL_1/somefeed", 1, "RSS di   - ANSA.it"))
         }
     }
 
@@ -123,9 +123,9 @@ class FeedFinderIntegrationTest {
         tester.assertComplete()
         tester.assertValueCount(3)
         tester.values().apply {
-            assertThat(this).contains("$URL_1/feed")
-            assertThat(this).contains("http://www.rsssomething.com")
-            assertThat(this).contains("http://www.staceppa2.com")
+            assertThat(this).contains(FoundFeed(1, "$URL_1/feed", 1, "RSS di   - ANSA.it"))
+            assertThat(this).contains(FoundFeed(2, "http://www.staceppa2.com", 1, "RSS di   - ANSA.it"))
+            assertThat(this).contains(FoundFeed(3, "http://www.rsssomething.com", 1, "RSS di   - ANSA.it"))
         }
     }
 
@@ -167,7 +167,7 @@ class FeedFinderIntegrationTest {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<atom:link rel="self" type="application/rss+xml" href="http://www.ansa.it/sito/ansait_rss.xml"></atom:link>
-		<title>RSS di   - ANSA.it</title>
+		<title>   RSS di   - ANSA.it      </title>
 		  <link>http://www.ansa.it/</link>
 		  <description>Updated every day - FOR PERSONAL USE ONLY</description>
 		<language>it</language>

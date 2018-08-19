@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.settings.view
+package com.lelloman.read.widget
 
 import android.content.Context
 import android.util.AttributeSet

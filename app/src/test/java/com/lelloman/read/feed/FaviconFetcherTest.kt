@@ -1,5 +1,6 @@
 package com.lelloman.read.feed
 
+import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.http.HttpResponse
