@@ -1,10 +1,15 @@
-# android-read
 DONE:
 
-- <s>add option to open article in webview or choose external app</s>
-- <s>fix settings checkbox ugliness</s>
+- [FEATURE]<s>add option to open article in webview or choose external app</s>
+- [FEATURE]<s>fix settings checkbox ugliness</s>
 
-TODO:
+DEBT:
+- find way to mock both view model and http layers in ui tests
+- ui-unit tests for all activities
+- add ui smoke tests
+- unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
+
+FEATURE:
 - add option to choose which external app is used to open articles
 - add refresher background job
 - add source screen
@@ -19,6 +24,6 @@ BUGS:
 - first add many sources, in source list scroll to bottom, the last source is covered by "add" button
 
 IN PROGRESS:
-- add source discovery from url
-- add intro setup
+- [FEATURE] add source discovery from url
+- [FEATURE] add intro setup
 
