@@ -47,11 +47,12 @@
 
     </FrameLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollNotifierRecyclerView
         android:id="@+id/discover_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#ffff0000"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

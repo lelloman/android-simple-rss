@@ -15,4 +15,8 @@
         <attr name="indicatorEmptyColor" format="color" />
         <attr name="indicatorFillColor" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="OutsideScrollNotifierRecyclerView">
+        <attr name="notifyChildrenOnLayout" format="boolean" />
+    </declare-styleable>
 </resources>

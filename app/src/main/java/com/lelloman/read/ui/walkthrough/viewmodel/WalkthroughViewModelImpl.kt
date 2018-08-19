@@ -14,7 +14,9 @@ import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
+import io.reactivex.Observable
 import io.reactivex.Scheduler
+import java.util.concurrent.TimeUnit
 
 class WalkthroughViewModelImpl(
     @UiScheduler private val uiScheduler: Scheduler,
@@ -59,6 +61,18 @@ class WalkthroughViewModelImpl(
             foundFeedsInternal.clear()
             foundFeeds.postValue(foundFeedsInternal)
             subscription {
+//                val founds = Array(50) {
+//                    FoundFeed(it.toLong(), "aaaaaaaaaaaaaaaa", 400, "aaaaaaaaaaaaa")
+//                }
+//                Observable
+//                    .fromIterable(founds.toList())
+//                    .delay(1, TimeUnit.SECONDS)
+//                    .subscribeOn(ioScheduler)
+//                    .observeOn(uiScheduler)
+//                    .subscribe {
+//                        foundFeedsInternal.add( it)
+//                        foundFeeds.postValue(ArrayList(foundFeedsInternal))
+//                    }
                 feedFinder
                     .findValidFeedUrls(urlWithProtocol)
                     .subscribeOn(ioScheduler)
