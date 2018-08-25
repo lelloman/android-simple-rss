@@ -8,14 +8,14 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.feed.finder.FoundFeed
-import com.lelloman.read.ui.common.repository.WalkthroughRepository
+import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Scheduler
 
 class FoundFeedListViewModelImpl(
     @UiScheduler uiScheduler: Scheduler,
     @IoScheduler private val ioScheduler: Scheduler,
-    private val walkthroughRepository: WalkthroughRepository,
+    private val discoverRepository: DiscoverRepository,
     resourceProvider: ResourceProvider,
     actionTokenProvider: ActionTokenProvider
 ) : FoundFeedListViewModel(
@@ -25,7 +25,7 @@ class FoundFeedListViewModelImpl(
 
     override val isFindingFeeds: MutableLiveData<Boolean> by LazyLiveData {
         subscription {
-            walkthroughRepository
+            discoverRepository
                 .isFindingFeeds
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
@@ -37,7 +37,7 @@ class FoundFeedListViewModelImpl(
 
     override val foundFeeds: MutableLiveData<List<FoundFeed>> by LazyLiveData {
         subscription {
-            walkthroughRepository
+            discoverRepository
                 .foundFeeds
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
@@ -71,7 +71,7 @@ class FoundFeedListViewModelImpl(
     }
 
     override fun onAddAllFoundFeedsConfirmationClicked(foundFeeds: List<FoundFeed>) {
-        walkthroughRepository
+        discoverRepository
             .addFoundFeeds(foundFeeds)
             .subscribeOn(ioScheduler)
             .subscribe()

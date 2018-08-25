@@ -9,7 +9,7 @@ import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
-import com.lelloman.read.ui.common.repository.WalkthroughRepository
+import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Scheduler
@@ -19,7 +19,7 @@ class DiscoverUrlViewModelImpl(
     @IoScheduler private val ioScheduler: Scheduler,
     resourceProvider: ResourceProvider,
     actionTokenProvider: ActionTokenProvider,
-    private val walkthroughRepository: WalkthroughRepository,
+    private val discoverRepository: DiscoverRepository,
     private val urlValidator: UrlValidator
 ) : DiscoverUrlViewModel(
     resourceProvider = resourceProvider,
@@ -29,7 +29,7 @@ class DiscoverUrlViewModelImpl(
 
     override val isFeedDiscoverLoading: MutableLiveData<Boolean> by LazyLiveData {
         subscription {
-            walkthroughRepository
+            discoverRepository
                 .isFindingFeeds
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
@@ -40,7 +40,7 @@ class DiscoverUrlViewModelImpl(
     override fun onDiscoverClicked(view: View?) {
         urlValidator.maybePrependProtocol(discoverUrl.get())?.let { urlWithProtocol ->
             discoverUrl.set(urlWithProtocol)
-            walkthroughRepository.findFeeds(urlWithProtocol)
+            discoverRepository.findFeeds(urlWithProtocol)
             navigate(ScreenNavigationEvent(NavigationScreen.FOUND_FEED_LIST, arrayOf(urlWithProtocol)))
         }
     }

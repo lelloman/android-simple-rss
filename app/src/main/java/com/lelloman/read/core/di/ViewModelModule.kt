@@ -14,8 +14,7 @@ import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModelImpl
 import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.SourcesRepository
-import com.lelloman.read.ui.common.repository.WalkthroughRepository
-import com.lelloman.read.ui.common.viewmodel.IDiscoverUrlViewModel
+import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModel
 import com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModelImpl
 import com.lelloman.read.ui.discover.viewmodel.FoundFeedListViewModel
@@ -132,7 +131,7 @@ open class ViewModelModule {
     open fun provideWalkthroughViewModel(
         @UiScheduler uiScheduler: Scheduler,
         @IoScheduler ioScheduler: Scheduler,
-        walkthroughRepository: WalkthroughRepository,
+        discoverRepository: DiscoverRepository,
         resourceProvider: ResourceProvider,
         actionTokenProvider: ActionTokenProvider,
         appSettings: AppSettings,
@@ -143,7 +142,7 @@ open class ViewModelModule {
         appSettings = appSettings,
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
-        walkthroughRepository = walkthroughRepository,
+        discoveryRepository = discoverRepository,
         urlValidator = urlValidator
     )
 
@@ -164,11 +163,11 @@ open class ViewModelModule {
         actionTokenProvider: ActionTokenProvider,
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
-        walkthroughRepository: WalkthroughRepository
+        discoverRepository: DiscoverRepository
     ): FoundFeedListViewModel = FoundFeedListViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
-        walkthroughRepository = walkthroughRepository,
+        discoverRepository = discoverRepository,
         resourceProvider = resourceProvider,
         actionTokenProvider = actionTokenProvider
     )
@@ -177,14 +176,14 @@ open class ViewModelModule {
     open fun provideDiscoverUrlViewModel(
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
-        walkthroughRepository: WalkthroughRepository,
+        discoverRepository: DiscoverRepository,
         urlValidator: UrlValidator,
         resourceProvider: ResourceProvider,
         actionTokenProvider: ActionTokenProvider
     ): DiscoverUrlViewModel = DiscoverUrlViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
-        walkthroughRepository = walkthroughRepository,
+        discoverRepository = discoverRepository,
         urlValidator = urlValidator,
         resourceProvider = resourceProvider,
         actionTokenProvider = actionTokenProvider

@@ -5,7 +5,7 @@ import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.MockLoggerFactory
-import com.lelloman.read.ui.common.repository.WalkthroughRepository
+import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.BackpressureStrategy
@@ -14,7 +14,7 @@ import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.junit.Test
 
-class WalkthroughRepositoryTest {
+class DiscoverRepositoryTest {
 
     private val feedFinderFindUrlsSubject: Subject<FoundFeed> = PublishSubject.create()
     private val feedFinder: FeedFinder = mock {
@@ -26,7 +26,7 @@ class WalkthroughRepositoryTest {
         on { getAll() }.thenReturn(allSourcesSubject.toFlowable(BackpressureStrategy.LATEST))
     }
 
-    private val tested = WalkthroughRepository(
+    private val tested = DiscoverRepository(
         ioScheduler = trampoline(),
         feedFinder = feedFinder,
         sourcesDao = sourcesDao,

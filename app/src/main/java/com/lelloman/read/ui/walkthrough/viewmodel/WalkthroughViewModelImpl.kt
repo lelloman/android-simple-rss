@@ -12,7 +12,7 @@ import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.ui.common.repository.WalkthroughRepository
+import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Scheduler
@@ -23,7 +23,7 @@ class WalkthroughViewModelImpl(
     resourceProvider: ResourceProvider,
     actionTokenProvider: ActionTokenProvider,
     private val appSettings: AppSettings,
-    private val walkthroughRepository: WalkthroughRepository,
+    private val discoveryRepository: DiscoverRepository,
     private val urlValidator: UrlValidator
 ) : WalkthroughViewModel(
     resourceProvider = resourceProvider,
@@ -34,7 +34,7 @@ class WalkthroughViewModelImpl(
 
     override val isFeedDiscoverLoading: MutableLiveData<Boolean> by LazyLiveData {
         subscription {
-            walkthroughRepository
+            discoveryRepository
                 .isFindingFeeds
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
@@ -64,9 +64,14 @@ class WalkthroughViewModelImpl(
     override fun onDiscoverClicked(view: View?) {
         urlValidator.maybePrependProtocol(discoverUrl.get())?.let { urlWithProtocol ->
             discoverUrl.set(urlWithProtocol)
-            walkthroughRepository.findFeeds(urlWithProtocol)
+            discoveryRepository.findFeeds(urlWithProtocol)
             navigate(ScreenNavigationEvent(NavigationScreen.FOUND_FEED_LIST, arrayOf(urlWithProtocol)))
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        discoveryRepository.reset()
     }
 
     private companion object {
