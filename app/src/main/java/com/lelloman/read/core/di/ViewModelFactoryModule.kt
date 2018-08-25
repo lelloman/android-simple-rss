@@ -10,6 +10,7 @@ import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
+import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListViewModel
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import dagger.Binds
 import dagger.Module
@@ -60,4 +61,9 @@ abstract class ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(LauncherViewModel::class)
     abstract fun bindLauncherViewModel(launcherViewModel: LauncherViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FoundFeedListViewModel::class)
+    abstract fun bindFoundFeedListViewModek(foundFeedListViewModel: FoundFeedListViewModel) : ViewModel
 }

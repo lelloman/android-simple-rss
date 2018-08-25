@@ -21,17 +21,10 @@ class WalkthroughPagerAdapter(
     private val context: Context,
     private val lifecycleOwner: LifecycleOwner,
     private val walkthroughViewModel: WalkthroughViewModel,
-    private val resourceProvider: ResourceProvider,
-    private val onFoundFeedClickListener: (FoundFeed) -> Unit
+    private val resourceProvider: ResourceProvider
 ) : PagerAdapter() {
 
     private lateinit var discoverBinding: PagerItemWalkthroughDiscoverBinding
-
-    private var discoverScene2Animated = false
-
-    private val discoverScene2ConstraintSet by lazy {
-        ConstraintSet().apply { clone(context, R.layout.pager_item_walkthrough_discover_set2) }
-    }
 
     override fun isViewFromObject(view: View, obj: Any) = view == obj
 
@@ -46,42 +39,19 @@ class WalkthroughPagerAdapter(
             R.layout.pager_item_walkthrough_discover -> {
                 discoverBinding = DataBindingUtil.bind(view)!!
                 discoverBinding.viewModel = walkthroughViewModel
-                val foundFeedsAdapter = FoundFeedsAdapter(
-                    resourceProvider = resourceProvider,
-                    onFoundFeedClickListener = onFoundFeedClickListener
-                )
-                walkthroughViewModel.foundFeeds.observe(lifecycleOwner, foundFeedsAdapter)
-                discoverBinding.discoverRecyclerView.adapter = foundFeedsAdapter
-                discoverBinding.discoverRecyclerView.layoutManager = LinearLayoutManager(context)
+//                val foundFeedsAdapter = FoundFeedsAdapter(
+//                    resourceProvider = resourceProvider,
+//                    onFoundFeedClickListener = onFoundFeedClickListener
+//                )
+//                walkthroughViewModel.foundFeeds.observe(lifecycleOwner, foundFeedsAdapter)
+//                discoverBinding.discoverRecyclerView.adapter = foundFeedsAdapter
+//                discoverBinding.discoverRecyclerView.layoutManager = LinearLayoutManager(context)
                 discoverBinding.setLifecycleOwner(lifecycleOwner)
-                if (discoverScene2Animated) {
-                    discoverScene2ConstraintSet.applyTo(discoverBinding.constraintLayout)
-                }
             }
         }
         container.addView(view)
 
         return view
-    }
-
-    fun onDiscoverUrlSelectedAnimationEvent() {
-        if (!discoverScene2Animated) {
-            discoverScene2Animated = true
-
-            val constraint1 = ConstraintSet()
-            constraint1.clone(discoverBinding.constraintLayout)
-
-            TransitionManager.beginDelayedTransition(discoverBinding.constraintLayout)
-            discoverScene2ConstraintSet.applyTo(discoverBinding.constraintLayout)
-        }
-    }
-
-    fun onSaveInstanceState(outState: Bundle) {
-        outState.putBoolean(KEY_DISCOVER_SCENE_2_ANIMATED, discoverScene2Animated)
-    }
-
-    fun onRestoreInstanceState(savedState: Bundle) {
-        discoverScene2Animated = savedState.getBoolean(KEY_DISCOVER_SCENE_2_ANIMATED, false)
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, obj: Any) {
@@ -94,7 +64,5 @@ class WalkthroughPagerAdapter(
             R.layout.pager_item_walkthrough_2,
             R.layout.pager_item_walkthrough_3
         )
-
-        const val KEY_DISCOVER_SCENE_2_ANIMATED = "DiscoverScene2Animated"
     }
 }

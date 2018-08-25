@@ -19,8 +19,6 @@ abstract class AddSourceViewModel(
     abstract val testingUrl: MutableLiveData<Boolean>
 
 
-    abstract fun onCloseClicked()
-
     abstract fun onSaveClicked()
 
     abstract fun onTestUrlClicked()

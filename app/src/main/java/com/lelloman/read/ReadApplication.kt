@@ -18,12 +18,9 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasBroadcastReceiverInjector
 import io.reactivex.Completable
+import io.reactivex.plugins.RxJavaPlugins
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
-import io.reactivex.plugins.RxJavaPlugins
-
-
-
 
 open class ReadApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector {
 
@@ -63,14 +60,14 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
         inject()
         logger = loggerFactory.getLogger(javaClass.simpleName)
 
-        if(BuildConfig.DEBUG){
+        if (BuildConfig.DEBUG) {
             picassoWrap.enableImageSourceIndicator()
         }
         RxJavaPlugins.setErrorHandler {
             val isHttpClientException = it is HttpClientException || it.cause is HttpClientException || it.cause?.cause is HttpClientException
-            val httpClientExtraMsg = if (isHttpClientException){
+            val httpClientExtraMsg = if (isHttpClientException) {
                 ". This might be an un-subscribed http call, in which case it should be fine."
-            }else {
+            } else {
                 ""
             }
             logger.e("RxJavaPlugin error handler$httpClientExtraMsg", it)

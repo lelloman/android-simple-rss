@@ -57,4 +57,9 @@
     <string name="type_in_url">Type in the URL</string>
     <string name="discover">Discover</string>
     <string name="found_feed_n_articles">Found %d articles</string>
+    <string name="ADD_ALL">ADD ALL</string>
+    <string name="add_sources">Add sources</string>
+    <string name="add_all_sources_empty_list">There is no source to add.</string>
+    <string name="add_all_sources_message">Add %d sources:\n%s</string>
+
 </resources>

@@ -45,7 +45,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.feedUrl}"
                 app:layout_constraintBottom_toTopOf="@+id/text_view_n_articles"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/text_view_feed_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_feed_name"
                 app:viewVisible="@{viewModel.feedUrlVisible}"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.nArticles}"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/text_view_feed_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_url"
                 tools:text="Found 999 articles" />

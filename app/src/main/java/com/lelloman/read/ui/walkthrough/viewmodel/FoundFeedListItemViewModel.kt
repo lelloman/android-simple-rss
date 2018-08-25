@@ -1,5 +1,6 @@
 package com.lelloman.read.ui.walkthrough.viewmodel
 
+import android.view.View
 import com.lelloman.read.R
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.feed.finder.FoundFeed
@@ -25,5 +26,13 @@ class FoundFeedListItemViewModel(
         feedName = foundFeed.name ?: foundFeed.url
         feedUrl = foundFeed.url
         nArticles = resourceProvider.getString(R.string.found_feed_n_articles, foundFeed.nArticles)
+    }
+
+    fun onEditClicked(view: View?){
+        
+    }
+
+    fun onAddClicked(view: View?){
+
     }
 }

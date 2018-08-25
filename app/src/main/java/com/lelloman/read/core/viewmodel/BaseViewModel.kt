@@ -47,6 +47,8 @@ abstract class BaseViewModel(
         viewActionEvents.postValue(animationViewActionEvent)
     }
 
+    open fun onCloseClicked() = navigateBack()
+
     protected fun shortToast(message: String) =
         viewActionEvents.postValue(ToastEvent(
             message = message,

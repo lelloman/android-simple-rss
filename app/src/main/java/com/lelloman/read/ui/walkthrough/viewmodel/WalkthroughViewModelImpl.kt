@@ -11,9 +11,8 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
-import com.lelloman.read.feed.finder.FeedFinder
-import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.read.ui.walkthrough.repository.WalkthroughRepository
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Scheduler
@@ -24,7 +23,7 @@ class WalkthroughViewModelImpl(
     resourceProvider: ResourceProvider,
     actionTokenProvider: ActionTokenProvider,
     private val appSettings: AppSettings,
-    private val feedFinder: FeedFinder,
+    private val walkthroughRepository: WalkthroughRepository,
     private val urlValidator: UrlValidator
 ) : WalkthroughViewModel(
     resourceProvider = resourceProvider,
@@ -35,33 +34,22 @@ class WalkthroughViewModelImpl(
 
     override val isFeedDiscoverLoading: MutableLiveData<Boolean> by LazyLiveData {
         subscription {
-            feedFinder
-                .loading
+            walkthroughRepository
+                .isFindingFeeds
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe(isFeedDiscoverLoading::postValue)
         }
     }
 
-    private val foundFeedsInternal = ArrayList<FoundFeed>()
-
-    override val foundFeeds: MutableLiveData<List<FoundFeed>> by LazyLiveData {
-        foundFeeds.postValue(foundFeedsInternal)
-    }
-
     override fun onSaveInstanceState(bundle: Bundle) {
         super.onSaveInstanceState(bundle)
         bundle.putString(ARG_URL, discoverUrl.get())
-        bundle.putParcelableArrayList(ARG_FOUND_FEEDS, foundFeedsInternal)
     }
 
     override fun onRestoreInstanceState(bundle: Bundle) {
         super.onRestoreInstanceState(bundle)
         bundle.getString(ARG_URL)?.let { discoverUrl.set(it) }
-        bundle.getParcelableArrayList<FoundFeed>(ARG_FOUND_FEEDS)?.let {
-            foundFeedsInternal.addAll(it)
-            foundFeeds.postValue(foundFeedsInternal)
-        }
     }
 
     override fun onSkipClicked(view: View) {
@@ -69,51 +57,33 @@ class WalkthroughViewModelImpl(
         navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
     }
 
-    override fun onFoundFeedClicked(foundFeed: FoundFeed) {
-        navigate(
-            ScreenNavigationEvent(
-                NavigationScreen.ADD_SOURCE,
-                arrayOf(
-                    foundFeed.name ?: foundFeed.url,
-                    foundFeed.url
-                )
-            )
-        )
+    override fun onKeyboardActionDone() {
+        onDiscoverClicked(null)
     }
 
-    override fun onDiscoverClicked(view: View) {
+    override fun onDiscoverClicked(view: View?) {
         urlValidator.maybePrependProtocol(discoverUrl.get())?.let { urlWithProtocol ->
             discoverUrl.set(urlWithProtocol)
-            animate(DiscoverUrlSelectedAnimationEvent)
-            foundFeedsInternal.clear()
-            foundFeeds.postValue(foundFeedsInternal)
-            subscription {
-                //                val founds = Array(50) {
-//                    FoundFeed(it.toLong(), "aaaaaaaaaaaaaaaa", 400, "aaaaaaaaaaaaa")
-//                }
-//                Observable
-//                    .fromIterable(founds.toList())
-//                    .delay(1, TimeUnit.SECONDS)
+            walkthroughRepository.findFeeds(urlWithProtocol)
+            navigate(ScreenNavigationEvent(NavigationScreen.FOUND_FEED_LIST, arrayOf(urlWithProtocol)))
+
+//            animate(DiscoverUrlSelectedAnimationEvent)
+//            foundFeedsInternal.clear()
+//            foundFeeds.postValue(foundFeedsInternal)
+//            subscription {
+//                feedFinder
+//                    .findValidFeedUrls(urlWithProtocol)
 //                    .subscribeOn(ioScheduler)
 //                    .observeOn(uiScheduler)
 //                    .subscribe {
-//                        foundFeedsInternal.add( it)
+//                        foundFeedsInternal.add(it)
 //                        foundFeeds.postValue(ArrayList(foundFeedsInternal))
 //                    }
-                feedFinder
-                    .findValidFeedUrls(urlWithProtocol)
-                    .subscribeOn(ioScheduler)
-                    .observeOn(uiScheduler)
-                    .subscribe {
-                        foundFeedsInternal.add(it)
-                        foundFeeds.postValue(ArrayList(foundFeedsInternal))
-                    }
-            }
+//            }
         }
     }
 
     private companion object {
         const val ARG_URL = "Url"
-        const val ARG_FOUND_FEEDS = "FoundFeeds"
     }
 }

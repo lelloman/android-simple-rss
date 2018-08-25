@@ -6,7 +6,7 @@ import android.view.View
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.viewmodel.BaseViewModel
-import com.lelloman.read.feed.finder.FoundFeed
+import com.lelloman.read.utils.OnKeyboardActionDoneListener
 
 abstract class WalkthroughViewModel(
     resourceProvider: ResourceProvider,
@@ -14,16 +14,14 @@ abstract class WalkthroughViewModel(
 ) : BaseViewModel(
     resourceProvider = resourceProvider,
     actionTokenProvider = actionTokenProvider
-) {
+), OnKeyboardActionDoneListener {
 
     abstract fun onSkipClicked(view: View)
 
     // discover page
     abstract val discoverUrl: ObservableField<String>
     abstract val isFeedDiscoverLoading: MutableLiveData<Boolean>
-    abstract val foundFeeds: MutableLiveData<List<FoundFeed>>
 
-    abstract fun onDiscoverClicked(view: View)
-    abstract fun onFoundFeedClicked(foundFeed: FoundFeed)
+    abstract fun onDiscoverClicked(view: View?)
     // discover page
 }
