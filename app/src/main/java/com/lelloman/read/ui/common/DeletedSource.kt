@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.sources.repository
+package com.lelloman.read.ui.common
 
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source

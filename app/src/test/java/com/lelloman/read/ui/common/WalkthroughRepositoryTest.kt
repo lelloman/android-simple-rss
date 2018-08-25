@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.walkthrough.repository
+package com.lelloman.read.ui.common
 
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FoundFeed

@@ -61,5 +61,6 @@
     <string name="add_sources">Add sources</string>
     <string name="add_all_sources_empty_list">There is no source to add.</string>
     <string name="add_all_sources_message">Add %d sources:\n%s</string>
+    <string name="discover_sources">Discover source</string>
 
 </resources>

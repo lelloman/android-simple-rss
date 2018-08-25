@@ -12,7 +12,7 @@ import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.ui.walkthrough.repository.WalkthroughRepository
+import com.lelloman.read.ui.common.WalkthroughRepository
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Scheduler

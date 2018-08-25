@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.sources.repository
+package com.lelloman.read.ui.common
 
 import com.lelloman.read.feed.FeedRefresher
 import com.lelloman.read.persistence.db.ArticlesDao

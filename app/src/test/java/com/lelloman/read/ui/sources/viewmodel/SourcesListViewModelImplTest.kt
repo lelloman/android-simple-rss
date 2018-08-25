@@ -15,9 +15,9 @@ import com.lelloman.read.persistence.settings.clear
 import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.test
-import com.lelloman.read.ui.articles.repository.ArticlesRepository
-import com.lelloman.read.ui.sources.repository.DeletedSource
-import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.common.ArticlesRepository
+import com.lelloman.read.ui.common.DeletedSource
+import com.lelloman.read.ui.common.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argWhere
 import com.nhaarman.mockito_kotlin.mock

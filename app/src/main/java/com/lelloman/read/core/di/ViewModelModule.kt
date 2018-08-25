@@ -7,9 +7,8 @@ import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FeedFetcher
-import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.ui.articles.repository.ArticlesRepository
+import com.lelloman.read.ui.common.ArticlesRepository
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModelImpl
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
@@ -18,14 +17,14 @@ import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModel
 import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModelImpl
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModelImpl
-import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.common.SourcesRepository
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModelImpl
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModelImpl
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModelImpl
-import com.lelloman.read.ui.walkthrough.repository.WalkthroughRepository
+import com.lelloman.read.ui.common.WalkthroughRepository
 import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListViewModel
 import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListViewModelImpl
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel

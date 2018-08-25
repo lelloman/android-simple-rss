@@ -11,7 +11,7 @@ import com.lelloman.read.feed.fetcher.HttpError
 import com.lelloman.read.feed.fetcher.Success
 import com.lelloman.read.feed.fetcher.XmlError
 import com.lelloman.read.persistence.db.model.Source
-import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.common.SourcesRepository
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Scheduler

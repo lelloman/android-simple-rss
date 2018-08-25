@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.walkthrough.repository
+package com.lelloman.read.ui.common
 
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.logger.LoggerFactory
@@ -13,7 +13,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.ReplaySubject
-import io.reactivex.subjects.Subject
 import javax.inject.Inject
 import javax.inject.Singleton
 
