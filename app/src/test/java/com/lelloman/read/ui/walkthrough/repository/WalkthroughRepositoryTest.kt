@@ -2,8 +2,12 @@ package com.lelloman.read.ui.walkthrough.repository
 
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FoundFeed
+import com.lelloman.read.persistence.db.SourcesDao
+import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.testutils.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
+import io.reactivex.BackpressureStrategy
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -16,9 +20,16 @@ class WalkthroughRepositoryTest {
         on { findValidFeedUrls(any()) }.thenReturn(feedFinderFindUrlsSubject.hide())
     }
 
+    private val allSourcesSubject = PublishSubject.create<List<Source>>()
+    private val sourcesDao: SourcesDao = mock {
+        on { getAll() }.thenReturn(allSourcesSubject.toFlowable(BackpressureStrategy.LATEST))
+    }
+
     private val tested = WalkthroughRepository(
         ioScheduler = trampoline(),
-        feedFinder = feedFinder
+        feedFinder = feedFinder,
+        sourcesDao = sourcesDao,
+        loggerFactory = MockLoggerFactory()
     )
 
     @Test
@@ -56,6 +67,7 @@ class WalkthroughRepositoryTest {
         tester.assertNoValues()
 
         tested.findFeeds("asd")
+        allSourcesSubject.onNext(emptyList())
         tester.assertValueCount(1)
         tester.assertValueAt(0) { it.isEmpty() }
 
@@ -99,7 +111,7 @@ class WalkthroughRepositoryTest {
     }
 
     @Test
-    fun `restarts feed finding when find feeds is called a second time with same url but previous finding was finished`(){
+    fun `restarts feed finding when find feeds is called a second time with same url but previous finding was finished`() {
         val tester = tested.foundFeeds.test()
         tester.assertValueCount(0)
         val url = "www.staceppa.it"

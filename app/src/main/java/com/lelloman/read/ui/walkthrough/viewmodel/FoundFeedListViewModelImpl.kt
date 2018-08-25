@@ -75,5 +75,6 @@ class FoundFeedListViewModelImpl(
             .addFoundFeeds(foundFeeds)
             .subscribeOn(ioScheduler)
             .subscribe()
+        navigateBack()
     }
 }

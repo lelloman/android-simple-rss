@@ -1,6 +1,7 @@
 package com.lelloman.read.ui.walkthrough.view
 
 import android.app.Activity
+import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -23,6 +24,8 @@ AddFoundFeedsConfirmationDialogFragment.Listener{
     lateinit var resourceProvider: ResourceProvider
 
     private lateinit var adapter: FoundFeedsAdapter
+
+    private lateinit var addAllAction: MenuItem
 
     override fun getLayoutId() = R.layout.activity_found_feed_list
 
@@ -49,10 +52,15 @@ AddFoundFeedsConfirmationDialogFragment.Listener{
         viewModel.foundFeeds.observe(this, adapter)
 
         binding.viewModel = viewModel
+
+        viewModel.isFindingFeeds.observe(this, Observer {
+            addAllAction.isEnabled = it != true
+        })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.activity_found_feeds_list, menu)
+        addAllAction = menu.findItem(R.id.action_add_all)
         return true
     }
 

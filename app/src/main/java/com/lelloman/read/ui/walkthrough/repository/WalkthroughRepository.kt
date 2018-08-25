@@ -1,6 +1,7 @@
 package com.lelloman.read.ui.walkthrough.repository
 
 import com.lelloman.read.core.di.qualifiers.IoScheduler
+import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.db.SourcesDao
@@ -9,6 +10,7 @@ import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
+import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.ReplaySubject
 import io.reactivex.subjects.Subject
@@ -19,10 +21,13 @@ import javax.inject.Singleton
 class WalkthroughRepository @Inject constructor(
     @IoScheduler private val ioScheduler: Scheduler,
     private val sourcesDao: SourcesDao,
-    private val feedFinder: FeedFinder
+    private val feedFinder: FeedFinder,
+    loggerFactory: LoggerFactory
 ) {
 
-    private val isFindingFeedsSubject: Subject<Boolean> = BehaviorSubject
+    private val logger = loggerFactory.getLogger(javaClass.simpleName)
+
+    private val isFindingFeedsSubject = BehaviorSubject
         .create<Boolean>()
         .apply { onNext(false) }
 
@@ -51,7 +56,7 @@ class WalkthroughRepository @Inject constructor(
         foundFeedsSubject.cleanupBuffer()
         foundFeedsSubject.onNext(foundFeedsList)
 
-        findFeedSubscription = feedFinder
+        val foundFeedsStream = feedFinder
             .findValidFeedUrls(url)
             .subscribeOn(ioScheduler)
             .observeOn(ioScheduler)
@@ -60,20 +65,28 @@ class WalkthroughRepository @Inject constructor(
                 isFindingFeedsSubject.onNext(false)
                 lastFindFeedUrl = null
             }
-            .subscribe {
-                foundFeedsList.add(it)
+
+        findFeedSubscription = Observable
+            .combineLatest<FoundFeed, List<Source>, Pair<FoundFeed, List<Source>>>(
+                foundFeedsStream,
+                sourcesDao.getAll().toObservable(),
+                BiFunction { foundFeed, allSources ->
+                    foundFeed to allSources
+                }
+            )
+            .subscribe { (foundFeed, allSources) ->
+                foundFeedsList.add(foundFeed)
+                foundFeedsList.removeAll { oldFoundFeed ->
+                    val alreadyInSources = allSources.any { it.url == oldFoundFeed.url }
+                    if (alreadyInSources) {
+                        logger.d("Filtering out found feed $oldFoundFeed because already in sources.")
+                    }
+                    alreadyInSources
+                }
+                logger.d("onNexting foundFeedList with size ${foundFeedsList.size}")
                 foundFeedsSubject.cleanupBuffer()
                 foundFeedsSubject.onNext(foundFeedsList)
             }
-
-//        foundFeedsList.addAll(Array(30){
-//            FoundFeed(
-//                id = it.toLong(),
-//                url = "www.asdasdasdasd.com",
-//                nArticles = 666,
-//                name = "bla bla bla bla bla bla bla bla bla"
-//            )
-//        })
     }
 
     fun addFoundFeeds(foundFeeds: List<FoundFeed>): Completable = Completable.fromAction {

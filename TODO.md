@@ -22,6 +22,9 @@ page in walkthrough
 BUGS:
 - add-source screen, try to save a source with invalid name and/or url, error, then try to save a valid one
 - first add many sources, in source list scroll to bottom, the last source is covered by "add" button
+- swipe delete a source from list, the snackbar doesnt push the "+" button
+- found feeds list includes http - https cloned urls, should probably remove http ones
+- sources in source list have identicons even if favicon is available
 
 IN PROGRESS:
 - [FEATURE] add source discovery from url
