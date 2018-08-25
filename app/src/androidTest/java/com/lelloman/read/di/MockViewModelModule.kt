@@ -7,9 +7,9 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.ui.common.ArticlesRepository
+import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
-import com.lelloman.read.ui.common.SourcesRepository
+import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.utils.UrlValidator

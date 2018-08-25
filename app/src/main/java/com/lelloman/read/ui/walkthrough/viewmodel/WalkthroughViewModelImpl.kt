@@ -12,7 +12,7 @@ import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.ui.common.WalkthroughRepository
+import com.lelloman.read.ui.common.repository.WalkthroughRepository
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Scheduler
@@ -66,20 +66,6 @@ class WalkthroughViewModelImpl(
             discoverUrl.set(urlWithProtocol)
             walkthroughRepository.findFeeds(urlWithProtocol)
             navigate(ScreenNavigationEvent(NavigationScreen.FOUND_FEED_LIST, arrayOf(urlWithProtocol)))
-
-//            animate(DiscoverUrlSelectedAnimationEvent)
-//            foundFeedsInternal.clear()
-//            foundFeeds.postValue(foundFeedsInternal)
-//            subscription {
-//                feedFinder
-//                    .findValidFeedUrls(urlWithProtocol)
-//                    .subscribeOn(ioScheduler)
-//                    .observeOn(uiScheduler)
-//                    .subscribe {
-//                        foundFeedsInternal.add(it)
-//                        foundFeeds.postValue(ArrayList(foundFeedsInternal))
-//                    }
-//            }
         }
     }
 

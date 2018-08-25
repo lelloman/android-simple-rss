@@ -9,8 +9,8 @@ import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.ui.common.ArticlesRepository
-import com.lelloman.read.ui.common.SourcesRepository
+import com.lelloman.read.ui.common.repository.ArticlesRepository
+import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Observable
 import io.reactivex.Scheduler

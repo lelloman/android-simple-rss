@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel" />
+            type="com.lelloman.read.ui.common.viewmodel.IDiscoverUrlViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

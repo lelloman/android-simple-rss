@@ -12,9 +12,10 @@ import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModelImpl
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModelImpl
-import com.lelloman.read.ui.common.ArticlesRepository
-import com.lelloman.read.ui.common.SourcesRepository
-import com.lelloman.read.ui.common.WalkthroughRepository
+import com.lelloman.read.ui.common.repository.ArticlesRepository
+import com.lelloman.read.ui.common.repository.SourcesRepository
+import com.lelloman.read.ui.common.repository.WalkthroughRepository
+import com.lelloman.read.ui.common.viewmodel.IDiscoverUrlViewModel
 import com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModel
 import com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModelImpl
 import com.lelloman.read.ui.discover.viewmodel.FoundFeedListViewModel
@@ -174,9 +175,17 @@ open class ViewModelModule {
 
     @Provides
     open fun provideDiscoverUrlViewModel(
+        @IoScheduler ioScheduler: Scheduler,
+        @UiScheduler uiScheduler: Scheduler,
+        walkthroughRepository: WalkthroughRepository,
+        urlValidator: UrlValidator,
         resourceProvider: ResourceProvider,
         actionTokenProvider: ActionTokenProvider
     ): DiscoverUrlViewModel = DiscoverUrlViewModelImpl(
+        ioScheduler = ioScheduler,
+        uiScheduler = uiScheduler,
+        walkthroughRepository = walkthroughRepository,
+        urlValidator = urlValidator,
         resourceProvider = resourceProvider,
         actionTokenProvider = actionTokenProvider
     )

@@ -8,9 +8,12 @@
             type="com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.constraint.ConstraintLayout>
+        <include
+            android:id="@+id/included"
+            layout="@layout/layout_discover_url" />
+    </FrameLayout>
 </layout>

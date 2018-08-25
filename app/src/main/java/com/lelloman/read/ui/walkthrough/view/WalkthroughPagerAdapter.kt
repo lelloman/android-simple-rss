@@ -3,18 +3,13 @@ package com.lelloman.read.ui.walkthrough.view
 import android.arch.lifecycle.LifecycleOwner
 import android.content.Context
 import android.databinding.DataBindingUtil
-import android.os.Bundle
-import android.support.constraint.ConstraintSet
 import android.support.v4.view.PagerAdapter
-import android.support.v7.widget.LinearLayoutManager
-import android.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.core.ResourceProvider
-import com.lelloman.read.databinding.PagerItemWalkthroughDiscoverBinding
-import com.lelloman.read.feed.finder.FoundFeed
+import com.lelloman.read.databinding.LayoutDiscoverUrlBinding
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 
 class WalkthroughPagerAdapter(
@@ -24,7 +19,7 @@ class WalkthroughPagerAdapter(
     private val resourceProvider: ResourceProvider
 ) : PagerAdapter() {
 
-    private lateinit var discoverBinding: PagerItemWalkthroughDiscoverBinding
+    private lateinit var discoverBinding: LayoutDiscoverUrlBinding
 
     override fun isViewFromObject(view: View, obj: Any) = view == obj
 
@@ -36,16 +31,9 @@ class WalkthroughPagerAdapter(
         val view = LayoutInflater.from(container.context).inflate(layoutId, container, false)
 
         when (layoutId) {
-            R.layout.pager_item_walkthrough_discover -> {
+            R.layout.layout_discover_url -> {
                 discoverBinding = DataBindingUtil.bind(view)!!
                 discoverBinding.viewModel = walkthroughViewModel
-//                val foundFeedsAdapter = FoundFeedsAdapter(
-//                    resourceProvider = resourceProvider,
-//                    onFoundFeedClickListener = onFoundFeedClickListener
-//                )
-//                walkthroughViewModel.foundFeeds.observe(lifecycleOwner, foundFeedsAdapter)
-//                discoverBinding.discoverRecyclerView.adapter = foundFeedsAdapter
-//                discoverBinding.discoverRecyclerView.layoutManager = LinearLayoutManager(context)
                 discoverBinding.setLifecycleOwner(lifecycleOwner)
             }
         }
@@ -60,7 +48,7 @@ class WalkthroughPagerAdapter(
 
     private companion object {
         val LAYOUT_IDS = arrayOf(
-            R.layout.pager_item_walkthrough_discover,
+            R.layout.layout_discover_url,
             R.layout.pager_item_walkthrough_2,
             R.layout.pager_item_walkthrough_3
         )

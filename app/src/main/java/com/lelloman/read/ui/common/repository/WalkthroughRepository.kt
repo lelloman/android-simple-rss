@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.common
+package com.lelloman.read.ui.common.repository
 
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.logger.LoggerFactory

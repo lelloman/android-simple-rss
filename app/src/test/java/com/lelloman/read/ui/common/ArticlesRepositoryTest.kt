@@ -4,6 +4,7 @@ import com.lelloman.read.feed.FeedRefresher
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.SourceArticle
+import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.nhaarman.mockito_kotlin.anyVararg
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

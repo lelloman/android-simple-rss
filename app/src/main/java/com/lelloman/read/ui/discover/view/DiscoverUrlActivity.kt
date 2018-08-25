@@ -2,6 +2,7 @@ package com.lelloman.read.ui.discover.view
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import com.lelloman.read.R
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityDiscoverUrlBinding
@@ -13,6 +14,12 @@ class DiscoverUrlActivity : BaseActivity<DiscoverUrlViewModel, ActivityDiscoverU
 
     override fun getViewModelClass() = DiscoverUrlViewModel::class.java
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        binding.viewModel = viewModel
+        binding.included!!.viewModel = viewModel // why AS shows an error? it compiles... -_-
+    }
     companion object {
         fun start(activity: Activity) {
             activity.startActivity(Intent(activity, DiscoverUrlActivity::class.java))

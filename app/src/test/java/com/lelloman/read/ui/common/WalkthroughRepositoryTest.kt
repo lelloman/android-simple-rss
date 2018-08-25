@@ -5,6 +5,7 @@ import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.MockLoggerFactory
+import com.lelloman.read.ui.common.repository.WalkthroughRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.BackpressureStrategy
