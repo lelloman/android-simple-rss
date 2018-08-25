@@ -77,6 +77,10 @@ class ArticlesListActivity :
             viewModel.onSettingsClicked()
             true
         }
+        R.id.action_discover_sources -> {
+            viewModel.onDiscoverSourceClicked()
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 

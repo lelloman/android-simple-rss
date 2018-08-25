@@ -37,7 +37,7 @@ class NavigationRouter {
         }
     }
 
-    internal fun findStarterMethod(navigationScreen: NavigationScreen, args: Array<Any>): KFunction<*>? = navigationScreen
+    internal fun findStarterMethod(navigationScreen: NavigationScreen, args: Array<out Any>): KFunction<*>? = navigationScreen
         .clazz
         .companionObject
         ?.declaredFunctions

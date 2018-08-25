@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.walkthrough.view
+package com.lelloman.read.ui.discover.view
 
 import android.app.Activity
 import android.app.AlertDialog

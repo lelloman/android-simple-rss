@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.walkthrough.view
+package com.lelloman.read.ui.discover.view
 
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
@@ -9,7 +9,7 @@ import com.lelloman.read.R
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.databinding.ListItemDiscoverFoundFeedBinding
 import com.lelloman.read.feed.finder.FoundFeed
-import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListItemViewModel
+import com.lelloman.read.ui.discover.viewmodel.FoundFeedListItemViewModel
 import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 
 class FoundFeedsAdapter(

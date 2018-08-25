@@ -5,12 +5,13 @@ import android.arch.lifecycle.ViewModelProvider
 import com.lelloman.read.core.viewmodel.ViewModelFactory
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
+import com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModel
+import com.lelloman.read.ui.discover.viewmodel.FoundFeedListViewModel
 import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModel
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
-import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListViewModel
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import dagger.Binds
 import dagger.Module
@@ -65,5 +66,10 @@ abstract class ViewModelFactoryModule {
     @Binds
     @IntoMap
     @ViewModelKey(FoundFeedListViewModel::class)
-    abstract fun bindFoundFeedListViewModek(foundFeedListViewModel: FoundFeedListViewModel) : ViewModel
+    abstract fun bindFoundFeedListViewModek(foundFeedListViewModel: FoundFeedListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DiscoverUrlViewModel::class)
+    abstract fun bindDiscoverUrlViewModel(discoverUrlViewModel: DiscoverUrlViewModel): ViewModel
 }

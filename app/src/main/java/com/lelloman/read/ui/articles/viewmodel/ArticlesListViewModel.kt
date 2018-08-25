@@ -26,4 +26,6 @@ abstract class ArticlesListViewModel(
     abstract fun onArticleClicked(article: SourceArticle)
 
     abstract fun onSettingsClicked()
+
+    abstract fun onDiscoverSourceClicked()
 }

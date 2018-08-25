@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.walkthrough.view
+package com.lelloman.read.ui.discover.view
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
@@ -12,13 +12,13 @@ import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityFoundFeedListBinding
 import com.lelloman.read.feed.finder.FoundFeed
-import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListViewModel
+import com.lelloman.read.ui.discover.viewmodel.FoundFeedListViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class FoundFeedListActivity
     : BaseActivity<FoundFeedListViewModel, ActivityFoundFeedListBinding>(),
-AddFoundFeedsConfirmationDialogFragment.Listener{
+    AddFoundFeedsConfirmationDialogFragment.Listener {
 
     @Inject
     lateinit var resourceProvider: ResourceProvider

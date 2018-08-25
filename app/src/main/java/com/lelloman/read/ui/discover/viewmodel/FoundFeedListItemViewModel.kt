@@ -1,4 +1,4 @@
-package com.lelloman.read.ui.walkthrough.viewmodel
+package com.lelloman.read.ui.discover.viewmodel
 
 import android.view.View
 import com.lelloman.read.R
