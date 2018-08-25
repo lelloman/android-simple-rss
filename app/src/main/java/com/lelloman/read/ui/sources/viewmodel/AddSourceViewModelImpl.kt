@@ -87,8 +87,6 @@ class AddSourceViewModelImpl(
         }
     }
 
-    override fun onCloseClicked() = navigateBack()
-
     override fun onSaveClicked() {
         if (saving) return
 

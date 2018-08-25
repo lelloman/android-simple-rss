@@ -9,6 +9,7 @@ import com.lelloman.read.ui.settings.view.SettingsActivity
 import com.lelloman.read.ui.sources.view.AddSourceActivity
 import com.lelloman.read.ui.sources.view.SourceActivity
 import com.lelloman.read.ui.sources.view.SourcesListActivity
+import com.lelloman.read.ui.walkthrough.view.FoundFeedListActivity
 import com.lelloman.read.ui.walkthrough.view.WalkthroughActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -45,4 +46,7 @@ interface AndroidContributes {
 
     @ContributesAndroidInjector
     fun contributeLauncherActivity(): LauncherActivity
+
+    @ContributesAndroidInjector
+    fun contributeFoundFeedListActivity(): FoundFeedListActivity
 }

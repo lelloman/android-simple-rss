@@ -5,12 +5,17 @@ import android.net.Uri
 import android.support.design.widget.TextInputLayout
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import com.lelloman.identicon.ClassicIdenticonView
 import com.lelloman.read.R
 import com.lelloman.read.ReadApplication
 
+interface OnKeyboardActionDoneListener {
+    fun onKeyboardActionDone()
+}
 
 object BindingAdapters {
 
@@ -67,5 +72,19 @@ object BindingAdapters {
     @BindingAdapter("app:editTextDrawable")
     fun bindEditTextDrawable(editText: EditText, resId: Int) {
         editText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, resId, 0)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:onKeyboardActionDoneListener")
+    fun setOnKeyboardActionDoneListener(view: TextView, listener: OnKeyboardActionDoneListener?) {
+        if (listener == null) {
+            view.setOnEditorActionListener(null)
+        } else {
+            view.setOnEditorActionListener { _, actionId, _ ->
+                (actionId == EditorInfo.IME_ACTION_DONE)
+                    .also { if (it) listener.onKeyboardActionDone() }
+            }
+        }
+
     }
 }

@@ -8,7 +8,6 @@ import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.view.AnimationViewActionEvent
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityWalkthroughBinding
-import com.lelloman.read.ui.walkthrough.viewmodel.DiscoverUrlSelectedAnimationEvent
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -32,31 +31,13 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
             context = this,
             lifecycleOwner = this,
             walkthroughViewModel = viewModel,
-            resourceProvider = resourceProvider,
-            onFoundFeedClickListener = viewModel::onFoundFeedClicked
+            resourceProvider = resourceProvider
         )
         binding.viewModel = viewModel
         binding.viewPager.offscreenPageLimit = 20
         binding.viewPager.adapter = viewPagerAdapter
         binding.pagerIndicator.viewPager = binding.viewPager
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        viewPagerAdapter.onSaveInstanceState(outState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        viewPagerAdapter.onRestoreInstanceState(savedInstanceState)
-    }
-
-    override fun onAnimationViewActionEvent(animationViewActionEvent: AnimationViewActionEvent) {
-        when (animationViewActionEvent) {
-            is DiscoverUrlSelectedAnimationEvent -> viewPagerAdapter.onDiscoverUrlSelectedAnimationEvent()
-        }
-    }
-
     companion object {
         fun start(activity: Activity) {
             activity.startActivity(Intent(activity, WalkthroughActivity::class.java))

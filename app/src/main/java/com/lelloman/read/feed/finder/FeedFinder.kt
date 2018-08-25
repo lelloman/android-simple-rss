@@ -63,12 +63,8 @@ class FeedFinder(
         .onErrorResumeNext { _: Throwable ->
             Observable.empty()
         }
-        .doOnSubscribe {
-            loadingSubject.onNext(true)
-        }
-        .doFinally {
-            loadingSubject.onNext(false)
-        }
+        .doOnSubscribe { loadingSubject.onNext(true) }
+        .doFinally { loadingSubject.onNext(false) }
 
     private fun testUrl(urlToTest: String) = feedFetcher
         .testUrl(urlToTest)

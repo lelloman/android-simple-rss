@@ -39,6 +39,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
             android:singleLine="true"
+            android:imeOptions="actionDone"
+            app:onKeyboardActionDoneListener="@{viewModel}"
             android:enabled="@{!viewModel.isFeedDiscoverLoading()}"
             android:text="@={viewModel.discoverUrl}"
             app:layout_constraintBottom_toTopOf="@+id/button_and_progress_container"
@@ -71,17 +73,6 @@
                 android:layout_gravity="center"
                 app:viewVisible="@{viewModel.isFeedDiscoverLoading()}" />
         </FrameLayout>
-
-        <com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollNotifierRecyclerView
-            android:id="@+id/discover_recycler_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scrollbars="vertical"
-            app:notifyChildrenOnLayout="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_and_progress_container" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

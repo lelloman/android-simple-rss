@@ -25,6 +25,9 @@ import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModelImpl
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModelImpl
+import com.lelloman.read.ui.walkthrough.repository.WalkthroughRepository
+import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListViewModel
+import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListViewModelImpl
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModelImpl
 import com.lelloman.read.utils.UrlValidator
@@ -127,7 +130,7 @@ open class ViewModelModule {
     open fun provideWalkthroughViewModel(
         @UiScheduler uiScheduler: Scheduler,
         @IoScheduler ioScheduler: Scheduler,
-        feedFinder: FeedFinder,
+        walkthroughRepository: WalkthroughRepository,
         resourceProvider: ResourceProvider,
         actionTokenProvider: ActionTokenProvider,
         appSettings: AppSettings,
@@ -138,7 +141,7 @@ open class ViewModelModule {
         appSettings = appSettings,
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
-        feedFinder = feedFinder,
+        walkthroughRepository = walkthroughRepository,
         urlValidator = urlValidator
     )
 
@@ -151,5 +154,20 @@ open class ViewModelModule {
         resourceProvider = resourceProvider,
         actionTokenProvider = actionTokenProvider,
         appSettings = appSettings
+    )
+
+    @Provides
+    open fun provideFoundFeedListViewModel(
+        resourceProvider: ResourceProvider,
+        actionTokenProvider: ActionTokenProvider,
+        @IoScheduler ioScheduler: Scheduler,
+        @UiScheduler uiScheduler: Scheduler,
+        walkthroughRepository: WalkthroughRepository
+    ) : FoundFeedListViewModel = FoundFeedListViewModelImpl(
+        ioScheduler = ioScheduler,
+        uiScheduler = uiScheduler,
+        walkthroughRepository = walkthroughRepository,
+        resourceProvider = resourceProvider,
+        actionTokenProvider = actionTokenProvider
     )
 }
