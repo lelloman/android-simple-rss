@@ -46,6 +46,7 @@ open class ViewModelModule {
         articlesRepository: ArticlesRepository,
         resourceProvider: ResourceProvider,
         sourcesRepository: SourcesRepository,
+        discoverRepository: DiscoverRepository,
         appSettings: AppSettings
     ): ArticlesListViewModel = ArticlesListViewModelImpl(
         ioScheduler = ioScheduler,
@@ -53,6 +54,7 @@ open class ViewModelModule {
         articlesRepository = articlesRepository,
         resourceProvider = resourceProvider,
         sourcesRepository = sourcesRepository,
+        discoverRepository = discoverRepository,
         appSettings = appSettings
     )
 

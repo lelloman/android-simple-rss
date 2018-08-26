@@ -69,11 +69,6 @@ class WalkthroughViewModelImpl(
         }
     }
 
-    override fun onCleared() {
-        super.onCleared()
-        discoveryRepository.reset()
-    }
-
     private companion object {
         const val ARG_URL = "Url"
     }

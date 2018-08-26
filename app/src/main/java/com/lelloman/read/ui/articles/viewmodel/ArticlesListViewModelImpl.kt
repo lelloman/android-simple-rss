@@ -10,6 +10,7 @@ import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.common.repository.ArticlesRepository
+import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Observable
@@ -20,6 +21,7 @@ class ArticlesListViewModelImpl(
     private val uiScheduler: Scheduler,
     private val articlesRepository: ArticlesRepository,
     private val sourcesRepository: SourcesRepository,
+    private val discoverRepository: DiscoverRepository,
     private val appSettings: AppSettings,
     resourceProvider: ResourceProvider
 ) : ArticlesListViewModel(resourceProvider) {
@@ -67,6 +69,11 @@ class ArticlesListViewModelImpl(
 
     init {
         emptyViewVisible.value = false
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        discoverRepository.reset()
     }
 
     override fun refresh() = articlesRepository.refresh()

@@ -74,7 +74,6 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
         }
 
         appSettings.setShouldShowWalkthtough(true)
-
         Completable
             .fromAction {
                 db.clearAllTables()
