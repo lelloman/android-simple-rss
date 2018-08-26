@@ -5,7 +5,6 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.annotation.LayoutRes
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
@@ -21,6 +20,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     protected lateinit var binding: DB
 
     private lateinit var coordinatorLayout: CoordinatorLayout
+
+    private var hasSupportActionBarBackButton = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +46,21 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected open fun onAnimationViewActionEvent(animationViewActionEvent: AnimationViewActionEvent) {
 
+    }
+
+    protected fun setHasActionBarBackButton() {
+        supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            setDisplayShowHomeEnabled(true)
+            hasSupportActionBarBackButton = true
+        }
+    }
+
+    override fun onSupportNavigateUp() = if (hasSupportActionBarBackButton) {
+        onBackPressed()
+        true
+    } else {
+        super.onSupportNavigateUp()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

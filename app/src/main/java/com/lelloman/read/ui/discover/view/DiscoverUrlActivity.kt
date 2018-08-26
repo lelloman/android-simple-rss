@@ -16,9 +16,9 @@ class DiscoverUrlActivity : BaseActivity<DiscoverUrlViewModel, ActivityDiscoverU
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setHasActionBarBackButton()
         binding.viewModel = viewModel
-        binding.included!!.viewModel = viewModel // why AS shows an error? it compiles... -_-
+        binding.included!!.viewModel = viewModel
     }
     companion object {
         fun start(activity: Activity) {
