@@ -23,7 +23,8 @@
             android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="@string/type_in_url"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium.Inverse"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            android:textColor="?attr/invertibleTextColor"
             app:layout_constraintBottom_toTopOf="@+id/edit_text_url"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,21 +33,21 @@
 
         <EditText
             android:id="@+id/edit_text_url"
-            style="@android:style/TextAppearance.DeviceDefault.Inverse"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:singleLine="true"
-            android:imeOptions="actionDone"
-            app:onKeyboardActionDoneListener="@{viewModel}"
             android:enabled="@{!viewModel.isFeedDiscoverLoading()}"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:text="@={viewModel.discoverUrl}"
+            android:textColor="?attr/invertibleTextColor"
             app:layout_constraintBottom_toTopOf="@+id/button_and_progress_container"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_view_type_url" />
+            app:layout_constraintTop_toBottomOf="@+id/text_view_type_url"
+            app:onKeyboardActionDoneListener="@{viewModel}" />
 
         <FrameLayout
             android:id="@+id/button_and_progress_container"

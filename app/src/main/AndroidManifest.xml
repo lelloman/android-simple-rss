@@ -43,7 +43,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.discover.view.DiscoverUrlActivity"
-            android:theme="@style/AppTheme.NoActionBar.Inverse" />
+            android:theme="@style/AppTheme" />
 
         <receiver
             android:name=".feed.FeedRefreshBroadcastReceiver"
