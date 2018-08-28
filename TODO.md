@@ -2,6 +2,7 @@ DONE:
 
 - [FEATURE]<s>add option to open article in webview or choose external app</s>
 - [FEATURE]<s>fix settings checkbox ugliness</s>
+- [FEATURE]<s>add source discovery from url</s>
 
 DEBT:
 - find way to mock both view model and http layers in ui tests
@@ -12,9 +13,7 @@ DEBT:
 FEATURE:
 - add option to choose which external app is used to open articles
 - add refresher background job
-- add source screen
-- add select settings (metered network, refresh interval)
-page in walkthrough
+- add single-source-screen
 - add intro page in walkthrough (why type in url in discovery)
 - make "last refresh" time in source list refresh every 1 min
 - add theme selection (as setting and in walkthrough)
@@ -27,6 +26,7 @@ BUGS:
 - sources in source list have identicons even if favicon is available
 
 IN PROGRESS:
-- [FEATURE] add source discovery from url
 - [FEATURE] add intro setup
+- [FEATURE] add select settings (metered network, refresh interval)
+page in walkthrough
 
