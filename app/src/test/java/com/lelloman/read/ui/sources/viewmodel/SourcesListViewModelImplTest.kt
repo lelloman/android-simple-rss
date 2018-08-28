@@ -6,9 +6,9 @@ import com.lelloman.read.R
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
-import com.lelloman.read.core.view.SnackEvent
-import com.lelloman.read.core.view.ToastEvent
-import com.lelloman.read.core.view.ViewActionEvent
+import com.lelloman.read.core.view.actionevent.SnackEvent
+import com.lelloman.read.core.view.actionevent.ToastEvent
+import com.lelloman.read.core.view.actionevent.ViewActionEvent
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.clear

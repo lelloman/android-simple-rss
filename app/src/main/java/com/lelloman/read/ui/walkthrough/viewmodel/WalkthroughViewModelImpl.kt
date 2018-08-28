@@ -11,6 +11,7 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.utils.LazyLiveData
@@ -67,6 +68,16 @@ class WalkthroughViewModelImpl(
             discoveryRepository.findFeeds(urlWithProtocol)
             navigate(ScreenNavigationEvent(NavigationScreen.FOUND_FEED_LIST, arrayOf(urlWithProtocol)))
         }
+    }
+
+    override fun onMeteredConnectionNoClicked(view: View) {
+        viewActionEvents.postValue(SwipePageActionEvent(SwipePageActionEvent.Direction.RIGHT))
+        appSettings.setUseMeteredNetwork(false)
+    }
+
+    override fun onMeteredConnectionYesClicked(view: View) {
+        viewActionEvents.postValue(SwipePageActionEvent(SwipePageActionEvent.Direction.RIGHT))
+        appSettings.setUseMeteredNetwork(true)
     }
 
     private companion object {

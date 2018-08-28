@@ -24,6 +24,7 @@ BUGS:
 - swipe delete a source from list, the snackbar doesnt push the "+" button
 - found feeds list includes http - https cloned urls, should probably remove http ones
 - sources in source list have identicons even if favicon is available
+- !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
 
 IN PROGRESS:
 - [FEATURE] add intro setup

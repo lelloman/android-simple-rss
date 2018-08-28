@@ -7,7 +7,7 @@ import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
-import com.lelloman.read.core.view.SnackEvent
+import com.lelloman.read.core.view.actionevent.SnackEvent
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DeletedSource

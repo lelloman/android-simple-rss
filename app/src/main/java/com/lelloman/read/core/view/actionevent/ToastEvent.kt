@@ -1,4 +1,4 @@
-package com.lelloman.read.core.view
+package com.lelloman.read.core.view.actionevent
 
 import android.widget.Toast
 

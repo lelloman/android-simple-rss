@@ -11,6 +11,10 @@ import android.support.design.widget.Snackbar
 import android.widget.Toast
 import com.lelloman.read.R
 import com.lelloman.read.core.navigation.NavigationEvent
+import com.lelloman.read.core.view.actionevent.AnimationViewActionEvent
+import com.lelloman.read.core.view.actionevent.SnackEvent
+import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
+import com.lelloman.read.core.view.actionevent.ToastEvent
 import com.lelloman.read.core.viewmodel.BaseViewModel
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
@@ -38,6 +42,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 is ToastEvent -> showToast(it)
                 is SnackEvent -> showSnack(it)
                 is AnimationViewActionEvent -> onAnimationViewActionEvent(it)
+                is SwipePageActionEvent -> onSwipePageActionEvent(it)
             }
         })
 
@@ -45,6 +50,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     }
 
     protected open fun onAnimationViewActionEvent(animationViewActionEvent: AnimationViewActionEvent) {
+
+    }
+
+    protected open fun onSwipePageActionEvent(swipePageActionEvent: SwipePageActionEvent) {
 
     }
 

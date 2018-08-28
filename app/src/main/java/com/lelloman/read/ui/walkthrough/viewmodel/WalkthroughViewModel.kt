@@ -17,4 +17,7 @@ abstract class WalkthroughViewModel(
 
     abstract fun onSkipClicked(view: View)
 
+    abstract fun onMeteredConnectionYesClicked(view: View)
+    abstract fun onMeteredConnectionNoClicked(view: View)
+
 }

@@ -11,10 +11,10 @@ import com.lelloman.read.core.navigation.CloseScreenNavigationEvent
 import com.lelloman.read.core.navigation.NavigationEvent
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
-import com.lelloman.read.core.view.AnimationViewActionEvent
-import com.lelloman.read.core.view.SnackEvent
-import com.lelloman.read.core.view.ToastEvent
-import com.lelloman.read.core.view.ViewActionEvent
+import com.lelloman.read.core.view.actionevent.AnimationViewActionEvent
+import com.lelloman.read.core.view.actionevent.SnackEvent
+import com.lelloman.read.core.view.actionevent.ToastEvent
+import com.lelloman.read.core.view.actionevent.ViewActionEvent
 import com.lelloman.read.utils.SingleLiveData
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
