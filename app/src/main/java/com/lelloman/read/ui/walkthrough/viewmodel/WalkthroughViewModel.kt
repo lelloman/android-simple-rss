@@ -15,9 +15,10 @@ abstract class WalkthroughViewModel(
     actionTokenProvider = actionTokenProvider
 ) {
 
-    abstract fun onSkipClicked(view: View)
+    abstract fun onCloseClicked(view: View)
 
     abstract fun onMeteredConnectionYesClicked(view: View)
     abstract fun onMeteredConnectionNoClicked(view: View)
+    abstract fun onFirstPageOkClicked(view: View)
 
 }

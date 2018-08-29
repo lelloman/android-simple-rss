@@ -65,5 +65,7 @@
     <string name="NO">NO</string>
     <string name="YES">YES</string>
     <string name="walkthrough_metered_network_question">Do you want the app to use metered networks (mobile) to download feeds and images?</string>
+    <string name="walkthrough_first_page">Blah blah blah</string>
+    <string name="OK">OK</string>
 
 </resources>

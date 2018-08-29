@@ -53,7 +53,7 @@ class WalkthroughViewModelImpl(
         bundle.getString(ARG_URL)?.let { discoverUrl.set(it) }
     }
 
-    override fun onSkipClicked(view: View) {
+    override fun onCloseClicked(view: View) {
         appSettings.setShouldShowWalkthtough(false)
         navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
     }
@@ -71,13 +71,17 @@ class WalkthroughViewModelImpl(
     }
 
     override fun onMeteredConnectionNoClicked(view: View) {
-        viewActionEvents.postValue(SwipePageActionEvent(SwipePageActionEvent.Direction.RIGHT))
+        navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
         appSettings.setUseMeteredNetwork(false)
     }
 
     override fun onMeteredConnectionYesClicked(view: View) {
-        viewActionEvents.postValue(SwipePageActionEvent(SwipePageActionEvent.Direction.RIGHT))
+        navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
         appSettings.setUseMeteredNetwork(true)
+    }
+
+    override fun onFirstPageOkClicked(view: View) {
+        viewActionEvents.postValue(SwipePageActionEvent(SwipePageActionEvent.Direction.RIGHT))
     }
 
     private companion object {

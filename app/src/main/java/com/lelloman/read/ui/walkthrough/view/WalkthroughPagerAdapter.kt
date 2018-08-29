@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.databinding.LayoutDiscoverUrlBinding
+import com.lelloman.read.databinding.PagerItemWalkthrough1Binding
 import com.lelloman.read.databinding.PagerItemWalkthroughMeteredNetworkBinding
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 
@@ -37,6 +38,9 @@ class WalkthroughPagerAdapter(
             R.layout.pager_item_walkthrough_metered_network -> bind<PagerItemWalkthroughMeteredNetworkBinding>(view).apply {
                 viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
             }
+            R.layout.pager_item_walkthrough_1 -> bind<PagerItemWalkthrough1Binding>(view).apply {
+                viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
+            }
             else -> null
         }
 
@@ -55,9 +59,9 @@ class WalkthroughPagerAdapter(
 
     private companion object {
         val LAYOUT_IDS = arrayOf(
+            R.layout.pager_item_walkthrough_1,
             R.layout.layout_discover_url,
-            R.layout.pager_item_walkthrough_metered_network,
-            R.layout.pager_item_walkthrough_3
+            R.layout.pager_item_walkthrough_metered_network
         )
     }
 }
