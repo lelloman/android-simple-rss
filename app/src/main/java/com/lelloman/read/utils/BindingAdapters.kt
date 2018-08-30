@@ -1,6 +1,7 @@
 package com.lelloman.read.utils
 
 import android.databinding.BindingAdapter
+import android.graphics.Bitmap
 import android.net.Uri
 import android.support.design.widget.TextInputLayout
 import android.support.v4.widget.SwipeRefreshLayout
@@ -12,6 +13,7 @@ import android.widget.TextView
 import com.lelloman.identicon.ClassicIdenticonView
 import com.lelloman.read.R
 import com.lelloman.read.ReadApplication
+import com.lelloman.read.widget.SourceImageView
 
 interface OnKeyboardActionDoneListener {
     fun onKeyboardActionDone()
@@ -59,12 +61,22 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("app:imageBytes")
-    fun bindImageBytes(view: ImageView, byteArrayWithId: ByteArrayWithId) {
-        byteArrayWithId.byteArray?.let { bytes ->
+    fun bindImageViewImageBytes(view: ImageView, byteArrayWithId: ByteArrayWithId) {
+        byteArrayWithId.bind(view::setImageBitmap)
+    }
+
+    @JvmStatic
+    @BindingAdapter("app:imageBytes")
+    fun bindSourceImageViewImageBytes(view: SourceImageView, byteArrayWithId: ByteArrayWithId) {
+        byteArrayWithId.bind(view::setImage)
+    }
+
+    private fun ByteArrayWithId.bind(action: (Bitmap) -> Unit) {
+        byteArray?.let {
             ReadApplication
                 .getFaviconBitmapProvider()
-                .getFaviconBitmap(bytes, byteArrayWithId.id)
-                ?.let { view.setImageBitmap(it) }
+                .getFaviconBitmap(byteArray, id)
+                ?.let(action)
         }
     }
 
