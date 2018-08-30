@@ -73,49 +73,49 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
             logger.e("RxJavaPlugin error handler$httpClientExtraMsg", it)
         }
 
-        appSettings.setShouldShowWalkthtough(true)
-        Completable
-            .fromAction {
-                db.clearAllTables()
-                sourcesDao.insert(
-                    Source(
-                        id = 0L,
-                        name = "repubblica",
-                        url = "http://www.repubblica.it/rss/homepage/rss2.0.xml",
-                        lastFetched = 0L,
-                        isActive = true
-                    )
-                )
-                sourcesDao.insert(
-                    Source(
-                        id = 0L,
-                        name = "fanpage",
-                        url = "https://www.fanpage.it/feed/",
-                        lastFetched = 0L,
-                        isActive = true
-                    )
-                )
-                sourcesDao.insert(
-                    Source(
-                        id = 0L,
-                        name = "ansa",
-                        url = "http://www.ansa.it/sito/ansait_rss.xml",
-                        lastFetched = 0L,
-                        isActive = true
-                    )
-                )
-                sourcesDao.insert(
-                    Source(
-                        id = 0L,
-                        name = "ilmattino",
-                        url = "http://www.ilmattino.it/rss.php",
-                        lastFetched = 0L,
-                        isActive = true
-                    )
-                )
-            }
-            .subscribeOn(Schedulers.io())
-            .subscribe()
+//        appSettings.setShouldShowWalkthtough(true)
+//        Completable
+//            .fromAction {
+//                db.clearAllTables()
+//                sourcesDao.insert(
+//                    Source(
+//                        id = 0L,
+//                        name = "repubblica",
+//                        url = "http://www.repubblica.it/rss/homepage/rss2.0.xml",
+//                        lastFetched = 0L,
+//                        isActive = true
+//                    )
+//                )
+//                sourcesDao.insert(
+//                    Source(
+//                        id = 0L,
+//                        name = "fanpage",
+//                        url = "https://www.fanpage.it/feed/",
+//                        lastFetched = 0L,
+//                        isActive = true
+//                    )
+//                )
+//                sourcesDao.insert(
+//                    Source(
+//                        id = 0L,
+//                        name = "ansa",
+//                        url = "http://www.ansa.it/sito/ansait_rss.xml",
+//                        lastFetched = 0L,
+//                        isActive = true
+//                    )
+//                )
+//                sourcesDao.insert(
+//                    Source(
+//                        id = 0L,
+//                        name = "ilmattino",
+//                        url = "http://www.ilmattino.it/rss.php",
+//                        lastFetched = 0L,
+//                        isActive = true
+//                    )
+//                )
+//            }
+//            .subscribeOn(Schedulers.io())
+//            .subscribe()
 
     }
 
