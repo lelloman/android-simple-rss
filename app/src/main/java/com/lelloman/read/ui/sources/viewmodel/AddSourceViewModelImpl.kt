@@ -90,8 +90,6 @@ class AddSourceViewModelImpl(
     override fun onSaveClicked() {
         if (saving) return
 
-        saving = true
-
         val name = sourceName.get()
         val inputUrl = sourceUrl.get()
 
@@ -99,6 +97,7 @@ class AddSourceViewModelImpl(
         val hasValidUrl = urlValidator.isValidUrl(inputUrl)
 
         if (hasValidName && hasValidUrl) {
+            saving = true
             val url = urlValidator.maybePrependProtocol(inputUrl)
             sourceUrl.set(url)
             sourceNameError.value = ""

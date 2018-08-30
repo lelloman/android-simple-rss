@@ -5,6 +5,7 @@ DONE:
 - [FEATURE]<s>add intro setup</s>
 - [FEATURE]<s>add select settings (metered network, refresh interval)
 page in walkthrough</s>
+- [BUG]<s>add-source screen, try to save a source with invalid name and/or url, error, then try to save a valid one</s>
 
 DEBT:
 - find way to mock both view model and http layers in ui tests
@@ -21,12 +22,11 @@ FEATURE:
 - add theme selection (as setting and in walkthrough)
 
 BUGS:
-- first add many sources, in source list scroll to bottom, the last source is covered by "add" button
 - swipe delete a source from list, the snackbar doesnt push the "+" button
 - found feeds list includes http - https cloned urls, should probably remove http ones
 - sources in source list have identicons even if favicon is available
 - !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
 
 IN PROGRESS:
-- [BUG] add-source screen, try to save a source with invalid name and/or url, error, then try to save a valid one
+- [BUG] first add many sources, in source list scroll to bottom, the last source is covered by "add" button
 
