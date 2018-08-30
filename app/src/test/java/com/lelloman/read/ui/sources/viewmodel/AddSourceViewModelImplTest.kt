@@ -3,7 +3,7 @@ package com.lelloman.read.ui.sources.viewmodel
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
 import com.lelloman.read.core.navigation.CloseScreenNavigationEvent
-import com.lelloman.read.core.view.ToastEvent
+import com.lelloman.read.core.view.actionevent.ToastEvent
 import com.lelloman.read.feed.fetcher.EmptySource
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.fetcher.HttpError
@@ -16,7 +16,7 @@ import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockLoggerFactory
 import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.test
-import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.lelloman.read.utils.UrlValidator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.anyOrNull

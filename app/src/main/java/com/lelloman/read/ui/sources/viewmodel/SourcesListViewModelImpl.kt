@@ -7,11 +7,11 @@ import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
-import com.lelloman.read.core.view.SnackEvent
+import com.lelloman.read.core.view.actionevent.SnackEvent
 import com.lelloman.read.persistence.db.model.Source
-import com.lelloman.read.ui.articles.repository.ArticlesRepository
-import com.lelloman.read.ui.sources.repository.DeletedSource
-import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.common.repository.ArticlesRepository
+import com.lelloman.read.ui.common.repository.DeletedSource
+import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Completable
 import io.reactivex.Scheduler

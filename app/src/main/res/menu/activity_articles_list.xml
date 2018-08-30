@@ -17,4 +17,11 @@
         android:orderInCategory="200"
         android:title="@string/settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_discover_sources"
+        android:orderInCategory="300"
+        android:title="@string/discover_sources"
+        app:showAsAction="never"
+        />
 </menu>

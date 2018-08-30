@@ -5,8 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import com.lelloman.read.R
 import com.lelloman.read.core.ResourceProvider
-import com.lelloman.read.core.view.AnimationViewActionEvent
 import com.lelloman.read.core.view.BaseActivity
+import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.databinding.ActivityWalkthroughBinding
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import dagger.android.AndroidInjection
@@ -38,6 +38,14 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
         binding.viewPager.adapter = viewPagerAdapter
         binding.pagerIndicator.viewPager = binding.viewPager
     }
+
+    override fun onSwipePageActionEvent(swipePageActionEvent: SwipePageActionEvent) {
+        when (swipePageActionEvent.direction) {
+            SwipePageActionEvent.Direction.LEFT -> binding.viewPager.currentItem = binding.viewPager.currentItem - 1
+            SwipePageActionEvent.Direction.RIGHT -> binding.viewPager.currentItem = binding.viewPager.currentItem + 1
+        }
+    }
+
     companion object {
         fun start(activity: Activity) {
             activity.startActivity(Intent(activity, WalkthroughActivity::class.java))

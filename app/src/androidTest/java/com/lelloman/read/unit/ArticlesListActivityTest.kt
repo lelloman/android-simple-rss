@@ -7,7 +7,7 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.lelloman.read.R
-import com.lelloman.read.core.view.ViewActionEvent
+import com.lelloman.read.core.view.actionevent.ViewActionEvent
 import com.lelloman.read.di.MockViewModelModule
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.testutils.TestApp

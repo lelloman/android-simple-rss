@@ -3,7 +3,7 @@ package com.lelloman.read.ui.sources.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.common.repository.SourcesRepository
 import io.reactivex.Scheduler
 
 class SourceViewModelImpl(

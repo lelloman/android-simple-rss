@@ -39,8 +39,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.walkthrough.view.FoundFeedListActivity"
+            android:name=".ui.discover.view.FoundFeedListActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.discover.view.DiscoverUrlActivity"
+            android:label="@string/discover_sources" />
 
         <receiver
             android:name=".feed.FeedRefreshBroadcastReceiver"

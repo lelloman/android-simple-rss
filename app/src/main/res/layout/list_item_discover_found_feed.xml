@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListItemViewModel" />
+            type="com.lelloman.read.ui.discover.viewmodel.FoundFeedListItemViewModel" />
     </data>
 
     <com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollCardView

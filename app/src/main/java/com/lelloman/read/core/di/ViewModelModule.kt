@@ -7,27 +7,28 @@ import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FeedFetcher
-import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.ui.articles.repository.ArticlesRepository
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModelImpl
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModelImpl
+import com.lelloman.read.ui.common.repository.ArticlesRepository
+import com.lelloman.read.ui.common.repository.SourcesRepository
+import com.lelloman.read.ui.common.repository.DiscoverRepository
+import com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModel
+import com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModelImpl
+import com.lelloman.read.ui.discover.viewmodel.FoundFeedListViewModel
+import com.lelloman.read.ui.discover.viewmodel.FoundFeedListViewModelImpl
 import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModel
 import com.lelloman.read.ui.launcher.viewmodel.LauncherViewModelImpl
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModelImpl
-import com.lelloman.read.ui.sources.repository.SourcesRepository
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModelImpl
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModelImpl
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModelImpl
-import com.lelloman.read.ui.walkthrough.repository.WalkthroughRepository
-import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListViewModel
-import com.lelloman.read.ui.walkthrough.viewmodel.FoundFeedListViewModelImpl
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModelImpl
 import com.lelloman.read.utils.UrlValidator
@@ -45,6 +46,7 @@ open class ViewModelModule {
         articlesRepository: ArticlesRepository,
         resourceProvider: ResourceProvider,
         sourcesRepository: SourcesRepository,
+        discoverRepository: DiscoverRepository,
         appSettings: AppSettings
     ): ArticlesListViewModel = ArticlesListViewModelImpl(
         ioScheduler = ioScheduler,
@@ -52,6 +54,7 @@ open class ViewModelModule {
         articlesRepository = articlesRepository,
         resourceProvider = resourceProvider,
         sourcesRepository = sourcesRepository,
+        discoverRepository = discoverRepository,
         appSettings = appSettings
     )
 
@@ -130,7 +133,7 @@ open class ViewModelModule {
     open fun provideWalkthroughViewModel(
         @UiScheduler uiScheduler: Scheduler,
         @IoScheduler ioScheduler: Scheduler,
-        walkthroughRepository: WalkthroughRepository,
+        discoverRepository: DiscoverRepository,
         resourceProvider: ResourceProvider,
         actionTokenProvider: ActionTokenProvider,
         appSettings: AppSettings,
@@ -141,7 +144,7 @@ open class ViewModelModule {
         appSettings = appSettings,
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
-        walkthroughRepository = walkthroughRepository,
+        discoveryRepository = discoverRepository,
         urlValidator = urlValidator
     )
 
@@ -162,11 +165,28 @@ open class ViewModelModule {
         actionTokenProvider: ActionTokenProvider,
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
-        walkthroughRepository: WalkthroughRepository
-    ) : FoundFeedListViewModel = FoundFeedListViewModelImpl(
+        discoverRepository: DiscoverRepository
+    ): FoundFeedListViewModel = FoundFeedListViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
-        walkthroughRepository = walkthroughRepository,
+        discoverRepository = discoverRepository,
+        resourceProvider = resourceProvider,
+        actionTokenProvider = actionTokenProvider
+    )
+
+    @Provides
+    open fun provideDiscoverUrlViewModel(
+        @IoScheduler ioScheduler: Scheduler,
+        @UiScheduler uiScheduler: Scheduler,
+        discoverRepository: DiscoverRepository,
+        urlValidator: UrlValidator,
+        resourceProvider: ResourceProvider,
+        actionTokenProvider: ActionTokenProvider
+    ): DiscoverUrlViewModel = DiscoverUrlViewModelImpl(
+        ioScheduler = ioScheduler,
+        uiScheduler = uiScheduler,
+        discoverRepository = discoverRepository,
+        urlValidator = urlValidator,
         resourceProvider = resourceProvider,
         actionTokenProvider = actionTokenProvider
     )

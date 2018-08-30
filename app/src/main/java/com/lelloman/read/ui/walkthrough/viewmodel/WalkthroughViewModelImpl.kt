@@ -11,8 +11,9 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.ui.walkthrough.repository.WalkthroughRepository
+import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Scheduler
@@ -23,7 +24,7 @@ class WalkthroughViewModelImpl(
     resourceProvider: ResourceProvider,
     actionTokenProvider: ActionTokenProvider,
     private val appSettings: AppSettings,
-    private val walkthroughRepository: WalkthroughRepository,
+    private val discoveryRepository: DiscoverRepository,
     private val urlValidator: UrlValidator
 ) : WalkthroughViewModel(
     resourceProvider = resourceProvider,
@@ -34,7 +35,7 @@ class WalkthroughViewModelImpl(
 
     override val isFeedDiscoverLoading: MutableLiveData<Boolean> by LazyLiveData {
         subscription {
-            walkthroughRepository
+            discoveryRepository
                 .isFindingFeeds
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
@@ -52,7 +53,7 @@ class WalkthroughViewModelImpl(
         bundle.getString(ARG_URL)?.let { discoverUrl.set(it) }
     }
 
-    override fun onSkipClicked(view: View) {
+    override fun onCloseClicked(view: View) {
         appSettings.setShouldShowWalkthtough(false)
         navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
     }
@@ -64,23 +65,23 @@ class WalkthroughViewModelImpl(
     override fun onDiscoverClicked(view: View?) {
         urlValidator.maybePrependProtocol(discoverUrl.get())?.let { urlWithProtocol ->
             discoverUrl.set(urlWithProtocol)
-            walkthroughRepository.findFeeds(urlWithProtocol)
+            discoveryRepository.findFeeds(urlWithProtocol)
             navigate(ScreenNavigationEvent(NavigationScreen.FOUND_FEED_LIST, arrayOf(urlWithProtocol)))
-
-//            animate(DiscoverUrlSelectedAnimationEvent)
-//            foundFeedsInternal.clear()
-//            foundFeeds.postValue(foundFeedsInternal)
-//            subscription {
-//                feedFinder
-//                    .findValidFeedUrls(urlWithProtocol)
-//                    .subscribeOn(ioScheduler)
-//                    .observeOn(uiScheduler)
-//                    .subscribe {
-//                        foundFeedsInternal.add(it)
-//                        foundFeeds.postValue(ArrayList(foundFeedsInternal))
-//                    }
-//            }
         }
+    }
+
+    override fun onMeteredConnectionNoClicked(view: View) {
+        navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
+        appSettings.setUseMeteredNetwork(false)
+    }
+
+    override fun onMeteredConnectionYesClicked(view: View) {
+        navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
+        appSettings.setUseMeteredNetwork(true)
+    }
+
+    override fun onFirstPageOkClicked(view: View) {
+        viewActionEvents.postValue(SwipePageActionEvent(SwipePageActionEvent.Direction.RIGHT))
     }
 
     private companion object {

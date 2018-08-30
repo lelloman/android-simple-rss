@@ -12,8 +12,8 @@ import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.dummySourceArticle
 import com.lelloman.read.testutils.test
-import com.lelloman.read.ui.articles.repository.ArticlesRepository
-import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.common.repository.ArticlesRepository
+import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify

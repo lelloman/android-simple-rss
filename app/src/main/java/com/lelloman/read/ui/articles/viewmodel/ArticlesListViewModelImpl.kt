@@ -9,8 +9,9 @@ import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.ui.articles.repository.ArticlesRepository
-import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.common.repository.ArticlesRepository
+import com.lelloman.read.ui.common.repository.DiscoverRepository
+import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -20,6 +21,7 @@ class ArticlesListViewModelImpl(
     private val uiScheduler: Scheduler,
     private val articlesRepository: ArticlesRepository,
     private val sourcesRepository: SourcesRepository,
+    private val discoverRepository: DiscoverRepository,
     private val appSettings: AppSettings,
     resourceProvider: ResourceProvider
 ) : ArticlesListViewModel(resourceProvider) {
@@ -69,6 +71,11 @@ class ArticlesListViewModelImpl(
         emptyViewVisible.value = false
     }
 
+    override fun onCreate() {
+        super.onCreate()
+        discoverRepository.reset()
+    }
+
     override fun refresh() = articlesRepository.refresh()
 
     override fun onSourcesClicked() = navigate(ScreenNavigationEvent(NavigationScreen.SOURCES_LIST))
@@ -84,6 +91,10 @@ class ArticlesListViewModelImpl(
     }
 
     override fun onSettingsClicked() = navigate(ScreenNavigationEvent(NavigationScreen.SETTINGS))
+
+    override fun onDiscoverSourceClicked() {
+        navigateToScreen(NavigationScreen.DISCOVER_URL)
+    }
 
     private fun setEmptyViewValues(sources: List<Source>) {
         when {

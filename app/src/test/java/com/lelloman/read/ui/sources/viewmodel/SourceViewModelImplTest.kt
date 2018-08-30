@@ -5,7 +5,7 @@ import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.AndroidArchTest
-import com.lelloman.read.ui.sources.repository.SourcesRepository
+import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
