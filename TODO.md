@@ -13,20 +13,22 @@ page in walkthrough
 </s>
 
 DEBT:
-- find way to mock both view model and http layers in ui tests
-- ui-unit tests for all activities
-- add ui smoke tests
-- unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
+- [DEBT] find way to mock both view model and http layers in ui tests
+- [DEBT] ui-unit tests for all activities
+- [DEBT] add ui smoke tests
+- [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
+- [DEBT] create delegate properties or something for AppSettingsImpl 
 
 FEATURE:
-- add option to choose which external app is used to open articles
-- add refresher background job
-- add single-source-screen
-- add intro page in walkthrough (why type in url in discovery)
+- [FEATURE] add option to choose which external app is used to open articles
+- [FEATURE] add refresher background job
+- [FEATURE] add single-source-screen
+- [FEATURE] add intro page in walkthrough (why type in url in discovery)
 
 BUGS:
-- found feeds list includes http - https cloned urls, should probably remove http ones
-- !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
+- [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
+- [BUG] !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
+- [BUG] in sources list screen, if there is no source the screen is empty
 
 IN PROGRESS:
 - add theme selection (as setting and in walkthrough)

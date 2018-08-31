@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import android.view.Window
 import com.lelloman.read.R
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.view.BaseActivity
@@ -35,7 +36,6 @@ class FoundFeedListActivity
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)

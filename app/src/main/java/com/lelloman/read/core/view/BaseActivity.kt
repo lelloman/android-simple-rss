@@ -6,8 +6,10 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.LayoutRes
+import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
+import android.view.View
 import android.widget.Toast
 import com.lelloman.read.R
 import com.lelloman.read.core.navigation.NavigationEvent
@@ -27,11 +29,29 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     private var hasSupportActionBarBackButton = false
 
+    protected open val hasActionBar = true
+
+    protected open val hasInverseTheme = false
+
+    @LayoutRes
+    protected open val layoutResId = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        appSettings
+            .appTheme
+            .blockingFirst()
+            .apply { theme.applyStyle(resId, true) }
+
+        if (hasInverseTheme) {
+            theme.applyStyle(R.style.InverseTheme, true)
+        }
+
         setContentView(R.layout.activity_base)
+        setupActionBar()
         coordinatorLayout = findViewById(R.id.coordinator_layout)
-        binding = DataBindingUtil.inflate(layoutInflater, getLayoutId(), coordinatorLayout, true)
+        val layoutId = getLayoutId()
+        binding = DataBindingUtil.inflate(layoutInflater, if (layoutId != 0) layoutId else layoutResId, coordinatorLayout, true)
         binding.setLifecycleOwner(this)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
@@ -47,6 +67,14 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         })
 
         viewModel.onCreate()
+    }
+
+    private fun setupActionBar() {
+        if (hasActionBar) {
+            setSupportActionBar(findViewById(R.id.toolbar))
+        } else {
+            findViewById<AppBarLayout>(R.id.app_bar_layout).visibility = View.GONE
+        }
     }
 
     protected open fun onAnimationViewActionEvent(animationViewActionEvent: AnimationViewActionEvent) {
@@ -97,7 +125,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     }
 
     @LayoutRes
-    protected abstract fun getLayoutId(): Int
+    @Deprecated("use layoutResId val instead instead", ReplaceWith("layoutResId"))
+    protected open fun getLayoutId() = 0
 
     protected abstract fun getViewModelClass(): Class<VM>
 

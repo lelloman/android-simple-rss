@@ -19,7 +19,11 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
     @Inject
     lateinit var resourceProvider: ResourceProvider
 
-    override fun getLayoutId() = R.layout.activity_walkthrough
+    override val hasActionBar = false
+
+    override val hasInverseTheme = true
+
+    override val layoutResId = R.layout.activity_walkthrough
 
     override fun getViewModelClass() = WalkthroughViewModel::class.java
 
@@ -28,10 +32,8 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
         AndroidInjection.inject(this)
 
         viewPagerAdapter = WalkthroughPagerAdapter(
-            context = this,
             lifecycleOwner = this,
-            walkthroughViewModel = viewModel,
-            resourceProvider = resourceProvider
+            walkthroughViewModel = viewModel
         )
         binding.viewModel = viewModel
         binding.viewPager.offscreenPageLimit = 20

@@ -23,9 +23,6 @@ class ArticlesListActivity :
     private lateinit var adapter: ArticlesAdapter
 
     @Inject
-    lateinit var appSettings: AppSettings
-
-    @Inject
     @field:UiScheduler
     lateinit var uiScheduler: Scheduler
 
