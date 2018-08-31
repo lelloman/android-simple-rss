@@ -44,7 +44,7 @@ class SourceListItemViewModelTest {
             assertThat(name).isEqualTo(source.name)
             assertThat(url).isEqualTo(source.url)
             assertThat(hash).isEqualTo(source.immutableHashCode)
-            assertThat(lastFetched).isEqualTo(lastFetchedString)
+            assertThat(lastFetched.get()).isEqualTo(lastFetchedString)
             assertThat(isActive).isEqualTo(source.isActive)
         }
     }

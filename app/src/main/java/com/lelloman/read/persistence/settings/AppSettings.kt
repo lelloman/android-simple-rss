@@ -1,5 +1,6 @@
 package com.lelloman.read.persistence.settings
 
+import com.lelloman.read.core.view.AppTheme
 import io.reactivex.Observable
 
 interface AppSettings {
@@ -14,6 +15,8 @@ interface AppSettings {
 
     val shouldShowWalkthrough: Observable<Boolean>
 
+    val appTheme: Observable<AppTheme>
+
     fun setSourceRefreshMinInterval(interval: SourceRefreshInterval)
 
     fun setArticlesListImagesEnabled(enabled: Boolean)
@@ -23,4 +26,6 @@ interface AppSettings {
     fun setOpenArticlesInApp(openInApp: Boolean)
 
     fun setShouldShowWalkthtough(shouldShowWalkthrough: Boolean)
+
+    fun setAppTheme(appTheme: AppTheme)
 }

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="CustomTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="invertibleTextColor">@android:color/primary_text_light</item>
+    </style>
+
+    <style name="CustomTheme.Darcula" parent="Theme.AppCompat" >
+
+    </style>
+</resources>

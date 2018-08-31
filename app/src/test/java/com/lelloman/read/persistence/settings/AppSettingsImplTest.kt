@@ -2,11 +2,14 @@ package com.lelloman.read.persistence.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.lelloman.read.core.view.AppTheme
+import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_APP_THEME
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_OPEN_ARTICLES_IN_APP
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_SHOULD_SHOW_WALKTHROUGH
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_USE_METERED_NETWORK
+import com.lelloman.read.utils.Constants.AppSettings.KEY_APP_THEME
 import com.lelloman.read.utils.Constants.AppSettings.KEY_ARTICLE_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.KEY_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.utils.Constants.AppSettings.KEY_OPEN_ARTICLES_IN_APP
@@ -26,6 +29,7 @@ class AppSettingsImplTest {
     private var prefUseMeteredNetwork = false
     private var prefOpenArticlesInApp = false
     private var prefShouldShowWalkthrough = false
+    private var prefAppTheme = AppTheme.LIGHT
 
     private val sharedPrefsEditor: SharedPreferences.Editor = mock()
 
@@ -45,6 +49,9 @@ class AppSettingsImplTest {
         on { getBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, DEFAULT_SHOULD_SHOW_WALKTHROUGH) }
             .thenAnswer { prefShouldShowWalkthrough }
 
+        on { getString(KEY_APP_THEME, DEFAULT_APP_THEME.name) }
+            .thenAnswer { prefAppTheme.name }
+
         on { edit() }.thenReturn(sharedPrefsEditor)
     }
 
@@ -59,7 +66,7 @@ class AppSettingsImplTest {
     }
 
     @Test
-    fun `can get and set min refresh interval`() {
+    fun `gets and sets min refresh interval`() {
         val firstInterval = SourceRefreshInterval.RELAXED
         val secondInterval = SourceRefreshInterval.STONER
         prefInterval = firstInterval
@@ -76,7 +83,7 @@ class AppSettingsImplTest {
     }
 
     @Test
-    fun `can get and set articles list images enabled`() {
+    fun `gets and sets articles list images enabled`() {
         prefArticlesImages = false
         val tested = AppSettingsImpl(context)
         val tester = tested.articleListImagesEnabled.test()
@@ -91,7 +98,7 @@ class AppSettingsImplTest {
     }
 
     @Test
-    fun `can get and set use metered network`() {
+    fun `gets and sets use metered network`() {
         prefUseMeteredNetwork = false
         val tested = AppSettingsImpl(context)
         val tester = tested.useMeteredNetwork.test()
@@ -106,7 +113,7 @@ class AppSettingsImplTest {
     }
 
     @Test
-    fun `can get and set open articles in app`() {
+    fun `gets and sets open articles in app`() {
         prefOpenArticlesInApp = false
         val tested = AppSettingsImpl(context)
         val tester = tested.openArticlesInApp.test()
@@ -133,5 +140,20 @@ class AppSettingsImplTest {
 
         verify(sharedPrefsEditor).putBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, true)
         tester.assertValues(false, true)
+    }
+
+    @Test
+    fun `gets and sets app theme`(){
+        prefAppTheme = AppTheme.DARCULA
+        val tested = AppSettingsImpl(context)
+        val tester = tested.appTheme.test()
+
+        tester.assertValues(AppTheme.DARCULA)
+
+        prefAppTheme = AppTheme.LIGHT
+        tested.setAppTheme(AppTheme.LIGHT)
+
+        verify(sharedPrefsEditor).putString(KEY_APP_THEME, AppTheme.LIGHT.name)
+        tester.assertValues(AppTheme.DARCULA, AppTheme.LIGHT)
     }
 }
