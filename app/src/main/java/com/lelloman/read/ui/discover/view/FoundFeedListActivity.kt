@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
-import android.view.Window
 import com.lelloman.read.R
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.view.BaseActivity
@@ -26,7 +25,7 @@ class FoundFeedListActivity
 
     private lateinit var adapter: FoundFeedsAdapter
 
-    private lateinit var addAllAction: MenuItem
+    private var addAllAction: MenuItem? = null
 
     override fun getLayoutId() = R.layout.activity_found_feed_list
 
@@ -54,7 +53,7 @@ class FoundFeedListActivity
         binding.viewModel = viewModel
 
         viewModel.isFindingFeeds.observe(this, Observer {
-            addAllAction.isEnabled = it != true
+            addAllAction?.isEnabled = it != true
         })
     }
 
