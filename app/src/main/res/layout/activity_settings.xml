@@ -55,6 +55,18 @@
                 app:description="@string/settings_opens_articles_in_app_descr"
                 app:title="@string/settings_opens_articles_in_app_title" />
 
+            <com.lelloman.read.widget.SettingsItemView
+                style="@style/SettingsItemContainer"
+                app:description="@string/settings_theme_descr"
+                app:title="@string/settings_theme_title">
+                <android.support.v7.widget.AppCompatSpinner
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:entries="@{viewModel.themes}"
+                    android:selectedItemPosition="@={viewModel.selectedTheme}" />
+            </com.lelloman.read.widget.SettingsItemView>
+
         </LinearLayout>
     </ScrollView>
 </layout>

@@ -7,6 +7,7 @@ import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
+import com.lelloman.read.core.view.AppTheme
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
 import com.lelloman.read.utils.LazyLiveData
@@ -35,6 +36,26 @@ class SettingsViewModelImpl(
         minRefreshIntervals.value = sortedRefreshIntervals.map {
             semanticTimeProvider.getTimeQuantity(it.ms)
         }
+    }
+
+    override val themes: MutableLiveData<List<String>> by LazyLiveData {
+        subscription {
+            appSettings.appTheme
+                .observeOn(uiScheduler)
+                .subscribe { selectedTheme.set(AppTheme.values().indexOf(it)) }
+        }
+        themes.value = AppTheme.values().map { it.name }
+    }
+    override val selectedTheme = ObservableField<Int>().also {
+        it.addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
+            override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
+                if(sender is ObservableField<*>) {
+                    (sender.get() as? Int)?.let { position ->
+                        appSettings.setAppTheme(AppTheme.values()[position])
+                    }
+                }
+            }
+        })
     }
 
     override val selectedMinRefreshInterval = ObservableField<Int>().also {

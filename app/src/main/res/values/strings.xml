@@ -67,5 +67,7 @@
     <string name="walkthrough_metered_network_question">Do you want the app to use metered networks (mobile) to download feeds and images?</string>
     <string name="walkthrough_first_page">Blah blah blah</string>
     <string name="OK">OK</string>
+    <string name="settings_theme_descr">Theme</string>
+    <string name="settings_theme_title">Change the colors of the app.</string>
 
 </resources>
