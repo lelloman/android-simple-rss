@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,12 +10,68 @@
             type="com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModel" />
     </data>
 
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".ui.walkthrough.view.WalkthroughActivity">
 
-        <include
-            android:id="@+id/included"
-            layout="@layout/layout_discover_url" />
-    </FrameLayout>
+        <TextView
+            android:id="@+id/text_view_type_url"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="@string/type_in_url"
+            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            app:layout_constraintBottom_toTopOf="@+id/edit_text_url"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <EditText
+            android:id="@+id/edit_text_url"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:enabled="@{!viewModel.isFeedDiscoverLoading()}"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            android:text="@={viewModel.discoverUrl}"
+            app:layout_constraintBottom_toTopOf="@+id/button_and_progress_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view_type_url"
+            app:onKeyboardActionDoneListener="@{viewModel}" />
+
+        <FrameLayout
+            android:id="@+id/button_and_progress_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_text_url">
+
+            <Button
+                android:id="@+id/button_discover"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:onClick="@{viewModel::onDiscoverClicked}"
+                android:text="@string/discover"
+                app:viewVisible="@{!viewModel.isFeedDiscoverLoading()}" />
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:viewVisible="@{viewModel.isFeedDiscoverLoading()}" />
+        </FrameLayout>
+
+    </android.support.constraint.ConstraintLayout>
 </layout>

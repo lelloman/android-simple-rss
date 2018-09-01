@@ -1,11 +1,14 @@
 package com.lelloman.read.persistence.settings
 
 import android.content.Context
+import com.lelloman.read.core.view.AppTheme
+import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_APP_THEME
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_OPEN_ARTICLES_IN_APP
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_SHOULD_SHOW_WALKTHROUGH
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_USE_METERED_NETWORK
+import com.lelloman.read.utils.Constants.AppSettings.KEY_APP_THEME
 import com.lelloman.read.utils.Constants.AppSettings.KEY_ARTICLE_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.KEY_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.utils.Constants.AppSettings.KEY_OPEN_ARTICLES_IN_APP
@@ -32,6 +35,8 @@ class AppSettingsImpl(
 
     private val shouldShowWalkthroughSubject: Subject<Boolean> = BehaviorSubject.create()
 
+    private val appThemeSubject: Subject<AppTheme> = BehaviorSubject.create()
+
     override val sourceRefreshMinInterval: Observable<SourceRefreshInterval> =
         sourceRefreshMinIntervalSubject.hide()
 
@@ -46,6 +51,8 @@ class AppSettingsImpl(
 
     override val shouldShowWalkthrough: Observable<Boolean> =
         shouldShowWalkthroughSubject.hide()
+
+    override val appTheme: Observable<AppTheme> = appThemeSubject.hide()
 
     init {
         sourceRefreshMinIntervalSubject.onNext(
@@ -65,6 +72,11 @@ class AppSettingsImpl(
 
         shouldShowWalkthroughSubject.onNext(
             prefs.getBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, DEFAULT_SHOULD_SHOW_WALKTHROUGH)
+        )
+        appThemeSubject.onNext(
+            prefs
+                .getString(KEY_APP_THEME, DEFAULT_APP_THEME.name)
+                .let { AppTheme.fromName(it) }
         )
     }
 
@@ -97,4 +109,10 @@ class AppSettingsImpl(
         .putBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, shouldShowWalkthrough)
         .apply()
         .also { shouldShowWalkthroughSubject.onNext(shouldShowWalkthrough) }
+
+    override fun setAppTheme(appTheme: AppTheme) = prefs
+        .edit()
+        .putString(KEY_APP_THEME, appTheme.name)
+        .apply()
+        .also { appThemeSubject.onNext(appTheme) }
 }

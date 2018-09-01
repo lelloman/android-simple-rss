@@ -18,7 +18,6 @@ class DiscoverUrlActivity : BaseActivity<DiscoverUrlViewModel, ActivityDiscoverU
         super.onCreate(savedInstanceState)
         setHasActionBarBackButton()
         binding.viewModel = viewModel
-        binding.included!!.viewModel = viewModel
     }
     companion object {
         fun start(activity: Activity) {

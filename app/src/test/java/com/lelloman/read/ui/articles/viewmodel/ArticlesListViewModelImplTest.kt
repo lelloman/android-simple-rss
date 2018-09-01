@@ -13,6 +13,7 @@ import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.dummySourceArticle
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.ArticlesRepository
+import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
@@ -27,6 +28,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
     private val articlesRepository: ArticlesRepository = mock()
     private val sourcesRepository: SourcesRepository = mock()
+    private val discoveryRepository: DiscoverRepository = mock()
     private val resourceProvider = MockResourceProvider()
     private val appSettings: AppSettings = mock()
 
@@ -38,6 +40,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             uiScheduler = trampoline(),
             articlesRepository = articlesRepository,
             sourcesRepository = sourcesRepository,
+            discoverRepository = discoveryRepository,
             resourceProvider = resourceProvider,
             appSettings = appSettings
         )

@@ -25,7 +25,7 @@ class FoundFeedListActivity
 
     private lateinit var adapter: FoundFeedsAdapter
 
-    private lateinit var addAllAction: MenuItem
+    private var addAllAction: MenuItem? = null
 
     override fun getLayoutId() = R.layout.activity_found_feed_list
 
@@ -35,7 +35,6 @@ class FoundFeedListActivity
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        setSupportActionBar(binding.toolbar)
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)
@@ -54,7 +53,7 @@ class FoundFeedListActivity
         binding.viewModel = viewModel
 
         viewModel.isFindingFeeds.observe(this, Observer {
-            addAllAction.isEnabled = it != true
+            addAllAction?.isEnabled = it != true
         })
     }
 

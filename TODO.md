@@ -9,25 +9,28 @@ page in walkthrough
 - [BUG] first add many sources, in source list scroll to bottom, the last source is covered by "add" button
 - [BUG] swipe delete a source from list, the snackbar doesnt push the "+" button
 - [BUG] sources in source list have identicons even if favicon is available
+- [FEATURE] make "last refresh" time in source list refresh every 1 sec
 </s>
 
 DEBT:
-- find way to mock both view model and http layers in ui tests
-- ui-unit tests for all activities
-- add ui smoke tests
-- unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
+- [DEBT] find way to mock both view model and http layers in ui tests
+- [DEBT] ui-unit tests for all activities
+- [DEBT] add ui smoke tests
+- [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
+- [DEBT] create delegate properties or something for AppSettingsImpl 
 
 FEATURE:
-- add option to choose which external app is used to open articles
-- add refresher background job
-- add single-source-screen
-- add intro page in walkthrough (why type in url in discovery)
-- add theme selection (as setting and in walkthrough)
+- [FEATURE] add option to choose which external app is used to open articles
+- [FEATURE] add refresher background job
+- [FEATURE] add single-source-screen
+- [FEATURE] add intro page in walkthrough (why type in url in discovery)
 
 BUGS:
-- found feeds list includes http - https cloned urls, should probably remove http ones
-- !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
+- [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
+- [BUG] !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
+- [BUG] in sources list screen, if there is no source the screen is empty
+- [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 
 IN PROGRESS:
-- [FEATURE] make "last refresh" time in source list refresh every 1 min
+- add theme selection (as setting and in walkthrough)
 

@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             app:indicatorEmptyColor="#ffaaaaaa"
-            app:indicatorFillColor="@color/colorAccent"
+            app:indicatorFillColor="?android:attr/colorAccent"
             app:indicatorMargin="8dp"
             app:indicatorRadius="4dp"
             app:layout_constraintBottom_toBottomOf="parent"

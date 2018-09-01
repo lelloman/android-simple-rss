@@ -20,6 +20,7 @@ class SourcesAdapter(
 
     private var data = emptyList<Source>()
     private val listDiffCalculator = ModelWithIdListDiffCalculator()
+    private val viewHolders = mutableListOf<ViewHolder>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = DataBindingUtil.inflate<ListItemSourceBinding>(
@@ -28,7 +29,7 @@ class SourcesAdapter(
             parent,
             false
         )
-        return ViewHolder(binding)
+        return ViewHolder(binding).also { viewHolders.add(it) }
     }
 
     override fun getItemCount() = data.size
@@ -45,12 +46,14 @@ class SourcesAdapter(
 
     fun getItem(position: Int) = data[position]
 
+    fun tick() = viewHolders.forEach { it.viewModel.tick() }
+
     inner class ViewHolder(private val binding: ListItemSourceBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var source: Source
 
-        private val viewModel = SourceListItemViewModel(
+        internal val viewModel = SourceListItemViewModel(
             semanticTimeProvider = semanticTimeProvider,
             onIsActiveChanged = { onSourceIsActiveChangedListener.invoke(source.id, it) }
         )

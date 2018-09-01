@@ -11,6 +11,9 @@ import com.lelloman.read.databinding.ActivitySourcesListBinding
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.utils.ItemSwipeListener
 import dagger.android.AndroidInjection
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -21,6 +24,10 @@ class SourcesListActivity
 
     @Inject
     lateinit var semanticTimeProvider: SemanticTimeProvider
+
+    private val logger by lazy { loggerFactory.getLogger(SourcesListActivity::class.java.simpleName) }
+
+    private var timerSubscription: Disposable? = null
 
     override fun getLayoutId() = R.layout.activity_sources_list
 
@@ -41,6 +48,23 @@ class SourcesListActivity
         ItemSwipeListener.set(binding.recyclerView) { viewModel.onSourceSwiped(adapter.getItem(it)) }
         binding.viewModel = viewModel
         viewModel.sources.observe(this, adapter)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        timerSubscription = Observable
+            .interval(1, TimeUnit.SECONDS)
+            .observeOn(uiScheduler)
+            .subscribe {
+                adapter.tick()
+                logger.d("1s tick")
+            }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        timerSubscription?.dispose()
+        timerSubscription = null
     }
 
     companion object {

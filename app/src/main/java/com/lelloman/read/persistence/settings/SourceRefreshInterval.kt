@@ -12,11 +12,14 @@ enum class SourceRefreshInterval(val ms: Long) {
 
     companion object {
 
-        private val map = SourceRefreshInterval
+        private val namesMap = SourceRefreshInterval
             .values()
             .associateBy(SourceRefreshInterval::name)
 
-        fun fromName(name: String): SourceRefreshInterval =
-            map[name] ?: DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+        fun fromName(name: String): SourceRefreshInterval = if (namesMap.containsKey(name)) {
+            namesMap[name]!!
+        } else {
+            DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+        }
     }
 }

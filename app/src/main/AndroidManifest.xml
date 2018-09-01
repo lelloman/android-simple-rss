@@ -21,8 +21,7 @@
         </activity>
         <activity
             android:name=".ui.sources.view.AddSourceActivity"
-            android:label="@string/title_activity_add_source"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_add_source" />
         <activity android:name=".ui.sources.view.SourceActivity" />
         <activity android:name=".ui.articles.view.ArticleActivity" />
         <activity
@@ -30,7 +29,6 @@
             android:label="@string/settings" />
         <activity
             android:name=".ui.walkthrough.view.WalkthroughActivity"
-            android:theme="@style/AppTheme.NoActionBar.Inverse"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.launcher.view.LauncherActivity">
             <intent-filter>
@@ -38,9 +36,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.discover.view.FoundFeedListActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.discover.view.FoundFeedListActivity" />
         <activity
             android:name=".ui.discover.view.DiscoverUrlActivity"
             android:label="@string/discover_sources" />

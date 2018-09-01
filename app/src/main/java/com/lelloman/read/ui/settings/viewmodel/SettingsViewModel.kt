@@ -13,6 +13,9 @@ abstract class SettingsViewModel(
     abstract val minRefreshIntervals: MutableLiveData<List<String>>
     abstract val selectedMinRefreshInterval: ObservableField<Int>
 
+    abstract val themes: MutableLiveData<List<String>>
+    abstract val selectedTheme: ObservableField<Int>
+
     abstract val articlesListImagesSelected: MutableLiveData<Boolean>
 
     abstract val useMeteredNetworkSelected: MutableLiveData<Boolean>
