@@ -11,9 +11,11 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.view.AppTheme
 import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.common.repository.DiscoverRepository
+import com.lelloman.read.ui.walkthrough.ThemeListItem
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Scheduler
@@ -31,6 +33,27 @@ class WalkthroughViewModelImpl(
     actionTokenProvider = actionTokenProvider
 ) {
 
+    override val themes: MutableLiveData<List<ThemeListItem>> by LazyLiveData {
+        subscription {
+            appSettings
+                .appTheme
+                .subscribe { selectedTheme ->
+                    themes.postValue(
+                        AppTheme
+                            .values()
+                            .toList()
+                            .mapIndexed { index, appTheme ->
+                                ThemeListItem(
+                                    id = index.toLong(),
+                                    theme = appTheme,
+                                    isEnabled = appTheme == selectedTheme
+                                )
+                            }
+                    )
+                }
+        }
+    }
+
     override val discoverUrl = ObservableField<String>()
 
     override val isFeedDiscoverLoading: MutableLiveData<Boolean> by LazyLiveData {
@@ -41,6 +64,10 @@ class WalkthroughViewModelImpl(
                 .observeOn(uiScheduler)
                 .subscribe(isFeedDiscoverLoading::postValue)
         }
+    }
+
+    override fun onThemeClicked(theme: AppTheme) {
+        appSettings.setAppTheme(theme)
     }
 
     override fun onSaveInstanceState(bundle: Bundle) {

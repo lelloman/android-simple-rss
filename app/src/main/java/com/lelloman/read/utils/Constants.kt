@@ -30,7 +30,7 @@ object Constants {
         const val DEFAULT_SHOULD_SHOW_WALKTHROUGH = true
 
         const val KEY_APP_THEME = "AppTheme"
-        val DEFAULT_APP_THEME = AppTheme.BLACK
+        val DEFAULT_APP_THEME = AppTheme.LIGHT
     }
 
 }
