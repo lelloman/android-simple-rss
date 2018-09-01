@@ -1,23 +1,18 @@
 package com.lelloman.read
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.espresso.Espresso.closeSoftKeyboard
-import android.support.test.espresso.Espresso.pressBack
 import android.support.test.rule.ActivityTestRule
-import com.lelloman.read.core.view.AppTheme
+import com.lelloman.read.core.TimeProvider
+import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.read.http.HttpClient
+import com.lelloman.read.http.HttpModule
+import com.lelloman.read.http.HttpRequest
+import com.lelloman.read.http.HttpResponse
+import com.lelloman.read.screen.WalkthroughScreen
 import com.lelloman.read.testutils.TestApp
-import com.lelloman.read.testutils.clickView
-import com.lelloman.read.testutils.clickViewWithText
-import com.lelloman.read.testutils.openOverflowMenu
 import com.lelloman.read.testutils.rotateNatural
-import com.lelloman.read.testutils.swipeLeft
-import com.lelloman.read.testutils.swipeRight
-import com.lelloman.read.testutils.typeInEditText
-import com.lelloman.read.testutils.viewIsDisplayed
-import com.lelloman.read.testutils.viewWithText
-import com.lelloman.read.testutils.viewWithTextIsDisplayed
-import com.lelloman.read.testutils.wait
 import com.lelloman.read.ui.launcher.view.LauncherActivity
+import io.reactivex.Single
+import okhttp3.OkHttpClient
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -27,72 +22,61 @@ class SmokeTest {
     @get:Rule
     val activityTestRule = ActivityTestRule<LauncherActivity>(LauncherActivity::class.java, true, false)
 
-    private val context = InstrumentationRegistry.getTargetContext()
+    private val httpClient: HttpClient = object : HttpClient {
 
-    private fun string(id: Int) = context.getString(id)
+        override fun request(request: HttpRequest): Single<HttpResponse> {
+            return Single.error(Exception("MWAHAHA"))
+        }
+    }
 
     @Before
     fun setUp() {
         rotateNatural()
+        TestApp.instance.httpModule = object : HttpModule() {
+            override fun provideHttpClient(
+                okHttpClient: OkHttpClient,
+                loggerFactory: LoggerFactory,
+                timeProvider: TimeProvider
+            ) = httpClient
+        }
         TestApp.instance.appSettings.reset()
         TestApp.instance.db.clearAllTables()
 
         activityTestRule.launchActivity(null)
     }
 
-    private fun fromWalkthroughToArticlesList() {
-        viewIsDisplayed(R.id.walkthrough_root)
-        viewWithTextIsDisplayed(string(R.string.walkthrough_first_page))
-        clickView(R.id.button_ok)
-        viewWithTextIsDisplayed(AppTheme.LIGHT.name)
-        viewWithTextIsDisplayed(AppTheme.DARCULA.name)
-        clickViewWithText(AppTheme.DARCULA.name)
-        clickViewWithText(AppTheme.LIGHT.name)
-        swipeLeft(R.id.view_pager)
-        viewWithTextIsDisplayed(string(R.string.walkthrough_first_page))
-        swipeRight(R.id.view_pager)
-        swipeRight(R.id.view_pager)
-        viewWithText(string(R.string.type_in_url))
-        swipeRight(R.id.view_pager)
-        clickViewWithText(string(R.string.NO))
-    }
-
-    private fun articlesListNavigation() {
-        // sources
-        openOverflowMenu()
-        clickViewWithText(string(R.string.sources))
-        viewIsDisplayed(R.id.sources_recycler_view)
-        clickView(R.id.fab)
-        viewIsDisplayed(R.id.add_source_root)
-        pressBack()
-        viewIsDisplayed(R.id.sources_recycler_view)
-        pressBack()
-
-        // settings
-        openOverflowMenu()
-        clickViewWithText(string(R.string.settings))
-        viewIsDisplayed(R.id.settings_root)
-        pressBack()
-
-        // discover
-        openOverflowMenu()
-        clickViewWithText(string(R.string.discover_sources))
-        viewWithTextIsDisplayed(string(R.string.type_in_url))
-        typeInEditText(R.id.edit_text_url, "www.asd.com")
-        closeSoftKeyboard()
-        clickView(R.id.button_discover)
-        viewWithTextIsDisplayed("http://www.asd.com")
-        pressBack()
-        viewWithTextIsDisplayed(string(R.string.type_in_url))
-        viewWithTextIsDisplayed("http://www.asd.com")
-        pressBack()
-    }
-
     @Test
     fun smokeTest() {
-        fromWalkthroughToArticlesList()
-        articlesListNavigation()
-
-        wait(5.0)
+        // from walkthrough to articles list
+        WalkthroughScreen()
+            .firstPageIsDisplayed()
+            .clickOk()
+            .themesAreDisplayed()
+            .clickOnThemes()
+            .swipeLeft()
+            .firstPageIsDisplayed()
+            .swipeRight()
+            .swipeRight()
+            .typeInUrlIsDisplayed()
+            .swipeRight()
+            .clickNo()
+            // navigation from articles list
+            // -sources
+            .clickOnSourcesInOverflow()
+            .clickAddSource()
+            .backToSourcesList()
+            .backToArticlesList()
+            // -settings
+            .clickOnSettingsInOverflow()
+            .backToArticlesList()
+            // -discover
+            .clickOnDiscoverSourcesInOverflow()
+            .typeUrl("www.asd.com")
+            .closeKeyboard()
+            .clickOnDiscover()
+            .hasText("http://www.asd.com")
+            .backToDiscoverUrlScreen()
+            .hasText("http://www.asd.com")
+            .backToArticlesList()
     }
 }

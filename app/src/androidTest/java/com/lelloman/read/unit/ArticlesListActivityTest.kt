@@ -84,7 +84,7 @@ class ArticlesListActivityTest {
 
     @Test
     fun showsSwipeRefreshWhenLoading() {
-        viewIsDisplayed(R.id.recycler_view)
+        viewIsDisplayed(R.id.articles_recycler_view)
         checkIsSwipeRefreshing(false)
 
         onUiThread { isLoadingLiveData.value = true }
@@ -107,12 +107,12 @@ class ArticlesListActivityTest {
 
     @Test
     fun showsArticles() {
-        checkRecyclerViewCount(0)
+        checkRecyclerViewCount(0, R.id.articles_recycler_view)
 
         onUiThread { articlesLiveData.value = articles }
         wait(0.2)
 
-        checkRecyclerViewCount(articles.size)
+        checkRecyclerViewCount(articles.size, R.id.articles_recycler_view)
     }
 
     @Test
@@ -153,16 +153,16 @@ class ArticlesListActivityTest {
         articlesLiveData.postValue(listOf(article))
         wait(0.2)
 
-        checkRecyclerViewCount(1)
-        checkViewAtPositionHasText(0, article.title)
+        checkRecyclerViewCount(1, R.id.articles_recycler_view)
+        checkViewAtPositionHasText(0, article.title, R.id.articles_recycler_view)
 
         rotateLeft()
-        checkRecyclerViewCount(1)
-        checkViewAtPositionHasText(0, article.title)
+        checkRecyclerViewCount(1, R.id.articles_recycler_view)
+        checkViewAtPositionHasText(0, article.title, R.id.articles_recycler_view)
 
         rotateRight()
-        checkRecyclerViewCount(1)
-        checkViewAtPositionHasText(0, article.title)
+        checkRecyclerViewCount(1, R.id.articles_recycler_view)
+        checkViewAtPositionHasText(0, article.title, R.id.articles_recycler_view)
     }
 
 

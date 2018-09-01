@@ -38,8 +38,8 @@ class ArticlesListActivity :
             semanticTimeProvider = semanticTimeProvider
         )
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
+        binding.articlesRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.articlesRecyclerView.adapter = adapter
 
         binding.viewModel = viewModel
 
