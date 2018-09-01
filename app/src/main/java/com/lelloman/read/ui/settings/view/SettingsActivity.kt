@@ -10,7 +10,7 @@ import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
 
 class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding>() {
 
-    override fun getLayoutId() = R.layout.activity_settings
+    override val layoutResId = R.layout.activity_settings
 
     override fun getViewModelClass() = SettingsViewModel::class.java
 

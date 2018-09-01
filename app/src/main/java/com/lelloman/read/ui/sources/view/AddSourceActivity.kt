@@ -12,7 +12,7 @@ import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 
 class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBinding>() {
 
-    override fun getLayoutId() = R.layout.activity_add_source
+    override val layoutResId = R.layout.activity_add_source
 
     override fun getViewModelClass() = AddSourceViewModel::class.java
 

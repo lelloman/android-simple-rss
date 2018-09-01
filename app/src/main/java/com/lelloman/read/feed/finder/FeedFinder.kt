@@ -26,45 +26,44 @@ class FeedFinder(
         loadingSubject.onNext(false)
     }
 
-    fun findValidFeedUrls(url: String): Observable<FoundFeed> = httpClient
-        .requestStringBodyAndBaseUrl(url)
-        .flatMap { (stringBody, baseUrl) ->
-            logger.d("findValidFeedUrls() base url $baseUrl")
-            parser.parseDoc(
-                url = baseUrl,
-                html = stringBody
-            )
-        }
-        .flatMapObservable(parser::findCandidateUrls)
-        .flatMap { candidateUrl ->
-            httpClient
-                .requestStringBody(candidateUrl)
-                .onErrorComplete()
-                .flatMap {
-                    parser.parseDoc(
-                        url = url,
-                        html = it
-                    )
-                }
-                .flatMapObservable {
-                    Observable.merge(
-                        parser.findCandidateUrls(it),
-                        Observable.just(candidateUrl)
-                    )
-                }
-        }
-        .toList()
-        .map { it.toSet() }
-        .flatMapObservable { urls ->
-            logger.d("found ${urls.size} urls to test")
-            Observable.fromIterable(urls)
-        }
-        .flatMapMaybe(::testUrl)
-        .onErrorResumeNext { _: Throwable ->
-            Observable.empty()
-        }
-        .doOnSubscribe { loadingSubject.onNext(true) }
-        .doFinally { loadingSubject.onNext(false) }
+    fun findValidFeedUrls(url: String): Observable<FoundFeed> = mutableSetOf<String>().let { foundUrls ->
+        httpClient
+            .requestStringBodyAndBaseUrl(url)
+            .flatMap { (stringBody, baseUrl) ->
+                logger.d("findValidFeedUrls() base url $baseUrl")
+                parser.parseDoc(
+                    url = baseUrl,
+                    html = stringBody
+                )
+            }
+            .flatMapObservable(parser::findCandidateUrls)
+            .flatMap { candidateUrl ->
+                httpClient
+                    .requestStringBody(candidateUrl)
+                    .onErrorComplete()
+                    .flatMap {
+                        parser.parseDoc(
+                            url = url,
+                            html = it
+                        )
+                    }
+                    .flatMapObservable {
+                        Observable.merge(
+                            parser.findCandidateUrls(it),
+                            Observable.just(candidateUrl)
+                        )
+                    }
+            }
+            .filter { foundUrls.contains(it).not() }
+            .doOnNext { foundUrls.add(it) }
+            .flatMapMaybe(::testUrl)
+            .onErrorResumeNext { throwable: Throwable ->
+                logger.e("error", throwable)
+                Observable.empty()
+            }
+            .doOnSubscribe { loadingSubject.onNext(true) }
+            .doFinally { loadingSubject.onNext(false) }
+    }
 
     private fun testUrl(urlToTest: String) = feedFetcher
         .testUrl(urlToTest)

@@ -1,22 +1,28 @@
 package com.lelloman.read.ui.walkthrough.view
 
 import android.arch.lifecycle.LifecycleOwner
+import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v4.view.PagerAdapter
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.lelloman.read.R
 import com.lelloman.read.databinding.PagerItemDiscoverUrlBinding
+import com.lelloman.read.databinding.PagerItemSelectThemeBinding
 import com.lelloman.read.databinding.PagerItemWalkthrough1Binding
 import com.lelloman.read.databinding.PagerItemWalkthroughMeteredNetworkBinding
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 
 class WalkthroughPagerAdapter(
     private val lifecycleOwner: LifecycleOwner,
+    private val context: Context,
     private val walkthroughViewModel: WalkthroughViewModel
 ) : PagerAdapter() {
+
+    private val themesAdapter = ThemesAdapter { walkthroughViewModel.onThemeClicked(it.theme) }
 
     override fun isViewFromObject(view: View, obj: Any) = view == obj
 
@@ -35,6 +41,12 @@ class WalkthroughPagerAdapter(
                 viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
             }
             R.layout.pager_item_walkthrough_1 -> bind<PagerItemWalkthrough1Binding>(view).apply {
+                viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
+            }
+            R.layout.pager_item_select_theme -> bind<PagerItemSelectThemeBinding>(view).apply {
+                recyclerView.adapter = themesAdapter
+                recyclerView.layoutManager = LinearLayoutManager(context)
+                walkthroughViewModel.themes.observe(lifecycleOwner, themesAdapter)
                 viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
             }
             else -> null
@@ -56,6 +68,7 @@ class WalkthroughPagerAdapter(
     private companion object {
         val LAYOUT_IDS = arrayOf(
             R.layout.pager_item_walkthrough_1,
+            R.layout.pager_item_select_theme,
             R.layout.pager_item_discover_url,
             R.layout.pager_item_walkthrough_metered_network
         )

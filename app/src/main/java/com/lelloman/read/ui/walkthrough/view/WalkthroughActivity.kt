@@ -32,6 +32,7 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
         AndroidInjection.inject(this)
 
         viewPagerAdapter = WalkthroughPagerAdapter(
+            context = this,
             lifecycleOwner = this,
             walkthroughViewModel = viewModel
         )

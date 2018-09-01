@@ -22,7 +22,7 @@ class ArticlesListActivity :
     @Inject
     lateinit var semanticTimeProvider: SemanticTimeProvider
 
-    override fun getLayoutId() = R.layout.activity_articles_list
+    override val layoutResId = R.layout.activity_articles_list
 
     override fun getViewModelClass() = ArticlesListViewModel::class.java
 
@@ -38,8 +38,8 @@ class ArticlesListActivity :
             semanticTimeProvider = semanticTimeProvider
         )
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
+        binding.articlesRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.articlesRecyclerView.adapter = adapter
 
         binding.viewModel = viewModel
 

@@ -11,7 +11,7 @@ import dagger.android.AndroidInjection
 
 class SourceActivity : BaseActivity<SourceViewModel, ActivitySourceBinding>() {
 
-    override fun getLayoutId() = R.layout.activity_source
+    override val layoutResId = R.layout.activity_source
 
     override fun getViewModelClass() = SourceViewModel::class.java
 

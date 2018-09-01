@@ -29,7 +29,7 @@ class SourcesListActivity
 
     private var timerSubscription: Disposable? = null
 
-    override fun getLayoutId() = R.layout.activity_sources_list
+    override val layoutResId = R.layout.activity_sources_list
 
     override fun getViewModelClass() = SourcesListViewModel::class.java
 
@@ -43,9 +43,9 @@ class SourcesListActivity
             onSourceIsActiveChangedListener = viewModel::onSourceIsActiveChanged
         )
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
-        ItemSwipeListener.set(binding.recyclerView) { viewModel.onSourceSwiped(adapter.getItem(it)) }
+        binding.sourcesRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.sourcesRecyclerView.adapter = adapter
+        ItemSwipeListener.set(binding.sourcesRecyclerView) { viewModel.onSourceSwiped(adapter.getItem(it)) }
         binding.viewModel = viewModel
         viewModel.sources.observe(this, adapter)
     }

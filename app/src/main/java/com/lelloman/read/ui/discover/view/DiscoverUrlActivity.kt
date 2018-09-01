@@ -10,7 +10,7 @@ import com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModel
 
 class DiscoverUrlActivity : BaseActivity<DiscoverUrlViewModel, ActivityDiscoverUrlBinding>() {
 
-    override fun getLayoutId() = R.layout.activity_discover_url
+    override val layoutResId = R.layout.activity_discover_url
 
     override fun getViewModelClass() = DiscoverUrlViewModel::class.java
 

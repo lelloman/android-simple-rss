@@ -55,6 +55,10 @@ class AppSettingsImpl(
     override val appTheme: Observable<AppTheme> = appThemeSubject.hide()
 
     init {
+        readAllSettings()
+    }
+
+    private fun readAllSettings() {
         sourceRefreshMinIntervalSubject.onNext(
             prefs
                 .getString(KEY_MIN_SOURCE_REFRESH_INTERVAL, DEFAULT_MIN_SOURCE_REFRESH_INTERVAL.name)
@@ -78,6 +82,11 @@ class AppSettingsImpl(
                 .getString(KEY_APP_THEME, DEFAULT_APP_THEME.name)
                 .let { AppTheme.fromName(it) }
         )
+    }
+
+    override fun reset() {
+        prefs.edit().clear().apply()
+        readAllSettings()
     }
 
     override fun setSourceRefreshMinInterval(interval: SourceRefreshInterval) = prefs

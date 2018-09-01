@@ -17,6 +17,8 @@ interface AppSettings {
 
     val appTheme: Observable<AppTheme>
 
+    fun reset()
+
     fun setSourceRefreshMinInterval(interval: SourceRefreshInterval)
 
     fun setArticlesListImagesEnabled(enabled: Boolean)

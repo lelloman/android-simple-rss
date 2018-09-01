@@ -17,7 +17,7 @@ import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 
 class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>() {
 
-    override fun getLayoutId() = R.layout.activity_article
+    override val layoutResId = R.layout.activity_article
 
     override fun getViewModelClass() = ArticleViewModel::class.java
 
