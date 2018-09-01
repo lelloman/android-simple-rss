@@ -15,7 +15,6 @@ page in walkthrough
 
 DEBT:
 - [DEBT] ui-unit tests for all activities
-- [DEBT] add ui smoke tests
 - [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
 - [DEBT] create delegate properties or something for AppSettingsImpl 
 
@@ -35,4 +34,5 @@ BUGS:
 
 IN PROGRESS:
 - [DEBT] find way to mock both view model and http layers in ui tests
+- [DEBT] add ui smoke tests
 

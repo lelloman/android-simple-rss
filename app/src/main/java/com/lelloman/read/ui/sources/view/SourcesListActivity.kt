@@ -43,9 +43,9 @@ class SourcesListActivity
             onSourceIsActiveChangedListener = viewModel::onSourceIsActiveChanged
         )
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
-        ItemSwipeListener.set(binding.recyclerView) { viewModel.onSourceSwiped(adapter.getItem(it)) }
+        binding.sourcesRecyclerView.layoutManager = LinearLayoutManager(this)
+        binding.sourcesRecyclerView.adapter = adapter
+        ItemSwipeListener.set(binding.sourcesRecyclerView) { viewModel.onSourceSwiped(adapter.getItem(it)) }
         binding.viewModel = viewModel
         viewModel.sources.observe(this, adapter)
     }
