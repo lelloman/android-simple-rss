@@ -27,7 +27,7 @@ class FoundFeedListActivity
 
     private var addAllAction: MenuItem? = null
 
-    override fun getLayoutId() = R.layout.activity_found_feed_list
+    override val layoutResId = R.layout.activity_found_feed_list
 
     override fun getViewModelClass() = FoundFeedListViewModel::class.java
 

@@ -10,10 +10,10 @@ page in walkthrough
 - [BUG] swipe delete a source from list, the snackbar doesnt push the "+" button
 - [BUG] sources in source list have identicons even if favicon is available
 - [FEATURE] make "last refresh" time in source list refresh every 1 sec
+- [FEATURE] add theme selection (as setting and in walkthrough)
 </s>
 
 DEBT:
-- [DEBT] find way to mock both view model and http layers in ui tests
 - [DEBT] ui-unit tests for all activities
 - [DEBT] add ui smoke tests
 - [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
@@ -34,5 +34,5 @@ BUGS:
 - [BUG] sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present
 
 IN PROGRESS:
-- [FEATURE] add theme selection (as setting and in walkthrough)
+- [DEBT] find way to mock both view model and http layers in ui tests
 

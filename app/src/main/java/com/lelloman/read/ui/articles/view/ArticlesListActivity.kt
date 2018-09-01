@@ -22,7 +22,7 @@ class ArticlesListActivity :
     @Inject
     lateinit var semanticTimeProvider: SemanticTimeProvider
 
-    override fun getLayoutId() = R.layout.activity_articles_list
+    override val layoutResId = R.layout.activity_articles_list
 
     override fun getViewModelClass() = ArticlesListViewModel::class.java
 

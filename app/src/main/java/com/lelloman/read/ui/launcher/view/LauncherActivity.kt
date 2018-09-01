@@ -10,7 +10,7 @@ import dagger.android.AndroidInjection
 
 class LauncherActivity : BaseActivity<LauncherViewModel, ActivityLauncherBinding>() {
 
-    override fun getLayoutId() = R.layout.activity_launcher
+    override val layoutResId = R.layout.activity_launcher
 
     override fun getViewModelClass() = LauncherViewModel::class.java
 

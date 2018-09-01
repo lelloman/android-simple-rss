@@ -65,8 +65,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         setContentView(R.layout.activity_base)
         setupActionBar()
         coordinatorLayout = findViewById(R.id.coordinator_layout)
-        val layoutId = getLayoutId()
-        binding = DataBindingUtil.inflate(layoutInflater, if (layoutId != 0) layoutId else layoutResId, coordinatorLayout, true)
+        binding = DataBindingUtil.inflate(layoutInflater, layoutResId, coordinatorLayout, true)
         binding.setLifecycleOwner(this)
 
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
@@ -143,10 +142,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         }
         snack.show()
     }
-
-    @LayoutRes
-    @Deprecated("use layoutResId val instead instead", ReplaceWith("layoutResId"))
-    protected open fun getLayoutId() = 0
 
     protected abstract fun getViewModelClass(): Class<VM>
 

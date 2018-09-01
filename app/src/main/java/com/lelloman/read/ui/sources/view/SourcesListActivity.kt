@@ -29,7 +29,7 @@ class SourcesListActivity
 
     private var timerSubscription: Disposable? = null
 
-    override fun getLayoutId() = R.layout.activity_sources_list
+    override val layoutResId = R.layout.activity_sources_list
 
     override fun getViewModelClass() = SourcesListViewModel::class.java
 
