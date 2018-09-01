@@ -29,6 +29,7 @@ BUGS:
 - [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
 - [BUG] !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
 - [BUG] in sources list screen, if there is no source the screen is empty
+- [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 
 IN PROGRESS:
 - add theme selection (as setting and in walkthrough)

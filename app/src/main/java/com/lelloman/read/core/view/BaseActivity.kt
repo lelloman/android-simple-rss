@@ -18,6 +18,7 @@ import com.lelloman.read.core.view.actionevent.SnackEvent
 import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.core.view.actionevent.ToastEvent
 import com.lelloman.read.core.viewmodel.BaseViewModel
+import io.reactivex.disposables.Disposable
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     : InjectableActivity() {
@@ -36,12 +37,26 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     @LayoutRes
     protected open val layoutResId = 0
 
+    private lateinit var themeChangesSubscription: Disposable
+
+    private val logger by lazy { loggerFactory.getLogger(javaClass.simpleName) }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        appSettings
+
+        val customTheme = appSettings
             .appTheme
             .blockingFirst()
-            .apply { theme.applyStyle(resId, true) }
+        theme.applyStyle(customTheme.resId, true)
+
+        themeChangesSubscription = appSettings
+            .appTheme
+            .filter { it != customTheme }
+            .observeOn(uiScheduler)
+            .subscribe {
+                logger.d("Theme changed from $customTheme to $it")
+                recreate()
+            }
 
         if (hasInverseTheme) {
             theme.applyStyle(R.style.InverseTheme, true)
@@ -67,6 +82,11 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         })
 
         viewModel.onCreate()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        themeChangesSubscription.dispose()
     }
 
     private fun setupActionBar() {

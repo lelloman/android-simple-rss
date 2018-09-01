@@ -6,15 +6,12 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.lelloman.read.R
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.core.di.qualifiers.UiScheduler
-import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivitySourcesListBinding
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.utils.ItemSwipeListener
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -27,13 +24,6 @@ class SourcesListActivity
 
     @Inject
     lateinit var semanticTimeProvider: SemanticTimeProvider
-
-    @Inject
-    @field:UiScheduler
-    lateinit var uiScheduler: Scheduler
-
-    @Inject
-    lateinit var loggerFactory: LoggerFactory
 
     private val logger by lazy { loggerFactory.getLogger(SourcesListActivity::class.java.simpleName) }
 
