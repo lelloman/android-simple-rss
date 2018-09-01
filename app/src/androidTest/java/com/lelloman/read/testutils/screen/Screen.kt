@@ -1,4 +1,4 @@
-package com.lelloman.read.screen
+package com.lelloman.read.testutils.screen
 
 import android.support.test.InstrumentationRegistry
 import com.lelloman.read.testutils.viewIsDisplayed

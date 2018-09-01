@@ -1,4 +1,4 @@
-package com.lelloman.read.screen
+package com.lelloman.read.testutils.screen
 
 import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.espresso.Espresso.pressBack

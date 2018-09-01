@@ -11,6 +11,7 @@ page in walkthrough
 - [BUG] sources in source list have identicons even if favicon is available
 - [FEATURE] make "last refresh" time in source list refresh every 1 sec
 - [FEATURE] add theme selection (as setting and in walkthrough)
+- [DEBT] find way to mock both view model and http layers in ui tests
 </s>
 
 DEBT:
@@ -33,6 +34,5 @@ BUGS:
 - [BUG] sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present
 
 IN PROGRESS:
-- [DEBT] find way to mock both view model and http layers in ui tests
 - [DEBT] add ui smoke tests
 

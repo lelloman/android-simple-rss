@@ -1,4 +1,4 @@
-package com.lelloman.read.screen
+package com.lelloman.read.testutils.screen
 
 import com.lelloman.read.R
 import com.lelloman.read.testutils.clickViewWithText

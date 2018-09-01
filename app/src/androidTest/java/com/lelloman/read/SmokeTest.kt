@@ -1,18 +1,19 @@
 package com.lelloman.read
 
 import android.support.test.rule.ActivityTestRule
-import com.lelloman.read.core.TimeProvider
-import com.lelloman.read.core.logger.LoggerFactory
-import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpModule
-import com.lelloman.read.http.HttpRequest
-import com.lelloman.read.http.HttpResponse
-import com.lelloman.read.screen.WalkthroughScreen
+import com.lelloman.read.testutils.MockHttpClient
+import com.lelloman.read.testutils.MockHttpClient.Companion.URL_ASD
 import com.lelloman.read.testutils.TestApp
 import com.lelloman.read.testutils.rotateNatural
+import com.lelloman.read.testutils.screen.AddSourceScreen
+import com.lelloman.read.testutils.screen.ArticlesListScreen
+import com.lelloman.read.testutils.screen.DiscoverSourcesScreen
+import com.lelloman.read.testutils.screen.FoundFeedsScreen
+import com.lelloman.read.testutils.screen.SettingsScreen
+import com.lelloman.read.testutils.screen.SourcesListScreen
+import com.lelloman.read.testutils.screen.WalkthroughScreen
 import com.lelloman.read.ui.launcher.view.LauncherActivity
-import io.reactivex.Single
-import okhttp3.OkHttpClient
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -22,22 +23,11 @@ class SmokeTest {
     @get:Rule
     val activityTestRule = ActivityTestRule<LauncherActivity>(LauncherActivity::class.java, true, false)
 
-    private val httpClient: HttpClient = object : HttpClient {
-
-        override fun request(request: HttpRequest): Single<HttpResponse> {
-            return Single.error(Exception("MWAHAHA"))
-        }
-    }
-
     @Before
     fun setUp() {
         rotateNatural()
         TestApp.instance.httpModule = object : HttpModule() {
-            override fun provideHttpClient(
-                okHttpClient: OkHttpClient,
-                loggerFactory: LoggerFactory,
-                timeProvider: TimeProvider
-            ) = httpClient
+            override fun provideOkHttpClient() = MockHttpClient()
         }
         TestApp.instance.appSettings.reset()
         TestApp.instance.db.clearAllTables()
@@ -60,23 +50,25 @@ class SmokeTest {
             .typeInUrlIsDisplayed()
             .swipeRight()
             .clickNo()
-            // navigation from articles list
-            // -sources
-            .clickOnSourcesInOverflow()
-            .clickAddSource()
-            .backToSourcesList()
-            .backToArticlesList()
-            // -settings
-            .clickOnSettingsInOverflow()
-            .backToArticlesList()
-            // -discover
-            .clickOnDiscoverSourcesInOverflow()
-            .typeUrl("www.asd.com")
+
+        // navigation from articles list screen
+        ArticlesListScreen().clickOnSourcesInOverflow()
+        SourcesListScreen().clickAddSource()
+        AddSourceScreen().backToSourcesList()
+        SourcesListScreen().backToArticlesList()
+        ArticlesListScreen().clickOnSettingsInOverflow()
+        SettingsScreen().backToArticlesList()
+        ArticlesListScreen().clickOnDiscoverSourcesInOverflow()
+        DiscoverSourcesScreen().typeUrl(URL_ASD)
             .closeKeyboard()
             .clickOnDiscover()
-            .hasText("http://www.asd.com")
+        FoundFeedsScreen()
+            .wait(2)
+            .displaysArticles(3)
+            .hasText(URL_ASD)
             .backToDiscoverUrlScreen()
-            .hasText("http://www.asd.com")
+        DiscoverSourcesScreen()
+            .hasText(URL_ASD)
             .backToArticlesList()
     }
 }
