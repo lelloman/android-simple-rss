@@ -16,11 +16,12 @@ page in walkthrough
 - [DEBT] create instrumentation tests for AppSettingsImpl
 - [DEBT] create delegate properties or something for AppSettingsImpl
 - [DEBT] add steps to smoke test to verify use metered network, articles images
+- [DEBT] add steps to smoke test to verify all recycler view adapters (for refactoring)
+- [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
 </s>
 
 DEBT:
 - [DEBT] ui-unit tests for all activities
-- [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
 
 FEATURE:
@@ -36,6 +37,6 @@ BUGS:
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] there is no way to stop a discover url, not even a timeout
 - [BUG] sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present
+- [BUG] smoke tests are flaky
 
 IN PROGRESS:
-- [DEBT] add steps to smoke test to verify all recycler view adapters (for refactoring)

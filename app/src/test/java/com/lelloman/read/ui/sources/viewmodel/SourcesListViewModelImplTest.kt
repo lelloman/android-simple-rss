@@ -90,7 +90,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         whenever(sourcesRepository.getSource(ACTIVE_SOURCE.id)).thenReturn(Flowable.just(ACTIVE_SOURCE))
         whenever(sourcesRepository.setSourceIsActive(any(), any())).thenReturn(Completable.complete())
 
-        tested.onSourceClicked(ACTIVE_SOURCE.id)
+        tested.onSourceClicked(ACTIVE_SOURCE)
 
         verify(sourcesRepository).setSourceIsActive(ACTIVE_SOURCE.id, false)
     }
@@ -100,7 +100,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         whenever(sourcesRepository.getSource(INACTIVE_SOURCE.id)).thenReturn(Flowable.just(INACTIVE_SOURCE))
         whenever(sourcesRepository.setSourceIsActive(any(), any())).thenReturn(Completable.complete())
 
-        tested.onSourceClicked(INACTIVE_SOURCE.id)
+        tested.onSourceClicked(INACTIVE_SOURCE)
 
         verify(sourcesRepository).setSourceIsActive(INACTIVE_SOURCE.id, true)
     }

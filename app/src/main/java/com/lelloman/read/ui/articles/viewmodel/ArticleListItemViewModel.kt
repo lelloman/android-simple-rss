@@ -7,6 +7,7 @@ import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.lelloman.read.BR
 import com.lelloman.read.core.SemanticTimeProvider
+import com.lelloman.read.core.viewmodel.BaseListItemViewModel
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.ByteArrayWithId
@@ -19,7 +20,7 @@ class ArticleListItemViewModel(
     uiScheduler: Scheduler,
     appSettings: AppSettings,
     private val semanticTimeProvider: SemanticTimeProvider
-) : LifecycleObserver, BaseObservable() {
+) : LifecycleObserver, BaseListItemViewModel<SourceArticle>, BaseObservable() {
 
     private val subscription = CompositeDisposable()
 
@@ -76,13 +77,13 @@ class ArticleListItemViewModel(
     var favicon: ByteArrayWithId = ByteArrayWithId(null, -1)
         private set
 
-    fun bind(article: SourceArticle) {
-        title = article.title
-        details = "${semanticTimeProvider.getDateTimeString(article.time)} - ${article.sourceName}"
-        hash = article.hashCode()
-        subtitle = article.subtitle
-        subtitleVisible = article.subtitle.isNotEmpty()
-        articleImageUrl = article.imageUrl
+    override fun bind(item: SourceArticle) {
+        title = item.title
+        details = "${semanticTimeProvider.getDateTimeString(item.time)} - ${item.sourceName}"
+        hash = item.hashCode()
+        subtitle = item.subtitle
+        subtitleVisible = item.subtitle.isNotEmpty()
+        articleImageUrl = item.imageUrl
         if (imagesEnabled) {
             imageVisible = !articleImageUrl.isNullOrBlank()
             imageUrl = articleImageUrl
@@ -90,8 +91,8 @@ class ArticleListItemViewModel(
             imageVisible = false
             imageUrl = null
         }
-        faviconVisible = article.favicon != null
-        favicon = ByteArrayWithId(article.favicon, article.sourceId)
+        faviconVisible = item.favicon != null
+        favicon = ByteArrayWithId(item.favicon, item.sourceId)
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
