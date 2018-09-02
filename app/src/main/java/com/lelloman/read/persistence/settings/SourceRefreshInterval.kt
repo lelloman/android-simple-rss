@@ -1,8 +1,9 @@
 package com.lelloman.read.persistence.settings
 
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+import com.lelloman.read.utils.Named
 
-enum class SourceRefreshInterval(val ms: Long) {
+enum class SourceRefreshInterval(val ms: Long) : Named {
     NEUROTIC(60_000L),
     VERY_FREQUENT(5 * 60_000L),
     FREQUENT(15 * 60_000L),

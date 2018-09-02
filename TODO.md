@@ -14,6 +14,7 @@ page in walkthrough
 - [DEBT] find way to mock both view model and http layers in ui tests
 - [DEBT] add ui smoke tests
 - [DEBT] create instrumentation tests for AppSettingsImpl
+- [DEBT] create delegate properties or something for AppSettingsImpl
 </s>
 
 DEBT:
@@ -36,4 +37,4 @@ BUGS:
 - [BUG] sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present
 
 IN PROGRESS:
-- [DEBT] create delegate properties or something for AppSettingsImpl
+- [DEBT] add steps to smoke test to verify use metered network, articles images
