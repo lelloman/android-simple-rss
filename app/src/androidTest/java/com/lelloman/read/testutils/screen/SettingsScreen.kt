@@ -20,4 +20,8 @@ class SettingsScreen : Screen() {
     fun setArticlesImages(hasImages: Boolean) = apply {
         viewWithId(R.id.toggle_setting_artcles_images).perform(setToggleSettingChecked(hasImages))
     }
+
+    fun setUseMeteredNetwork(useMeteredNetwork: Boolean) = apply {
+        viewWithId(R.id.toggle_setting_use_metered_network).perform(setToggleSettingChecked(useMeteredNetwork))
+    }
 }

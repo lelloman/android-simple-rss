@@ -1,6 +1,8 @@
 package com.lelloman.read.testutils.screen
 
 import android.support.test.espresso.action.ViewActions
+import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.matcher.ViewMatchers.withText
 import com.lelloman.read.R
 import com.lelloman.read.testutils.checkIsSwipeRefreshing
 import com.lelloman.read.testutils.checkRecyclerViewCount
@@ -15,7 +17,7 @@ import com.lelloman.read.testutils.viewWithId
 class ArticlesListScreen : Screen() {
 
     private val recyclerViewId = R.id.articles_recycler_view
-    
+
     init {
         viewVisible(recyclerViewId)
     }
@@ -30,6 +32,14 @@ class ArticlesListScreen : Screen() {
         openOverflowMenu()
         clickViewWithText(string(R.string.settings))
         return SettingsScreen()
+    }
+
+    fun showsEmptyViewWithNoSourcesText() = apply { showsEmptyViewText(string(R.string.empty_articles_no_source)) }
+
+    fun showsEmptyViewWithNoArticlesText() = apply { showsEmptyViewText(string(R.string.empty_articles_must_refresh)) }
+
+    private fun showsEmptyViewText(text: String) = apply {
+        viewWithId(R.id.text_view_empty_list).check(matches(withText(text)))
     }
 
     fun clickOnDiscoverSourcesInOverflow(): DiscoverSourcesScreen {
@@ -63,4 +73,6 @@ class ArticlesListScreen : Screen() {
     fun articleWithoutImageAt(position: Int) = apply {
         checkViewAtPositionHasImageGone(position, recyclerViewId, R.id.image)
     }
+
+    fun wait(seconds: Double) = apply { com.lelloman.read.testutils.wait(seconds) }
 }

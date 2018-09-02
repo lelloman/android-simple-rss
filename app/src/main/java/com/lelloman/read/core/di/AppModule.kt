@@ -93,6 +93,10 @@ open class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
+    open fun provideMeteredConnectionChecker(context: Context) = MeteredConnectionChecker(context)
+
+    @Singleton
+    @Provides
     fun provideFaviconBitmapProvider(
         loggerFactory: LoggerFactory
     ) = FaviconBitmapProvider(

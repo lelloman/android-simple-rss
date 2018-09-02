@@ -15,6 +15,7 @@ page in walkthrough
 - [DEBT] add ui smoke tests
 - [DEBT] create instrumentation tests for AppSettingsImpl
 - [DEBT] create delegate properties or something for AppSettingsImpl
+- [DEBT] add steps to smoke test to verify use metered network, articles images
 </s>
 
 DEBT:
@@ -37,4 +38,4 @@ BUGS:
 - [BUG] sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present
 
 IN PROGRESS:
-- [DEBT] add steps to smoke test to verify use metered network, articles images
+- [DEBT] add steps to smoke test to verify all recycler view adapters (for refactoring)
