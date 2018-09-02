@@ -13,12 +13,12 @@ page in walkthrough
 - [FEATURE] add theme selection (as setting and in walkthrough)
 - [DEBT] find way to mock both view model and http layers in ui tests
 - [DEBT] add ui smoke tests
+- [DEBT] create instrumentation tests for AppSettingsImpl
 </s>
 
 DEBT:
 - [DEBT] ui-unit tests for all activities
 - [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
-- [DEBT] create delegate properties or something for AppSettingsImpl
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
 
 FEATURE:
@@ -36,4 +36,4 @@ BUGS:
 - [BUG] sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present
 
 IN PROGRESS:
-- [DEBT] create instrumentation tests for AppSettingsImpl
+- [DEBT] create delegate properties or something for AppSettingsImpl
