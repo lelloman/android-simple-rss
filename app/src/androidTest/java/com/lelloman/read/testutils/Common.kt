@@ -92,7 +92,7 @@ fun onUiThread(action: () -> Unit) = InstrumentationRegistry
 fun checkIsSwipeRefreshing(isRefreshing: Boolean, id: Int = R.id.swipe_refresh_layout)
     : ViewInteraction = viewWithId(id).checkMatches(SwipeRefreshLayoutMatcher(isRefreshing))
 
-fun checkRecyclerViewCount(count: Int, id: Int = R.id.recycler_view)
+fun checkRecyclerViewCount(count: Int, id: Int)
     : ViewInteraction = viewWithId(id).checkMatches(RecyclerViewCountMatcher(count))
 
 fun rotateNatural() = UiDevice.getInstance(getInstrumentation()).setOrientationNatural()
@@ -101,7 +101,7 @@ fun rotateLeft() = UiDevice.getInstance(getInstrumentation()).setOrientationLeft
 
 fun rotateRight() = UiDevice.getInstance(getInstrumentation()).setOrientationRight()
 
-fun checkViewAtPositionHasText(position: Int, text: String, id: Int = R.id.recycler_view) {
+fun checkViewAtPositionHasText(position: Int, text: String, id: Int) {
     viewWithId(id)
         .check(matches(AtPositionMatcher(position, hasDescendant(withText(text)))))
 }

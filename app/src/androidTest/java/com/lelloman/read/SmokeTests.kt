@@ -1,14 +1,10 @@
 package com.lelloman.read
 
 import android.content.Context
-import android.net.Uri
 import android.support.test.rule.ActivityTestRule
-import android.widget.ImageView
 import com.lelloman.read.core.MeteredConnectionChecker
-import com.lelloman.read.core.PicassoWrap
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.http.HttpModule
-import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.testutils.MockHttpClient
 import com.lelloman.read.testutils.MockHttpClient.Companion.FANPAGE_ARTICLES_COUNT
 import com.lelloman.read.testutils.MockHttpClient.Companion.REPUBBLICA_ARTICLES_COUNT
@@ -18,8 +14,6 @@ import com.lelloman.read.testutils.rotateNatural
 import com.lelloman.read.testutils.screen.ArticlesListScreen
 import com.lelloman.read.testutils.screen.WalkthroughScreen
 import com.lelloman.read.ui.launcher.view.LauncherActivity
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -35,20 +29,6 @@ class SmokeTests {
     fun setUp() {
         rotateNatural()
         TestApp.dependenciesUpdate {
-            it.appModule = object : AppModule(it) {
-                override fun providePicassoWrap(appSettings: AppSettings, meteredConnectionChecker: MeteredConnectionChecker): PicassoWrap {
-                    return object : PicassoWrap(appSettings, meteredConnectionChecker) {
-                        override fun loadUrlIntoImageView(uri: Uri, view: ImageView, placeHolderId: Int?) {
-                            Picasso
-                                .get()
-                                .load(uri)
-                                .networkPolicy(NetworkPolicy.OFFLINE)
-                                .placeholder(placeHolderId ?: 0)
-                                .into(view)
-                        }
-                    }
-                }
-            }
             it.httpModule = object : HttpModule() {
                 override fun provideOkHttpClient() = MockHttpClient()
             }

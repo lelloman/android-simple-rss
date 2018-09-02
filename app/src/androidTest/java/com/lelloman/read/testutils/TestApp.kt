@@ -1,6 +1,9 @@
 package com.lelloman.read.testutils
 
+import android.net.Uri
+import android.widget.ImageView
 import com.lelloman.read.ReadApplication
+import com.lelloman.read.core.PicassoWrap
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
 import com.lelloman.read.core.di.ViewModelModule
@@ -13,6 +16,14 @@ class TestApp : ReadApplication() {
     var viewModelModule = ViewModelModule()
     var persistenceModule = PersistenceModule()
     var httpModule = HttpModule()
+
+    override var picassoWrap: PicassoWrap = object : PicassoWrap {
+        override fun enableImageSourceIndicator() = Unit
+
+        override fun loadUrlIntoImageView(uri: Uri, view: ImageView, placeHolderId: Int?) =
+            view.setImageResource(placeHolderId ?: 0)
+    }
+        set(value) {}
 
     override fun onCreate() {
         super.onCreate()

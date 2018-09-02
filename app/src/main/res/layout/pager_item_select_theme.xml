@@ -9,7 +9,7 @@
     </data>
 
     <com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollNotifierRecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/themes_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="16dp"/>

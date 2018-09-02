@@ -7,6 +7,7 @@ import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.core.PicassoWrap
+import com.lelloman.read.core.PicassoWrapImpl
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.ResourceProviderImpl
 import com.lelloman.read.core.SemanticTimeProvider
@@ -83,10 +84,10 @@ open class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    open fun providePicassoWrap(
+    fun providePicassoWrap(
         appSettings: AppSettings,
         meteredConnectionChecker: MeteredConnectionChecker
-    ) = PicassoWrap(
+    ): PicassoWrap = PicassoWrapImpl(
         appSettings = appSettings,
         meteredConnectionChecker = meteredConnectionChecker
     )

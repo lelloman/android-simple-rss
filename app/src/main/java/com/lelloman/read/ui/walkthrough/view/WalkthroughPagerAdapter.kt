@@ -44,8 +44,8 @@ class WalkthroughPagerAdapter(
                 viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
             }
             R.layout.pager_item_select_theme -> bind<PagerItemSelectThemeBinding>(view).apply {
-                recyclerView.adapter = themesAdapter
-                recyclerView.layoutManager = LinearLayoutManager(context)
+                themesRecyclerView.adapter = themesAdapter
+                themesRecyclerView.layoutManager = LinearLayoutManager(context)
                 walkthroughViewModel.themes.observe(lifecycleOwner, themesAdapter)
                 viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
             }

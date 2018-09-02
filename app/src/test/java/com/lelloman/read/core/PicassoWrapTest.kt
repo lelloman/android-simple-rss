@@ -19,7 +19,7 @@ class PicassoWrapTest {
         on { networkPolicy(any()) }.thenAnswer { it.mock }
     }
 
-    private val tested = PicassoWrap(
+    private val tested = PicassoWrapImpl(
         appSettings = appSettings,
         meteredConnectionChecker = meteredConnectionChecker,
         requestCreatorProvider = { picassoRequestCreator }
