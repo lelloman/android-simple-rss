@@ -7,8 +7,10 @@ import com.lelloman.read.testutils.clickView
 
 class SourcesListScreen : Screen() {
 
+    private val recyclerViewId = R.id.sources_recycler_view
+
     init {
-        viewVisible(R.id.sources_recycler_view)
+        viewVisible(recyclerViewId)
     }
 
     fun clickAddSource(): AddSourceScreen {
@@ -18,5 +20,5 @@ class SourcesListScreen : Screen() {
 
     fun backToArticlesList() = with(pressBack()) { ArticlesListScreen() }
 
-    fun showsSources(count: Int) = apply { checkRecyclerViewCount(count, R.id.sources_recycler_view) }
+    fun showsSources(count: Int) = apply { checkRecyclerViewCount(count, recyclerViewId) }
 }

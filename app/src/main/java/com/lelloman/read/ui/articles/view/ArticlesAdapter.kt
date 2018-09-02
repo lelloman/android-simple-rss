@@ -70,5 +70,4 @@ class ArticlesAdapter(
             binding.executePendingBindings()
         }
     }
-
 }

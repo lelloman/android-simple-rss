@@ -71,7 +71,9 @@ class MockHttpClient : OkHttpClient() {
 
     companion object {
         const val URL_FANPAGE_FEED = "http://www.fanpage.it/feed"
+        const val FANPAGE_ARTICLES_COUNT = 118
         const val URL_REPUBBLICA_FEED = "http://www.repubblica.it/feed"
+        const val REPUBBLICA_ARTICLES_COUNT = 23
         const val URL_ASD = "http://www.asd.com"
         const val URL_ASD_FEED = "http://www.asd.com/feed"
     }

@@ -19,6 +19,7 @@ import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.uiautomator.UiDevice
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.ImageView
 import com.lelloman.read.R
 import com.lelloman.read.testutils.matcher.AtPositionMatcher
 import com.lelloman.read.testutils.matcher.RecyclerViewCountMatcher
@@ -103,6 +104,41 @@ fun rotateRight() = UiDevice.getInstance(getInstrumentation()).setOrientationRig
 fun checkViewAtPositionHasText(position: Int, text: String, id: Int = R.id.recycler_view) {
     viewWithId(id)
         .check(matches(AtPositionMatcher(position, hasDescendant(withText(text)))))
+}
+
+fun checkViewAtPositionHasImageVisible(position: Int, recyclerViewId: Int, imageViewId: Int) =
+    checkViewAtPositionImageViewVisibility(
+        position = position,
+        recyclerViewId = recyclerViewId,
+        imageViewId = imageViewId,
+        visibility = View.VISIBLE
+    )
+
+fun checkViewAtPositionHasImageGone(position: Int, recyclerViewId: Int, imageViewId: Int) =
+    checkViewAtPositionImageViewVisibility(
+        position = position,
+        recyclerViewId = recyclerViewId,
+        imageViewId = imageViewId,
+        visibility = View.GONE
+    )
+
+fun checkViewAtPositionImageViewVisibility(
+    position: Int,
+    recyclerViewId: Int,
+    imageViewId: Int,
+    visibility: Int
+) {
+    viewWithId(recyclerViewId)
+        .check(matches(AtPositionMatcher(position, object : BaseMatcher<View>() {
+            override fun describeTo(description: Description?) = Unit
+
+            override fun matches(item: Any?): Boolean {
+                val view = item as View
+
+                val imageView = view.findViewById<ImageView>(imageViewId)
+                return imageView.visibility == visibility
+            }
+        })))
 }
 
 fun setToggleSettingChecked(isChecked: Boolean) = object : ViewAction {

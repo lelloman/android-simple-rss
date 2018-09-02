@@ -36,4 +36,6 @@ class WalkthroughScreen : Screen() {
     fun clickNo() = with(clickViewWithText(string(R.string.NO))) {
         ArticlesListScreen()
     }
+
+    fun pressClose() = with(clickView(R.id.skip)) { ArticlesListScreen() }
 }

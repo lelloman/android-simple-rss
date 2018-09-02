@@ -36,6 +36,7 @@
             </com.lelloman.read.widget.SettingsItemView>
 
             <com.lelloman.read.widget.ToggleSettingItemView
+                android:id="@+id/toggle_setting_artcles_images"
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_articles_images_descr"
                 android:onCheckedChanged="@{(_, isActive) -> viewModel.onArticleListImagesChanged(isActive) }"
@@ -43,6 +44,7 @@
                 app:title="@string/settings_articles_images_title" />
 
             <com.lelloman.read.widget.ToggleSettingItemView
+                android:id="@+id/toggle_setting_use_metered_network"
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_use_metered_networks_descr"
                 android:checked="@{viewModel.useMeteredNetworkSelected}"

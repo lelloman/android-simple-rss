@@ -16,4 +16,8 @@ class SettingsScreen : Screen() {
     fun setOpenArticlesInApp(openInApp: Boolean) = apply {
         viewWithId(R.id.toggle_setting_open_articles_in_app).perform(setToggleSettingChecked(openInApp))
     }
+
+    fun setArticlesImages(hasImages: Boolean) = apply {
+        viewWithId(R.id.toggle_setting_artcles_images).perform(setToggleSettingChecked(hasImages))
+    }
 }
