@@ -2,6 +2,8 @@ package com.lelloman.read.persistence.settings
 
 import android.content.Context
 import com.lelloman.read.core.view.AppTheme
+import com.lelloman.read.persistence.settings.property.booleanProperty
+import com.lelloman.read.persistence.settings.property.enumProperty
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_APP_THEME
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
@@ -15,9 +17,6 @@ import com.lelloman.read.utils.Constants.AppSettings.KEY_OPEN_ARTICLES_IN_APP
 import com.lelloman.read.utils.Constants.AppSettings.KEY_SHOULD_SHOW_WALKTHROUGH
 import com.lelloman.read.utils.Constants.AppSettings.KEY_USE_METERED_NETWORK
 import com.lelloman.read.utils.Constants.AppSettings.SHARED_PREFS_NAME
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
 
 class AppSettingsImpl(
     context: Context
@@ -25,63 +24,42 @@ class AppSettingsImpl(
 
     private val prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
-    private val sourceRefreshMinIntervalSubject: Subject<SourceRefreshInterval> = BehaviorSubject.create()
+    private val sourceRefreshMinIntervalProperty = prefs
+        .enumProperty(KEY_MIN_SOURCE_REFRESH_INTERVAL, DEFAULT_MIN_SOURCE_REFRESH_INTERVAL, SourceRefreshInterval.Companion::fromName)
 
-    private val articlesListImagesEnabledSubject: Subject<Boolean> = BehaviorSubject.create()
+    private val articlesListImagesEnabledProperty = prefs
+        .booleanProperty(KEY_ARTICLE_LIST_IMAGES, DEFAULT_ARTICLES_LIST_IMAGES)
 
-    private val useMeteredNetworkSubject: Subject<Boolean> = BehaviorSubject.create()
+    private val useMeteredNetworkProperty = prefs
+        .booleanProperty(KEY_USE_METERED_NETWORK, DEFAULT_USE_METERED_NETWORK)
 
-    private val openArticlesInAppSubject: Subject<Boolean> = BehaviorSubject.create()
+    private val openArticlesInAppProperty = prefs
+        .booleanProperty(KEY_OPEN_ARTICLES_IN_APP, DEFAULT_OPEN_ARTICLES_IN_APP)
 
-    private val shouldShowWalkthroughSubject: Subject<Boolean> = BehaviorSubject.create()
+    private val shouldShowWalkthroughProperty = prefs
+        .booleanProperty(KEY_SHOULD_SHOW_WALKTHROUGH, DEFAULT_SHOULD_SHOW_WALKTHROUGH)
 
-    private val appThemeSubject: Subject<AppTheme> = BehaviorSubject.create()
+    private val appThemeProperty = prefs
+        .enumProperty(KEY_APP_THEME, DEFAULT_APP_THEME, AppTheme.Companion::fromName)
 
-    override val sourceRefreshMinInterval: Observable<SourceRefreshInterval> =
-        sourceRefreshMinIntervalSubject.hide()
-
-    override val articleListImagesEnabled: Observable<Boolean> =
-        articlesListImagesEnabledSubject.hide()
-
-    override val useMeteredNetwork: Observable<Boolean> =
-        useMeteredNetworkSubject.hide()
-
-    override val openArticlesInApp: Observable<Boolean> =
-        openArticlesInAppSubject.hide()
-
-    override val shouldShowWalkthrough: Observable<Boolean> =
-        shouldShowWalkthroughSubject.hide()
-
-    override val appTheme: Observable<AppTheme> = appThemeSubject.hide()
+    override val sourceRefreshMinInterval = sourceRefreshMinIntervalProperty.observable
+    override val articleListImagesEnabled = articlesListImagesEnabledProperty.observable
+    override val useMeteredNetwork = useMeteredNetworkProperty.observable
+    override val openArticlesInApp = openArticlesInAppProperty.observable
+    override val shouldShowWalkthrough = shouldShowWalkthroughProperty.observable
+    override val appTheme = appThemeProperty.observable
 
     init {
         readAllSettings()
     }
 
     private fun readAllSettings() {
-        sourceRefreshMinIntervalSubject.onNext(
-            prefs
-                .getString(KEY_MIN_SOURCE_REFRESH_INTERVAL, DEFAULT_MIN_SOURCE_REFRESH_INTERVAL.name)
-                .let { SourceRefreshInterval.fromName(it) }
-        )
-        articlesListImagesEnabledSubject.onNext(
-            prefs.getBoolean(KEY_ARTICLE_LIST_IMAGES, DEFAULT_ARTICLES_LIST_IMAGES)
-        )
-        useMeteredNetworkSubject.onNext(
-            prefs.getBoolean(KEY_USE_METERED_NETWORK, DEFAULT_USE_METERED_NETWORK)
-        )
-        openArticlesInAppSubject.onNext(
-            prefs.getBoolean(KEY_OPEN_ARTICLES_IN_APP, DEFAULT_OPEN_ARTICLES_IN_APP)
-        )
-
-        shouldShowWalkthroughSubject.onNext(
-            prefs.getBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, DEFAULT_SHOULD_SHOW_WALKTHROUGH)
-        )
-        appThemeSubject.onNext(
-            prefs
-                .getString(KEY_APP_THEME, DEFAULT_APP_THEME.name)
-                .let { AppTheme.fromName(it) }
-        )
+        sourceRefreshMinIntervalProperty.readValue()
+        articlesListImagesEnabledProperty.readValue()
+        useMeteredNetworkProperty.readValue()
+        openArticlesInAppProperty.readValue()
+        shouldShowWalkthroughProperty.readValue()
+        appThemeProperty.readValue()
     }
 
     override fun reset() {
@@ -89,39 +67,20 @@ class AppSettingsImpl(
         readAllSettings()
     }
 
-    override fun setSourceRefreshMinInterval(interval: SourceRefreshInterval) = prefs
-        .edit()
-        .putString(KEY_MIN_SOURCE_REFRESH_INTERVAL, interval.name)
-        .apply()
-        .also { sourceRefreshMinIntervalSubject.onNext(interval) }
+    override fun setSourceRefreshMinInterval(interval: SourceRefreshInterval) =
+        sourceRefreshMinIntervalProperty.set(interval)
 
-    override fun setArticlesListImagesEnabled(enabled: Boolean) = prefs
-        .edit()
-        .putBoolean(KEY_ARTICLE_LIST_IMAGES, enabled)
-        .apply()
-        .also { articlesListImagesEnabledSubject.onNext(enabled) }
+    override fun setArticlesListImagesEnabled(enabled: Boolean) =
+        articlesListImagesEnabledProperty.set(enabled)
 
-    override fun setUseMeteredNetwork(useMeteredNetwork: Boolean) = prefs
-        .edit()
-        .putBoolean(KEY_USE_METERED_NETWORK, useMeteredNetwork)
-        .apply()
-        .also { useMeteredNetworkSubject.onNext(useMeteredNetwork) }
+    override fun setUseMeteredNetwork(useMeteredNetwork: Boolean) =
+        useMeteredNetworkProperty.set(useMeteredNetwork)
 
-    override fun setOpenArticlesInApp(openInApp: Boolean) = prefs
-        .edit()
-        .putBoolean(KEY_OPEN_ARTICLES_IN_APP, openInApp)
-        .apply()
-        .also { openArticlesInAppSubject.onNext(openInApp) }
+    override fun setOpenArticlesInApp(openInApp: Boolean) =
+        openArticlesInAppProperty.set(openInApp)
 
-    override fun setShouldShowWalkthtough(shouldShowWalkthrough: Boolean) = prefs
-        .edit()
-        .putBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, shouldShowWalkthrough)
-        .apply()
-        .also { shouldShowWalkthroughSubject.onNext(shouldShowWalkthrough) }
+    override fun setShouldShowWalkthtough(shouldShowWalkthrough: Boolean) =
+        shouldShowWalkthroughProperty.set(shouldShowWalkthrough)
 
-    override fun setAppTheme(appTheme: AppTheme) = prefs
-        .edit()
-        .putString(KEY_APP_THEME, appTheme.name)
-        .apply()
-        .also { appThemeSubject.onNext(appTheme) }
+    override fun setAppTheme(appTheme: AppTheme) = appThemeProperty.set(appTheme)
 }

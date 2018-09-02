@@ -77,6 +77,6 @@ class FeedFinderTest {
     fun findsAndroidDevBlogFeedUrl() {
         val tester = tested.findValidFeedUrls("https://android-developers.googleblog.com").test()
 
-        tester.assertValueCount(0)
+        tester.assertValueCount(1)
     }
 }

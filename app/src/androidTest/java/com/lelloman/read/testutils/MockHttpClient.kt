@@ -30,6 +30,11 @@ class MockHttpClient : OkHttpClient() {
                         """.trimIndent()
     )
 
+    private fun successfulResponse(body: ByteArray) = Response
+        .Builder()
+        .code(200)
+        .body(ResponseBody.create(MediaType.get("text/xml"), body))
+
     override fun newCall(request: Request): Call {
         val url = request
             .url()
@@ -45,24 +50,10 @@ class MockHttpClient : OkHttpClient() {
                     .bufferedReader()
                     .readText()
                     .toByteArray()
-                Response
-                    .Builder()
-                    .code(200)
-                    .body(ResponseBody
-                        .create(MediaType
-                            .get("text/xml"),
-                            body)
-                    )
+                successfulResponse(body)
             }
             literalResponses.containsKey(url) -> {
-                Response
-                    .Builder()
-                    .code(200)
-                    .body(ResponseBody
-                        .create(MediaType
-                            .get("text/xml"),
-                            literalResponses[url]!!.toByteArray())
-                    )
+                successfulResponse(literalResponses[url]!!.toByteArray())
             }
             else -> Response
                 .Builder()
@@ -80,7 +71,9 @@ class MockHttpClient : OkHttpClient() {
 
     companion object {
         const val URL_FANPAGE_FEED = "http://www.fanpage.it/feed"
+        const val FANPAGE_ARTICLES_COUNT = 23
         const val URL_REPUBBLICA_FEED = "http://www.repubblica.it/feed"
+        const val REPUBBLICA_ARTICLES_COUNT = 118
         const val URL_ASD = "http://www.asd.com"
         const val URL_ASD_FEED = "http://www.asd.com/feed"
     }

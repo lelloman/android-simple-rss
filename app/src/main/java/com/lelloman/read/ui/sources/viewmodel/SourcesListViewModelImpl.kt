@@ -60,13 +60,13 @@ class SourcesListViewModelImpl(
     override fun onFabClicked(view: View) =
         navigate(ScreenNavigationEvent(NavigationScreen.ADD_SOURCE))
 
-    override fun onSourceClicked(sourceId: Long) {
+    override fun onSourceClicked(source: Source) {
         sourcesRepository
-            .getSource(sourceId)
+            .getSource(source.id)
             .firstOrError()
             .flatMapCompletable {
                 Completable.fromAction {
-                    onSourceIsActiveChanged(sourceId, !it.isActive)
+                    onSourceIsActiveChanged(source.id, !it.isActive)
                 }
             }
             .subscribeOn(ioScheduler)

@@ -1,24 +1,15 @@
 package com.lelloman.read.unit
 
 import android.arch.lifecycle.MutableLiveData
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.action.ViewActions.swipeDown
-import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.lelloman.read.R
 import com.lelloman.read.core.view.actionevent.ViewActionEvent
 import com.lelloman.read.di.MockViewModelModule
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.testutils.TestApp
-import com.lelloman.read.testutils.checkIsSwipeRefreshing
-import com.lelloman.read.testutils.checkRecyclerViewCount
-import com.lelloman.read.testutils.checkViewAtPositionHasText
 import com.lelloman.read.testutils.onUiThread
-import com.lelloman.read.testutils.rotateLeft
 import com.lelloman.read.testutils.rotateNatural
-import com.lelloman.read.testutils.rotateRight
-import com.lelloman.read.testutils.viewIsDisplayed
+import com.lelloman.read.testutils.screen.ArticlesListScreen
 import com.lelloman.read.testutils.wait
 import com.lelloman.read.testutils.whenever
 import com.lelloman.read.ui.articles.view.ArticlesListActivity
@@ -46,6 +37,8 @@ class ArticlesListActivityTest {
     private lateinit var isLoadingLiveData: MutableLiveData<Boolean>
     private lateinit var viewActionEvents: SingleLiveData<ViewActionEvent>
 
+    private lateinit var screen: ArticlesListScreen
+
     private val articles = Array(20) {
         SourceArticle(
             id = it.toLong(),
@@ -68,13 +61,14 @@ class ArticlesListActivityTest {
         isLoadingLiveData = MutableLiveData()
         viewActionEvents = SingleLiveData()
 
-        TestApp.instance.viewModelModule = viewModelModule
+        TestApp.dependenciesUpdate { it.viewModelModule = viewModelModule }
         viewModel = viewModelModule.articlesListViewModel
         whenever(viewModel.articles).thenReturn(articlesLiveData)
         whenever(viewModel.isLoading).thenReturn(isLoadingLiveData)
         whenever(viewModel.viewActionEvents).thenReturn(viewActionEvents)
 
         activityTestRule.launchActivity(null)
+        screen = ArticlesListScreen()
     }
 
     @After
@@ -84,35 +78,34 @@ class ArticlesListActivityTest {
 
     @Test
     fun showsSwipeRefreshWhenLoading() {
-        viewIsDisplayed(R.id.articles_recycler_view)
-        checkIsSwipeRefreshing(false)
+        screen.isNotSwipeRefreshing()
 
         onUiThread { isLoadingLiveData.value = true }
         wait(0.1)
-        checkIsSwipeRefreshing(true)
+        screen.isSwipeRefreshing()
 
         onUiThread { isLoadingLiveData.value = false }
         wait(0.1)
-        checkIsSwipeRefreshing(false)
+        screen.isNotSwipeRefreshing()
     }
 
     @Test
     fun triggersRefreshWhenSwipeDown() {
         verify(viewModel, never()).refresh()
 
-        onView(withId(R.id.swipe_refresh_layout)).perform(swipeDown())
+        screen.swipeToRefresh()
 
         verify(viewModel).refresh()
     }
 
     @Test
     fun showsArticles() {
-        checkRecyclerViewCount(0, R.id.articles_recycler_view)
+        screen.showsArticles(0)
 
         onUiThread { articlesLiveData.value = articles }
         wait(0.2)
 
-        checkRecyclerViewCount(articles.size, R.id.articles_recycler_view)
+        screen.showsArticles(articles.size)
     }
 
     @Test
@@ -121,18 +114,20 @@ class ArticlesListActivityTest {
         isLoadingLiveData.postValue(true)
         wait(0.2)
 
-        checkIsSwipeRefreshing(true)
-        rotateLeft()
-        checkIsSwipeRefreshing(true)
+        screen
+            .isSwipeRefreshing()
+            .rotateLeft()
+            .isSwipeRefreshing()
+            .rotateRight()
+            .isSwipeRefreshing()
 
-        rotateRight()
-        checkIsSwipeRefreshing(true)
         isLoadingLiveData.postValue(false)
         wait(0.2)
-        checkIsSwipeRefreshing(false)
 
-        rotateNatural()
-        checkIsSwipeRefreshing(false)
+        screen
+            .isNotSwipeRefreshing()
+            .rotateNatural()
+            .isNotSwipeRefreshing()
     }
 
     @Test
@@ -153,17 +148,14 @@ class ArticlesListActivityTest {
         articlesLiveData.postValue(listOf(article))
         wait(0.2)
 
-        checkRecyclerViewCount(1, R.id.articles_recycler_view)
-        checkViewAtPositionHasText(0, article.title, R.id.articles_recycler_view)
-
-        rotateLeft()
-        checkRecyclerViewCount(1, R.id.articles_recycler_view)
-        checkViewAtPositionHasText(0, article.title, R.id.articles_recycler_view)
-
-        rotateRight()
-        checkRecyclerViewCount(1, R.id.articles_recycler_view)
-        checkViewAtPositionHasText(0, article.title, R.id.articles_recycler_view)
+        screen
+            .showsArticles(1)
+            .showsArticleWithTitle(0, article.title)
+            .rotateLeft()
+            .showsArticles(1)
+            .showsArticleWithTitle(0, article.title)
+            .rotateRight()
+            .showsArticles(1)
+            .showsArticleWithTitle(0, article.title)
     }
-
-
 }

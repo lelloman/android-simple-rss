@@ -16,7 +16,7 @@ class FoundFeedsScreen : Screen() {
 
     fun backToDiscoverUrlScreen() = with(pressBack()) { DiscoverSourcesScreen() }
 
-    fun displaysArticles(count: Int) = apply {
+    fun displaysFoundFeeds(count: Int) = apply {
         checkRecyclerViewCount(count, R.id.discover_recycler_view)
     }
 }

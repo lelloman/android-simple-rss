@@ -1,6 +1,9 @@
 package com.lelloman.read.testutils
 
+import android.net.Uri
+import android.widget.ImageView
 import com.lelloman.read.ReadApplication
+import com.lelloman.read.core.PicassoWrap
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
 import com.lelloman.read.core.di.ViewModelModule
@@ -9,23 +12,18 @@ import com.lelloman.read.persistence.PersistenceModule
 
 class TestApp : ReadApplication() {
 
+    var appModule = AppModule(this)
     var viewModelModule = ViewModelModule()
-        set(value) {
-            field = value
-            inject()
-        }
-
     var persistenceModule = PersistenceModule()
-        set(value) {
-            field = value
-            inject()
-        }
-
     var httpModule = HttpModule()
-        set(value) {
-            field = value
-            inject()
-        }
+
+    override var picassoWrap: PicassoWrap = object : PicassoWrap {
+        override fun enableImageSourceIndicator() = Unit
+
+        override fun loadUrlIntoImageView(uri: Uri, view: ImageView, placeHolderId: Int?) =
+            view.setImageResource(placeHolderId ?: 0)
+    }
+        set(value) {}
 
     override fun onCreate() {
         super.onCreate()
@@ -34,7 +32,7 @@ class TestApp : ReadApplication() {
 
     override fun inject() = DaggerAppComponent
         .builder()
-        .appModule(AppModule(this))
+        .appModule(appModule)
         .viewModelModule(viewModelModule)
         .persistenceModule(persistenceModule)
         .httpModule(httpModule)
@@ -42,7 +40,16 @@ class TestApp : ReadApplication() {
         .inject(this)
 
     companion object {
-        lateinit var instance: TestApp
-            private set
+        private lateinit var instance: TestApp
+
+        fun dependenciesUpdate(action: (TestApp) -> Unit) {
+            action.invoke(instance)
+            instance.inject()
+        }
+
+        fun resetPersistence() {
+            instance.appSettings.reset()
+            instance.db.clearAllTables()
+        }
     }
 }

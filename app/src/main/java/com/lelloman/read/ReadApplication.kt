@@ -37,7 +37,7 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
     lateinit var sourcesDao: SourcesDao
 
     @Inject
-    lateinit var picassoWrap: PicassoWrap
+    open lateinit var picassoWrap: PicassoWrap
 
     @Inject
     lateinit var faviconBitmapProvider: FaviconBitmapProvider

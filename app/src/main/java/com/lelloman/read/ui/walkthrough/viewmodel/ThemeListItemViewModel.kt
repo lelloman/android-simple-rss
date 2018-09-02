@@ -1,8 +1,9 @@
 package com.lelloman.read.ui.walkthrough.viewmodel
 
+import com.lelloman.read.core.viewmodel.BaseListItemViewModel
 import com.lelloman.read.ui.walkthrough.ThemeListItem
 
-class ThemeListItemViewModel {
+class ThemeListItemViewModel : BaseListItemViewModel<ThemeListItem> {
 
     var name: String = ""
     private set
@@ -10,8 +11,8 @@ class ThemeListItemViewModel {
     var isSelected = false
     private set
 
-    fun bind(theme: ThemeListItem) {
-        name = theme.theme.name
-        isSelected = theme.isEnabled
+    override fun bind(item: ThemeListItem) {
+        name = item.theme.name
+        isSelected = item.isEnabled
     }
 }

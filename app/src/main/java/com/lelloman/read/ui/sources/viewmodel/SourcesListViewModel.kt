@@ -19,7 +19,7 @@ abstract class SourcesListViewModel(
 
     abstract fun onFabClicked(view: View)
 
-    abstract fun onSourceClicked(sourceId: Long)
+    abstract fun onSourceClicked(source: Source)
 
     abstract fun onSourceIsActiveChanged(sourceId: Long, isActive: Boolean)
 

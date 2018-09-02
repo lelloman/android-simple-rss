@@ -2,6 +2,7 @@ package com.lelloman.read.testutils.screen
 
 import com.lelloman.read.R
 import com.lelloman.read.core.view.AppTheme
+import com.lelloman.read.testutils.checkRecyclerViewCount
 import com.lelloman.read.testutils.clickView
 import com.lelloman.read.testutils.clickViewWithText
 import com.lelloman.read.testutils.viewIsDisplayed
@@ -21,6 +22,7 @@ class WalkthroughScreen : Screen() {
     fun themesAreDisplayed() = apply {
         viewWithTextIsDisplayed(AppTheme.LIGHT.name)
         viewWithTextIsDisplayed(AppTheme.DARCULA.name)
+        checkRecyclerViewCount(AppTheme.values().size, R.id.themes_recycler_view)
     }
 
     fun clickOnThemes() = apply {
@@ -36,4 +38,6 @@ class WalkthroughScreen : Screen() {
     fun clickNo() = with(clickViewWithText(string(R.string.NO))) {
         ArticlesListScreen()
     }
+
+    fun pressClose() = with(clickView(R.id.skip)) { ArticlesListScreen() }
 }

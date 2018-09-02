@@ -2,13 +2,14 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import android.databinding.ObservableField
 import com.lelloman.read.core.SemanticTimeProvider
+import com.lelloman.read.core.viewmodel.BaseListItemViewModel
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.utils.ByteArrayWithId
 
 class SourceListItemViewModel(
     private val semanticTimeProvider: SemanticTimeProvider,
     private val onIsActiveChanged: (Boolean) -> Unit
-) {
+) : BaseListItemViewModel<Source> {
 
     private lateinit var source: Source
 
@@ -29,14 +30,14 @@ class SourceListItemViewModel(
     var favicon: ByteArrayWithId = ByteArrayWithId(null, -1)
         private set
 
-    fun bind(source: Source) {
-        this.source = source
-        name = source.name
-        url = source.url
-        hash = source.immutableHashCode
+    override fun bind(item: Source) {
+        this.source = item
+        name = item.name
+        url = item.url
+        hash = item.immutableHashCode
         setLastFetched()
-        isActive = source.isActive
-        favicon = ByteArrayWithId(source.favicon, source.id)
+        isActive = item.isActive
+        favicon = ByteArrayWithId(item.favicon, item.id)
     }
 
     private fun setLastFetched(){
