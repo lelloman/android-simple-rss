@@ -30,6 +30,11 @@ class MockHttpClient : OkHttpClient() {
                         """.trimIndent()
     )
 
+    private fun successfulResponse(body: ByteArray) = Response
+        .Builder()
+        .code(200)
+        .body(ResponseBody.create(MediaType.get("text/xml"), body))
+
     override fun newCall(request: Request): Call {
         val url = request
             .url()
@@ -45,24 +50,10 @@ class MockHttpClient : OkHttpClient() {
                     .bufferedReader()
                     .readText()
                     .toByteArray()
-                Response
-                    .Builder()
-                    .code(200)
-                    .body(ResponseBody
-                        .create(MediaType
-                            .get("text/xml"),
-                            body)
-                    )
+                successfulResponse(body)
             }
             literalResponses.containsKey(url) -> {
-                Response
-                    .Builder()
-                    .code(200)
-                    .body(ResponseBody
-                        .create(MediaType
-                            .get("text/xml"),
-                            literalResponses[url]!!.toByteArray())
-                    )
+                successfulResponse(literalResponses[url]!!.toByteArray())
             }
             else -> Response
                 .Builder()

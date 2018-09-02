@@ -4,6 +4,8 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.InstrumentationRegistry.getInstrumentation
 import android.support.test.espresso.Espresso
 import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.UiController
+import android.support.test.espresso.ViewAction
 import android.support.test.espresso.ViewInteraction
 import android.support.test.espresso.action.GeneralLocation
 import android.support.test.espresso.action.GeneralSwipeAction
@@ -12,13 +14,18 @@ import android.support.test.espresso.action.Swipe
 import android.support.test.espresso.action.ViewActions.click
 import android.support.test.espresso.action.ViewActions.typeText
 import android.support.test.espresso.assertion.ViewAssertions.matches
+import android.support.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import android.support.test.espresso.matcher.ViewMatchers.*
 import android.support.test.uiautomator.UiDevice
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import com.lelloman.read.R
 import com.lelloman.read.testutils.matcher.AtPositionMatcher
 import com.lelloman.read.testutils.matcher.RecyclerViewCountMatcher
 import com.lelloman.read.testutils.matcher.SwipeRefreshLayoutMatcher
+import com.lelloman.read.widget.ToggleSettingItemView
+import org.hamcrest.BaseMatcher
+import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.mockito.Mockito.`when`
 import org.mockito.stubbing.OngoingStubbing
@@ -38,7 +45,7 @@ fun wait(seconds: Double) = Thread.sleep((seconds * 1000).toLong())
 
 fun viewWithId(id: Int): ViewInteraction = onView(withId(id))
 
-fun viewWithText(text: String) : ViewInteraction = onView(withText(text))
+fun viewWithText(text: String): ViewInteraction = onView(withText(text))
 
 fun clickView(id: Int) {
     viewWithId(id).perform(click())
@@ -66,11 +73,11 @@ fun swipeLeft(id: Int) {
     ))
 }
 
-fun typeInEditText(id: Int, text: String){
+fun typeInEditText(id: Int, text: String) {
     viewWithId(id).perform(typeText(text))
 }
 
-fun openOverflowMenu(){
+fun openOverflowMenu() {
     Espresso.openActionBarOverflowOrOptionsMenu(getInstrumentation().targetContext)
 }
 
@@ -96,5 +103,22 @@ fun rotateRight() = UiDevice.getInstance(getInstrumentation()).setOrientationRig
 fun checkViewAtPositionHasText(position: Int, text: String, id: Int = R.id.recycler_view) {
     viewWithId(id)
         .check(matches(AtPositionMatcher(position, hasDescendant(withText(text)))))
-
 }
+
+fun setToggleSettingChecked(isChecked: Boolean) = object : ViewAction {
+    override fun getDescription(): String = "setChecked($isChecked)"
+
+    override fun getConstraints() = object : BaseMatcher<View>() {
+        override fun describeTo(description: Description?) = Unit
+
+        override fun matches(item: Any?) = item is ToggleSettingItemView
+    }
+
+    override fun perform(uiController: UiController?, view: View?) {
+        (view as ToggleSettingItemView).setChecked(isChecked)
+    }
+}
+
+fun clickOnRecyclerViewItem(position: Int, recyclerViewId: Int): ViewInteraction =
+    viewWithId(recyclerViewId)
+        .perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(position, click()))

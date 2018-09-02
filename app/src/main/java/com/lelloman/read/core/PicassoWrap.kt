@@ -9,7 +9,7 @@ import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
 
-class PicassoWrap(
+open class PicassoWrap(
     private val appSettings: AppSettings,
     private val meteredConnectionChecker: MeteredConnectionChecker,
     private val requestCreatorProvider: (uri: Uri) -> RequestCreator = {
@@ -26,7 +26,7 @@ class PicassoWrap(
         Picasso.get().setIndicatorsEnabled(true)
     }
 
-    fun loadUrlIntoImageView(
+    open fun loadUrlIntoImageView(
         uri: Uri,
         view: ImageView,
         @DrawableRes placeHolderId: Int? = null

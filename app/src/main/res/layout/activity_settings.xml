@@ -50,6 +50,7 @@
                 app:title="@string/settings_use_metered_networks_title" />
 
             <com.lelloman.read.widget.ToggleSettingItemView
+                android:id="@+id/toggle_setting_open_articles_in_app"
                 style="@style/SettingsItemContainer"
                 android:checked="@{viewModel.openArticlesInAppSelected}"
                 android:onCheckedChanged="@{(_, isActive) -> viewModel.onOpenArticlesInAppChanged(isActive) }"

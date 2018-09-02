@@ -9,23 +9,10 @@ import com.lelloman.read.persistence.PersistenceModule
 
 class TestApp : ReadApplication() {
 
+    var appModule = AppModule(this)
     var viewModelModule = ViewModelModule()
-        set(value) {
-            field = value
-            inject()
-        }
-
     var persistenceModule = PersistenceModule()
-        set(value) {
-            field = value
-            inject()
-        }
-
     var httpModule = HttpModule()
-        set(value) {
-            field = value
-            inject()
-        }
 
     override fun onCreate() {
         super.onCreate()
@@ -34,7 +21,7 @@ class TestApp : ReadApplication() {
 
     override fun inject() = DaggerAppComponent
         .builder()
-        .appModule(AppModule(this))
+        .appModule(appModule)
         .viewModelModule(viewModelModule)
         .persistenceModule(persistenceModule)
         .httpModule(httpModule)
@@ -42,7 +29,16 @@ class TestApp : ReadApplication() {
         .inject(this)
 
     companion object {
-        lateinit var instance: TestApp
-            private set
+        private lateinit var instance: TestApp
+
+        fun dependenciesUpdate(action: (TestApp) -> Unit) {
+            action.invoke(instance)
+            instance.inject()
+        }
+
+        fun resetPersistence() {
+            instance.appSettings.reset()
+            instance.db.clearAllTables()
+        }
     }
 }

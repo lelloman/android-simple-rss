@@ -28,7 +28,7 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
-class AppModule(private val application: Application) {
+open class AppModule(private val application: Application) {
 
     @Provides
     fun provideContext(): Context = application
@@ -83,7 +83,7 @@ class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun providePicassoWrap(
+    open fun providePicassoWrap(
         appSettings: AppSettings,
         meteredConnectionChecker: MeteredConnectionChecker
     ) = PicassoWrap(

@@ -12,12 +12,14 @@ page in walkthrough
 - [FEATURE] make "last refresh" time in source list refresh every 1 sec
 - [FEATURE] add theme selection (as setting and in walkthrough)
 - [DEBT] find way to mock both view model and http layers in ui tests
+- [DEBT] add ui smoke tests
 </s>
 
 DEBT:
 - [DEBT] ui-unit tests for all activities
 - [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
-- [DEBT] create delegate properties or something for AppSettingsImpl 
+- [DEBT] create delegate properties or something for AppSettingsImpl
+- [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
@@ -34,5 +36,4 @@ BUGS:
 - [BUG] sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present
 
 IN PROGRESS:
-- [DEBT] add ui smoke tests
-
+- [DEBT] create instrumentation tests for AppSettingsImpl
