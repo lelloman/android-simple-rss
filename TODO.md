@@ -25,6 +25,7 @@ DEBT:
 - [DEBT] ui-unit tests for all activities
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
 - [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
+- [DEBT] use only deep links for navigation
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
@@ -37,7 +38,7 @@ BUGS:
 - [BUG] in sources list screen, if there is no source the screen is empty
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] there is no way to stop a discover url, not even a timeout
-- [BUG] sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present
+- [BUG] !! sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present, actually duplicates appear also in walkthrough
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:

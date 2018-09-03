@@ -5,7 +5,7 @@ import android.content.Context
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v4.view.PagerAdapter
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,7 +45,7 @@ class WalkthroughPagerAdapter(
             }
             R.layout.pager_item_select_theme -> bind<PagerItemSelectThemeBinding>(view).apply {
                 themesRecyclerView.adapter = themesAdapter
-                themesRecyclerView.layoutManager = LinearLayoutManager(context)
+                themesRecyclerView.layoutManager = GridLayoutManager(context, 2)
                 walkthroughViewModel.themes.observe(lifecycleOwner, themesAdapter)
                 viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
             }
@@ -68,8 +68,8 @@ class WalkthroughPagerAdapter(
     private companion object {
         val LAYOUT_IDS = arrayOf(
             R.layout.pager_item_walkthrough_1,
-            R.layout.pager_item_select_theme,
             R.layout.pager_item_discover_url,
+            R.layout.pager_item_select_theme,
             R.layout.pager_item_walkthrough_metered_network
         )
     }
