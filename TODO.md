@@ -18,6 +18,7 @@ page in walkthrough
 - [DEBT] add steps to smoke test to verify use metered network, articles images
 - [DEBT] add steps to smoke test to verify all recycler view adapters (for refactoring)
 - [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
+- [DEBT] add smoke test: 2 sources active, count articles, disable 1 source, count...
 </s>
 
 DEBT:
