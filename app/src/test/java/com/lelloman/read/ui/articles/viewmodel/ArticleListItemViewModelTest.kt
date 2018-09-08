@@ -3,8 +3,8 @@ package com.lelloman.read.ui.articles.viewmodel
 import android.arch.lifecycle.Lifecycle
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.core.SemanticTimeProvider
+import com.lelloman.read.mock.MockAppSettings
 import com.lelloman.read.persistence.db.model.SourceArticle
-import com.lelloman.read.persistence.settings.AppSettings
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
@@ -16,9 +16,9 @@ class ArticleListItemViewModelTest {
 
     private val imagesEnabledSubject = BehaviorSubject.create<Boolean>()
 
-    private val appSettings: AppSettings = mock {
-        on { articleListImagesEnabled }.thenReturn(imagesEnabledSubject)
-    }
+    private val appSettings = MockAppSettings(
+        providedArticleListImagesEnabled = imagesEnabledSubject
+    )
     private val lifecycle: Lifecycle = mock()
     private val semanticTimeProvider: SemanticTimeProvider = mock()
 

@@ -4,6 +4,7 @@ import android.support.test.espresso.Espresso.pressBack
 import com.lelloman.read.R
 import com.lelloman.read.testutils.checkRecyclerViewCount
 import com.lelloman.read.testutils.clickView
+import com.lelloman.read.testutils.clickViewWithText
 
 class SourcesListScreen : Screen() {
 
@@ -21,4 +22,6 @@ class SourcesListScreen : Screen() {
     fun backToArticlesList() = with(pressBack()) { ArticlesListScreen() }
 
     fun showsSources(count: Int) = apply { checkRecyclerViewCount(count, recyclerViewId) }
+
+    fun clickOnSource(text: String) = apply { clickViewWithText(text) }
 }

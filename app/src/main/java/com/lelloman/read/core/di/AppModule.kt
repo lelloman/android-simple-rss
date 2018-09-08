@@ -6,12 +6,14 @@ import android.content.Context
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.core.MeteredConnectionChecker
+import com.lelloman.read.core.MeteredConnectionCheckerImpl
 import com.lelloman.read.core.PicassoWrap
 import com.lelloman.read.core.PicassoWrapImpl
 import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.ResourceProviderImpl
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.TimeProvider
+import com.lelloman.read.core.TimeProviderImpl
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
@@ -58,7 +60,7 @@ open class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun provideTimeProvider() = TimeProvider()
+    fun provideTimeProvider(): TimeProvider = TimeProviderImpl()
 
     @Singleton
     @Provides
@@ -94,7 +96,7 @@ open class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    open fun provideMeteredConnectionChecker(context: Context) = MeteredConnectionChecker(context)
+    open fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker = MeteredConnectionCheckerImpl(context)
 
     @Singleton
     @Provides

@@ -1,4 +1,4 @@
-package com.lelloman.read.testutils
+package com.lelloman.read.mock
 
 import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory

@@ -15,8 +15,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
-        android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginTop="8dp">
+        android:layout_marginTop="8dp"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,11 +25,12 @@
             <TextView
                 android:id="@+id/text_view"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@{viewModel.name}"
+                android:layout_height="64dp"
+                android:gravity="center"
                 android:padding="16dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/radio_button"
+                android:text="@{viewModel.name}"
+                app:layout_constraintBottom_toTopOf="@+id/radio_button"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,8 +42,8 @@
                 android:checked="@{viewModel.isSelected}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/text_view"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_view" />
 
         </android.support.constraint.ConstraintLayout>
     </com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollCardView>

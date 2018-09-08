@@ -100,11 +100,13 @@ class FeedModule {
         httpClient: FeedFinderHttpClient,
         parser: FeedFinderParser,
         feedFetcher: FeedFetcher,
-        loggerFactory: LoggerFactory
+        loggerFactory: LoggerFactory,
+        @NewThreadScheduler newThreadScheduler: Scheduler
     ) = FeedFinder(
         httpClient = httpClient,
         parser = parser,
         feedFetcher = feedFetcher,
-        loggerFactory = loggerFactory
+        loggerFactory = loggerFactory,
+        newThreadScheduler = newThreadScheduler
     )
 }

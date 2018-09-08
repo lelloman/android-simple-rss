@@ -2,13 +2,14 @@ package com.lelloman.read.feed.finder
 
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.html.Doc
-import com.lelloman.read.testutils.MockLoggerFactory
+import com.lelloman.read.mock.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Maybe
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 
@@ -23,7 +24,8 @@ class FeedFinderTest {
         httpClient = httpClient,
         feedFetcher = feedFetcher,
         parser = parser,
-        loggerFactory = loggerFactory
+        loggerFactory = loggerFactory,
+        newThreadScheduler = trampoline()
     )
 
     @Test

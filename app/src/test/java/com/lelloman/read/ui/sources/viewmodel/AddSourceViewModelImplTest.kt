@@ -11,10 +11,10 @@ import com.lelloman.read.feed.fetcher.Success
 import com.lelloman.read.feed.fetcher.TestResult
 import com.lelloman.read.feed.fetcher.UnknownError
 import com.lelloman.read.feed.fetcher.XmlError
+import com.lelloman.read.mock.MockLoggerFactory
+import com.lelloman.read.mock.MockResourceProvider
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.AndroidArchTest
-import com.lelloman.read.testutils.MockLoggerFactory
-import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.lelloman.read.utils.UrlValidator

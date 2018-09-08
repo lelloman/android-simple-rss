@@ -16,41 +16,38 @@
 
         <TextView
             android:id="@+id/text_view"
+            style="@style/WalkthroughInfoTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
-            android:textColor="@android:color/primary_text_dark"
+            android:text="@string/walkthrough_metered_network_question"
             app:layout_constraintBottom_toTopOf="@+id/button_yes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Do you want the app to use metered networks (mobile) to download feeds and images?"
-            android:text="@string/walkthrough_metered_network_question"/>
+            tools:text="Do you want the app to use metered networks (mobile) to download feeds and images?" />
 
         <Button
             android:id="@+id/button_yes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/WalkthroughButton"
             android:onClick="@{viewModel::onMeteredConnectionYesClicked}"
+            android:text="@string/YES"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_no"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view"
-            android:text="@string/YES"
             tools:text="Ues" />
 
         <Button
             android:id="@+id/button_no"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/WalkthroughButton"
             android:onClick="@{viewModel::onMeteredConnectionNoClicked}"
+            android:text="@string/NO"
             app:layout_constraintBottom_toBottomOf="@+id/button_yes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/button_yes"
             app:layout_constraintTop_toTopOf="@+id/button_yes"
-            android:text="@string/NO"
             tools:text="No" />
 
     </android.support.constraint.ConstraintLayout>

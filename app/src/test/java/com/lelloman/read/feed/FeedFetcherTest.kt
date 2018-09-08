@@ -1,7 +1,6 @@
 package com.lelloman.read.feed
 
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
 import com.lelloman.read.feed.fetcher.EmptySource
@@ -14,9 +13,10 @@ import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpResponse
+import com.lelloman.read.mock.MockAppSettings
+import com.lelloman.read.mock.MockLoggerFactory
+import com.lelloman.read.mock.MockMeteredConnectionChecker
 import com.lelloman.read.persistence.db.model.Source
-import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.testutils.MockLoggerFactory
 import com.lelloman.read.testutils.dummySource
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
@@ -32,8 +32,8 @@ class FeedFetcherTest {
     private val httpClient: HttpClient = mock()
     private val feedParser: FeedParser = mock()
     private val htmlParser: HtmlParser = mock()
-    private val meteredConnectionChecker: MeteredConnectionChecker = mock()
-    private val appSettings: AppSettings = mock()
+    private val meteredConnectionChecker = MockMeteredConnectionChecker()
+    private val appSettings = MockAppSettings()
     private val loggerFactory = MockLoggerFactory()
 
     private val tested = FeedFetcher(
@@ -208,19 +208,19 @@ class FeedFetcherTest {
     }
 
     private fun givenUnMeteredNetwork() {
-        whenever(meteredConnectionChecker.isNetworkMetered()).thenReturn(false)
+        meteredConnectionChecker.isNetworkMeteredValue = false
     }
 
     private fun givenMeteredNetwork() {
-        whenever(meteredConnectionChecker.isNetworkMetered()).thenReturn(true)
+        meteredConnectionChecker.isNetworkMeteredValue = true
     }
 
     private fun givenCannotUseMeteredNetwork() {
-        whenever(appSettings.useMeteredNetwork).thenReturn(Observable.just(false))
+        appSettings.providedUseMeteredNetwork = Observable.just(false)
     }
 
     private fun givenCanUseMeteredNetwork() {
-        whenever(appSettings.useMeteredNetwork).thenReturn(Observable.just(true))
+        appSettings.providedUseMeteredNetwork = Observable.just(true)
     }
 
     private fun givenHttpSuccessfulResponse() {

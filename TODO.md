@@ -18,17 +18,19 @@ page in walkthrough
 - [DEBT] add steps to smoke test to verify use metered network, articles images
 - [DEBT] add steps to smoke test to verify all recycler view adapters (for refactoring)
 - [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
+- [DEBT] add smoke test: 2 sources active, count articles, disable 1 source, count...
+- [DEBT] remove robolectric now seriously
 </s>
 
 DEBT:
 - [DEBT] ui-unit tests for all activities
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
+- [DEBT] use only deep links for navigation
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
 - [FEATURE] add refresher background job
 - [FEATURE] add single-source-screen
-- [FEATURE] add intro page in walkthrough (why type in url in discovery)
 
 BUGS:
 - [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
@@ -36,7 +38,9 @@ BUGS:
 - [BUG] in sources list screen, if there is no source the screen is empty
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] there is no way to stop a discover url, not even a timeout
-- [BUG] sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present
+- [BUG] !! sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present, actually duplicates appear also in walkthrough
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:
+- [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
+- [FEATURE] add intro page in walkthrough (why type in url in discovery)

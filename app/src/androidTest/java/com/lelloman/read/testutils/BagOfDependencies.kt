@@ -2,7 +2,9 @@ package com.lelloman.read.testutils
 
 import android.support.test.InstrumentationRegistry
 import com.lelloman.read.core.MeteredConnectionChecker
+import com.lelloman.read.core.MeteredConnectionCheckerImpl
 import com.lelloman.read.core.TimeProvider
+import com.lelloman.read.core.TimeProviderImpl
 import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.fetcher.FeedFetcher
@@ -14,6 +16,7 @@ import com.lelloman.read.http.HttpClientImpl
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.AppSettingsImpl
 import com.lelloman.read.utils.UrlValidator
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 
 class BagOfDependencies {
@@ -28,12 +31,12 @@ class BagOfDependencies {
     init {
         val okHttpClient = OkHttpClient.Builder().build()
         val loggerFactory = LoggerFactoryImpl()
-        timeProvider = TimeProvider()
+        timeProvider = TimeProviderImpl()
         htmlParser = HtmlParser()
         val urlValidator = UrlValidator()
 
         val targetContext = InstrumentationRegistry.getTargetContext()
-        meteredConnectionChecker = MeteredConnectionChecker(targetContext)
+        meteredConnectionChecker = MeteredConnectionCheckerImpl(targetContext)
         appSettings = AppSettingsImpl(targetContext)
 
         feedParser = FeedParser(timeProvider)
@@ -68,7 +71,8 @@ class BagOfDependencies {
             httpClient = feedFinderHttpClient,
             parser = feedFinderParser,
             feedFetcher = feedFetcher,
-            loggerFactory = loggerFactory
+            loggerFactory = loggerFactory,
+            newThreadScheduler = Schedulers.newThread()
         )
     }
 }

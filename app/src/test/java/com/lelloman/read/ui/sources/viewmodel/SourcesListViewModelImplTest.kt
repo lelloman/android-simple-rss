@@ -9,11 +9,11 @@ import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.core.view.actionevent.SnackEvent
 import com.lelloman.read.core.view.actionevent.ToastEvent
 import com.lelloman.read.core.view.actionevent.ViewActionEvent
+import com.lelloman.read.mock.MockResourceProvider
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.clear
 import com.lelloman.read.testutils.AndroidArchTest
-import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DeletedSource

@@ -34,7 +34,7 @@ class SmokeTests {
             }
             it.appModule = object : AppModule(it) {
                 override fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker {
-                    return object : MeteredConnectionChecker(context) {
+                    return object : MeteredConnectionChecker {
                         override fun isNetworkMetered() = isNetworkMetered
                     }
                 }
@@ -51,13 +51,15 @@ class SmokeTests {
         WalkthroughScreen()
             .firstPageIsDisplayed()
             .clickOk()
+            .typeInUrlIsDisplayed()
+            .swipeRight()
             .themesAreDisplayed()
             .clickOnThemes()
+            .swipeLeft()
             .swipeLeft()
             .firstPageIsDisplayed()
             .swipeRight()
             .swipeRight()
-            .typeInUrlIsDisplayed()
             .swipeRight()
             .clickNo()
 
@@ -151,6 +153,25 @@ class SmokeTests {
             .apply { isNetworkMetered = false }
             .swipeToRefresh()
             .wait(2.0)
+            .showsArticles(REPUBBLICA_ARTICLES_COUNT)
+
+        // add another source and verify sources enable/disable
+        ArticlesListScreen()
+            .clickOnSourcesInOverflow()
+            .clickAddSource()
+            .typeSourceName("fanpage")
+            .typeSourceUrl(MockHttpClient.URL_FANPAGE_FEED)
+            .clickSave()
+            .backToArticlesList()
+            .showsArticles(REPUBBLICA_ARTICLES_COUNT + FANPAGE_ARTICLES_COUNT)
+            .clickOnSourcesInOverflow()
+            .clickOnSource("repubblica")
+            .backToArticlesList()
+            .showsArticles(FANPAGE_ARTICLES_COUNT)
+            .clickOnSourcesInOverflow()
+            .clickOnSource("repubblica")
+            .clickOnSource("fanpage")
+            .backToArticlesList()
             .showsArticles(REPUBBLICA_ARTICLES_COUNT)
     }
 }

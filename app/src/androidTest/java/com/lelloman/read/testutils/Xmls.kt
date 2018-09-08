@@ -1,8 +1,9 @@
 package com.lelloman.read.testutils
 
+import android.support.test.InstrumentationRegistry
 import com.lelloman.read.feed.ParsedFeed
 import io.reactivex.Single
-import java.io.File
+
 
 object Xmls {
     private const val FANPAGE = "rss_fanpage.xml"
@@ -66,7 +67,12 @@ object Xmls {
     )
 
     fun readFile(fileName: String): Single<String> = Single.fromCallable {
-        val uri = javaClass.classLoader.getResource(fileName)
-        File(uri.file).readText()
+        InstrumentationRegistry
+            .getContext()
+            .assets
+            .open(fileName)
+            .bufferedReader()
+            .readLines()
+            .joinToString("\n")
     }
 }
