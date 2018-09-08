@@ -2,7 +2,7 @@ package com.lelloman.read.feed.finder
 
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.html.Doc
-import com.lelloman.read.testutils.MockLoggerFactory
+import com.lelloman.read.mock.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

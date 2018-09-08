@@ -5,11 +5,11 @@ import com.lelloman.read.R
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
+import com.lelloman.read.mock.MockAppSettings
+import com.lelloman.read.mock.MockResourceProvider
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.db.model.SourceArticle
-import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.testutils.AndroidArchTest
-import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.dummySourceArticle
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.ArticlesRepository
@@ -30,7 +30,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
     private val sourcesRepository: SourcesRepository = mock()
     private val discoveryRepository: DiscoverRepository = mock()
     private val resourceProvider = MockResourceProvider()
-    private val appSettings: AppSettings = mock()
+    private val appSettings = MockAppSettings()
 
     private lateinit var tested: ArticlesListViewModelImpl
 
@@ -229,11 +229,11 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
     }
 
     private fun givenOpenArticleInAppSettingDisabled() {
-        whenever(appSettings.openArticlesInApp).thenReturn(Observable.just(false))
+        appSettings.providedOpenArticlesInApp = Observable.just(false)
     }
 
     private fun givenOpenArticleInAppSettingEnabled() {
-        whenever(appSettings.openArticlesInApp).thenReturn(Observable.just(true))
+        appSettings.providedOpenArticlesInApp = Observable.just(true)
     }
 
     private fun givenNoActiveSources() {

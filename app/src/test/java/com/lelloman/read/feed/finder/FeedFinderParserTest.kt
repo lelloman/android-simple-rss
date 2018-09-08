@@ -4,7 +4,7 @@ import com.lelloman.read.html.Doc
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.html.element.ADocElement
 import com.lelloman.read.html.element.LinkDocElement
-import com.lelloman.read.testutils.MockLoggerFactory
+import com.lelloman.read.mock.MockLoggerFactory
 import com.lelloman.read.utils.UrlValidator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock

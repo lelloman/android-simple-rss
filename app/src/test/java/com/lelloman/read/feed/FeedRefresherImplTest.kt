@@ -5,11 +5,11 @@ import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.mock.MockAppSettings
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
-import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
 import com.lelloman.read.testutils.dummySource
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
@@ -35,7 +35,7 @@ class FeedRefresherImplTest {
     private val sourcesDao: SourcesDao = mock()
     private val articlesDao: ArticlesDao = mock()
     private val timeProvider: TimeProvider = mock()
-    private val appSettings: AppSettings = mock()
+    private val appSettings = MockAppSettings()
     private val logger: Logger = mock()
     private val loggerFactory: LoggerFactory = mock {
         on { getLogger(any()) }.thenReturn(logger)
@@ -216,11 +216,11 @@ class FeedRefresherImplTest {
     }
 
     private fun givenHasDefaultMinRefreshInterval() {
-        whenever(appSettings.sourceRefreshMinInterval).thenReturn(Observable.just(DEFAULT_MIN_SOURCE_REFRESH_INTERVAL))
+        appSettings.providedSourceRefreshMinInterval = Observable.just(DEFAULT_MIN_SOURCE_REFRESH_INTERVAL)
     }
 
     private fun givenHasMinRefreshInterval(sourceRefreshInterval: SourceRefreshInterval) {
-        whenever(appSettings.sourceRefreshMinInterval).thenReturn(Observable.just(sourceRefreshInterval))
+        appSettings.providedSourceRefreshMinInterval = Observable.just(sourceRefreshInterval)
     }
 
     private fun givenHasActiveSources(vararg source: Source) {

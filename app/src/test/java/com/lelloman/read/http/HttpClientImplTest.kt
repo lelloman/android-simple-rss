@@ -1,7 +1,7 @@
 package com.lelloman.read.http
 
 import com.lelloman.read.core.TimeProvider
-import com.lelloman.read.testutils.MockLoggerFactory
+import com.lelloman.read.mock.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock

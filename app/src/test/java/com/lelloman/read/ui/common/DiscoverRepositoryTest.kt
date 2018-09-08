@@ -2,9 +2,9 @@ package com.lelloman.read.ui.common
 
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FoundFeed
+import com.lelloman.read.mock.MockLoggerFactory
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Source
-import com.lelloman.read.testutils.MockLoggerFactory
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock

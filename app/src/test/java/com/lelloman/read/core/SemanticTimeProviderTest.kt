@@ -2,7 +2,7 @@ package com.lelloman.read.core
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
-import com.lelloman.read.testutils.MockResourceProvider
+import com.lelloman.read.mock.MockResourceProvider
 import com.lelloman.read.testutils.dummySource
 import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test

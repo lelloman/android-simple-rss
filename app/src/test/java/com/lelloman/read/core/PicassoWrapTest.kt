@@ -1,6 +1,6 @@
 package com.lelloman.read.core
 
-import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.read.mock.MockAppSettings
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
@@ -13,7 +13,7 @@ import org.junit.Test
 
 class PicassoWrapTest {
 
-    private val appSettings: AppSettings = mock()
+    private val appSettings = MockAppSettings()
     private val meteredConnectionChecker: MeteredConnectionChecker = mock()
     private val picassoRequestCreator: RequestCreator = mock {
         on { networkPolicy(any()) }.thenAnswer { it.mock }
@@ -74,11 +74,11 @@ class PicassoWrapTest {
     }
 
     private fun givenUseMeteredNetworkIsTrue() {
-        whenever(appSettings.useMeteredNetwork).thenReturn(Observable.just(true))
+        appSettings.providedUseMeteredNetwork = Observable.just(true)
     }
 
     private fun givenUseMeteredNetworkIsFalse() {
-        whenever(appSettings.useMeteredNetwork).thenReturn(Observable.just(false))
+        appSettings.providedUseMeteredNetwork = Observable.just(false)
     }
 
     private fun givenNetworkIsMetered() {
