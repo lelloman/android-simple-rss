@@ -3,6 +3,10 @@ apply plugin: "com.github.ben-manes.versions"
 
 buildscript {
 
+    ext.compileSdkVersion = 27
+    ext.targetSdkVersion = 27
+    ext.minSdkVersion = 21
+
     ext.kotlin_version = '1.2.60'
     ext.android_plugin_version = '3.1.4'
     ext.support_lib_version = "27.1.1"

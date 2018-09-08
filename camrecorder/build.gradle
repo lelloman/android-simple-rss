@@ -8,12 +8,13 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
-        applicationId "com.lelloman.read"
+        applicationId "com.lelloman.camrecorder"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "com.lelloman.read.testutils.MockTestRunner"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     dataBinding {
@@ -29,10 +30,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
 
-kapt {
-    generateStubs = true
 }
 
 dependencies {
@@ -49,33 +47,9 @@ dependencies {
     implementation "com.android.support:design:$support_lib_version"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
 
-    // rx
-    implementation "io.reactivex.rxjava2:rxandroid:$rx_android_version"
-    implementation "io.reactivex.rxjava2:rxjava:$rx_java_version"
-
-    // room
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    kapt "android.arch.persistence.room:compiler:$room_version"
-    implementation "android.arch.persistence.room:rxjava2:$room_version"
-
-    // dagger
-    implementation "com.google.dagger:dagger:$dagger_version"
-    implementation "com.google.dagger:dagger-android:$dagger_version"
-    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
-    kapt "com.google.dagger:dagger-compiler:$dagger_version"
-
-    implementation "com.github.lelloman:android-identicons:v9"
-
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
-
-    implementation "org.jsoup:jsoup:$jsoup_version"
-
-    implementation "com.squareup.picasso:picasso:$picasso_version"
-
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.persistence.room:testing:$room_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
-    testImplementation "org.robolectric:robolectric:$robolectric_version"
     testImplementation "com.google.truth:truth:$truth_version"
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
