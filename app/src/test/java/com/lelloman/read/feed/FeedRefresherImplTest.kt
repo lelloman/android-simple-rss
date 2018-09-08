@@ -1,10 +1,10 @@
 package com.lelloman.read.feed
 
-import com.lelloman.read.core.logger.Logger
-import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.mock.MockAppSettings
+import com.lelloman.read.mock.MockLogger
+import com.lelloman.read.mock.MockLoggerFactory
 import com.lelloman.read.mock.MockTimeProvider
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao
@@ -36,10 +36,8 @@ class FeedRefresherImplTest {
     private val articlesDao: ArticlesDao = mock()
     private val timeProvider = MockTimeProvider()
     private val appSettings = MockAppSettings()
-    private val logger: Logger = mock()
-    private val loggerFactory: LoggerFactory = mock {
-        on { getLogger(any()) }.thenReturn(logger)
-    }
+    private val logger = MockLogger()
+    private val loggerFactory = MockLoggerFactory(logger)
     private val feedFetcher: FeedFetcher = mock()
     private val faviconFetcher: FaviconFetcher = mock()
 
@@ -162,7 +160,7 @@ class FeedRefresherImplTest {
 
         tested.refresh()
 
-        verify(logger, never()).e(any(), any())
+        logger.assertNeverLoggedError()
     }
 
     @Test
@@ -174,7 +172,7 @@ class FeedRefresherImplTest {
 
         tested.refresh()
 
-        verify(logger).e(GENERIC_ERR_MSG, error)
+        logger.assertLoggedError(GENERIC_ERR_MSG, error)
     }
 
     @Test
