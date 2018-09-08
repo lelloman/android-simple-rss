@@ -26,6 +26,7 @@ DEBT:
 - [DEBT] ui-unit tests for all activities
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
 - [DEBT] use only deep links for navigation
+- [DEBT] FeedFinderIntegrationTest.findsLinksInHtml2 is blocking >_<
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles

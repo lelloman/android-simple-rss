@@ -2,10 +2,9 @@ package com.lelloman.read.mock
 
 import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
-import com.nhaarman.mockito_kotlin.mock
 
-class MockLoggerFactory : LoggerFactory {
+class MockLoggerFactory(private val logger: Logger = MockLogger()) : LoggerFactory {
 
-    override fun getLogger(tag: String): Logger = mock()
+    override fun getLogger(tag: String) = logger
 
 }
