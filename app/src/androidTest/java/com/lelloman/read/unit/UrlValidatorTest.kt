@@ -1,102 +1,102 @@
 package com.lelloman.read.unit
 
-import com.google.common.truth.Truth
-import com.lelloman.read.utils.UrlValidator
+import com.google.common.truth.Truth.assertThat
+import com.lelloman.read.utils.UrlValidatorImpl
 import org.junit.Test
 
 class UrlValidatorTest {
 
-    private val tested = UrlValidator()
+    private val tested = UrlValidatorImpl()
 
     @Test
     fun detectsValidUrl1() {
-        Truth.assertThat(tested.isValidUrl("staceppa.com")).isTrue()
+        assertThat(tested.isValidUrl("staceppa.com")).isTrue()
     }
 
     @Test
     fun detectsValidUrl2() {
-        Truth.assertThat(tested.isValidUrl("www.staceppa.com")).isTrue()
+        assertThat(tested.isValidUrl("www.staceppa.com")).isTrue()
     }
 
     @Test
     fun detectsValidUrl3() {
-        Truth.assertThat(tested.isValidUrl("staceppa.com/")).isTrue()
+        assertThat(tested.isValidUrl("staceppa.com/")).isTrue()
     }
 
     @Test
     fun detectsValidUrl4() {
-        Truth.assertThat(tested.isValidUrl("nonnt.staceppa.com")).isTrue()
+        assertThat(tested.isValidUrl("nonnt.staceppa.com")).isTrue()
     }
 
     @Test
     fun detectsValidUrl5() {
-        Truth.assertThat(tested.isValidUrl("ciccia.bebbe.staceppa.cc")).isTrue()
+        assertThat(tested.isValidUrl("ciccia.bebbe.staceppa.cc")).isTrue()
     }
 
     @Test
     fun detectsValidUrl6() {
-        Truth.assertThat(tested.isValidUrl("www.nonnt.staceppa.alforno.it/klkl_123123-fdf/aff123123.xdfg")).isTrue()
+        assertThat(tested.isValidUrl("www.nonnt.staceppa.alforno.it/klkl_123123-fdf/aff123123.xdfg")).isTrue()
     }
 
     @Test
     fun detectsValidUrl7() {
-        Truth.assertThat(tested.isValidUrl("http://staceppa.com")).isTrue()
+        assertThat(tested.isValidUrl("http://staceppa.com")).isTrue()
     }
 
     @Test
     fun detectsValidUrl8() {
-        Truth.assertThat(tested.isValidUrl("https://staceppa.com")).isTrue()
+        assertThat(tested.isValidUrl("https://staceppa.com")).isTrue()
     }
 
 
     @Test
     fun detectsInvalidUrl1() {
-        Truth.assertThat(tested.isValidUrl("/.staceppa.com")).isFalse()
+        assertThat(tested.isValidUrl("/.staceppa.com")).isFalse()
     }
 
     @Test
     fun detectsInvalidUrl2() {
-        Truth.assertThat(tested.isValidUrl("htttp://www.staceppa.com")).isFalse()
+        assertThat(tested.isValidUrl("htttp://www.staceppa.com")).isFalse()
     }
 
     @Test
     fun detectsInvalidUrl3() {
-        Truth.assertThat(tested.isValidUrl("-_-.staceppa.com/")).isFalse()
+        assertThat(tested.isValidUrl("-_-.staceppa.com/")).isFalse()
     }
 
     @Test
     fun detectsInvalidUrl4() {
-        Truth.assertThat(tested.isValidUrl("nonnt.staceppa.com/ $$$ ")).isFalse()
+        assertThat(tested.isValidUrl("nonnt.staceppa.com/ $$$ ")).isFalse()
     }
 
     @Test
     fun detectsInvalidUrl5() {
-        Truth.assertThat(tested.isValidUrl("ciccia$.bebbe.staceppa.stodominiononesiste")).isFalse()
+        assertThat(tested.isValidUrl("ciccia$.bebbe.staceppa.stodominiononesiste")).isFalse()
     }
 
     @Test
     fun detectsInvalidUrl6() {
-        Truth.assertThat(tested.isValidUrl("www.nonnt.it\\klkl_123123-fdf/aff123123.xdfg")).isFalse()
+        assertThat(tested.isValidUrl("www.nonnt.it\\klkl_123123-fdf/aff123123.xdfg")).isFalse()
     }
 
     @Test
     fun detectsInvalidUrl7() {
-        Truth.assertThat(tested.isValidUrl("ssh://staceppa.com")).isFalse()
+        assertThat(tested.isValidUrl("ssh://staceppa.com")).isFalse()
     }
 
     @Test
     fun detectsInvalidUrl8() {
-        Truth.assertThat(tested.isValidUrl("ftp://staceppa.com")).isFalse()
+        assertThat(tested.isValidUrl("ftp://staceppa.com")).isFalse()
     }
 
     @Test
     fun emptyUrlIsInvalid() {
-        Truth.assertThat(tested.isValidUrl("")).isFalse()
+        assertThat(tested.isValidUrl("")).isFalse()
     }
 
     @Test
     fun nullUrlIsInvalid() {
-        Truth.assertThat(tested.isValidUrl(null)).isFalse()
+        assertThat(tested.isValidUrl(null)).isFalse()
     }
 
     @Test
@@ -105,7 +105,7 @@ class UrlValidatorTest {
 
         val withProtocol = tested.maybePrependProtocol(original)
 
-        Truth.assertThat(withProtocol).isEqualTo("http://$original")
+        assertThat(withProtocol).isEqualTo("http://$original")
     }
 
     @Test
@@ -114,7 +114,7 @@ class UrlValidatorTest {
 
         val withProtocol = tested.maybePrependProtocol(original)
 
-        Truth.assertThat(withProtocol).isEqualTo(original)
+        assertThat(withProtocol).isEqualTo(original)
     }
 
     @Test
@@ -123,7 +123,7 @@ class UrlValidatorTest {
 
         val withProtocol = tested.maybePrependProtocol(original)
 
-        Truth.assertThat(withProtocol).isEqualTo(original)
+        assertThat(withProtocol).isEqualTo(original)
     }
 
     @Test
@@ -211,7 +211,7 @@ class UrlValidatorTest {
             path = path
         )
 
-        Truth.assertThat(result).isEqualTo("www.asd.com/sta/ceppa")
+        assertThat(result).isEqualTo("www.asd.com/sta/ceppa")
     }
 
     @Test
@@ -224,6 +224,6 @@ class UrlValidatorTest {
             path = path
         )
 
-        Truth.assertThat(result).isEqualTo("www.staceppa.com/sta/ceppa")
+        assertThat(result).isEqualTo("www.staceppa.com/sta/ceppa")
     }
 }

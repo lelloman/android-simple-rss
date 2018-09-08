@@ -1,5 +1,6 @@
 package com.lelloman.read.core
 
+import android.widget.ImageView
 import com.lelloman.read.mock.MockAppSettings
 import com.lelloman.read.mock.MockMeteredConnectionChecker
 import com.nhaarman.mockito_kotlin.any
@@ -29,7 +30,7 @@ class PicassoWrapTest {
     fun `does not set offline policy if used metered network is true`() {
         givenUseMeteredNetworkIsTrue()
 
-        tested.loadUrlIntoImageView(mock(), mock(), null)
+        tested.loadUrlIntoImageView("", MOCK_IMAGE_VIEW, null)
 
         verify(picassoRequestCreator, never()).networkPolicy(NetworkPolicy.OFFLINE)
     }
@@ -39,7 +40,7 @@ class PicassoWrapTest {
         givenUseMeteredNetworkIsFalse()
         givenNetworkIsMetered()
 
-        tested.loadUrlIntoImageView(mock(), mock(), null)
+        tested.loadUrlIntoImageView("", MOCK_IMAGE_VIEW, null)
 
         verify(picassoRequestCreator).networkPolicy(NetworkPolicy.OFFLINE)
     }
@@ -49,7 +50,7 @@ class PicassoWrapTest {
         givenUseMeteredNetworkIsFalse()
         givenNetworkIsNotMetered()
 
-        tested.loadUrlIntoImageView(mock(), mock(), null)
+        tested.loadUrlIntoImageView("", MOCK_IMAGE_VIEW, null)
 
         verify(picassoRequestCreator, never()).networkPolicy(NetworkPolicy.OFFLINE)
     }
@@ -58,7 +59,7 @@ class PicassoWrapTest {
     fun `does not set placeholder if argument is null`() {
         givenUseMeteredNetworkIsTrue()
 
-        tested.loadUrlIntoImageView(mock(), mock(), null)
+        tested.loadUrlIntoImageView("", MOCK_IMAGE_VIEW, null)
 
         verify(picassoRequestCreator, never()).placeholder(any<Int>())
     }
@@ -68,7 +69,7 @@ class PicassoWrapTest {
         givenUseMeteredNetworkIsTrue()
         val placeHolderId = 1234
 
-        tested.loadUrlIntoImageView(mock(), mock(), placeHolderId)
+        tested.loadUrlIntoImageView("", MOCK_IMAGE_VIEW, placeHolderId)
 
         verify(picassoRequestCreator).placeholder(placeHolderId)
     }
@@ -88,4 +89,10 @@ class PicassoWrapTest {
     private fun givenNetworkIsNotMetered() {
         meteredConnectionChecker.isNetworkMeteredValue = false
     }
+
+    private companion object {
+        val MOCK_IMAGE_VIEW = MockImageView()
+    }
+
+    class MockImageView : ImageView(null, null)
 }

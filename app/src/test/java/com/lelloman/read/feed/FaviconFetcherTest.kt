@@ -4,7 +4,7 @@ import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.http.HttpResponse
-import com.lelloman.read.utils.UrlValidator
+import com.lelloman.read.utils.UrlValidatorImpl
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -15,7 +15,7 @@ import org.junit.Test
 class FaviconFetcherTest {
 
     private val httpClient: HttpClient = mock()
-    private val urlValidator = UrlValidator()
+    private val urlValidator = UrlValidatorImpl()
 
     private val tested = FaviconFetcher(
         httpClient = httpClient,

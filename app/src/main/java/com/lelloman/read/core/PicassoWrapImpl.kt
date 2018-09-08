@@ -1,6 +1,5 @@
 package com.lelloman.read.core
 
-import android.net.Uri
 import android.support.annotation.DrawableRes
 import android.widget.ImageView
 import com.lelloman.read.BuildConfig
@@ -12,7 +11,7 @@ import com.squareup.picasso.RequestCreator
 class PicassoWrapImpl(
     private val appSettings: AppSettings,
     private val meteredConnectionChecker: MeteredConnectionChecker,
-    private val requestCreatorProvider: (uri: Uri) -> RequestCreator = {
+    private val requestCreatorProvider: (uri: String) -> RequestCreator = {
         val picasso = Picasso.get()
         if (BuildConfig.DEBUG) {
             picasso.setIndicatorsEnabled(true)
@@ -27,7 +26,7 @@ class PicassoWrapImpl(
     }
 
     override fun loadUrlIntoImageView(
-        uri: Uri,
+        uri: String,
         view: ImageView,
         @DrawableRes placeHolderId: Int?
     ) {
