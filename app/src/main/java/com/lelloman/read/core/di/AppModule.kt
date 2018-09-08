@@ -22,6 +22,7 @@ import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.core.navigation.NavigationRouter
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.UrlValidator
+import com.lelloman.read.utils.UrlValidatorImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -82,7 +83,7 @@ open class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun provideUrlValidator() = UrlValidator()
+    fun provideUrlValidator(): UrlValidator = UrlValidatorImpl()
 
     @Singleton
     @Provides

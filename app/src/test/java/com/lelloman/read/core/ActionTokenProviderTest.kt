@@ -11,7 +11,7 @@ class ActionTokenProviderTest {
     fun `generates unique tokens`(){
         val tokens = hashSetOf<String>()
 
-        for (i in 0 until 10_000){
+        for (i in 0 until 1000) {
             val token = tested.makeActionToken()
             assertThat(tokens).doesNotContain(token)
             tokens.add(token)

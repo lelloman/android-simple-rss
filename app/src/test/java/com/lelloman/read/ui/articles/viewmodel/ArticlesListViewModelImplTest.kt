@@ -96,6 +96,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         val article = dummySourceArticle().copy(link = link)
 
         tested.onArticleClicked(article)
+
         viewActions.assertValues(ViewIntentNavigationEvent(link))
     }
 

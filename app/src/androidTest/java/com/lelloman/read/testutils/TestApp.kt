@@ -1,6 +1,5 @@
 package com.lelloman.read.testutils
 
-import android.net.Uri
 import android.widget.ImageView
 import com.lelloman.read.ReadApplication
 import com.lelloman.read.core.PicassoWrap
@@ -20,7 +19,7 @@ class TestApp : ReadApplication() {
     override var picassoWrap: PicassoWrap = object : PicassoWrap {
         override fun enableImageSourceIndicator() = Unit
 
-        override fun loadUrlIntoImageView(uri: Uri, view: ImageView, placeHolderId: Int?) =
+        override fun loadUrlIntoImageView(uri: String, view: ImageView, placeHolderId: Int?) =
             view.setImageResource(placeHolderId ?: 0)
     }
         set(value) {}

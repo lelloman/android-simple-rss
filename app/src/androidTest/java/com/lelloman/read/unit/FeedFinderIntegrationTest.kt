@@ -16,7 +16,7 @@ import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.utils.UrlValidator
+import com.lelloman.read.utils.UrlValidatorImpl
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -47,7 +47,7 @@ class FeedFinderIntegrationTest {
             .toSingle()
     }
 
-    private val urlValidator = UrlValidator()
+    private val urlValidator = UrlValidatorImpl()
     private val htmlParser = HtmlParser()
 
     private val loggerFactory = object : LoggerFactory {

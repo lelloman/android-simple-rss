@@ -20,6 +20,7 @@ page in walkthrough
 - [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
 - [DEBT] add smoke test: 2 sources active, count articles, disable 1 source, count...
 - [DEBT] remove robolectric now seriously
+- [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
 </s>
 
 DEBT:
@@ -27,6 +28,7 @@ DEBT:
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
 - [DEBT] use only deep links for navigation
 - [DEBT] FeedFinderIntegrationTest.findsLinksInHtml2 is blocking >_<
+- [DEBT] check if subscribing on new thread when doing http, should use a thread pool
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
@@ -43,5 +45,4 @@ BUGS:
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:
-- [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
 - [FEATURE] add intro page in walkthrough (why type in url in discovery)

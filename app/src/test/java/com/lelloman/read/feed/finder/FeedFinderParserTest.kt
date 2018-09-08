@@ -5,20 +5,19 @@ import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.html.element.ADocElement
 import com.lelloman.read.html.element.LinkDocElement
 import com.lelloman.read.mock.MockLoggerFactory
-import com.lelloman.read.utils.UrlValidator
+import com.lelloman.read.mock.MockUrlValidator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import io.reactivex.Maybe
 import org.junit.Test
 
 class FeedFinderParserTest {
 
-    private val urlValidator: UrlValidator = mock {
-        on { findBaseUrlWithProtocol(URL_WITH_PATH) }.thenReturn(Maybe.just(BASE_URL))
-        on { maybePrependBaseUrl(any(), any()) }.thenAnswer { it.arguments[1] as String }
+    private val urlValidator = MockUrlValidator {
+        foundBaseUrlWithProtocol = BASE_URL
     }
+
     private val htmlParser: HtmlParser = mock()
 
     private val tested = FeedFinderParser(
@@ -30,7 +29,7 @@ class FeedFinderParserTest {
     @Test
     fun `parses doc and assigns base url`() {
         val html = "html stuff"
-        val doc: Doc = mock()
+        val doc = Doc()
         whenever(htmlParser.parseDoc(any(), any(), any())).thenReturn(doc)
 
         val tester = tested.parseDoc(URL_WITH_PATH, html).test()
@@ -45,7 +44,7 @@ class FeedFinderParserTest {
 
     @Test
     fun `drops error from url validator when parsing doc`() {
-        whenever(urlValidator.findBaseUrlWithProtocol(any())).thenReturn(Maybe.error(Exception()))
+        urlValidator.findBaseUrlWithProtocolThrowsException = true
 
         val tester = tested.parseDoc(URL_WITH_PATH, "").test()
 
@@ -136,8 +135,7 @@ class FeedFinderParserTest {
         val path = "/rssasdasd"
         val noPath = "feedthis"
         val pathWithBaseUrl = "http://www.staceppa.com/asd"
-        whenever(urlValidator.maybePrependBaseUrl(baseUrl = BASE_URL, path = path))
-            .thenReturn(pathWithBaseUrl)
+        urlValidator.wheneverMaybePrependBaseUrl(BASE_URL, path) { pathWithBaseUrl }
         val doc = givenDocWithCandidatesAndUrl(listOf(path, noPath))
 
         val tester = tested.findCandidateUrls(doc).test()

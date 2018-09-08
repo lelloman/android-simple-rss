@@ -15,7 +15,7 @@ import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClientImpl
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.AppSettingsImpl
-import com.lelloman.read.utils.UrlValidator
+import com.lelloman.read.utils.UrlValidatorImpl
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 
@@ -33,7 +33,7 @@ class BagOfDependencies {
         val loggerFactory = LoggerFactoryImpl()
         timeProvider = TimeProviderImpl()
         htmlParser = HtmlParser()
-        val urlValidator = UrlValidator()
+        val urlValidator = UrlValidatorImpl()
 
         val targetContext = InstrumentationRegistry.getTargetContext()
         meteredConnectionChecker = MeteredConnectionCheckerImpl(targetContext)

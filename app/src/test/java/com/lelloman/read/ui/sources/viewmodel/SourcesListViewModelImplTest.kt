@@ -1,6 +1,7 @@
 package com.lelloman.read.ui.sources.viewmodel
 
 import android.arch.lifecycle.Observer
+import android.view.View
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
 import com.lelloman.read.core.ActionTokenProvider
@@ -19,7 +20,6 @@ import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DeletedSource
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.argWhere
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.verifyZeroInteractions
@@ -75,14 +75,17 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `navigates to add source when click on fab`() {
-        val viewActionObserver: Observer<ViewActionEvent> = mock()
+        val invocations = mutableListOf<ViewActionEvent>()
+        val viewActionObserver = Observer<ViewActionEvent> {
+            invocations.add(it!!)
+        }
         tested.viewActionEvents.observeForever(viewActionObserver)
 
-        tested.onFabClicked(mock())
+        tested.onFabClicked(View(null))
 
-        verify(viewActionObserver).onChanged(argWhere {
+        assertThat(invocations.any {
             it is ScreenNavigationEvent && it.screen == NavigationScreen.ADD_SOURCE
-        })
+        }).isTrue()
     }
 
     @Test
