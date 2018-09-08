@@ -1,6 +1,5 @@
 package com.lelloman.read.unit
 
-import android.support.test.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.core.TimeProvider
@@ -55,7 +54,7 @@ class FeedFinderIntegrationTest {
         override fun getLogger(tag: String) = mock(Logger::class.java)
     }
 
-    private val meteredConnectionChecker = object : MeteredConnectionChecker(InstrumentationRegistry.getTargetContext()) {
+    private val meteredConnectionChecker = object : MeteredConnectionChecker {
         override fun isNetworkMetered() = false
     }
 

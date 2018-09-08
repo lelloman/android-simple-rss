@@ -1,11 +1,11 @@
 package com.lelloman.read.core
 
 import com.lelloman.read.mock.MockAppSettings
+import com.lelloman.read.mock.MockMeteredConnectionChecker
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.RequestCreator
 import io.reactivex.Observable
@@ -14,7 +14,7 @@ import org.junit.Test
 class PicassoWrapTest {
 
     private val appSettings = MockAppSettings()
-    private val meteredConnectionChecker: MeteredConnectionChecker = mock()
+    private val meteredConnectionChecker = MockMeteredConnectionChecker()
     private val picassoRequestCreator: RequestCreator = mock {
         on { networkPolicy(any()) }.thenAnswer { it.mock }
     }
@@ -82,10 +82,10 @@ class PicassoWrapTest {
     }
 
     private fun givenNetworkIsMetered() {
-        whenever(meteredConnectionChecker.isNetworkMetered()).thenReturn(true)
+        meteredConnectionChecker.isNetworkMeteredValue = true
     }
 
     private fun givenNetworkIsNotMetered() {
-        whenever(meteredConnectionChecker.isNetworkMetered()).thenReturn(false)
+        meteredConnectionChecker.isNetworkMeteredValue = false
     }
 }

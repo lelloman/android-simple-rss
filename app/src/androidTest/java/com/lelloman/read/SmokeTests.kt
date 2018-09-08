@@ -34,7 +34,7 @@ class SmokeTests {
             }
             it.appModule = object : AppModule(it) {
                 override fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker {
-                    return object : MeteredConnectionChecker(context) {
+                    return object : MeteredConnectionChecker {
                         override fun isNetworkMetered() = isNetworkMetered
                     }
                 }

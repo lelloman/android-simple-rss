@@ -6,6 +6,7 @@ import android.content.Context
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.core.MeteredConnectionChecker
+import com.lelloman.read.core.MeteredConnectionCheckerImpl
 import com.lelloman.read.core.PicassoWrap
 import com.lelloman.read.core.PicassoWrapImpl
 import com.lelloman.read.core.ResourceProvider
@@ -94,7 +95,7 @@ open class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    open fun provideMeteredConnectionChecker(context: Context) = MeteredConnectionChecker(context)
+    open fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker = MeteredConnectionCheckerImpl(context)
 
     @Singleton
     @Provides

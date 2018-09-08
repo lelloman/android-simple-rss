@@ -1,7 +1,6 @@
 package com.lelloman.read.feed
 
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
 import com.lelloman.read.feed.fetcher.EmptySource
@@ -16,6 +15,7 @@ import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.mock.MockAppSettings
 import com.lelloman.read.mock.MockLoggerFactory
+import com.lelloman.read.mock.MockMeteredConnectionChecker
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.dummySource
 import com.nhaarman.mockito_kotlin.any
@@ -32,7 +32,7 @@ class FeedFetcherTest {
     private val httpClient: HttpClient = mock()
     private val feedParser: FeedParser = mock()
     private val htmlParser: HtmlParser = mock()
-    private val meteredConnectionChecker: MeteredConnectionChecker = mock()
+    private val meteredConnectionChecker = MockMeteredConnectionChecker()
     private val appSettings = MockAppSettings()
     private val loggerFactory = MockLoggerFactory()
 
@@ -208,11 +208,11 @@ class FeedFetcherTest {
     }
 
     private fun givenUnMeteredNetwork() {
-        whenever(meteredConnectionChecker.isNetworkMetered()).thenReturn(false)
+        meteredConnectionChecker.isNetworkMeteredValue = false
     }
 
     private fun givenMeteredNetwork() {
-        whenever(meteredConnectionChecker.isNetworkMetered()).thenReturn(true)
+        meteredConnectionChecker.isNetworkMeteredValue = true
     }
 
     private fun givenCannotUseMeteredNetwork() {
