@@ -1,7 +1,7 @@
 package com.lelloman.read.http
 
-import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.mock.MockLoggerFactory
+import com.lelloman.read.mock.MockTimeProvider
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock
@@ -25,9 +25,7 @@ class HttpClientImplTest {
         on { newCall(any()) }.thenAnswer { okHttpCall }
     }
     private val loggerFactory = MockLoggerFactory()
-    private val timeProvider: TimeProvider = mock {
-        on { nowUtcMs() }.thenReturn(0L)
-    }
+    private val timeProvider = MockTimeProvider()
 
     private val tested = HttpClientImpl(
         okHttpClient = okHttpClient,

@@ -4,7 +4,6 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
 import com.lelloman.read.mock.MockResourceProvider
 import com.lelloman.read.testutils.dummySource
-import com.nhaarman.mockito_kotlin.mock
 import org.junit.Test
 import java.util.*
 
@@ -12,8 +11,8 @@ class SemanticTimeProviderTest {
 
     private var now = 123456789123L
 
-    private val timeProvider: TimeProvider = mock {
-        on { nowUtcMs() }.thenAnswer { now }
+    private val timeProvider = object : TimeProvider {
+        override fun nowUtcMs() = now
     }
 
     private val myTimestamp = 527505620_000L

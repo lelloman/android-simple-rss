@@ -13,7 +13,7 @@ import org.junit.Test
 class FeedParserTest {
 
     private val time = 0L
-    private val timeProvider = object : TimeProvider() {
+    private val timeProvider = object : TimeProvider {
         override fun nowUtcMs() = time
     }
 

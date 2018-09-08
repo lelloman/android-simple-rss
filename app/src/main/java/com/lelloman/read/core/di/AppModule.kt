@@ -13,6 +13,7 @@ import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.ResourceProviderImpl
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.TimeProvider
+import com.lelloman.read.core.TimeProviderImpl
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
@@ -59,7 +60,7 @@ open class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun provideTimeProvider() = TimeProvider()
+    fun provideTimeProvider(): TimeProvider = TimeProviderImpl()
 
     @Singleton
     @Provides

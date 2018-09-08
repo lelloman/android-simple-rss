@@ -1,11 +1,11 @@
 package com.lelloman.read.feed
 
-import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.mock.MockAppSettings
+import com.lelloman.read.mock.MockTimeProvider
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Article
@@ -34,7 +34,7 @@ class FeedRefresherImplTest {
 
     private val sourcesDao: SourcesDao = mock()
     private val articlesDao: ArticlesDao = mock()
-    private val timeProvider: TimeProvider = mock()
+    private val timeProvider = MockTimeProvider()
     private val appSettings = MockAppSettings()
     private val logger: Logger = mock()
     private val loggerFactory: LoggerFactory = mock {
@@ -228,7 +228,7 @@ class FeedRefresherImplTest {
     }
 
     private fun givenHasTime(time: Long) {
-        whenever(timeProvider.nowUtcMs()).thenReturn(time)
+        timeProvider.now = time
     }
 
     private fun givenActiveSourcesSubject(): Subject<List<Source>> {

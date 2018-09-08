@@ -2,7 +2,7 @@ package com.lelloman.read.unit
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.core.MeteredConnectionChecker
-import com.lelloman.read.core.TimeProvider
+import com.lelloman.read.core.TimeProviderImpl
 import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedParser
@@ -60,7 +60,7 @@ class FeedFinderIntegrationTest {
 
     private val appSettings = mock(AppSettings::class.java)
 
-    private val timeProvider = TimeProvider()
+    private val timeProvider = TimeProviderImpl()
 
     private val feedParser = FeedParser(timeProvider = timeProvider)
 
