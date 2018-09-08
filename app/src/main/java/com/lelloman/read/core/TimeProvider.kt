@@ -1,6 +1,6 @@
 package com.lelloman.read.core
 
-class TimeProvider {
+open class TimeProvider {
 
-    fun nowUtcMs() = System.currentTimeMillis()
+    open fun nowUtcMs() = System.currentTimeMillis()
 }

@@ -4,6 +4,7 @@ import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.fetcher.Success
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 
@@ -11,6 +12,7 @@ class FeedFinder(
     private val httpClient: FeedFinderHttpClient,
     private val parser: FeedFinderParser,
     private val feedFetcher: FeedFetcher,
+    private val newThreadScheduler: Scheduler,
     loggerFactory: LoggerFactory
 ) {
 
@@ -29,6 +31,7 @@ class FeedFinder(
     fun findValidFeedUrls(url: String): Observable<FoundFeed> = mutableSetOf<String>().let { foundUrls ->
         httpClient
             .requestStringBodyAndBaseUrl(url)
+            .subscribeOn(newThreadScheduler)
             .flatMap { (stringBody, baseUrl) ->
                 logger.d("findValidFeedUrls() base url $baseUrl")
                 parser.parseDoc(
@@ -40,6 +43,7 @@ class FeedFinder(
             .flatMap { candidateUrl ->
                 httpClient
                     .requestStringBody(candidateUrl)
+                    .subscribeOn(newThreadScheduler)
                     .onErrorComplete()
                     .flatMap {
                         parser.parseDoc(
@@ -67,6 +71,7 @@ class FeedFinder(
 
     private fun testUrl(urlToTest: String) = feedFetcher
         .testUrl(urlToTest)
+        .subscribeOn(newThreadScheduler)
         .filter { testResult ->
             logger.d("tested url $urlToTest -> $testResult")
             testResult is Success

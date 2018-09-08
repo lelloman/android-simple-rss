@@ -19,13 +19,12 @@ page in walkthrough
 - [DEBT] add steps to smoke test to verify all recycler view adapters (for refactoring)
 - [DEBT] unify RecyclerView adapter with base class (FoundFeedsAdapter, ArticlesAdapter)
 - [DEBT] add smoke test: 2 sources active, count articles, disable 1 source, count...
+- [DEBT] remove robolectric now seriously
 </s>
 
 DEBT:
-- [DEBT] remove robolectric now seriously
 - [DEBT] ui-unit tests for all activities
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
-- [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
 - [DEBT] use only deep links for navigation
 
 FEATURE:
@@ -43,4 +42,5 @@ BUGS:
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:
+- [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
 - [FEATURE] add intro page in walkthrough (why type in url in discovery)

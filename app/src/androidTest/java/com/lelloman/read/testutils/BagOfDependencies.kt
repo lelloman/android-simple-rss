@@ -14,6 +14,7 @@ import com.lelloman.read.http.HttpClientImpl
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.AppSettingsImpl
 import com.lelloman.read.utils.UrlValidator
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 
 class BagOfDependencies {
@@ -68,7 +69,8 @@ class BagOfDependencies {
             httpClient = feedFinderHttpClient,
             parser = feedFinderParser,
             feedFetcher = feedFetcher,
-            loggerFactory = loggerFactory
+            loggerFactory = loggerFactory,
+            newThreadScheduler = Schedulers.newThread()
         )
     }
 }

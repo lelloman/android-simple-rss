@@ -1,6 +1,6 @@
-package com.lelloman.read.feed.finder
+package com.lelloman.read.unit
 
-import android.net.ConnectivityManager
+import android.support.test.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.core.TimeProvider
@@ -8,17 +8,22 @@ import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.feed.finder.FeedFinder
+import com.lelloman.read.feed.finder.FeedFinderHttpClient
+import com.lelloman.read.feed.finder.FeedFinderParser
+import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.UrlValidator
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Maybe
 import io.reactivex.Single
+import io.reactivex.schedulers.Schedulers
+import org.junit.Ignore
 import org.junit.Test
+import org.mockito.Mockito.mock
 
 class FeedFinderIntegrationTest {
 
@@ -47,19 +52,14 @@ class FeedFinderIntegrationTest {
     private val htmlParser = HtmlParser()
 
     private val loggerFactory = object : LoggerFactory {
-        override fun getLogger(tag: String): Logger = mock()
+        override fun getLogger(tag: String) = mock(Logger::class.java)
     }
 
-    private val connectivityManager: ConnectivityManager = mock {
-        on { isActiveNetworkMetered }.thenReturn(false)
+    private val meteredConnectionChecker = object : MeteredConnectionChecker(InstrumentationRegistry.getTargetContext()) {
+        override fun isNetworkMetered() = false
     }
-    private val meteredConnectionChecker = MeteredConnectionChecker(mock {
-        on { getSystemService(any()) }.thenReturn(connectivityManager)
-    })
 
-    private val appSettings: AppSettings = mock {
-
-    }
+    private val appSettings = mock(AppSettings::class.java)
 
     private val timeProvider = TimeProvider()
 
@@ -89,44 +89,44 @@ class FeedFinderIntegrationTest {
         httpClient = feedFinderHttpClient,
         parser = feedFinderParser,
         feedFetcher = feedFetcher,
-        loggerFactory = loggerFactory
+        loggerFactory = loggerFactory,
+        newThreadScheduler = Schedulers.newThread()
     )
 
+    private fun List<FoundFeed>.assertContains(url: String, nArticles: Int, name: String) {
+        assertThat(any { it.url == url && it.nArticles == nArticles && it.name == name }).isTrue()
+    }
+
     @Test
-    fun `finds links in html 1`() {
+    fun findsLinksInHtml1() {
         httpClient.map(URL_1, HTML_1)
         httpClient.map("$URL_1/feed", VALID_FEED_XML)
         httpClient.map("$URL_1/somefeed", VALID_FEED_XML)
         httpClient.map("http://www.staceppa.com", VALID_FEED_XML)
 
-        val tester = tested.findValidFeedUrls(URL_1).test()
+        val foundFeeds = tested.findValidFeedUrls(URL_1).toList().blockingGet()
 
-        tester.assertComplete()
-        tester.assertValueCount(3)
-        tester.values().apply {
-            assertThat(this).contains(FoundFeed(1, "$URL_1/feed", 1, "RSS di   - ANSA.it"))
-            assertThat(this).contains(FoundFeed(2, "http://www.staceppa.com", 1, "RSS di   - ANSA.it"))
-            assertThat(this).contains(FoundFeed(3, "$URL_1/somefeed", 1, "RSS di   - ANSA.it"))
-        }
+        assertThat(foundFeeds).hasSize(3)
+        foundFeeds.assertContains(url = "$URL_1/feed", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "http://www.staceppa.com", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "$URL_1/somefeed", nArticles = 1, name = "RSS di   - ANSA.it")
     }
 
+    @Ignore
     @Test
-    fun `finds links in html 2`() {
+    fun findsLinksInHtml2() {
         httpClient.map(URL_1, HTML_1)
         httpClient.map("$URL_1/feed", VALID_FEED_XML)
         httpClient.map("$URL_1/somefeed", HTML_2)
         httpClient.map("http://www.rsssomething.com", VALID_FEED_XML)
         httpClient.map("http://www.staceppa2.com", VALID_FEED_XML)
 
-        val tester = tested.findValidFeedUrls(URL_1).test()
+        val foundFeeds = tested.findValidFeedUrls(URL_1).toList().blockingGet()
 
-        tester.assertComplete()
-        tester.assertValueCount(3)
-        tester.values().apply {
-            assertThat(this).contains(FoundFeed(1, "$URL_1/feed", 1, "RSS di   - ANSA.it"))
-            assertThat(this).contains(FoundFeed(2, "http://www.staceppa2.com", 1, "RSS di   - ANSA.it"))
-            assertThat(this).contains(FoundFeed(3, "http://www.rsssomething.com", 1, "RSS di   - ANSA.it"))
-        }
+        assertThat(foundFeeds).hasSize(3)
+        foundFeeds.assertContains(url = "$URL_1/feed", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "http://www.staceppa2.com", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "http://www.rsssomething.com", nArticles = 1, name = "RSS di   - ANSA.it")
     }
 
     private companion object {

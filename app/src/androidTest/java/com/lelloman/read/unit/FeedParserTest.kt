@@ -1,30 +1,26 @@
-package com.lelloman.read.feed
+package com.lelloman.read.unit
 
-import com.google.common.truth.Truth.assertThat
+import com.google.common.truth.Truth
 import com.lelloman.read.core.TimeProvider
+import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
 import com.lelloman.read.testutils.Xmls
-import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Observable
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.robolectric.RobolectricTestRunner
-import org.robolectric.annotation.Config
 
-@RunWith(RobolectricTestRunner::class)
-@Config(manifest = Config.NONE)
+
 class FeedParserTest {
 
     private val time = 0L
-    private val timeProvider: TimeProvider = mock {
-        on { nowUtcMs() }.thenAnswer { time }
+    private val timeProvider = object : TimeProvider() {
+        override fun nowUtcMs() = time
     }
 
     private val tested = FeedParser(timeProvider)
 
     @Test
-    fun `throws malformed xml exception`() {
+    fun throwsMalformedXmlException() {
         val tester = Xmls.readFile(Xmls.MALFORMED_XML1)
             .flatMap(tested::parseFeeds)
             .test()
@@ -33,7 +29,7 @@ class FeedParserTest {
     }
 
     @Test
-    fun `throws invalid root tag exception`() {
+    fun throwsInvalidRootTagException() {
         val tester = Xmls.readFile(Xmls.INVALID_ROOT_TAG_XML)
             .flatMap(tested::parseFeeds)
             .test()
@@ -42,7 +38,7 @@ class FeedParserTest {
     }
 
     @Test
-    fun `parses correct number of feeds from xmls`() {
+    fun parsesCorrectNumberOfFeedsFromXmls() {
         val test = Observable.fromIterable(Xmls.ALL_RSS)
             .flatMapSingle(Xmls::readFile)
             .flatMapSingle(tested::parseFeeds)
@@ -58,7 +54,7 @@ class FeedParserTest {
     }
 
     @Test
-    fun `parses feeds from sample xml`() {
+    fun parsesFeedsFromSampleXml() {
         val tester = Xmls.readFile(Xmls.SAMPLE)
             .flatMap(tested::parseFeeds)
             .test()
@@ -66,13 +62,13 @@ class FeedParserTest {
         tester.assertNoErrors()
         tester.assertValueCount(1)
         val feeds = tester.values()[0]
-        assertThat(feeds[0]).isEqualTo(Xmls.SAMPLE_FEEDS[0])
-        assertThat(feeds[1]).isEqualTo(Xmls.SAMPLE_FEEDS[1])
-        assertThat(feeds[2]).isEqualTo(Xmls.SAMPLE_FEEDS[2])
+        Truth.assertThat(feeds[0]).isEqualTo(Xmls.SAMPLE_FEEDS[0])
+        Truth.assertThat(feeds[1]).isEqualTo(Xmls.SAMPLE_FEEDS[1])
+        Truth.assertThat(feeds[2]).isEqualTo(Xmls.SAMPLE_FEEDS[2])
     }
 
     @Test
-    fun `parses feeds from vice xml`() {
+    fun parsesFeedsFromViceXml() {
         val test = Xmls.readFile(Xmls.VICE)
             .flatMap(tested::parseFeeds)
             .test()
@@ -80,7 +76,7 @@ class FeedParserTest {
         test.assertNoErrors()
         test.assertValueCount(1)
         val feeds = test.values()[0]
-        assertThat(feeds[0]).isEqualTo(Xmls.VICE_FEED_0)
-        assertThat(feeds[1]).isEqualTo(Xmls.VICE_FEED_1)
+        Truth.assertThat(feeds[0]).isEqualTo(Xmls.VICE_FEED_0)
+        Truth.assertThat(feeds[1]).isEqualTo(Xmls.VICE_FEED_1)
     }
 }

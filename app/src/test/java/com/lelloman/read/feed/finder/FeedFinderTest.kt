@@ -9,6 +9,7 @@ import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Maybe
 import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.PublishSubject
 import org.junit.Test
 
@@ -23,7 +24,8 @@ class FeedFinderTest {
         httpClient = httpClient,
         feedFetcher = feedFetcher,
         parser = parser,
-        loggerFactory = loggerFactory
+        loggerFactory = loggerFactory,
+        newThreadScheduler = trampoline()
     )
 
     @Test
