@@ -1,8 +1,8 @@
 package com.lelloman.read.ui.discover.view
 
 import com.lelloman.read.R
-import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.view.BaseRecyclerViewAdapter
+import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.databinding.ListItemDiscoverFoundFeedBinding
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.ui.discover.viewmodel.FoundFeedListItemViewModel

@@ -1,4 +1,4 @@
-package com.lelloman.read.core
+package com.lelloman.read.core.view
 
 import android.support.annotation.DrawableRes
 import android.widget.ImageView

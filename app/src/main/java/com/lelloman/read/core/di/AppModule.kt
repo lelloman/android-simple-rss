@@ -7,10 +7,6 @@ import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.core.MeteredConnectionChecker
 import com.lelloman.read.core.MeteredConnectionCheckerImpl
-import com.lelloman.read.core.PicassoWrap
-import com.lelloman.read.core.PicassoWrapImpl
-import com.lelloman.read.core.ResourceProvider
-import com.lelloman.read.core.ResourceProviderImpl
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.TimeProvider
 import com.lelloman.read.core.TimeProviderImpl
@@ -20,6 +16,10 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.core.navigation.NavigationRouter
+import com.lelloman.read.core.view.PicassoWrap
+import com.lelloman.read.core.view.PicassoWrapImpl
+import com.lelloman.read.core.view.ResourceProvider
+import com.lelloman.read.core.view.ResourceProviderImpl
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.utils.UrlValidator
 import com.lelloman.read.utils.UrlValidatorImpl
@@ -53,7 +53,7 @@ open class AppModule(private val application: Application) {
     fun provideNewThreadScheduler(): Scheduler = Schedulers.newThread()
 
     @Provides
-    fun provideNavigationRouter() = NavigationRouter()
+    fun provideNavigationRouter(loggerFactory: LoggerFactory) = NavigationRouter(loggerFactory)
 
     @Singleton
     @Provides

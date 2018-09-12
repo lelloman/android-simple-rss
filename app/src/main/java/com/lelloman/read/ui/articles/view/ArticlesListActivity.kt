@@ -1,6 +1,7 @@
 package com.lelloman.read.ui.articles.view
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -8,6 +9,8 @@ import android.view.Menu
 import android.view.MenuItem
 import com.lelloman.read.R
 import com.lelloman.read.core.SemanticTimeProvider
+import com.lelloman.read.core.navigation.DeepLink
+import com.lelloman.read.core.navigation.DeepLinkStartable
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityArticlesListBinding
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
@@ -75,8 +78,16 @@ class ArticlesListActivity :
     }
 
     companion object {
-        fun start(activity: Activity) {
-            activity.startActivity(Intent(activity, ArticlesListActivity::class.java))
+
+        var deepLinkStartable = object : DeepLinkStartable {
+            override fun start(context: Context, deepLink: DeepLink) {
+                val intent = Intent(context, ArticlesListActivity::class.java)
+                if (context !is Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+            }
         }
+            internal set
     }
 }

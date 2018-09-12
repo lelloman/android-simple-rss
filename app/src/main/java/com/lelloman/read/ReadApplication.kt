@@ -4,11 +4,11 @@ import android.app.Activity
 import android.app.Application
 import android.content.BroadcastReceiver
 import com.lelloman.read.core.FaviconBitmapProvider
-import com.lelloman.read.core.PicassoWrap
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
 import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.read.core.view.PicassoWrap
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.persistence.db.AppDatabase
 import com.lelloman.read.persistence.db.SourcesDao

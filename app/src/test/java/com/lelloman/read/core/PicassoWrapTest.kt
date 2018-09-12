@@ -1,6 +1,7 @@
 package com.lelloman.read.core
 
 import android.widget.ImageView
+import com.lelloman.read.core.view.PicassoWrapImpl
 import com.lelloman.read.mock.MockAppSettings
 import com.lelloman.read.mock.MockMeteredConnectionChecker
 import com.nhaarman.mockito_kotlin.any

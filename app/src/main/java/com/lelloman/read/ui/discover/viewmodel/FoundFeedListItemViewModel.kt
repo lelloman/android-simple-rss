@@ -1,7 +1,7 @@
 package com.lelloman.read.ui.discover.viewmodel
 
 import com.lelloman.read.R
-import com.lelloman.read.core.ResourceProvider
+import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.core.viewmodel.BaseListItemViewModel
 import com.lelloman.read.feed.finder.FoundFeed
 
