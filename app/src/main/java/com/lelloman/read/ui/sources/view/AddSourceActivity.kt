@@ -1,11 +1,16 @@
 package com.lelloman.read.ui.sources.view
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.lelloman.read.R
+import com.lelloman.read.core.navigation.DeepLink
+import com.lelloman.read.core.navigation.DeepLinkStartable
+import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_SOURCE_NAME
+import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityAddSourceBinding
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
@@ -53,19 +58,23 @@ class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBind
 
     companion object {
 
-        private const val ARG_SOURCE_NAME = "SourceName"
-        private const val ARG_SOURCE_URL = "SourceUrl"
+        var deepLinkStartable = object : DeepLinkStartable {
+            override fun start(context: Context, deepLink: DeepLink) {
+                val intent = Intent(context, AddSourceActivity::class.java)
+                if (context !is Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
 
-        fun start(activity: Activity) {
-            activity.startActivity(Intent(activity, AddSourceActivity::class.java))
-        }
+                deepLink.parameters.get(ARG_SOURCE_URL)?.let {
+                    intent.putExtra(ARG_SOURCE_URL, it as String)
+                }
+                deepLink.parameters.get(ARG_SOURCE_NAME)?.let {
+                    intent.putExtra(ARG_SOURCE_NAME, it as String)
+                }
 
-        fun startWithPrefill(activity: Activity, sourceName: String, sourceUrl: String) {
-            activity.startActivity(
-                Intent(activity, AddSourceActivity::class.java)
-                    .putExtra(ARG_SOURCE_NAME, sourceName)
-                    .putExtra(ARG_SOURCE_URL, sourceUrl)
-            )
+                context.startActivity(intent)
+            }
         }
+            internal set
     }
 }

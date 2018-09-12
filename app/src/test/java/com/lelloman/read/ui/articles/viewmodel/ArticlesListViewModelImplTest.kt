@@ -2,6 +2,7 @@ package com.lelloman.read.ui.articles.viewmodel
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
+import com.lelloman.read.core.navigation.DeepLinkNavigationEvent
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
@@ -61,10 +62,9 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
         assertThat(viewActions.values).hasSize(1)
         viewActions.values[0].apply {
-            assertThat(this).isInstanceOf(ScreenNavigationEvent::class.java)
-            (this as ScreenNavigationEvent).apply {
-                assertThat(args).isEmpty()
-                assertThat(screen).isEqualTo(NavigationScreen.SOURCES_LIST)
+            (this as DeepLinkNavigationEvent).apply {
+                assertThat(deepLink.parameters).isEmpty()
+                assertThat(deepLink.screen).isEqualTo(NavigationScreen.SOURCES_LIST)
             }
         }
     }
@@ -164,10 +164,9 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         emptyButtonTester.assertValues("${R.string.add_source}")
         viewActionsTester.assertValuesCount(1)
         viewActionsTester.values[0].apply {
-            assertThat(this).isInstanceOf(ScreenNavigationEvent::class.java)
-            (this as ScreenNavigationEvent).apply {
-                assertThat(args).isEmpty()
-                assertThat(screen).isEqualTo(NavigationScreen.ADD_SOURCE)
+            (this as DeepLinkNavigationEvent).apply {
+                assertThat(deepLink.parameters).isEmpty()
+                assertThat(deepLink.screen).isEqualTo(NavigationScreen.ADD_SOURCE)
             }
         }
     }
@@ -190,10 +189,9 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         emptyButtonTester.assertValues("${R.string.enable_sources}")
         viewActionsTester.assertValuesCount(1)
         viewActionsTester.values[0].apply {
-            assertThat(this).isInstanceOf(ScreenNavigationEvent::class.java)
-            (this as ScreenNavigationEvent).apply {
-                assertThat(args).isEmpty()
-                assertThat(screen).isEqualTo(NavigationScreen.SOURCES_LIST)
+            (this as DeepLinkNavigationEvent).apply {
+                assertThat(deepLink.parameters).isEmpty()
+                assertThat(deepLink.screen).isEqualTo(NavigationScreen.SOURCES_LIST)
             }
         }
     }

@@ -6,9 +6,7 @@ import com.lelloman.read.mock.MockLoggerFactory
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.ui.articles.view.ArticleActivity
 import com.lelloman.read.ui.settings.view.SettingsActivity
-import com.lelloman.read.ui.sources.view.AddSourceActivity
 import com.lelloman.read.ui.sources.view.SourceActivity
-import com.lelloman.read.ui.sources.view.SourcesListActivity
 import com.lelloman.read.ui.walkthrough.view.WalkthroughActivity
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -18,25 +16,26 @@ class NavigationRouterTest {
 
     private val tested = NavigationRouter(MockLoggerFactory())
 
+    private val starter: DeepLinkStartable = mock()
+
     @Test
     fun `finds starter methods for SOURCES_LIST`() {
-        val starterMethod = tested.findStarterMethod(NavigationScreen.SOURCES_LIST, emptyArray()).toString()
+        val deepLink = DeepLink(NavigationScreen.SOURCES_LIST)
+        NavigationScreen.SOURCES_LIST.deepLinkStartable = starter
 
-        assertThat(starterMethod).isEqualTo(SourcesListActivity.Companion::start.toString())
+        tested.handleDeepLink(ACTIVITY, DeepLinkNavigationEvent(deepLink))
+
+        verify(starter).start(ACTIVITY, deepLink)
     }
 
     @Test
-    fun `finds starter methods for ADD_SOURCE with no args`() {
-        val starterMethod = tested.findStarterMethod(NavigationScreen.ADD_SOURCE, emptyArray()).toString()
+    fun `finds starter methods for ADD_SOURCE`() {
+        val deepLink = DeepLink(NavigationScreen.ADD_SOURCE)
+        NavigationScreen.ADD_SOURCE.deepLinkStartable = starter
 
-        assertThat(starterMethod).isEqualTo(AddSourceActivity.Companion::start.toString())
-    }
+        tested.handleDeepLink(ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
-    @Test
-    fun `finds starter methods for ADD_SOURCE with prefill`() {
-        val starterMethod = tested.findStarterMethod(NavigationScreen.ADD_SOURCE, arrayOf("name", "url")).toString()
-
-        assertThat(starterMethod).isEqualTo(AddSourceActivity.Companion::startWithPrefill.toString())
+        verify(starter).start(ACTIVITY, deepLink)
     }
 
     @Test
@@ -71,7 +70,6 @@ class NavigationRouterTest {
     @Test
     fun `finds starter methods for ARTICLES_LIST`() {
         val deepLink = DeepLink(NavigationScreen.ARTICLES_LIST)
-        val starter: DeepLinkStartable = mock()
         NavigationScreen.ARTICLES_LIST.deepLinkStartable = starter
 
         tested.handleDeepLink(ACTIVITY, DeepLinkNavigationEvent(deepLink))
