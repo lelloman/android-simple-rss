@@ -1,7 +1,7 @@
 package com.lelloman.read.ui.articles.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import com.lelloman.read.core.ResourceProvider
+import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.core.viewmodel.BaseViewModel
 import com.lelloman.read.persistence.db.model.SourceArticle
 

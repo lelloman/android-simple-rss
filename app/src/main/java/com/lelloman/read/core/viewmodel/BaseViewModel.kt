@@ -6,11 +6,14 @@ import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.widget.Toast
 import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.CloseScreenNavigationEvent
+import com.lelloman.read.core.navigation.DeepLink
+import com.lelloman.read.core.navigation.DeepLinkAndCloseNavigationEvent
+import com.lelloman.read.core.navigation.DeepLinkNavigationEvent
 import com.lelloman.read.core.navigation.NavigationEvent
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.core.view.actionevent.AnimationViewActionEvent
 import com.lelloman.read.core.view.actionevent.SnackEvent
 import com.lelloman.read.core.view.actionevent.ToastEvent
@@ -42,6 +45,12 @@ abstract class BaseViewModel(
         resourceProvider.getString(stringId, *args)
 
     protected fun navigate(navigationEvent: NavigationEvent) = viewActionEvents.postValue(navigationEvent)
+
+    protected fun navigate(navigationScreen: NavigationScreen, parameters: Map<String, Any> = emptyMap()) =
+        viewActionEvents.postValue(DeepLinkNavigationEvent(DeepLink(navigationScreen, parameters)))
+
+    protected fun navigateAndClose(navigationScreen: NavigationScreen, parameters: Map<String, Any> = emptyMap()) =
+        viewActionEvents.postValue(DeepLinkAndCloseNavigationEvent(DeepLink(navigationScreen, parameters)))
 
     protected fun navigateBack() = navigate(CloseScreenNavigationEvent)
 

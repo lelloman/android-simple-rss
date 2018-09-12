@@ -1,6 +1,7 @@
 package com.lelloman.read.core
 
 import com.lelloman.read.R
+import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.persistence.db.model.Source
 import java.text.SimpleDateFormat
 import java.util.*

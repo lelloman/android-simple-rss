@@ -4,11 +4,11 @@ import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
 import android.view.View
 import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.utils.LazyLiveData
 import com.lelloman.read.utils.UrlValidator

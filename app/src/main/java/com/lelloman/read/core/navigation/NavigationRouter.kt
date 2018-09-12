@@ -3,18 +3,20 @@ package com.lelloman.read.core.navigation
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import com.lelloman.read.core.logger.LoggerFactory
 import kotlin.reflect.KFunction
-import kotlin.reflect.KType
 import kotlin.reflect.KVisibility
 import kotlin.reflect.full.companionObject
-import kotlin.reflect.full.createType
 import kotlin.reflect.full.declaredFunctions
 import kotlin.reflect.jvm.jvmErasure
 
-class NavigationRouter {
+class NavigationRouter(loggerFactory: LoggerFactory) {
+
+    private val logger = loggerFactory.getLogger(NavigationRouter::class.java.simpleName)
 
     fun onNavigationEvent(activity: Activity, navigationEvent: NavigationEvent) = when (navigationEvent) {
         is ScreenNavigationEvent -> navigateToActivity(activity, navigationEvent)
+        is DeepLinkNavigationEvent -> handleDeepLink(activity, navigationEvent)
         is CloseScreenNavigationEvent -> activity.finish()
         is ViewIntentNavigationEvent -> {
             val intent = Intent(Intent.ACTION_VIEW)
@@ -34,6 +36,15 @@ class NavigationRouter {
 
         if (event is ScreenAndCloseNavigationEvent) {
             activity.finish()
+        }
+    }
+
+    internal fun handleDeepLink(activity: Activity, event: DeepLinkNavigationEvent) {
+        val startable = event.deepLink.screen.deepLinkStartable
+        if (startable != null) {
+            startable.start(activity, event.deepLink)
+        } else {
+            logger.e("Cannot handle deep link screen ${event.deepLink.screen.clazz.qualifiedName} because companion object is not ${DeepLinkStartable::class.java.canonicalName} -> ${event.deepLink}")
         }
     }
 

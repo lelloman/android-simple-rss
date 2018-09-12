@@ -5,13 +5,12 @@ import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.View
 import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.core.view.AppTheme
+import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.common.repository.DiscoverRepository
@@ -82,7 +81,7 @@ class WalkthroughViewModelImpl(
 
     override fun onCloseClicked(view: View) {
         appSettings.setShouldShowWalkthtough(false)
-        navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
+        navigateAndClose(NavigationScreen.ARTICLES_LIST)
     }
 
     override fun onKeyboardActionDone() {
@@ -98,12 +97,12 @@ class WalkthroughViewModelImpl(
     }
 
     override fun onMeteredConnectionNoClicked(view: View) {
-        navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
+        navigateAndClose(NavigationScreen.ARTICLES_LIST)
         appSettings.setUseMeteredNetwork(false)
     }
 
     override fun onMeteredConnectionYesClicked(view: View) {
-        navigate(ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST))
+        navigateAndClose(NavigationScreen.ARTICLES_LIST)
         appSettings.setUseMeteredNetwork(true)
     }
 

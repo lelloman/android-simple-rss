@@ -1,9 +1,9 @@
 package com.lelloman.read.ui.launcher.viewmodel
 
 import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.ResourceProvider
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenAndCloseNavigationEvent
+import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.persistence.settings.AppSettings
 
 class LauncherViewModelImpl(
@@ -16,12 +16,10 @@ class LauncherViewModelImpl(
 ) {
 
     override fun onCreate() {
-        val navigationEvent = if (appSettings.shouldShowWalkthrough.blockingFirst()) {
-            ScreenAndCloseNavigationEvent(NavigationScreen.WALKTHROUGH)
+        if (appSettings.shouldShowWalkthrough.blockingFirst()) {
+            navigate(ScreenAndCloseNavigationEvent(NavigationScreen.WALKTHROUGH))
         } else {
-            ScreenAndCloseNavigationEvent(NavigationScreen.ARTICLES_LIST)
+            navigateAndClose(NavigationScreen.ARTICLES_LIST)
         }
-        navigate(navigationEvent)
-
     }
 }
