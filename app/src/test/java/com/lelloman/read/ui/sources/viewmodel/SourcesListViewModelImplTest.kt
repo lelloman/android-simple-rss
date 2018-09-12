@@ -5,8 +5,8 @@ import android.view.View
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
 import com.lelloman.read.core.ActionTokenProvider
+import com.lelloman.read.core.navigation.DeepLinkNavigationEvent
 import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.core.view.actionevent.SnackEvent
 import com.lelloman.read.core.view.actionevent.ToastEvent
 import com.lelloman.read.core.view.actionevent.ViewActionEvent
@@ -84,7 +84,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         tested.onFabClicked(View(null))
 
         assertThat(invocations.any {
-            it is ScreenNavigationEvent && it.screen == NavigationScreen.ADD_SOURCE
+            it is DeepLinkNavigationEvent && it.deepLink.screen == NavigationScreen.ADD_SOURCE
         }).isTrue()
     }
 

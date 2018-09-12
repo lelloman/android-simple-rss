@@ -47,14 +47,13 @@ class FoundFeedListViewModelImpl(
 
     override fun onFoundFeedClicked(foundFeed: FoundFeed) {
         navigate(
-            ScreenNavigationEvent(
                 NavigationScreen.ADD_SOURCE,
-                arrayOf(
-                    foundFeed.name ?: foundFeed.url,
-                    foundFeed.url
+            mapOf(
+                NavigationScreen.ARG_SOURCE_NAME to (foundFeed.name ?: foundFeed.url),
+                NavigationScreen.ARG_SOURCE_URL to foundFeed.url
                 )
             )
-        )
+
     }
 
     override fun onAddAllClicked() {

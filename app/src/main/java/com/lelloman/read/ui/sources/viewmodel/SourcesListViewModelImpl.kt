@@ -5,7 +5,6 @@ import android.view.View
 import com.lelloman.read.R
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.core.view.actionevent.SnackEvent
 import com.lelloman.read.persistence.db.model.Source
@@ -58,7 +57,7 @@ class SourcesListViewModelImpl(
     }
 
     override fun onFabClicked(view: View) =
-        navigate(ScreenNavigationEvent(NavigationScreen.ADD_SOURCE))
+        navigate(NavigationScreen.ADD_SOURCE)
 
     override fun onSourceClicked(source: Source) {
         sourcesRepository

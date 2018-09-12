@@ -78,7 +78,7 @@ class ArticlesListViewModelImpl(
 
     override fun refresh() = articlesRepository.refresh()
 
-    override fun onSourcesClicked() = navigate(ScreenNavigationEvent(NavigationScreen.SOURCES_LIST))
+    override fun onSourcesClicked() = navigate(NavigationScreen.SOURCES_LIST)
 
     override fun onEmptyViewButtonClicked() {
         emptyViewAction?.invoke()
@@ -101,12 +101,12 @@ class ArticlesListViewModelImpl(
             sources.isEmpty() -> {
                 emptyViewDescriptionText.value = getString(R.string.empty_articles_no_source)
                 emptyViewButtonText.value = getString(R.string.add_source)
-                emptyViewAction = { navigate(ScreenNavigationEvent(NavigationScreen.ADD_SOURCE)) }
+                emptyViewAction = { navigate(NavigationScreen.ADD_SOURCE) }
             }
             !sources.any(Source::isActive) -> {
                 emptyViewDescriptionText.value = getString(R.string.empty_articles_sources_disabled)
                 emptyViewButtonText.value = getString(R.string.enable_sources)
-                emptyViewAction = { navigate(ScreenNavigationEvent(NavigationScreen.SOURCES_LIST)) }
+                emptyViewAction = { navigate(NavigationScreen.SOURCES_LIST) }
             }
             else -> {
                 emptyViewDescriptionText.value = getString(R.string.empty_articles_must_refresh)

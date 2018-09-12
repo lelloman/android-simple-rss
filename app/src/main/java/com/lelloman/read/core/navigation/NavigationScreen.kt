@@ -18,20 +18,24 @@ import kotlin.reflect.KClass
  */
 enum class NavigationScreen(val clazz: KClass<*>, deepLinkStartable: DeepLinkStartable? = null) {
     ADD_FOUND_FEEDS_CONFIRMATION(AddFoundFeedsConfirmationDialogFragment::class),
-    ADD_SOURCE(AddSourceActivity::class),
+    ADD_SOURCE(AddSourceActivity::class, deepLinkStartable = AddSourceActivity.deepLinkStartable),
     ARTICLE(ArticleActivity::class),
     ARTICLES_LIST(ArticlesListActivity::class, deepLinkStartable = ArticlesListActivity.deepLinkStartable),
     DISCOVER_URL(DiscoverUrlActivity::class),
     FOUND_FEED_LIST(FoundFeedListActivity::class),
     SETTINGS(SettingsActivity::class),
     SOURCE(SourceActivity::class),
-    SOURCES_LIST(SourcesListActivity::class),
+    SOURCES_LIST(SourcesListActivity::class, deepLinkStartable = SourcesListActivity.deepLinkStartable),
     WALKTHROUGH(WalkthroughActivity::class);
 
     var deepLinkStartable: DeepLinkStartable? = deepLinkStartable
         internal set
 
     companion object {
+
+        const val ARG_SOURCE_NAME = "SourceName"
+        const val ARG_SOURCE_URL = "SourceUrl"
+
         private val namesMap = NavigationScreen
             .values()
             .associateBy(NavigationScreen::name)
