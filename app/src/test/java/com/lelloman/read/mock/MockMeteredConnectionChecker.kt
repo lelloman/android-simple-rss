@@ -1,6 +1,6 @@
 package com.lelloman.read.mock
 
-import com.lelloman.read.core.MeteredConnectionChecker
+import com.lelloman.common.view.MeteredConnectionChecker
 
 class MockMeteredConnectionChecker(var isNetworkMeteredValue: Boolean = false) : MeteredConnectionChecker {
 

@@ -1,5 +1,6 @@
 package com.lelloman.read.core
 
+import com.lelloman.common.utils.TimeProvider
 import com.lelloman.read.R
 import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.persistence.db.model.Source

@@ -3,26 +3,26 @@ package com.lelloman.read.core.di
 import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.content.Context
+import com.lelloman.common.utils.TimeProvider
+import com.lelloman.common.utils.TimeProviderImpl
+import com.lelloman.common.utils.UrlValidator
+import com.lelloman.common.utils.UrlValidatorImpl
+import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.common.view.MeteredConnectionCheckerImpl
+import com.lelloman.common.view.PicassoWrap
+import com.lelloman.common.view.PicassoWrapImpl
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.FaviconBitmapProvider
-import com.lelloman.read.core.MeteredConnectionChecker
-import com.lelloman.read.core.MeteredConnectionCheckerImpl
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.core.TimeProvider
-import com.lelloman.read.core.TimeProviderImpl
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.core.navigation.NavigationRouter
-import com.lelloman.read.core.view.PicassoWrap
-import com.lelloman.read.core.view.PicassoWrapImpl
 import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.core.view.ResourceProviderImpl
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.utils.UrlValidator
-import com.lelloman.read.utils.UrlValidatorImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -91,7 +91,7 @@ open class AppModule(private val application: Application) {
         appSettings: AppSettings,
         meteredConnectionChecker: MeteredConnectionChecker
     ): PicassoWrap = PicassoWrapImpl(
-        appSettings = appSettings,
+        useMeteredNetwork = appSettings.useMeteredNetwork,
         meteredConnectionChecker = meteredConnectionChecker
     )
 

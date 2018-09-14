@@ -1,5 +1,6 @@
 package com.lelloman.read.di
 
+import com.lelloman.common.utils.UrlValidator
 import com.lelloman.read.core.di.ViewModelModule
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
@@ -13,7 +14,6 @@ import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
-import com.lelloman.read.utils.UrlValidator
 import dagger.Provides
 import io.reactivex.Scheduler
 import org.mockito.Mockito.mock

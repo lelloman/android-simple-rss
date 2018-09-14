@@ -1,7 +1,7 @@
 package com.lelloman.read.unit
 
 import com.google.common.truth.Truth
-import com.lelloman.read.core.TimeProvider
+import com.lelloman.common.utils.TimeProvider
 import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException

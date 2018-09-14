@@ -3,7 +3,7 @@ package com.lelloman.read.persistence.db.model
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
-import com.lelloman.read.core.ModelWithId
+import com.lelloman.common.utils.ModelWithId
 import com.lelloman.read.utils.Constants.SOURCE_TABLE_NAME
 
 @Entity(tableName = SOURCE_TABLE_NAME)

@@ -6,6 +6,7 @@ import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
 
+@Ignore
 class FeedFinderTest {
 
     private lateinit var tested: FeedFinder
@@ -16,7 +17,6 @@ class FeedFinderTest {
         tested = dependencies.feedFinder
     }
 
-    @Ignore
     @Test
     fun findsFanpageFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.fanpage.it").test()
@@ -24,7 +24,6 @@ class FeedFinderTest {
         tester.assertValueCount(3)
     }
 
-    @Ignore
     @Test
     fun findsRepubblicaFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.repubblica.it").test()
@@ -32,7 +31,6 @@ class FeedFinderTest {
         tester.assertValueCount(0)
     }
 
-    @Ignore
     @Test
     fun findsAnsaFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.ansa.it").test()
@@ -40,7 +38,6 @@ class FeedFinderTest {
         tester.assertValueCount(43)
     }
 
-    @Ignore
     @Test
     fun findsAndroidWeeklyFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.androidweekly.net").test()
@@ -48,7 +45,6 @@ class FeedFinderTest {
         tester.assertValueCount(1)
     }
 
-    @Ignore
     @Test
     fun findsIlMattinoFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.ilmattino.it").test()
@@ -56,7 +52,6 @@ class FeedFinderTest {
         tester.assertValueCount(1)
     }
 
-    @Ignore
     @Test
     fun findsViceFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.vice.com/it").test()
@@ -64,7 +59,6 @@ class FeedFinderTest {
         tester.assertValueCount(2)
     }
 
-    @Ignore
     @Test
     fun findsWiredFeedUrl() {
         val tester = tested.findValidFeedUrls("http://www.wired.it").test()
@@ -72,7 +66,6 @@ class FeedFinderTest {
         tester.assertValueCount(2)
     }
 
-    @Ignore
     @Test
     fun findsAndroidDevBlogFeedUrl() {
         val tester = tested.findValidFeedUrls("https://android-developers.googleblog.com").test()

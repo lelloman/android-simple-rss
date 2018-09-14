@@ -1,4 +1,4 @@
-package com.lelloman.read.utils
+package com.lelloman.common.utils
 
 data class ByteArrayWithId(
     val byteArray: ByteArray?,

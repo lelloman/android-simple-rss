@@ -1,6 +1,7 @@
 package com.lelloman.read.core
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.utils.TimeProvider
 import com.lelloman.read.R
 import com.lelloman.read.mock.MockResourceProvider
 import com.lelloman.read.testutils.dummySource

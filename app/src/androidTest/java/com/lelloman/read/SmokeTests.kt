@@ -2,7 +2,7 @@ package com.lelloman.read
 
 import android.content.Context
 import android.support.test.rule.ActivityTestRule
-import com.lelloman.read.core.MeteredConnectionChecker
+import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.http.HttpModule
 import com.lelloman.read.testutils.MockHttpClient

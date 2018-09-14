@@ -1,8 +1,9 @@
 package com.lelloman.read.unit
 
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.read.core.MeteredConnectionChecker
-import com.lelloman.read.core.TimeProviderImpl
+import com.lelloman.common.utils.TimeProviderImpl
+import com.lelloman.common.utils.UrlValidatorImpl
+import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedParser
@@ -16,7 +17,6 @@ import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.utils.UrlValidatorImpl
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers

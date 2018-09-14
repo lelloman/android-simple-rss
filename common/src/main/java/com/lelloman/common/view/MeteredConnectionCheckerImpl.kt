@@ -1,4 +1,4 @@
-package com.lelloman.read.core
+package com.lelloman.common.view
 
 import android.content.Context
 import android.net.ConnectivityManager

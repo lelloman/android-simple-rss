@@ -1,14 +1,14 @@
 package com.lelloman.read
 
 import android.app.Activity
-import android.app.Application
 import android.content.BroadcastReceiver
+import com.lelloman.common.BaseApplication
+import com.lelloman.common.view.PicassoWrap
 import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
 import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
-import com.lelloman.read.core.view.PicassoWrap
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.persistence.db.AppDatabase
 import com.lelloman.read.persistence.db.SourcesDao
@@ -19,7 +19,7 @@ import dagger.android.HasBroadcastReceiverInjector
 import io.reactivex.plugins.RxJavaPlugins
 import javax.inject.Inject
 
-open class ReadApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector {
+open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector {
 
     @Inject
     lateinit var dispatchingActivityAndroidInjector: DispatchingAndroidInjector<Activity>

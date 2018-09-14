@@ -5,12 +5,12 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.BaseObservable
 import android.databinding.Bindable
+import com.lelloman.common.utils.ByteArrayWithId
 import com.lelloman.read.BR
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.viewmodel.BaseListItemViewModel
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
-import com.lelloman.read.utils.ByteArrayWithId
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 

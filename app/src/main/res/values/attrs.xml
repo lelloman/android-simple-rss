@@ -9,13 +9,6 @@
         <attr name="checked" format="boolean" />
     </declare-styleable>
 
-    <declare-styleable name="PagerIndicator">
-        <attr name="indicatorRadius" format="dimension" />
-        <attr name="indicatorMargin" format="dimension" />
-        <attr name="indicatorEmptyColor" format="color" />
-        <attr name="indicatorFillColor" format="color" />
-    </declare-styleable>
-
     <declare-styleable name="OutsideScrollNotifierRecyclerView">
         <attr name="notifyChildrenOnLayout" format="boolean" />
     </declare-styleable>

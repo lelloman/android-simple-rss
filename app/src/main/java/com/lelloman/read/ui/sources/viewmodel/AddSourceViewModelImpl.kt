@@ -2,6 +2,8 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
+import com.lelloman.common.utils.LazyLiveData
+import com.lelloman.common.utils.UrlValidator
 import com.lelloman.read.R
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.core.view.ResourceProvider
@@ -12,8 +14,6 @@ import com.lelloman.read.feed.fetcher.Success
 import com.lelloman.read.feed.fetcher.XmlError
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.common.repository.SourcesRepository
-import com.lelloman.read.utils.LazyLiveData
-import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Scheduler
 
 class AddSourceViewModelImpl(

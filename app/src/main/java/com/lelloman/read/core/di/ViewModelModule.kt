@@ -1,5 +1,6 @@
 package com.lelloman.read.core.di
 
+import com.lelloman.common.utils.UrlValidator
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
@@ -31,7 +32,6 @@ import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModelImpl
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModelImpl
-import com.lelloman.read.utils.UrlValidator
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler

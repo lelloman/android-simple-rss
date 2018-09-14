@@ -1,4 +1,4 @@
-package com.lelloman.read.utils
+package com.lelloman.common.utils
 
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper

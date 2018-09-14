@@ -6,7 +6,7 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
-import com.lelloman.read.core.ModelWithId
+import com.lelloman.common.utils.ModelWithId
 import com.lelloman.read.utils.Constants.ARTICLE_TABLE_NAME
 
 @Entity(tableName = ARTICLE_TABLE_NAME, foreignKeys = [ForeignKey(

@@ -1,11 +1,11 @@
 package com.lelloman.read.testutils
 
 import android.widget.ImageView
+import com.lelloman.common.view.PicassoWrap
 import com.lelloman.read.ReadApplication
 import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
 import com.lelloman.read.core.di.ViewModelModule
-import com.lelloman.read.core.view.PicassoWrap
 import com.lelloman.read.http.HttpModule
 import com.lelloman.read.persistence.PersistenceModule
 

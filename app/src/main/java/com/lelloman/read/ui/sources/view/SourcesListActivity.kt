@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import com.lelloman.common.utils.ItemSwipeListener
 import com.lelloman.read.R
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.navigation.DeepLink
@@ -12,7 +13,6 @@ import com.lelloman.read.core.navigation.DeepLinkStartable
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivitySourcesListBinding
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
-import com.lelloman.read.utils.ItemSwipeListener
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
