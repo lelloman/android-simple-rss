@@ -1,9 +1,12 @@
 package com.lelloman.read.ui.discover.view
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.lelloman.read.R
+import com.lelloman.read.core.navigation.DeepLink
+import com.lelloman.read.core.navigation.DeepLinkStartable
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityDiscoverUrlBinding
 import com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModel
@@ -20,8 +23,15 @@ class DiscoverUrlActivity : BaseActivity<DiscoverUrlViewModel, ActivityDiscoverU
         binding.viewModel = viewModel
     }
     companion object {
-        fun start(activity: Activity) {
-            activity.startActivity(Intent(activity, DiscoverUrlActivity::class.java))
+
+        var deepLinkStartable = object : DeepLinkStartable {
+            override fun start(context: Context, deepLink: DeepLink) {
+                val intent = Intent(context, DiscoverUrlActivity::class.java)
+                if (context !is Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+            }
         }
     }
 }

@@ -108,10 +108,10 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
         assertThat(viewActions.values).hasSize(1)
         viewActions.values[0].apply {
-            assertThat(this).isInstanceOf(ScreenNavigationEvent::class.java)
-            (this as ScreenNavigationEvent).apply {
-                assertThat(args).isEmpty()
-                assertThat(screen).isEqualTo(NavigationScreen.SETTINGS)
+            assertThat(this).isInstanceOf(DeepLinkNavigationEvent::class.java)
+            (this as DeepLinkNavigationEvent).apply {
+                assertThat(deepLink.parameters).isEmpty()
+                assertThat(deepLink.screen).isEqualTo(NavigationScreen.SETTINGS)
             }
         }
     }
