@@ -12,14 +12,11 @@ import com.lelloman.read.core.view.PicassoWrap
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.persistence.db.AppDatabase
 import com.lelloman.read.persistence.db.SourcesDao
-import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasBroadcastReceiverInjector
-import io.reactivex.Completable
 import io.reactivex.plugins.RxJavaPlugins
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 open class ReadApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector {
@@ -72,51 +69,6 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
             }
             logger.e("RxJavaPlugin error handler$httpClientExtraMsg", it)
         }
-
-        appSettings.setShouldShowWalkthtough(true)
-        Completable
-            .fromAction {
-                db.clearAllTables()
-                sourcesDao.insert(
-                    Source(
-                        id = 0L,
-                        name = "repubblica",
-                        url = "http://www.repubblica.it/rss/homepage/rss2.0.xml",
-                        lastFetched = 0L,
-                        isActive = true
-                    )
-                )
-                sourcesDao.insert(
-                    Source(
-                        id = 0L,
-                        name = "fanpage",
-                        url = "https://www.fanpage.it/feed/",
-                        lastFetched = 0L,
-                        isActive = true
-                    )
-                )
-                sourcesDao.insert(
-                    Source(
-                        id = 0L,
-                        name = "ansa",
-                        url = "http://www.ansa.it/sito/ansait_rss.xml",
-                        lastFetched = 0L,
-                        isActive = true
-                    )
-                )
-                sourcesDao.insert(
-                    Source(
-                        id = 0L,
-                        name = "ilmattino",
-                        url = "http://www.ilmattino.it/rss.php",
-                        lastFetched = 0L,
-                        isActive = true
-                    )
-                )
-            }
-            .subscribeOn(Schedulers.io())
-            .subscribe()
-
     }
 
     protected open fun inject() {

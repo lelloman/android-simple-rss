@@ -26,23 +26,24 @@ page in walkthrough
 DEBT:
 - [DEBT] ui-unit tests for all activities
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
-- [DEBT] use only deep links for navigation
 - [DEBT] FeedFinderIntegrationTest.findsLinksInHtml2 is blocking >_<
 - [DEBT] check if subscribing on new thread when doing http, should use a thread pool
+- [DEBT] handle deep links from outside (intent filter in manifest)
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
 - [FEATURE] add refresher background job
 - [FEATURE] add single-source-screen
+- [FEATURE] add intro page in walkthrough (why type in url in discovery)
 
 BUGS:
-- [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
+- [BUG] !! sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present, actually duplicates appear also in walkthrough
 - [BUG] !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
+- [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
 - [BUG] in sources list screen, if there is no source the screen is empty
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] there is no way to stop a discover url, not even a timeout
-- [BUG] !! sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present, actually duplicates appear also in walkthrough
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:
-- [FEATURE] add intro page in walkthrough (why type in url in discovery)
+- [DEBT] use only deep links for navigation
