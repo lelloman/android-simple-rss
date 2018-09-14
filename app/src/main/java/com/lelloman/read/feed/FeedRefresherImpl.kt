@@ -1,6 +1,6 @@
 package com.lelloman.read.feed
 
-import com.lelloman.read.core.TimeProvider
+import com.lelloman.common.utils.TimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.logger.LoggerFactory

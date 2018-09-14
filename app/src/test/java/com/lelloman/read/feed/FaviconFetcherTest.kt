@@ -1,10 +1,10 @@
 package com.lelloman.read.feed
 
+import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
 import com.lelloman.read.http.HttpResponse
-import com.lelloman.read.utils.UrlValidatorImpl
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

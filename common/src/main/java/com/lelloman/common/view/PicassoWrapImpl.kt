@@ -1,16 +1,15 @@
-package com.lelloman.read.core.view
+package com.lelloman.common.view
 
 import android.support.annotation.DrawableRes
 import android.widget.ImageView
-import com.lelloman.read.BuildConfig
-import com.lelloman.read.core.MeteredConnectionChecker
-import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.common.BuildConfig
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
 import com.squareup.picasso.RequestCreator
+import io.reactivex.Observable
 
 class PicassoWrapImpl(
-    private val appSettings: AppSettings,
+    private val useMeteredNetwork: Observable<Boolean>,
     private val meteredConnectionChecker: MeteredConnectionChecker,
     private val requestCreatorProvider: (uri: String) -> RequestCreator = {
         val picasso = Picasso.get()
@@ -31,7 +30,7 @@ class PicassoWrapImpl(
         view: ImageView,
         @DrawableRes placeHolderId: Int?
     ) {
-        val canUseNetwork = appSettings.useMeteredNetwork.blockingFirst() || !meteredConnectionChecker.isNetworkMetered()
+        val canUseNetwork = useMeteredNetwork.blockingFirst() || !meteredConnectionChecker.isNetworkMetered()
 
         var requestCreator = requestCreatorProvider.invoke(uri)
 

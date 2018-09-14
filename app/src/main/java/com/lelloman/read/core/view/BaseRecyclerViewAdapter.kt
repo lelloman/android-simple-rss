@@ -6,9 +6,9 @@ import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.lelloman.read.core.ModelWithId
+import com.lelloman.common.utils.ModelWithId
+import com.lelloman.common.utils.ModelWithIdListDiffCalculator
 import com.lelloman.read.core.viewmodel.BaseListItemViewModel
-import com.lelloman.read.utils.ModelWithIdListDiffCalculator
 
 abstract class BaseRecyclerViewAdapter<M : ModelWithId, VM : BaseListItemViewModel<M>, DB : ViewDataBinding>(
     private val onItemClickListener: (M) -> Unit = {}

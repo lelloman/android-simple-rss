@@ -1,9 +1,9 @@
 package com.lelloman.read.core.view
 
 import android.support.annotation.StyleRes
+import com.lelloman.common.utils.Named
 import com.lelloman.read.R
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_APP_THEME
-import com.lelloman.read.utils.Named
 
 enum class AppTheme(
     @StyleRes val resId: Int

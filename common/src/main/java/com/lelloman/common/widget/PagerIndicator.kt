@@ -1,4 +1,4 @@
-package com.lelloman.read.widget
+package com.lelloman.common.widget
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,7 +9,7 @@ import android.graphics.Rect
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.View
-import com.lelloman.read.R
+import com.lelloman.common.R
 
 /**
  * Doesn't support padding -_-'

@@ -1,28 +1,28 @@
-package com.lelloman.read.core
+package com.lelloman.common
 
 import android.widget.ImageView
-import com.lelloman.read.core.view.PicassoWrapImpl
-import com.lelloman.read.mock.MockAppSettings
-import com.lelloman.read.mock.MockMeteredConnectionChecker
+import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.common.view.PicassoWrapImpl
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.RequestCreator
-import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
 import org.junit.Test
 
 class PicassoWrapTest {
 
-    private val appSettings = MockAppSettings()
-    private val meteredConnectionChecker = MockMeteredConnectionChecker()
+    private val useMeteredNetwork = BehaviorSubject.create<Boolean>()
+    private val meteredConnectionChecker: MeteredConnectionChecker = mock()
     private val picassoRequestCreator: RequestCreator = mock {
         on { networkPolicy(any()) }.thenAnswer { it.mock }
     }
 
     private val tested = PicassoWrapImpl(
-        appSettings = appSettings,
+        useMeteredNetwork = useMeteredNetwork.hide(),
         meteredConnectionChecker = meteredConnectionChecker,
         requestCreatorProvider = { picassoRequestCreator }
     )
@@ -76,19 +76,19 @@ class PicassoWrapTest {
     }
 
     private fun givenUseMeteredNetworkIsTrue() {
-        appSettings.providedUseMeteredNetwork = Observable.just(true)
+        useMeteredNetwork.onNext(true)
     }
 
     private fun givenUseMeteredNetworkIsFalse() {
-        appSettings.providedUseMeteredNetwork = Observable.just(false)
+        useMeteredNetwork.onNext(false)
     }
 
     private fun givenNetworkIsMetered() {
-        meteredConnectionChecker.isNetworkMeteredValue = true
+        whenever(meteredConnectionChecker.isNetworkMetered()).thenReturn(true)
     }
 
     private fun givenNetworkIsNotMetered() {
-        meteredConnectionChecker.isNetworkMeteredValue = false
+        whenever(meteredConnectionChecker.isNetworkMetered()).thenReturn(false)
     }
 
     private companion object {

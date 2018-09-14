@@ -1,6 +1,6 @@
 package com.lelloman.read.http
 
-import com.lelloman.read.core.TimeProvider
+import com.lelloman.common.utils.TimeProvider
 import com.lelloman.read.core.logger.LoggerFactory
 import dagger.Module
 import dagger.Provides

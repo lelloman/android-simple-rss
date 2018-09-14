@@ -2,6 +2,7 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
+import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.read.R
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.navigation.NavigationScreen
@@ -11,7 +12,6 @@ import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DeletedSource
 import com.lelloman.read.ui.common.repository.SourcesRepository
-import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Completable
 import io.reactivex.Scheduler
 

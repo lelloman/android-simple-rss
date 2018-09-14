@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="PagerIndicator">
+        <attr name="indicatorRadius" format="dimension" />
+        <attr name="indicatorMargin" format="dimension" />
+        <attr name="indicatorEmptyColor" format="color" />
+        <attr name="indicatorFillColor" format="color" />
+    </declare-styleable>
+
+</resources>

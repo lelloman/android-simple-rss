@@ -1,6 +1,6 @@
 package com.lelloman.read.mock
 
-import com.lelloman.read.utils.UrlValidator
+import com.lelloman.common.utils.UrlValidator
 import io.reactivex.Maybe
 
 class MockUrlValidator(action: MockUrlValidator.() -> Unit = {}) : UrlValidator {

@@ -1,8 +1,8 @@
 package com.lelloman.read.feed.finder
 
+import com.lelloman.common.utils.UrlValidator
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpRequest
-import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Maybe
 import io.reactivex.Single
 

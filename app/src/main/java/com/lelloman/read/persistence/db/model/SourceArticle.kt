@@ -2,7 +2,7 @@ package com.lelloman.read.persistence.db.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.lelloman.read.core.ModelWithId
+import com.lelloman.common.utils.ModelWithId
 
 data class SourceArticle(
     override val id: Long,

@@ -1,9 +1,9 @@
 package com.lelloman.read.feed.finder
 
+import com.lelloman.common.utils.UrlValidator
 import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpResponse
-import com.lelloman.read.utils.UrlValidator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock

@@ -1,11 +1,11 @@
 package com.lelloman.read.feed.finder
 
+import com.lelloman.common.utils.UrlValidator
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.html.Doc
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.html.element.ADocElement
 import com.lelloman.read.html.element.LinkDocElement
-import com.lelloman.read.utils.UrlValidator
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single

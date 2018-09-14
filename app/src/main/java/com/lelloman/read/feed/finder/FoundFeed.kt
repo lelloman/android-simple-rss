@@ -2,7 +2,7 @@ package com.lelloman.read.feed.finder
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.lelloman.read.core.ModelWithId
+import com.lelloman.common.utils.ModelWithId
 
 data class FoundFeed(
     override val id: Long,

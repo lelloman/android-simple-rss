@@ -1,6 +1,7 @@
 package com.lelloman.read.ui.articles.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.read.R
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
@@ -12,7 +13,6 @@ import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.ui.common.repository.SourcesRepository
-import com.lelloman.read.utils.LazyLiveData
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 

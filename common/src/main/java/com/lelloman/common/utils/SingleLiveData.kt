@@ -1,4 +1,4 @@
-package com.lelloman.read.utils
+package com.lelloman.common.utils
 
 import android.arch.lifecycle.LifecycleOwner
 import android.arch.lifecycle.MutableLiveData
