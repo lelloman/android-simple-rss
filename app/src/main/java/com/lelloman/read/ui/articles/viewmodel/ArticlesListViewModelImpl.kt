@@ -90,11 +90,9 @@ class ArticlesListViewModelImpl(
         navigate(ViewIntentNavigationEvent(article.link))
     }
 
-    override fun onSettingsClicked() = navigate(ScreenNavigationEvent(NavigationScreen.SETTINGS))
+    override fun onSettingsClicked() = navigate(NavigationScreen.SETTINGS)
 
-    override fun onDiscoverSourceClicked() {
-        navigateToScreen(NavigationScreen.DISCOVER_URL)
-    }
+    override fun onDiscoverSourceClicked() = navigate(NavigationScreen.DISCOVER_URL)
 
     private fun setEmptyViewValues(sources: List<Source>) {
         when {

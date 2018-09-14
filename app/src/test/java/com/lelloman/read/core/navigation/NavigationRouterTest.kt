@@ -5,7 +5,6 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.mock.MockLoggerFactory
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.ui.articles.view.ArticleActivity
-import com.lelloman.read.ui.settings.view.SettingsActivity
 import com.lelloman.read.ui.sources.view.SourceActivity
 import com.lelloman.read.ui.walkthrough.view.WalkthroughActivity
 import com.nhaarman.mockito_kotlin.mock
@@ -55,9 +54,12 @@ class NavigationRouterTest {
 
     @Test
     fun `finds starter methods for SETTINGS`() {
-        val starterMethod = tested.findStarterMethod(NavigationScreen.SETTINGS, emptyArray()).toString()
+        val deepLink = DeepLink(NavigationScreen.SETTINGS)
+        NavigationScreen.SETTINGS.deepLinkStartable = starter
 
-        assertThat(starterMethod).isEqualTo(SettingsActivity.Companion::start.toString())
+        tested.handleDeepLink(ACTIVITY, DeepLinkNavigationEvent(deepLink))
+
+        verify(starter).start(ACTIVITY, deepLink)
     }
 
     @Test
@@ -71,6 +73,16 @@ class NavigationRouterTest {
     fun `finds starter methods for ARTICLES_LIST`() {
         val deepLink = DeepLink(NavigationScreen.ARTICLES_LIST)
         NavigationScreen.ARTICLES_LIST.deepLinkStartable = starter
+
+        tested.handleDeepLink(ACTIVITY, DeepLinkNavigationEvent(deepLink))
+
+        verify(starter).start(ACTIVITY, deepLink)
+    }
+
+    @Test
+    fun `finds starter methods for DISCOVER_URL`() {
+        val deepLink = DeepLink(NavigationScreen.DISCOVER_URL)
+        NavigationScreen.DISCOVER_URL.deepLinkStartable = starter
 
         tested.handleDeepLink(ACTIVITY, DeepLinkNavigationEvent(deepLink))
 

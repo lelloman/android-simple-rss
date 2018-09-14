@@ -21,9 +21,9 @@ enum class NavigationScreen(val clazz: KClass<*>, deepLinkStartable: DeepLinkSta
     ADD_SOURCE(AddSourceActivity::class, deepLinkStartable = AddSourceActivity.deepLinkStartable),
     ARTICLE(ArticleActivity::class),
     ARTICLES_LIST(ArticlesListActivity::class, deepLinkStartable = ArticlesListActivity.deepLinkStartable),
-    DISCOVER_URL(DiscoverUrlActivity::class),
+    DISCOVER_URL(DiscoverUrlActivity::class, deepLinkStartable = DiscoverUrlActivity.deepLinkStartable),
     FOUND_FEED_LIST(FoundFeedListActivity::class),
-    SETTINGS(SettingsActivity::class),
+    SETTINGS(SettingsActivity::class, deepLinkStartable = SettingsActivity.deepLinkStartable),
     SOURCE(SourceActivity::class),
     SOURCES_LIST(SourcesListActivity::class, deepLinkStartable = SourcesListActivity.deepLinkStartable),
     WALKTHROUGH(WalkthroughActivity::class);

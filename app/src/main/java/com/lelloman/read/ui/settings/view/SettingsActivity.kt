@@ -1,9 +1,12 @@
 package com.lelloman.read.ui.settings.view
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.lelloman.read.R
+import com.lelloman.read.core.navigation.DeepLink
+import com.lelloman.read.core.navigation.DeepLinkStartable
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivitySettingsBinding
 import com.lelloman.read.ui.settings.viewmodel.SettingsViewModel
@@ -21,8 +24,16 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
     }
 
     companion object {
-        fun start(activity: Activity) {
-            activity.startActivity(Intent(activity, SettingsActivity::class.java))
+
+        var deepLinkStartable = object : DeepLinkStartable {
+            override fun start(context: Context, deepLink: DeepLink) {
+                val intent = Intent(context, SettingsActivity::class.java)
+                if (context !is Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+            }
         }
+            internal set
     }
 }
