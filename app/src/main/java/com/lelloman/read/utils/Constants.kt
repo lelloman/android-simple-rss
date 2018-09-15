@@ -1,6 +1,6 @@
 package com.lelloman.read.utils
 
-import com.lelloman.read.core.view.AppTheme
+import com.lelloman.common.view.AppTheme
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
 
 object Constants {
@@ -30,7 +30,7 @@ object Constants {
         const val DEFAULT_SHOULD_SHOW_WALKTHROUGH = true
 
         const val KEY_APP_THEME = "AppTheme"
-        val DEFAULT_APP_THEME = AppTheme.LIGHT
+        val DEFAULT_APP_THEME = AppTheme.DEFAULT
     }
 
 }

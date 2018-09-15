@@ -1,4 +1,4 @@
-package com.lelloman.read.core.view
+package com.lelloman.common.view
 
 import android.content.Context
 import android.support.annotation.StringRes

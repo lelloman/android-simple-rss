@@ -7,9 +7,9 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
 import com.lelloman.read.core.view.BaseActivity
-import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.databinding.ActivityFoundFeedListBinding
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.ui.discover.viewmodel.FoundFeedListViewModel

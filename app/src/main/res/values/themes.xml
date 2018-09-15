@@ -7,53 +7,6 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="CustomTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/Light_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/Light_colorPrimaryDark</item>
-        <item name="colorAccent">@color/Light_colorAccent</item>
-        <item name="inverseWindowBackground">@color/Light_colorPrimary</item>
-    </style>
 
-    <style name="CustomTheme.Darcula" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/Darcula_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/Darcula_colorPrimaryDark</item>
-        <item name="colorAccent">@color/Darcula_colorAccent</item>
-        <item name="inverseWindowBackground">@color/Darcula_colorPrimary</item>
-    </style>
-
-    <style name="CustomTheme.Mockito" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/Mockito_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/Mockito_colorPrimaryDark</item>
-        <item name="android:colorActivatedHighlight">#DCEDC8</item>
-        <item name="colorAccent">@color/Mockito_colorAccent</item>
-        <item name="android:textColorPrimary">#212121</item>
-        <item name="android:textColorSecondary">#757575</item>
-        <item name="android:divider">#BDBDBD</item>
-        <item name="inverseWindowBackground">@color/Mockito_colorPrimary</item>
-    </style>
-
-    <style name="CustomTheme.Black" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/Black_colorPrimary</item>
-        <item name="colorPrimaryDark">@color/Black_colorPrimaryDark</item>
-        <item name="colorAccent">@color/Black_colorAccent</item>
-        <item name="inverseWindowBackground">@color/Black_colorPrimary</item>
-        <item name="android:windowBackground">@color/Black_colorPrimary</item>
-    </style>
-
-    <color name="darkBgForest">#4b2c20</color>
-    <style name="CustomTheme.Forest" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/Forest_colorPrimary</item>
-        <item name="colorControlHighlight">#629749</item>
-        <item name="colorPrimaryDark">@color/Forest_colorPrimaryDark</item>
-        <item name="colorAccent">@color/Forest_colorAccent</item>
-        <item name="android:windowBackground">@color/darkBgForest</item>
-        <item name="inverseWindowBackground">@color/Forest_colorPrimary</item>
-    </style>
-
-    <style name="InverseTheme">
-        <item name="android:windowBackground">?attr/inverseWindowBackground</item>
-    </style>
-
-    <attr name="inverseWindowBackground" format="color" />
 
 </resources>

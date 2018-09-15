@@ -11,6 +11,8 @@ import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.common.view.MeteredConnectionCheckerImpl
 import com.lelloman.common.view.PicassoWrap
 import com.lelloman.common.view.PicassoWrapImpl
+import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.view.ResourceProviderImpl
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.core.SemanticTimeProvider
@@ -20,8 +22,6 @@ import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.core.navigation.NavigationRouter
-import com.lelloman.read.core.view.ResourceProvider
-import com.lelloman.read.core.view.ResourceProviderImpl
 import com.lelloman.read.persistence.settings.AppSettings
 import dagger.Module
 import dagger.Provides

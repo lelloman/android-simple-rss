@@ -1,6 +1,6 @@
 package com.lelloman.read.ui.walkthrough.viewmodel
 
-import com.lelloman.read.core.viewmodel.BaseListItemViewModel
+import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.read.ui.walkthrough.ThemeListItem
 
 class ThemeListItemViewModel : BaseListItemViewModel<ThemeListItem> {

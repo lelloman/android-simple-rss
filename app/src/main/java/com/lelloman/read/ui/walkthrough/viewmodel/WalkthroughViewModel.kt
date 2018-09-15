@@ -2,9 +2,9 @@ package com.lelloman.read.ui.walkthrough.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
+import com.lelloman.common.view.AppTheme
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.view.AppTheme
-import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.core.viewmodel.BaseViewModel
 import com.lelloman.read.ui.common.viewmodel.IDiscoverUrlViewModel
 import com.lelloman.read.ui.walkthrough.ThemeListItem
