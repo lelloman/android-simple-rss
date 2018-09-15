@@ -1,6 +1,6 @@
 package com.lelloman.read.feed.finder
 
-import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.fetcher.Success
 import io.reactivex.Observable

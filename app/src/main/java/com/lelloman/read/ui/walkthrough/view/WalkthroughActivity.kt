@@ -4,12 +4,12 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.lelloman.common.navigation.DeepLink
+import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.DeepLink
-import com.lelloman.read.core.navigation.DeepLinkStartable
 import com.lelloman.read.core.view.BaseActivity
-import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.databinding.ActivityWalkthroughBinding
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel
 import dagger.android.AndroidInjection

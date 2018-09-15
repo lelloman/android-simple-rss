@@ -2,10 +2,10 @@ package com.lelloman.read.di
 
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.core.di.ViewModelModule
-import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel

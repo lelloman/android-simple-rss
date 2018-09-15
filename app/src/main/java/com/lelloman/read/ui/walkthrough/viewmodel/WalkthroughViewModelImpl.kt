@@ -6,14 +6,14 @@ import android.os.Bundle
 import android.view.View
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
+import com.lelloman.common.navigation.DeepLink
+import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.navigation.DeepLink
-import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
+import com.lelloman.common.view.actionevent.SwipePageActionEvent
+import com.lelloman.read.core.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.ui.walkthrough.ThemeListItem
@@ -81,7 +81,7 @@ class WalkthroughViewModelImpl(
 
     override fun onCloseClicked(view: View) {
         appSettings.setShouldShowWalkthtough(false)
-        navigateAndClose(NavigationScreen.ARTICLES_LIST)
+        navigateAndClose(ReadNavigationScreen.ARTICLES_LIST)
     }
 
     override fun onKeyboardActionDone() {
@@ -93,19 +93,19 @@ class WalkthroughViewModelImpl(
             discoverUrl.set(urlWithProtocol)
             discoveryRepository.findFeeds(urlWithProtocol)
             navigate(
-                DeepLink(NavigationScreen.FOUND_FEED_LIST)
+                DeepLink(ReadNavigationScreen.FOUND_FEED_LIST)
                     .putString(ARG_URL, urlWithProtocol)
             )
         }
     }
 
     override fun onMeteredConnectionNoClicked(view: View) {
-        navigateAndClose(NavigationScreen.ARTICLES_LIST)
+        navigateAndClose(ReadNavigationScreen.ARTICLES_LIST)
         appSettings.setUseMeteredNetwork(false)
     }
 
     override fun onMeteredConnectionYesClicked(view: View) {
-        navigateAndClose(NavigationScreen.ARTICLES_LIST)
+        navigateAndClose(ReadNavigationScreen.ARTICLES_LIST)
         appSettings.setUseMeteredNetwork(true)
     }
 

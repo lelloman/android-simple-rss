@@ -1,13 +1,12 @@
 package com.lelloman.read.ui.articles.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import com.lelloman.common.navigation.DeepLink
+import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.DeepLink
-import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_URL
-import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
+import com.lelloman.read.core.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
@@ -79,7 +78,7 @@ class ArticlesListViewModelImpl(
 
     override fun refresh() = articlesRepository.refresh()
 
-    override fun onSourcesClicked() = navigate(NavigationScreen.SOURCES_LIST)
+    override fun onSourcesClicked() = navigate(ReadNavigationScreen.SOURCES_LIST)
 
     override fun onEmptyViewButtonClicked() {
         emptyViewAction?.invoke()
@@ -87,28 +86,28 @@ class ArticlesListViewModelImpl(
 
     override fun onArticleClicked(article: SourceArticle) = if (openArticlesInApp) {
         navigate(
-            DeepLink(NavigationScreen.ARTICLE)
-                .putString(ARG_URL, article.link)
+            DeepLink(ReadNavigationScreen.ARTICLE)
+                .putString(ReadNavigationScreen.ARG_URL, article.link)
         )
     } else {
         navigate(ViewIntentNavigationEvent(article.link))
     }
 
-    override fun onSettingsClicked() = navigate(NavigationScreen.SETTINGS)
+    override fun onSettingsClicked() = navigate(ReadNavigationScreen.SETTINGS)
 
-    override fun onDiscoverSourceClicked() = navigate(NavigationScreen.DISCOVER_URL)
+    override fun onDiscoverSourceClicked() = navigate(ReadNavigationScreen.DISCOVER_URL)
 
     private fun setEmptyViewValues(sources: List<Source>) {
         when {
             sources.isEmpty() -> {
                 emptyViewDescriptionText.value = getString(R.string.empty_articles_no_source)
                 emptyViewButtonText.value = getString(R.string.add_source)
-                emptyViewAction = { navigate(NavigationScreen.ADD_SOURCE) }
+                emptyViewAction = { navigate(ReadNavigationScreen.ADD_SOURCE) }
             }
             !sources.any(Source::isActive) -> {
                 emptyViewDescriptionText.value = getString(R.string.empty_articles_sources_disabled)
                 emptyViewButtonText.value = getString(R.string.enable_sources)
-                emptyViewAction = { navigate(NavigationScreen.SOURCES_LIST) }
+                emptyViewAction = { navigate(ReadNavigationScreen.SOURCES_LIST) }
             }
             else -> {
                 emptyViewDescriptionText.value = getString(R.string.empty_articles_must_refresh)

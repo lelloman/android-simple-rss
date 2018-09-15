@@ -1,4 +1,4 @@
-package com.lelloman.read.core.logger
+package com.lelloman.common.logger
 
 class LoggerFactoryImpl : LoggerFactory {
 

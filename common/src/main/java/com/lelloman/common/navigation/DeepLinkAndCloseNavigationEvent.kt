@@ -1,3 +1,3 @@
-package com.lelloman.read.core.navigation
+package com.lelloman.common.navigation
 
 class DeepLinkAndCloseNavigationEvent(deepLink: DeepLink) : DeepLinkNavigationEvent(deepLink)

@@ -1,4 +1,4 @@
-package com.lelloman.read.core.view.actionevent
+package com.lelloman.common.view.actionevent
 
 class SwipePageActionEvent(val direction: Direction) : ViewActionEvent {
 

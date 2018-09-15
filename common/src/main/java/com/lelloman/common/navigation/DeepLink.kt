@@ -1,4 +1,4 @@
-package com.lelloman.read.core.navigation
+package com.lelloman.common.navigation
 
 import android.net.Uri
 import com.lelloman.common.utils.Base64Util

@@ -1,7 +1,7 @@
 package com.lelloman.read.ui.common.repository
 
 import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.db.SourcesDao

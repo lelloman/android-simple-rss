@@ -1,8 +1,6 @@
-package com.lelloman.common
+package com.lelloman.common.view
 
 import android.widget.ImageView
-import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.common.view.PicassoWrapImpl
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never

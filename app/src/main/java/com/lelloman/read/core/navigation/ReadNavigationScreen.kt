@@ -1,5 +1,7 @@
 package com.lelloman.read.core.navigation
 
+import com.lelloman.common.navigation.DeepLinkStartable
+import com.lelloman.common.navigation.NavigationScreen
 import com.lelloman.read.ui.articles.view.ArticleActivity
 import com.lelloman.read.ui.articles.view.ArticlesListActivity
 import com.lelloman.read.ui.discover.view.AddFoundFeedsConfirmationDialogFragment
@@ -15,7 +17,7 @@ import kotlin.reflect.KClass
  * Cannot change the names, [DeepLink] uses the names and if the values are changed in this enum
  * then older deep links might not work.
  */
-enum class NavigationScreen(val clazz: KClass<*>, deepLinkStartable: DeepLinkStartable? = null) {
+enum class ReadNavigationScreen(override val clazz: KClass<*>, deepLinkStartable: DeepLinkStartable? = null) : NavigationScreen {
     ADD_FOUND_FEEDS_CONFIRMATION(AddFoundFeedsConfirmationDialogFragment::class, deepLinkStartable = AddFoundFeedsConfirmationDialogFragment.deepLinkStartable),
     ADD_SOURCE(AddSourceActivity::class, deepLinkStartable = AddSourceActivity.deepLinkStartable),
     ARTICLE(ArticleActivity::class, deepLinkStartable = ArticleActivity.deepLinkStartable),
@@ -26,8 +28,7 @@ enum class NavigationScreen(val clazz: KClass<*>, deepLinkStartable: DeepLinkSta
     SOURCES_LIST(SourcesListActivity::class, deepLinkStartable = SourcesListActivity.deepLinkStartable),
     WALKTHROUGH(WalkthroughActivity::class, deepLinkStartable = WalkthroughActivity.deepLinkStartable);
 
-    var deepLinkStartable: DeepLinkStartable? = deepLinkStartable
-        internal set
+    override var deepLinkStartable: DeepLinkStartable? = deepLinkStartable
 
     companion object {
 
@@ -38,7 +39,7 @@ enum class NavigationScreen(val clazz: KClass<*>, deepLinkStartable: DeepLinkSta
 
         const val ARG_FOUND_FEEDS = "FoundFeeds"
 
-        private val namesMap = NavigationScreen
+        private val namesMap = ReadNavigationScreen
             .values()
             .associateBy(NavigationScreen::name)
 

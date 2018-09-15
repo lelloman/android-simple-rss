@@ -1,10 +1,10 @@
 package com.lelloman.read.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.navigation.CloseScreenNavigationEvent
 import com.lelloman.common.utils.UrlValidator
+import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.CloseScreenNavigationEvent
-import com.lelloman.read.core.view.actionevent.ToastEvent
 import com.lelloman.read.feed.fetcher.EmptySource
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.fetcher.HttpError

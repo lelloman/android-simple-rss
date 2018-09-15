@@ -1,13 +1,14 @@
 package com.lelloman.read.core.navigation
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.navigation.DeepLink
 import org.junit.Test
 
 class DeepLinkTest {
 
     @Test
     fun hasStringRepresentation1() {
-        val deepLink = DeepLink(NavigationScreen.ADD_SOURCE)
+        val deepLink = DeepLink(ReadNavigationScreen.ADD_SOURCE)
             .putInt("asdasd", 123)
             .putDouble("muuh", 1.0)
             .putBoolean("cracra", false)

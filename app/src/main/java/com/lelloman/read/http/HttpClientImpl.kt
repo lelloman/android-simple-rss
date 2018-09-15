@@ -1,7 +1,7 @@
 package com.lelloman.read.http
 
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
-import com.lelloman.read.core.logger.LoggerFactory
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import okhttp3.Request

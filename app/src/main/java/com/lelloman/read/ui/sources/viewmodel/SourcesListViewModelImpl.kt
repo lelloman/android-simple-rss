@@ -2,12 +2,12 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
+import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.read.R
-import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.view.actionevent.SnackEvent
+import com.lelloman.read.core.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DeletedSource
@@ -57,7 +57,7 @@ class SourcesListViewModelImpl(
     }
 
     override fun onFabClicked(view: View) =
-        navigate(NavigationScreen.ADD_SOURCE)
+        navigate(ReadNavigationScreen.ADD_SOURCE)
 
     override fun onSourceClicked(source: Source) {
         sourcesRepository

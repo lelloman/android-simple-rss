@@ -10,12 +10,12 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import com.lelloman.common.logger.Logger
+import com.lelloman.common.navigation.DeepLink
+import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.read.R
-import com.lelloman.read.core.logger.Logger
-import com.lelloman.read.core.navigation.DeepLink
-import com.lelloman.read.core.navigation.DeepLinkStartable
-import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_URL
+import com.lelloman.read.core.navigation.ReadNavigationScreen
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityArticleBinding
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
@@ -73,7 +73,7 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
                 val intent = Intent(context, ArticleActivity::class.java)
-                    .putExtra(NavigationScreen.ARG_URL, deepLink.getString(NavigationScreen.ARG_URL))
+                    .putExtra(ReadNavigationScreen.ARG_URL, deepLink.getString(ReadNavigationScreen.ARG_URL))
                 if (context !is Activity) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }

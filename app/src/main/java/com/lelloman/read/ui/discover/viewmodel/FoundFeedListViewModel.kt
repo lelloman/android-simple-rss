@@ -1,8 +1,8 @@
 package com.lelloman.read.ui.discover.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.viewmodel.BaseViewModel
 import com.lelloman.read.feed.finder.FoundFeed
 

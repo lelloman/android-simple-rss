@@ -6,10 +6,10 @@ import android.app.Dialog
 import android.app.DialogFragment
 import android.content.Context
 import android.os.Bundle
+import com.lelloman.common.navigation.DeepLink
+import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.DeepLink
-import com.lelloman.read.core.navigation.DeepLinkStartable
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_FOUND_FEEDS
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_FOUND_FEEDS
 import com.lelloman.read.feed.finder.FoundFeed
 
 class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {

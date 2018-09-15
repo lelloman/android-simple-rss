@@ -1,7 +1,7 @@
 package com.lelloman.read.feed.fetcher
 
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.ParsedFeed
 import com.lelloman.read.feed.exception.InvalidFeedTagException

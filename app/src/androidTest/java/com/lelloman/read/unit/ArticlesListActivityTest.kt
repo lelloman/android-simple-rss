@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.lelloman.common.utils.SingleLiveData
-import com.lelloman.read.core.view.actionevent.ViewActionEvent
+import com.lelloman.common.view.actionevent.ViewActionEvent
 import com.lelloman.read.di.MockViewModelModule
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.testutils.TestApp
