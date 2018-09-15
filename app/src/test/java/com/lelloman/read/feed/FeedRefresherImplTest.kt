@@ -12,6 +12,7 @@ import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
+import com.lelloman.read.testutils.dummyArticle
 import com.lelloman.read.testutils.dummySource
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
@@ -181,8 +182,8 @@ class FeedRefresherImplTest {
         givenHasActiveSources(SOURCE_1, SOURCE_2)
         givenHasTime(Long.MAX_VALUE)
         givenHasMinRefreshInterval(SourceRefreshInterval.NEUROTIC)
-        val articles1 = listOf<Article>(mock())
-        val articles2 = listOf<Article>(mock(), mock())
+        val articles1 = listOf(dummyArticle())
+        val articles2 = listOf(dummyArticle(), dummyArticle())
         whenever(feedFetcher.fetchFeed(SOURCE_1)).thenReturn(Maybe.just(SOURCE_1 to articles1))
         whenever(feedFetcher.fetchFeed(SOURCE_2)).thenReturn(Maybe.just(SOURCE_2 to articles2))
 

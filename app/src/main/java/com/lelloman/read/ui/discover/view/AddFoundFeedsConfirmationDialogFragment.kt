@@ -7,6 +7,9 @@ import android.app.DialogFragment
 import android.content.Context
 import android.os.Bundle
 import com.lelloman.read.R
+import com.lelloman.read.core.navigation.DeepLink
+import com.lelloman.read.core.navigation.DeepLinkStartable
+import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_FOUND_FEEDS
 import com.lelloman.read.feed.finder.FoundFeed
 
 class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
@@ -24,7 +27,8 @@ class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val foundFeeds: ArrayList<FoundFeed> = arguments?.getParcelableArrayList(ARG_FOUND_FEEDS) ?: ArrayList()
+        val foundFeeds: ArrayList<FoundFeed> = arguments?.getParcelableArrayList(ARG_FOUND_FEEDS)
+            ?: ArrayList()
         val message = if (foundFeeds.isNotEmpty()) {
             getString(
                 R.string.add_all_sources_message,
@@ -48,14 +52,19 @@ class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
 
     companion object {
 
-        private const val ARG_FOUND_FEEDS = "FoundFeeds"
-
-        fun start(activity: Activity, foundFeeds: ArrayList<FoundFeed>) {
-            val fragment = AddFoundFeedsConfirmationDialogFragment()
-            fragment.arguments = Bundle().apply {
-                putParcelableArrayList(ARG_FOUND_FEEDS, foundFeeds)
+        var deepLinkStartable = object : DeepLinkStartable {
+            override fun start(context: Context, deepLink: DeepLink) {
+                if (context is Activity) {
+                    val fragment = AddFoundFeedsConfirmationDialogFragment()
+                    fragment.arguments = Bundle().apply {
+                        val foundFeeds: ArrayList<FoundFeed> = deepLink.getSerializableArrayList(ARG_FOUND_FEEDS)!!
+                        putParcelableArrayList(ARG_FOUND_FEEDS, foundFeeds)
+                    }
+                    fragment.show(context.fragmentManager, AddFoundFeedsConfirmationDialogFragment::class.java.simpleName)
+                } else {
+                    throw IllegalArgumentException("Context argument must be an Activity")
+                }
             }
-            fragment.show(activity.fragmentManager, AddFoundFeedsConfirmationDialogFragment::class.java.simpleName)
         }
     }
 

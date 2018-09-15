@@ -65,11 +65,11 @@ class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBind
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }
 
-                deepLink.parameters.get(ARG_SOURCE_URL)?.let {
-                    intent.putExtra(ARG_SOURCE_URL, it as String)
+                deepLink.getString(ARG_SOURCE_URL)?.let {
+                    intent.putExtra(ARG_SOURCE_URL, it)
                 }
-                deepLink.parameters.get(ARG_SOURCE_NAME)?.let {
-                    intent.putExtra(ARG_SOURCE_NAME, it as String)
+                deepLink.getString(ARG_SOURCE_NAME)?.let {
+                    intent.putExtra(ARG_SOURCE_NAME, it)
                 }
 
                 context.startActivity(intent)

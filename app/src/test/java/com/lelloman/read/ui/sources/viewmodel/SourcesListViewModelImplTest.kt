@@ -15,6 +15,7 @@ import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.clear
 import com.lelloman.read.testutils.AndroidArchTest
+import com.lelloman.read.testutils.dummySource
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DeletedSource
@@ -131,7 +132,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         whenever(sourcesRepository.deleteSource(any())).thenReturn(Single.error(Exception()))
         val viewActions = tested.viewActionEvents.test()
 
-        tested.onSourceSwiped(mock())
+        tested.onSourceSwiped(dummySource())
 
         viewActions.assertValues(ToastEvent(message = "${R.string.something_went_wrong}"))
     }

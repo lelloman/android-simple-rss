@@ -1,5 +1,6 @@
 package com.lelloman.read.testutils
 
+import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.db.model.SourceArticle
@@ -34,4 +35,11 @@ fun dummySource(index: Int = 1) = Source(
     url = "url $index",
     lastFetched = 0L,
     isActive = true
+)
+
+fun dummyFoundFeed(index: Int = 1) = FoundFeed(
+    id = index.toLong(),
+    url = "url $index",
+    nArticles = index,
+    name = "name $index"
 )

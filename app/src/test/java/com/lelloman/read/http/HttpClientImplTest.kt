@@ -86,9 +86,7 @@ class HttpClientImplTest {
 
     @Test
     fun `returns empty string body if string from ok http response body is null`() {
-        val responseBody: ResponseBody = mock {
-            on { string() }.thenReturn(null)
-        }
+        val responseBody = ResponseBody.create(null, ByteArray(0))
         whenever(okHttpResponse.body()).thenReturn(responseBody)
 
         val tester = tested.request(HTTP_REQUEST).test()
@@ -100,9 +98,7 @@ class HttpClientImplTest {
     @Test
     fun `returns string body from ok http response`() {
         val body = "bo bo body"
-        val responseBody: ResponseBody = mock {
-            on { bytes() }.thenReturn(body.toByteArray())
-        }
+        val responseBody = ResponseBody.create(null, body.toByteArray())
         whenever(okHttpResponse.body()).thenReturn(responseBody)
 
         val tester = tested.request(HTTP_REQUEST).test()

@@ -2,6 +2,7 @@ package com.lelloman.read.ui.articles.view
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -10,9 +11,13 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.lelloman.read.R
+import com.lelloman.read.core.logger.Logger
+import com.lelloman.read.core.navigation.DeepLink
+import com.lelloman.read.core.navigation.DeepLinkStartable
+import com.lelloman.read.core.navigation.NavigationScreen
+import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_URL
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityArticleBinding
-import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 
 class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>() {
@@ -21,12 +26,17 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
 
     override fun getViewModelClass() = ArticleViewModel::class.java
 
+    private lateinit var logger: Logger
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val article = intent.getParcelableExtra<SourceArticle>(ARG_ARTICLE)
-        if (article == null) {
+        logger = loggerFactory.getLogger(ArticleActivity::class.java.simpleName)
+
+        val url = intent.getStringExtra(ARG_URL)
+        if (url == null) {
+            logger.e("$ARG_URL was not set in the Intent.")
             finish()
         } else {
             binding.webView.let { webView ->
@@ -45,7 +55,7 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
                 with(webView.settings) {
                     javaScriptEnabled = true
                 }
-                webView.loadUrl(article.link)
+                webView.loadUrl(url)
             }
         }
     }
@@ -60,12 +70,16 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
 
     companion object {
 
-        private const val ARG_ARTICLE = "Article"
-
-        fun start(activity: Activity, article: SourceArticle) {
-            val intent = Intent(activity, ArticleActivity::class.java)
-                .putExtra(ARG_ARTICLE, article)
-            activity.startActivity(intent)
+        var deepLinkStartable = object : DeepLinkStartable {
+            override fun start(context: Context, deepLink: DeepLink) {
+                val intent = Intent(context, ArticleActivity::class.java)
+                    .putExtra(NavigationScreen.ARG_URL, deepLink.getString(NavigationScreen.ARG_URL))
+                if (context !is Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+            }
         }
+            internal set
     }
 }
