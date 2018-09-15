@@ -1,6 +1,6 @@
 package com.lelloman.read.ui.common.repository
 
-import com.lelloman.read.core.di.qualifiers.IoScheduler
+import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.read.feed.FeedRefresher
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao

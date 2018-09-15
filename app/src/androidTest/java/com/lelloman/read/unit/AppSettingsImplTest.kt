@@ -1,18 +1,21 @@
 package com.lelloman.read.unit
 
 import android.support.test.InstrumentationRegistry
+import android.support.test.InstrumentationRegistry.getContext
 import android.support.test.runner.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.settings.BaseApplicationSettings
+import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_APP_THEME
+import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_USE_METERED_NETWORK
+import com.lelloman.common.settings.BaseApplicationSettingsImpl
 import com.lelloman.common.view.AppTheme
+import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_ARTICLES_LIST_IMAGES
+import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_OPEN_ARTICLES_IN_APP
+import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_SHOULD_SHOW_WALKTHROUGH
 import com.lelloman.read.persistence.settings.AppSettingsImpl
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
-import com.lelloman.read.utils.Constants
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_APP_THEME
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_ARTICLES_LIST_IMAGES
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_OPEN_ARTICLES_IN_APP
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_SHOULD_SHOW_WALKTHROUGH
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_USE_METERED_NETWORK
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -20,9 +23,12 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class AppSettingsImplTest {
 
-    private fun tested(action: AppSettingsImpl.() -> Unit) = AppSettingsImpl(InstrumentationRegistry.getContext()).run(action)
+    private val baseApplicationSettings: BaseApplicationSettings
+        get() = BaseApplicationSettingsImpl(getContext())
 
-    private val nonDefaultRefreshInterval = SourceRefreshInterval.values().first { it != DEFAULT_MIN_SOURCE_REFRESH_INTERVAL }
+    private fun tested(action: AppSettingsImpl.() -> Unit) = AppSettingsImpl(getContext(), baseApplicationSettings).run(action)
+
+    private val nonDefaultRefreshInterval = SourceRefreshInterval.values().first { it != AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL }
     private val nonDefaultArticlesListImages = DEFAULT_ARTICLES_LIST_IMAGES.not()
     private val nonDefaultUseMeteredNetwork = DEFAULT_USE_METERED_NETWORK.not()
     private val nonDefaultOpenArticlesInApp = DEFAULT_OPEN_ARTICLES_IN_APP.not()
@@ -33,7 +39,7 @@ class AppSettingsImplTest {
     fun setUp() {
         InstrumentationRegistry
             .getContext()
-            .getSharedPreferences(Constants.AppSettings.SHARED_PREFS_NAME, 0)
+            .getSharedPreferences(AppSettings.SHARED_PREFS_NAME, 0)
             .edit()
             .clear()
             .commit()

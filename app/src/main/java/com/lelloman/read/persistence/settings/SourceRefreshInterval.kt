@@ -1,7 +1,6 @@
 package com.lelloman.read.persistence.settings
 
 import com.lelloman.common.utils.Named
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 
 enum class SourceRefreshInterval(val ms: Long) : Named {
     NEUROTIC(60_000L),
@@ -20,7 +19,7 @@ enum class SourceRefreshInterval(val ms: Long) : Named {
         fun fromName(name: String): SourceRefreshInterval = if (namesMap.containsKey(name)) {
             namesMap[name]!!
         } else {
-            DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+            AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
         }
     }
 }

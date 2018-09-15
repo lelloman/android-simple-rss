@@ -1,11 +1,11 @@
 package com.lelloman.read.ui.discover.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.di.qualifiers.IoScheduler
-import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.feed.finder.FoundFeed

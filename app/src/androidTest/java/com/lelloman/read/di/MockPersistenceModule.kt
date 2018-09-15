@@ -1,13 +1,13 @@
 package com.lelloman.read.di
 
 import android.content.Context
-import com.lelloman.read.persistence.PersistenceModule
 import com.lelloman.read.persistence.db.AppDatabase
 import com.lelloman.read.persistence.db.ArticlesDao
+import com.lelloman.read.persistence.db.DbModule
 import com.lelloman.read.persistence.db.SourcesDao
 import org.mockito.Mockito.mock
 
-class MockPersistenceModule : PersistenceModule() {
+class MockDbModule : DbModule() {
 
     private val appDatabase: AppDatabase = mock(AppDatabase::class.java)
 

@@ -3,9 +3,9 @@ package com.lelloman.read
 import android.app.Activity
 import android.content.BroadcastReceiver
 import com.lelloman.common.BaseApplication
+import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.view.PicassoWrap
 import com.lelloman.read.core.FaviconBitmapProvider
-import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.core.di.DaggerAppComponent
 import com.lelloman.read.core.logger.Logger
 import com.lelloman.read.core.logger.LoggerFactory
@@ -71,9 +71,10 @@ open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcas
         }
     }
 
-    protected open fun inject() {
+    override fun inject() {
         DaggerAppComponent.builder()
-            .appModule(AppModule(this))
+            .baseApplicationModule(BaseApplicationModule(this))
+            .baseSettingsModule(baseSettingsModule)
             .build()
             .inject(this)
     }

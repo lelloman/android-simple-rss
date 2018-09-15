@@ -1,10 +1,10 @@
 package com.lelloman.read.feed
 
+import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.di.qualifiers.NewThreadScheduler
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.read.core.di.qualifiers.IoScheduler
-import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.feed.fetcher.FeedFetcher
