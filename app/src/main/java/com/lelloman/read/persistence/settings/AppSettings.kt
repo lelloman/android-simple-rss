@@ -1,6 +1,6 @@
 package com.lelloman.read.persistence.settings
 
-import com.lelloman.read.core.view.AppTheme
+import com.lelloman.common.view.AppTheme
 import io.reactivex.Observable
 
 interface AppSettings {

@@ -1,9 +1,9 @@
 package com.lelloman.read.ui.sources.view
 
 import android.view.ViewGroup
+import com.lelloman.common.view.BaseRecyclerViewAdapter
 import com.lelloman.read.R
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.core.view.BaseRecyclerViewAdapter
 import com.lelloman.read.databinding.ListItemSourceBinding
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.sources.viewmodel.SourceListItemViewModel

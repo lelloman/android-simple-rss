@@ -1,6 +1,6 @@
 package com.lelloman.read.mock
 
-import com.lelloman.read.core.view.ResourceProvider
+import com.lelloman.common.view.ResourceProvider
 
 class MockResourceProvider(
     private var defaultStringArrayLength: Int = 10

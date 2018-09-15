@@ -4,9 +4,9 @@ import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
 import com.lelloman.read.core.logger.LoggerFactory
-import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.feed.fetcher.EmptySource
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.fetcher.HttpError

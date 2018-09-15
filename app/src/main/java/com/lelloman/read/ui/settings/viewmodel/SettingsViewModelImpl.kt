@@ -4,11 +4,11 @@ import android.arch.lifecycle.MutableLiveData
 import android.databinding.Observable
 import android.databinding.ObservableField
 import com.lelloman.common.utils.LazyLiveData
+import com.lelloman.common.view.AppTheme
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
-import com.lelloman.read.core.view.AppTheme
-import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
 import io.reactivex.Scheduler

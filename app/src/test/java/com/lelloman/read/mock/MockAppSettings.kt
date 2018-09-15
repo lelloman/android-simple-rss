@@ -1,6 +1,6 @@
 package com.lelloman.read.mock
 
-import com.lelloman.read.core.view.AppTheme
+import com.lelloman.common.view.AppTheme
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
 import io.reactivex.Observable

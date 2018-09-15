@@ -2,7 +2,7 @@ package com.lelloman.read.persistence.settings
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.lelloman.read.core.view.AppTheme
+import com.lelloman.common.view.AppTheme
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_APP_THEME
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL

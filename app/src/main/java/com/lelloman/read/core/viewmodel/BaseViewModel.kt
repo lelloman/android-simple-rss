@@ -6,6 +6,7 @@ import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
 import android.widget.Toast
 import com.lelloman.common.utils.SingleLiveData
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.navigation.CloseScreenNavigationEvent
 import com.lelloman.read.core.navigation.DeepLink
@@ -14,7 +15,6 @@ import com.lelloman.read.core.navigation.DeepLinkNavigationEvent
 import com.lelloman.read.core.navigation.NavigationEvent
 import com.lelloman.read.core.navigation.NavigationScreen
 import com.lelloman.read.core.navigation.ScreenNavigationEvent
-import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.core.view.actionevent.AnimationViewActionEvent
 import com.lelloman.read.core.view.actionevent.SnackEvent
 import com.lelloman.read.core.view.actionevent.ToastEvent

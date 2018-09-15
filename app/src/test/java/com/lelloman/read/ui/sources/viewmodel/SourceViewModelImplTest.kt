@@ -1,8 +1,8 @@
 package com.lelloman.read.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.ui.common.repository.SourcesRepository

@@ -1,12 +1,12 @@
 package com.lelloman.read.core.di
 
 import com.lelloman.common.utils.UrlValidator
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.core.di.qualifiers.IoScheduler
 import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
-import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel

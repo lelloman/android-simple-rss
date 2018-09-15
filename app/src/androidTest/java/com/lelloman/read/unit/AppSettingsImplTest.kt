@@ -3,7 +3,7 @@ package com.lelloman.read.unit
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.read.core.view.AppTheme
+import com.lelloman.common.view.AppTheme
 import com.lelloman.read.persistence.settings.AppSettingsImpl
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
 import com.lelloman.read.utils.Constants

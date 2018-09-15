@@ -3,9 +3,9 @@ package com.lelloman.read.ui.walkthrough.view
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
 import com.lelloman.read.core.view.BaseActivity
-import com.lelloman.read.core.view.ResourceProvider
 import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.databinding.ActivityWalkthroughBinding
 import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel

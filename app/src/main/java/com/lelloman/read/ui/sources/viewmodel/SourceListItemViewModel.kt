@@ -2,8 +2,8 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import android.databinding.ObservableField
 import com.lelloman.common.utils.ByteArrayWithId
+import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.core.viewmodel.BaseListItemViewModel
 import com.lelloman.read.persistence.db.model.Source
 
 class SourceListItemViewModel(

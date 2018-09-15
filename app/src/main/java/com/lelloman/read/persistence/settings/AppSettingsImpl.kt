@@ -1,7 +1,7 @@
 package com.lelloman.read.persistence.settings
 
 import android.content.Context
-import com.lelloman.read.core.view.AppTheme
+import com.lelloman.common.view.AppTheme
 import com.lelloman.read.persistence.settings.property.booleanProperty
 import com.lelloman.read.persistence.settings.property.enumProperty
 import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_APP_THEME

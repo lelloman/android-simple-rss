@@ -1,7 +1,7 @@
 package com.lelloman.read.testutils.screen
 
+import com.lelloman.common.view.AppTheme
 import com.lelloman.read.R
-import com.lelloman.read.core.view.AppTheme
 import com.lelloman.read.testutils.checkRecyclerViewCount
 import com.lelloman.read.testutils.clickView
 import com.lelloman.read.testutils.clickViewWithText

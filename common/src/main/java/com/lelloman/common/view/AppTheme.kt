@@ -1,9 +1,8 @@
-package com.lelloman.read.core.view
+package com.lelloman.common.view
 
 import android.support.annotation.StyleRes
+import com.lelloman.common.R
 import com.lelloman.common.utils.Named
-import com.lelloman.read.R
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_APP_THEME
 
 enum class AppTheme(
     @StyleRes val resId: Int
@@ -15,6 +14,9 @@ enum class AppTheme(
     FOREST(R.style.CustomTheme_Forest);
 
     companion object {
+
+        val DEFAULT = LIGHT
+
         private val namesMap = AppTheme
             .values()
             .associateBy(AppTheme::name)
@@ -23,7 +25,7 @@ enum class AppTheme(
             if (namesMap.containsKey(name)) {
                 namesMap[name]!!
             } else {
-                DEFAULT_APP_THEME
+                DEFAULT
             }
     }
 }

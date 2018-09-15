@@ -1,4 +1,4 @@
-package com.lelloman.read.core.view
+package com.lelloman.common.view
 
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil
@@ -8,7 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.common.utils.ModelWithId
 import com.lelloman.common.utils.ModelWithIdListDiffCalculator
-import com.lelloman.read.core.viewmodel.BaseListItemViewModel
+import com.lelloman.common.viewmodel.BaseListItemViewModel
 
 abstract class BaseRecyclerViewAdapter<M : ModelWithId, VM : BaseListItemViewModel<M>, DB : ViewDataBinding>(
     private val onItemClickListener: (M) -> Unit = {}

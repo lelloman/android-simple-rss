@@ -1,4 +1,4 @@
-package com.lelloman.read.core.viewmodel
+package com.lelloman.common.viewmodel
 
 import com.lelloman.common.utils.ModelWithId
 
