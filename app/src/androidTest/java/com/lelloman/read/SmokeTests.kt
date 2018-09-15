@@ -75,7 +75,7 @@ class SmokeTests {
             .typeUrl(URL_ASD)
             .closeKeyboard()
             .clickOnDiscover()
-            .wait(1)
+            .wait(2)
             .displaysFoundFeeds(3)
             .hasText(URL_ASD)
             .backToDiscoverUrlScreen()
