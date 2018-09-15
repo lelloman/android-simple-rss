@@ -4,8 +4,9 @@ import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
+import com.lelloman.read.core.navigation.DeepLink
 import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_URL
 import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.db.model.SourceArticle
@@ -85,7 +86,10 @@ class ArticlesListViewModelImpl(
     }
 
     override fun onArticleClicked(article: SourceArticle) = if (openArticlesInApp) {
-        navigate(ScreenNavigationEvent(NavigationScreen.ARTICLE, arrayOf(article)))
+        navigate(
+            DeepLink(NavigationScreen.ARTICLE)
+                .putString(ARG_URL, article.link)
+        )
     } else {
         navigate(ViewIntentNavigationEvent(article.link))
     }

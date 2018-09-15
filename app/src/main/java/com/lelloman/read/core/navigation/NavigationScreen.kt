@@ -7,7 +7,6 @@ import com.lelloman.read.ui.discover.view.DiscoverUrlActivity
 import com.lelloman.read.ui.discover.view.FoundFeedListActivity
 import com.lelloman.read.ui.settings.view.SettingsActivity
 import com.lelloman.read.ui.sources.view.AddSourceActivity
-import com.lelloman.read.ui.sources.view.SourceActivity
 import com.lelloman.read.ui.sources.view.SourcesListActivity
 import com.lelloman.read.ui.walkthrough.view.WalkthroughActivity
 import kotlin.reflect.KClass
@@ -17,16 +16,15 @@ import kotlin.reflect.KClass
  * then older deep links might not work.
  */
 enum class NavigationScreen(val clazz: KClass<*>, deepLinkStartable: DeepLinkStartable? = null) {
-    ADD_FOUND_FEEDS_CONFIRMATION(AddFoundFeedsConfirmationDialogFragment::class),
+    ADD_FOUND_FEEDS_CONFIRMATION(AddFoundFeedsConfirmationDialogFragment::class, deepLinkStartable = AddFoundFeedsConfirmationDialogFragment.deepLinkStartable),
     ADD_SOURCE(AddSourceActivity::class, deepLinkStartable = AddSourceActivity.deepLinkStartable),
-    ARTICLE(ArticleActivity::class),
+    ARTICLE(ArticleActivity::class, deepLinkStartable = ArticleActivity.deepLinkStartable),
     ARTICLES_LIST(ArticlesListActivity::class, deepLinkStartable = ArticlesListActivity.deepLinkStartable),
     DISCOVER_URL(DiscoverUrlActivity::class, deepLinkStartable = DiscoverUrlActivity.deepLinkStartable),
-    FOUND_FEED_LIST(FoundFeedListActivity::class),
+    FOUND_FEED_LIST(FoundFeedListActivity::class, deepLinkStartable = FoundFeedListActivity.deepLinkStartable),
     SETTINGS(SettingsActivity::class, deepLinkStartable = SettingsActivity.deepLinkStartable),
-    SOURCE(SourceActivity::class),
     SOURCES_LIST(SourcesListActivity::class, deepLinkStartable = SourcesListActivity.deepLinkStartable),
-    WALKTHROUGH(WalkthroughActivity::class);
+    WALKTHROUGH(WalkthroughActivity::class, deepLinkStartable = WalkthroughActivity.deepLinkStartable);
 
     var deepLinkStartable: DeepLinkStartable? = deepLinkStartable
         internal set
@@ -35,6 +33,10 @@ enum class NavigationScreen(val clazz: KClass<*>, deepLinkStartable: DeepLinkSta
 
         const val ARG_SOURCE_NAME = "SourceName"
         const val ARG_SOURCE_URL = "SourceUrl"
+
+        const val ARG_URL = "Url"
+
+        const val ARG_FOUND_FEEDS = "FoundFeeds"
 
         private val namesMap = NavigationScreen
             .values()

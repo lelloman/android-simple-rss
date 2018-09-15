@@ -6,8 +6,11 @@ import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.core.ActionTokenProvider
+import com.lelloman.read.core.navigation.DeepLink
 import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.ScreenNavigationEvent
+import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_FOUND_FEEDS
+import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_SOURCE_NAME
+import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import io.reactivex.Scheduler
@@ -47,24 +50,20 @@ class FoundFeedListViewModelImpl(
 
     override fun onFoundFeedClicked(foundFeed: FoundFeed) {
         navigate(
-                NavigationScreen.ADD_SOURCE,
-            mapOf(
-                NavigationScreen.ARG_SOURCE_NAME to (foundFeed.name ?: foundFeed.url),
-                NavigationScreen.ARG_SOURCE_URL to foundFeed.url
-                )
-            )
-
+            DeepLink(NavigationScreen.ADD_SOURCE)
+                .putString(ARG_SOURCE_NAME, foundFeed.name ?: foundFeed.url)
+                .putString(ARG_SOURCE_URL, foundFeed.url)
+        )
     }
 
     override fun onAddAllClicked() {
         foundFeeds
             .value
-            ?.let { names ->
+            ?.let { foundFeedsList ->
+                val foundFeeds = foundFeedsList as? ArrayList ?: ArrayList(foundFeedsList)
                 navigate(
-                    ScreenNavigationEvent(
-                        NavigationScreen.ADD_FOUND_FEEDS_CONFIRMATION,
-                        arrayOf(names)
-                    )
+                    DeepLink(NavigationScreen.ADD_FOUND_FEEDS_CONFIRMATION)
+                        .putSerializableArrayList(ARG_FOUND_FEEDS, foundFeeds)
                 )
             }
     }

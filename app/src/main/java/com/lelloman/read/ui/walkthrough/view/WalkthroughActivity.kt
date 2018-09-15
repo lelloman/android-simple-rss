@@ -1,10 +1,13 @@
 package com.lelloman.read.ui.walkthrough.view
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
+import com.lelloman.read.core.navigation.DeepLink
+import com.lelloman.read.core.navigation.DeepLinkStartable
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.databinding.ActivityWalkthroughBinding
@@ -50,8 +53,16 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
     }
 
     companion object {
-        fun start(activity: Activity) {
-            activity.startActivity(Intent(activity, WalkthroughActivity::class.java))
+
+        var deepLinkStartable = object : DeepLinkStartable {
+            override fun start(context: Context, deepLink: DeepLink) {
+                val intent = Intent(context, WalkthroughActivity::class.java)
+                if (context !is Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+            }
         }
+            internal set
     }
 }

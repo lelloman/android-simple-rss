@@ -11,8 +11,8 @@ import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.core.ActionTokenProvider
+import com.lelloman.read.core.navigation.DeepLink
 import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.ScreenNavigationEvent
 import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.common.repository.DiscoverRepository
@@ -92,7 +92,10 @@ class WalkthroughViewModelImpl(
         urlValidator.maybePrependProtocol(discoverUrl.get())?.let { urlWithProtocol ->
             discoverUrl.set(urlWithProtocol)
             discoveryRepository.findFeeds(urlWithProtocol)
-            navigate(ScreenNavigationEvent(NavigationScreen.FOUND_FEED_LIST, arrayOf(urlWithProtocol)))
+            navigate(
+                DeepLink(NavigationScreen.FOUND_FEED_LIST)
+                    .putString(ARG_URL, urlWithProtocol)
+            )
         }
     }
 

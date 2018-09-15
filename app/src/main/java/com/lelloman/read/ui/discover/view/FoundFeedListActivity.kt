@@ -2,6 +2,7 @@ package com.lelloman.read.ui.discover.view
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -9,6 +10,9 @@ import android.view.Menu
 import android.view.MenuItem
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
+import com.lelloman.read.core.navigation.DeepLink
+import com.lelloman.read.core.navigation.DeepLinkStartable
+import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_URL
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityFoundFeedListBinding
 import com.lelloman.read.feed.finder.FoundFeed
@@ -81,13 +85,16 @@ class FoundFeedListActivity
 
     companion object {
 
-        private const val ARG_URL = "Url"
-
-        fun start(activity: Activity, url: String) {
-            activity.startActivity(
-                Intent(activity, FoundFeedListActivity::class.java)
-                    .putExtra(ARG_URL, url)
-            )
+        var deepLinkStartable = object : DeepLinkStartable {
+            override fun start(context: Context, deepLink: DeepLink) {
+                val intent = Intent(context, FoundFeedListActivity::class.java)
+                    .putExtra(ARG_URL, deepLink.getString(ARG_URL))
+                if (context !is Activity) {
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                context.startActivity(intent)
+            }
         }
+            internal set
     }
 }

@@ -5,6 +5,7 @@ import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.mock.MockLoggerFactory
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.testutils.dummyFoundFeed
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -72,11 +73,11 @@ class DiscoverRepositoryTest {
         tester.assertValueCount(1)
         tester.assertValueAt(0) { it.isEmpty() }
 
-        feedFinderFindUrlsSubject.onNext(mock())
+        feedFinderFindUrlsSubject.onNext(dummyFoundFeed())
         tester.assertValueCount(2)
         tester.assertValueAt(1) { it.size == 1 }
 
-        feedFinderFindUrlsSubject.onNext(mock())
+        feedFinderFindUrlsSubject.onNext(dummyFoundFeed())
         tester.assertValueCount(3)
         tester.assertValueAt(2) { it.size == 2 }
     }
