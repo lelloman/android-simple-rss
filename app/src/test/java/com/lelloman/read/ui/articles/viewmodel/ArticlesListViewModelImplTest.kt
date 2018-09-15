@@ -1,11 +1,11 @@
 package com.lelloman.read.ui.articles.viewmodel
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.navigation.DeepLinkNavigationEvent
+import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.DeepLinkNavigationEvent
-import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_URL
-import com.lelloman.read.core.navigation.ViewIntentNavigationEvent
+import com.lelloman.read.core.navigation.ReadNavigationScreen
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.mock.MockAppSettings
 import com.lelloman.read.mock.MockResourceProvider
 import com.lelloman.read.persistence.db.model.Source
@@ -64,7 +64,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         viewActions.values[0].apply {
             (this as DeepLinkNavigationEvent).apply {
                 assertThat(deepLink.parametersCount).isEqualTo(0)
-                assertThat(deepLink.screen).isEqualTo(NavigationScreen.SOURCES_LIST)
+                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.SOURCES_LIST)
             }
         }
     }
@@ -84,7 +84,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             (this as DeepLinkNavigationEvent).apply {
                 assertThat(deepLink.parametersCount).isEqualTo(1)
                 assertThat(deepLink.getString(ARG_URL)).isEqualTo(link)
-                assertThat(deepLink.screen).isEqualTo(NavigationScreen.ARTICLE)
+                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.ARTICLE)
             }
         }
     }
@@ -112,7 +112,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             assertThat(this).isInstanceOf(DeepLinkNavigationEvent::class.java)
             (this as DeepLinkNavigationEvent).apply {
                 assertThat(deepLink.parametersCount).isEqualTo(0)
-                assertThat(deepLink.screen).isEqualTo(NavigationScreen.SETTINGS)
+                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.SETTINGS)
             }
         }
     }
@@ -167,7 +167,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         viewActionsTester.values[0].apply {
             (this as DeepLinkNavigationEvent).apply {
                 assertThat(deepLink.parametersCount).isEqualTo(0)
-                assertThat(deepLink.screen).isEqualTo(NavigationScreen.ADD_SOURCE)
+                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.ADD_SOURCE)
             }
         }
     }
@@ -192,7 +192,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         viewActionsTester.values[0].apply {
             (this as DeepLinkNavigationEvent).apply {
                 assertThat(deepLink.parametersCount).isEqualTo(0)
-                assertThat(deepLink.screen).isEqualTo(NavigationScreen.SOURCES_LIST)
+                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.SOURCES_LIST)
             }
         }
     }

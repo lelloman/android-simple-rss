@@ -6,11 +6,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import com.lelloman.common.navigation.DeepLink
+import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.DeepLink
-import com.lelloman.read.core.navigation.DeepLinkStartable
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_SOURCE_NAME
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_SOURCE_URL
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_NAME
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityAddSourceBinding
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel

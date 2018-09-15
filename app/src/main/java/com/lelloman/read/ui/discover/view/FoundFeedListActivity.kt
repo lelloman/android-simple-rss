@@ -8,11 +8,11 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import com.lelloman.common.navigation.DeepLink
+import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.DeepLink
-import com.lelloman.read.core.navigation.DeepLinkStartable
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_URL
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityFoundFeedListBinding
 import com.lelloman.read.feed.finder.FoundFeed

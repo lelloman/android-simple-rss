@@ -1,4 +1,4 @@
-package com.lelloman.read.core
+package com.lelloman.common.utils
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test

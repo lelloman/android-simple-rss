@@ -3,14 +3,14 @@ package com.lelloman.read.ui.discover.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
+import com.lelloman.common.navigation.DeepLink
+import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.navigation.DeepLink
-import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_FOUND_FEEDS
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_SOURCE_NAME
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_SOURCE_URL
+import com.lelloman.read.core.navigation.ReadNavigationScreen
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_FOUND_FEEDS
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_NAME
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import io.reactivex.Scheduler
@@ -50,7 +50,7 @@ class FoundFeedListViewModelImpl(
 
     override fun onFoundFeedClicked(foundFeed: FoundFeed) {
         navigate(
-            DeepLink(NavigationScreen.ADD_SOURCE)
+            DeepLink(ReadNavigationScreen.ADD_SOURCE)
                 .putString(ARG_SOURCE_NAME, foundFeed.name ?: foundFeed.url)
                 .putString(ARG_SOURCE_URL, foundFeed.url)
         )
@@ -62,7 +62,7 @@ class FoundFeedListViewModelImpl(
             ?.let { foundFeedsList ->
                 val foundFeeds = foundFeedsList as? ArrayList ?: ArrayList(foundFeedsList)
                 navigate(
-                    DeepLink(NavigationScreen.ADD_FOUND_FEEDS_CONFIRMATION)
+                    DeepLink(ReadNavigationScreen.ADD_FOUND_FEEDS_CONFIRMATION)
                         .putSerializableArrayList(ARG_FOUND_FEEDS, foundFeeds)
                 )
             }

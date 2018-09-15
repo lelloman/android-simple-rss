@@ -1,7 +1,7 @@
 package com.lelloman.read.mock
 
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.read.core.logger.Logger
+import com.lelloman.common.logger.Logger
 
 class MockLogger : Logger {
 

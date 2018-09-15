@@ -1,9 +1,10 @@
-package com.lelloman.read.core.navigation
+package com.lelloman.common.navigation
 
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import com.lelloman.read.core.logger.LoggerFactory
+import android.support.annotation.VisibleForTesting
+import com.lelloman.common.logger.LoggerFactory
 
 class NavigationRouter(loggerFactory: LoggerFactory) {
 
@@ -21,7 +22,8 @@ class NavigationRouter(loggerFactory: LoggerFactory) {
         }
     }
 
-    internal fun handleDeepLink(activity: Activity, event: DeepLinkNavigationEvent) {
+    @VisibleForTesting
+    fun handleDeepLink(activity: Activity, event: DeepLinkNavigationEvent) {
         val startable = event.deepLink.screen.deepLinkStartable
         if (startable != null) {
             startable.start(activity, event.deepLink)

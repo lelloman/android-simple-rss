@@ -2,7 +2,7 @@ package com.lelloman.read.core
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import com.lelloman.read.core.logger.LoggerFactory
+import com.lelloman.common.logger.LoggerFactory
 
 class FaviconBitmapProvider(
     loggerFactory: LoggerFactory

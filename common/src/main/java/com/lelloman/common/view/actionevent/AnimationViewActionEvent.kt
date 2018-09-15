@@ -1,3 +1,3 @@
-package com.lelloman.read.core.view.actionevent
+package com.lelloman.common.view.actionevent
 
 interface AnimationViewActionEvent : ViewActionEvent

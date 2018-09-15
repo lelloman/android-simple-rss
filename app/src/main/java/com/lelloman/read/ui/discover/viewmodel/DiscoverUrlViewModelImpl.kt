@@ -5,13 +5,13 @@ import android.databinding.ObservableField
 import android.view.View
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
+import com.lelloman.common.navigation.DeepLink
+import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.ActionTokenProvider
-import com.lelloman.read.core.navigation.DeepLink
-import com.lelloman.read.core.navigation.NavigationScreen
-import com.lelloman.read.core.navigation.NavigationScreen.Companion.ARG_URL
+import com.lelloman.read.core.navigation.ReadNavigationScreen
+import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import io.reactivex.Scheduler
 
@@ -43,7 +43,7 @@ class DiscoverUrlViewModelImpl(
             discoverUrl.set(urlWithProtocol)
             discoverRepository.findFeeds(urlWithProtocol)
             navigate(
-                DeepLink(NavigationScreen.FOUND_FEED_LIST)
+                DeepLink(ReadNavigationScreen.FOUND_FEED_LIST)
                     .putString(ARG_URL, urlWithProtocol)
             )
         }

@@ -1,11 +1,11 @@
 package com.lelloman.read.unit
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.logger.Logger
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProviderImpl
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.read.core.logger.Logger
-import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.finder.FeedFinder

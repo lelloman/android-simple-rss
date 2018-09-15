@@ -1,6 +1,7 @@
 package com.lelloman.read.testutils
 
 import android.support.test.InstrumentationRegistry
+import com.lelloman.common.logger.LoggerFactoryImpl
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.settings.BaseApplicationSettingsImpl
 import com.lelloman.common.utils.TimeProvider
@@ -8,7 +9,6 @@ import com.lelloman.common.utils.TimeProviderImpl
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.common.view.MeteredConnectionCheckerImpl
-import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.finder.FeedFinder

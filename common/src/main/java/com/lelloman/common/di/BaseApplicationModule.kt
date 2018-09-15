@@ -5,6 +5,8 @@ import android.content.Context
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.NewThreadScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
+import com.lelloman.common.logger.LoggerFactory
+import com.lelloman.common.logger.LoggerFactoryImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -32,5 +34,9 @@ open class BaseApplicationModule(private val application: Application) {
     @Provides
     @NewThreadScheduler
     fun provideNewThreadScheduler(): Scheduler = Schedulers.newThread()
+
+    @Singleton
+    @Provides
+    fun provideLoggerFactory(): LoggerFactory = LoggerFactoryImpl()
 
 }

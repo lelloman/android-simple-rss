@@ -1,4 +1,4 @@
-package com.lelloman.read.core.navigation
+package com.lelloman.common.navigation
 
 import android.content.Context
 

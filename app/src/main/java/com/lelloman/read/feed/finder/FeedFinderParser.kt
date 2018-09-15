@@ -1,7 +1,7 @@
 package com.lelloman.read.feed.finder
 
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.html.Doc
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.html.element.ADocElement

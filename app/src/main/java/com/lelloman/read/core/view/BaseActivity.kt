@@ -11,12 +11,12 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Toast
+import com.lelloman.common.navigation.NavigationEvent
+import com.lelloman.common.view.actionevent.AnimationViewActionEvent
+import com.lelloman.common.view.actionevent.SnackEvent
+import com.lelloman.common.view.actionevent.SwipePageActionEvent
+import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.NavigationEvent
-import com.lelloman.read.core.view.actionevent.AnimationViewActionEvent
-import com.lelloman.read.core.view.actionevent.SnackEvent
-import com.lelloman.read.core.view.actionevent.SwipePageActionEvent
-import com.lelloman.read.core.view.actionevent.ToastEvent
 import com.lelloman.read.core.viewmodel.BaseViewModel
 import io.reactivex.disposables.Disposable
 

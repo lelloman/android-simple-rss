@@ -32,6 +32,7 @@ dependencies {
     // support
     api "com.android.support:appcompat-v7:$support_lib_version"
     api "com.android.support:recyclerview-v7:$support_lib_version"
+    api "com.android.support:design:$support_lib_version"
 
     // kotlin
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
