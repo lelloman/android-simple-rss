@@ -13,6 +13,7 @@ class MockAppSettings(
     var providedShouldShowWalkthrough: Observable<Boolean> = Observable.empty(),
     var providedAppTheme: Observable<AppTheme> = Observable.empty()
 ) : AppSettings {
+
     override val sourceRefreshMinInterval: Observable<SourceRefreshInterval> get() = providedSourceRefreshMinInterval
     override val articleListImagesEnabled: Observable<Boolean> get() = providedArticleListImagesEnabled
     override val useMeteredNetwork: Observable<Boolean> get() = providedUseMeteredNetwork
@@ -21,6 +22,8 @@ class MockAppSettings(
     override val appTheme: Observable<AppTheme> get() = providedAppTheme
 
     override fun reset() = Unit
+
+    override fun readAllSettings() = Unit
 
     override fun setSourceRefreshMinInterval(interval: SourceRefreshInterval) = Unit
 

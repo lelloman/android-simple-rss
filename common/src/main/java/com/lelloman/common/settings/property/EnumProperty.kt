@@ -1,4 +1,4 @@
-package com.lelloman.read.persistence.settings.property
+package com.lelloman.common.settings.property
 
 import android.content.SharedPreferences
 import com.lelloman.common.utils.Named

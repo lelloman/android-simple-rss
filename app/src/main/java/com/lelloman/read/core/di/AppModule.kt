@@ -1,6 +1,5 @@
 package com.lelloman.read.core.di
 
-import android.app.Application
 import android.arch.lifecycle.ViewModel
 import android.content.Context
 import com.lelloman.common.utils.TimeProvider
@@ -16,41 +15,17 @@ import com.lelloman.common.view.ResourceProviderImpl
 import com.lelloman.read.core.ActionTokenProvider
 import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.core.di.qualifiers.IoScheduler
-import com.lelloman.read.core.di.qualifiers.NewThreadScheduler
-import com.lelloman.read.core.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.core.logger.LoggerFactoryImpl
 import com.lelloman.read.core.navigation.NavigationRouter
 import com.lelloman.read.persistence.settings.AppSettings
 import dagger.Module
 import dagger.Provides
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
-open class AppModule(private val application: Application) {
-
-    @Provides
-    fun provideContext(): Context = application
-
-    @Singleton
-    @Provides
-    @IoScheduler
-    fun provideIoScheduler(): Scheduler = Schedulers.io()
-
-    @Singleton
-    @Provides
-    @UiScheduler
-    fun provideUiScheduler(): Scheduler = AndroidSchedulers.mainThread()
-
-    @Singleton
-    @Provides
-    @NewThreadScheduler
-    fun provideNewThreadScheduler(): Scheduler = Schedulers.newThread()
+open class AppModule {
 
     @Provides
     fun provideNavigationRouter(loggerFactory: LoggerFactory) = NavigationRouter(loggerFactory)

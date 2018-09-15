@@ -3,8 +3,8 @@ package com.lelloman.read.core.view
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.lelloman.read.core.di.qualifiers.IoScheduler
-import com.lelloman.read.core.di.qualifiers.UiScheduler
+import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.read.core.logger.LoggerFactory
 import com.lelloman.read.core.navigation.NavigationRouter
 import com.lelloman.read.persistence.settings.AppSettings

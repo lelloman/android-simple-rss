@@ -2,19 +2,20 @@ package com.lelloman.read.persistence.settings
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_APP_THEME
+import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_USE_METERED_NETWORK
+import com.lelloman.common.settings.BaseApplicationSettings.Companion.KEY_APP_THEME
+import com.lelloman.common.settings.BaseApplicationSettings.Companion.KEY_USE_METERED_NETWORK
+import com.lelloman.common.settings.BaseApplicationSettingsImpl
 import com.lelloman.common.view.AppTheme
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_APP_THEME
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_ARTICLES_LIST_IMAGES
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_OPEN_ARTICLES_IN_APP
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_SHOULD_SHOW_WALKTHROUGH
-import com.lelloman.read.utils.Constants.AppSettings.DEFAULT_USE_METERED_NETWORK
-import com.lelloman.read.utils.Constants.AppSettings.KEY_APP_THEME
-import com.lelloman.read.utils.Constants.AppSettings.KEY_ARTICLE_LIST_IMAGES
-import com.lelloman.read.utils.Constants.AppSettings.KEY_MIN_SOURCE_REFRESH_INTERVAL
-import com.lelloman.read.utils.Constants.AppSettings.KEY_OPEN_ARTICLES_IN_APP
-import com.lelloman.read.utils.Constants.AppSettings.KEY_SHOULD_SHOW_WALKTHROUGH
-import com.lelloman.read.utils.Constants.AppSettings.KEY_USE_METERED_NETWORK
+import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_ARTICLES_LIST_IMAGES
+import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_OPEN_ARTICLES_IN_APP
+import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_SHOULD_SHOW_WALKTHROUGH
+import com.lelloman.read.persistence.settings.AppSettings.Companion.KEY_ARTICLE_LIST_IMAGES
+import com.lelloman.read.persistence.settings.AppSettings.Companion.KEY_MIN_SOURCE_REFRESH_INTERVAL
+import com.lelloman.read.persistence.settings.AppSettings.Companion.KEY_OPEN_ARTICLES_IN_APP
+import com.lelloman.read.persistence.settings.AppSettings.Companion.KEY_SHOULD_SHOW_WALKTHROUGH
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -70,7 +71,7 @@ class AppSettingsImplTest {
         val firstInterval = SourceRefreshInterval.RELAXED
         val secondInterval = SourceRefreshInterval.STONER
         prefInterval = firstInterval
-        val tested = AppSettingsImpl(context)
+        val tested = createAppSettingsImpl()
         val tester = tested.sourceRefreshMinInterval.test()
 
         tester.assertValue(firstInterval)
@@ -85,7 +86,7 @@ class AppSettingsImplTest {
     @Test
     fun `gets and sets articles list images enabled`() {
         prefArticlesImages = false
-        val tested = AppSettingsImpl(context)
+        val tested = createAppSettingsImpl()
         val tester = tested.articleListImagesEnabled.test()
 
         tester.assertValue(false)
@@ -100,7 +101,7 @@ class AppSettingsImplTest {
     @Test
     fun `gets and sets use metered network`() {
         prefUseMeteredNetwork = false
-        val tested = AppSettingsImpl(context)
+        val tested = createAppSettingsImpl()
         val tester = tested.useMeteredNetwork.test()
 
         tester.assertValue(false)
@@ -115,7 +116,7 @@ class AppSettingsImplTest {
     @Test
     fun `gets and sets open articles in app`() {
         prefOpenArticlesInApp = false
-        val tested = AppSettingsImpl(context)
+        val tested = createAppSettingsImpl()
         val tester = tested.openArticlesInApp.test()
 
         tester.assertValues(false)
@@ -130,7 +131,7 @@ class AppSettingsImplTest {
     @Test
     fun `gets and sets should show walkthrough`() {
         prefShouldShowWalkthrough = false
-        val tested = AppSettingsImpl(context)
+        val tested = createAppSettingsImpl()
         val tester = tested.shouldShowWalkthrough.test()
 
         tester.assertValues(false)
@@ -143,9 +144,9 @@ class AppSettingsImplTest {
     }
 
     @Test
-    fun `gets and sets app theme`(){
+    fun `gets and sets app theme`() {
         prefAppTheme = AppTheme.DARCULA
-        val tested = AppSettingsImpl(context)
+        val tested = createAppSettingsImpl()
         val tester = tested.appTheme.test()
 
         tester.assertValues(AppTheme.DARCULA)
@@ -156,4 +157,6 @@ class AppSettingsImplTest {
         verify(sharedPrefsEditor).putString(KEY_APP_THEME, AppTheme.LIGHT.name)
         tester.assertValues(AppTheme.DARCULA, AppTheme.LIGHT)
     }
+
+    private fun createAppSettingsImpl() = AppSettingsImpl(context, BaseApplicationSettingsImpl(context))
 }

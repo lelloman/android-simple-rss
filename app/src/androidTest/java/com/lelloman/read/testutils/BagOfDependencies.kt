@@ -1,6 +1,8 @@
 package com.lelloman.read.testutils
 
 import android.support.test.InstrumentationRegistry
+import com.lelloman.common.settings.BaseApplicationSettings
+import com.lelloman.common.settings.BaseApplicationSettingsImpl
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.TimeProviderImpl
 import com.lelloman.common.utils.UrlValidatorImpl
@@ -26,6 +28,7 @@ class BagOfDependencies {
     val httpClient: HttpClientImpl
     val feedFinder: FeedFinder
     val feedParser: FeedParser
+    val baseAppSettings: BaseApplicationSettings
     val appSettings: AppSettings
 
     init {
@@ -37,7 +40,9 @@ class BagOfDependencies {
 
         val targetContext = InstrumentationRegistry.getTargetContext()
         meteredConnectionChecker = MeteredConnectionCheckerImpl(targetContext)
-        appSettings = AppSettingsImpl(targetContext)
+
+        baseAppSettings = BaseApplicationSettingsImpl(targetContext)
+        appSettings = AppSettingsImpl(targetContext, baseAppSettings)
 
         feedParser = FeedParser(timeProvider)
 

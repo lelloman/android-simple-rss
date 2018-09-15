@@ -32,7 +32,7 @@ class SmokeTests {
             it.httpModule = object : HttpModule() {
                 override fun provideOkHttpClient() = MockHttpClient()
             }
-            it.appModule = object : AppModule(it) {
+            it.appModule = object : AppModule() {
                 override fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker {
                     return object : MeteredConnectionChecker {
                         override fun isNetworkMetered() = isNetworkMetered

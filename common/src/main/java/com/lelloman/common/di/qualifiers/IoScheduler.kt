@@ -1,4 +1,4 @@
-package com.lelloman.read.core.di.qualifiers
+package com.lelloman.common.di.qualifiers
 
 import javax.inject.Qualifier
 
