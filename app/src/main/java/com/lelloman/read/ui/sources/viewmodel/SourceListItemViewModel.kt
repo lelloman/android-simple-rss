@@ -1,7 +1,7 @@
 package com.lelloman.read.ui.sources.viewmodel
 
 import android.databinding.ObservableField
-import com.lelloman.common.utils.ByteArrayWithId
+import com.lelloman.common.utils.model.ByteArrayWithId
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel

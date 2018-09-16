@@ -1,0 +1,33 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api "com.android.support.test.espresso:espresso-core:$espresso_version"
+    api "com.android.support.test:runner:$test_support_version"
+    api "com.android.support.test:rules:$test_support_version"
+    api "com.crittercism.dexmaker:dexmaker:$dexmaker_version"
+    api "com.crittercism.dexmaker:dexmaker-dx:$dexmaker_version"
+    api "com.crittercism.dexmaker:dexmaker-mockito:$dexmaker_version"
+    api "com.android.support.test.uiautomator:uiautomator-v18:$uiautomator_version"
+    api "com.android.support.test.espresso:espresso-contrib:$espresso_version"
+    api "com.google.truth:truth:$truth_version"
+}

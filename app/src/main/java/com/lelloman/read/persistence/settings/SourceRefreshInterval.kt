@@ -1,6 +1,6 @@
 package com.lelloman.read.persistence.settings
 
-import com.lelloman.common.utils.Named
+import com.lelloman.common.utils.model.Named
 
 enum class SourceRefreshInterval(val ms: Long) : Named {
     NEUROTIC(60_000L),

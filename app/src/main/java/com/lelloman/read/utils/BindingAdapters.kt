@@ -9,7 +9,7 @@ import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import com.lelloman.common.utils.ByteArrayWithId
+import com.lelloman.common.utils.model.ByteArrayWithId
 import com.lelloman.identicon.ClassicIdenticonView
 import com.lelloman.read.R
 import com.lelloman.read.ReadApplication

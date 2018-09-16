@@ -1,7 +1,7 @@
 package com.lelloman.common.settings.property
 
 import android.content.SharedPreferences
-import com.lelloman.common.utils.Named
+import com.lelloman.common.utils.model.Named
 
 fun <T : Named> SharedPreferences.enumProperty(
     key: String,
