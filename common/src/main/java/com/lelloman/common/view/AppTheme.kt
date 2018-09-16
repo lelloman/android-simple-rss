@@ -2,7 +2,7 @@ package com.lelloman.common.view
 
 import android.support.annotation.StyleRes
 import com.lelloman.common.R
-import com.lelloman.common.utils.Named
+import com.lelloman.common.utils.model.Named
 
 enum class AppTheme(
     @StyleRes val resId: Int

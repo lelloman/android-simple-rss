@@ -2,7 +2,7 @@ package com.lelloman.read.feed.finder
 
 import android.os.Parcel
 import android.os.Parcelable
-import com.lelloman.common.utils.ModelWithId
+import com.lelloman.common.utils.model.ModelWithId
 import java.io.Serializable
 
 data class FoundFeed(

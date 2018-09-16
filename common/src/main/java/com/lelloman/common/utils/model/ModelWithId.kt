@@ -1,4 +1,4 @@
-package com.lelloman.common.utils
+package com.lelloman.common.utils.model
 
 interface ModelWithId {
     val id: Long

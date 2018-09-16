@@ -5,7 +5,7 @@ import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.BaseObservable
 import android.databinding.Bindable
-import com.lelloman.common.utils.ByteArrayWithId
+import com.lelloman.common.utils.model.ByteArrayWithId
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.read.BR
