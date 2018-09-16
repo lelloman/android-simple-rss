@@ -1,4 +1,4 @@
-package com.lelloman.read.core.di
+package com.lelloman.read.di
 
 import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler

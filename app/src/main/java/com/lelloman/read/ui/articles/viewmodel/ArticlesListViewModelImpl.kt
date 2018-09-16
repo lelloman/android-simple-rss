@@ -6,7 +6,7 @@ import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.ReadNavigationScreen
+import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings

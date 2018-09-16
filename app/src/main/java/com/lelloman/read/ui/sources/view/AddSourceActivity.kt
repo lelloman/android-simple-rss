@@ -10,9 +10,9 @@ import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_NAME
-import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.read.databinding.ActivityAddSourceBinding
+import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_NAME
+import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 
 class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBinding>() {

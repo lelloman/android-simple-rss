@@ -4,8 +4,8 @@ import android.widget.ImageView
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.view.PicassoWrap
 import com.lelloman.read.ReadApplication
-import com.lelloman.read.core.di.DaggerAppComponent
-import com.lelloman.read.core.di.ViewModelModule
+import com.lelloman.read.di.DaggerAppComponent
+import com.lelloman.read.di.ViewModelModule
 import com.lelloman.read.http.HttpModule
 import com.lelloman.read.persistence.db.DbModule
 import com.lelloman.read.persistence.settings.SettingsModule

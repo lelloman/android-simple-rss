@@ -10,7 +10,7 @@ import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.view.actionevent.ViewActionEvent
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.ReadNavigationScreen
+import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.clear

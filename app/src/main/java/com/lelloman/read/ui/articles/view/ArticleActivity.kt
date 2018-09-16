@@ -15,9 +15,9 @@ import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.ReadNavigationScreen
-import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.databinding.ActivityArticleBinding
+import com.lelloman.read.navigation.ReadNavigationScreen
+import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 
 class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>() {

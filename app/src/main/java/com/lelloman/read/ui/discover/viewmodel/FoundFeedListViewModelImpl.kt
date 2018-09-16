@@ -7,11 +7,11 @@ import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.navigation.ReadNavigationScreen
-import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_FOUND_FEEDS
-import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_NAME
-import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.read.feed.finder.FoundFeed
+import com.lelloman.read.navigation.ReadNavigationScreen
+import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_FOUND_FEEDS
+import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_NAME
+import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import io.reactivex.Scheduler
 
