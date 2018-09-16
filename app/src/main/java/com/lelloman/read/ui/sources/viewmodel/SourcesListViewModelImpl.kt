@@ -7,7 +7,7 @@ import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.ReadNavigationScreen
+import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DeletedSource

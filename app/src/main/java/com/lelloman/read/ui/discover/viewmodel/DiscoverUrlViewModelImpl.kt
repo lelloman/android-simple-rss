@@ -10,8 +10,8 @@ import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.navigation.ReadNavigationScreen
-import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_URL
+import com.lelloman.read.navigation.ReadNavigationScreen
+import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import io.reactivex.Scheduler
 

@@ -7,8 +7,8 @@ import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.logger.Logger
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.PicassoWrap
-import com.lelloman.read.core.FaviconBitmapProvider
-import com.lelloman.read.core.di.DaggerAppComponent
+import com.lelloman.read.di.DaggerAppComponent
+import com.lelloman.read.feed.FaviconBitmapProvider
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.persistence.db.AppDatabase
 import com.lelloman.read.persistence.db.SourcesDao
@@ -71,12 +71,11 @@ open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcas
         }
     }
 
-    override fun inject() {
-        DaggerAppComponent.builder()
-            .baseApplicationModule(BaseApplicationModule(this))
-            .build()
-            .inject(this)
-    }
+    override fun inject() = DaggerAppComponent
+        .builder()
+        .baseApplicationModule(BaseApplicationModule(this))
+        .build()
+        .inject(this)
 
     companion object {
 

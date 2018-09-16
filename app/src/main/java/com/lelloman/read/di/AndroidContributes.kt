@@ -1,4 +1,4 @@
-package com.lelloman.read.core.di
+package com.lelloman.read.di
 
 import com.lelloman.common.view.InjectableActivity
 import com.lelloman.read.feed.FeedRefreshBroadcastReceiver

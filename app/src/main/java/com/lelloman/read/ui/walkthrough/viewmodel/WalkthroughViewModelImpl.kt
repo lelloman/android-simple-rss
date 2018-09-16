@@ -13,7 +13,7 @@ import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.actionevent.SwipePageActionEvent
-import com.lelloman.read.core.navigation.ReadNavigationScreen
+import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.ui.walkthrough.ThemeListItem

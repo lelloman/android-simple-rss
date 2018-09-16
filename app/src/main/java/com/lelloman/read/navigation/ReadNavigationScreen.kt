@@ -1,4 +1,4 @@
-package com.lelloman.read.core.navigation
+package com.lelloman.read.navigation
 
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.navigation.NavigationScreen

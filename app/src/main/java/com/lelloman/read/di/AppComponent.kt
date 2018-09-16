@@ -1,4 +1,4 @@
-package com.lelloman.read.core.di
+package com.lelloman.read.di
 
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.settings.BaseSettingsModule

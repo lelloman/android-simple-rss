@@ -2,6 +2,7 @@ package com.lelloman.read.core.navigation
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.navigation.DeepLink
+import com.lelloman.read.navigation.ReadNavigationScreen
 import org.junit.Test
 
 class DeepLinkTest {

@@ -2,7 +2,7 @@ package com.lelloman.read.ui.launcher.viewmodel
 
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.navigation.ReadNavigationScreen
+import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.settings.AppSettings
 
 class LauncherViewModelImpl(

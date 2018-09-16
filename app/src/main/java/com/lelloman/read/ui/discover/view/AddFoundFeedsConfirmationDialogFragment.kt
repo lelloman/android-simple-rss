@@ -9,8 +9,8 @@ import android.os.Bundle
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.read.R
-import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_FOUND_FEEDS
 import com.lelloman.read.feed.finder.FoundFeed
+import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_FOUND_FEEDS
 
 class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
 

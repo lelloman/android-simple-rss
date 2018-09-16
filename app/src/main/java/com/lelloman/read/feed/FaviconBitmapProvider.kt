@@ -1,4 +1,4 @@
-package com.lelloman.read.core
+package com.lelloman.read.feed
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
