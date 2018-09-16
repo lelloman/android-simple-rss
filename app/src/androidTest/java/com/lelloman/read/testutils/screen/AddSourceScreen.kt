@@ -4,11 +4,11 @@ import android.graphics.drawable.VectorDrawable
 import android.support.test.espresso.Espresso.pressBack
 import android.widget.EditText
 import com.lelloman.read.R
-import com.lelloman.read.testutils.clickView
-import com.lelloman.read.testutils.clickViewWithText
-import com.lelloman.read.testutils.typeInEditText
-import com.lelloman.read.testutils.viewIsDisplayed
-import com.lelloman.read.testutils.viewWithId
+import com.lelloman.testutils.clickView
+import com.lelloman.testutils.clickViewWithText
+import com.lelloman.testutils.typeInEditText
+import com.lelloman.testutils.viewIsDisplayed
+import com.lelloman.testutils.viewWithId
 import junit.framework.Assert
 
 class AddSourceScreen : Screen() {
@@ -35,7 +35,7 @@ class AddSourceScreen : Screen() {
         }
     }
 
-    fun wait(seconds: Double) = apply { com.lelloman.read.testutils.wait(seconds) }
+    fun wait(seconds: Double) = apply { com.lelloman.testutils.wait(seconds) }
 
     fun urlFieldShowsOkDrawable() = apply {
         viewWithId(R.id.edit_text_source_url).check { view, noViewFoundException ->

@@ -2,11 +2,11 @@ package com.lelloman.read.testutils.screen
 
 import com.lelloman.common.view.AppTheme
 import com.lelloman.read.R
-import com.lelloman.read.testutils.checkRecyclerViewCount
-import com.lelloman.read.testutils.clickView
-import com.lelloman.read.testutils.clickViewWithText
-import com.lelloman.read.testutils.viewIsDisplayed
-import com.lelloman.read.testutils.viewWithTextIsDisplayed
+import com.lelloman.testutils.checkRecyclerViewCount
+import com.lelloman.testutils.clickView
+import com.lelloman.testutils.clickViewWithText
+import com.lelloman.testutils.viewIsDisplayed
+import com.lelloman.testutils.viewWithTextIsDisplayed
 
 
 class WalkthroughScreen : Screen() {
@@ -30,8 +30,8 @@ class WalkthroughScreen : Screen() {
         clickViewWithText(AppTheme.LIGHT.name)
     }
 
-    fun swipeLeft() = apply { com.lelloman.read.testutils.swipeLeft(R.id.view_pager) }
-    fun swipeRight() = apply { com.lelloman.read.testutils.swipeRight(R.id.view_pager) }
+    fun swipeLeft() = apply { com.lelloman.testutils.swipeLeft(R.id.view_pager) }
+    fun swipeRight() = apply { com.lelloman.testutils.swipeRight(R.id.view_pager) }
 
     fun typeInUrlIsDisplayed() = apply { viewWithTextIsDisplayed(string(R.string.type_in_url)) }
 

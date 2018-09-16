@@ -10,10 +10,10 @@ import com.lelloman.read.testutils.MockHttpClient.Companion.FANPAGE_ARTICLES_COU
 import com.lelloman.read.testutils.MockHttpClient.Companion.REPUBBLICA_ARTICLES_COUNT
 import com.lelloman.read.testutils.MockHttpClient.Companion.URL_ASD
 import com.lelloman.read.testutils.TestApp
-import com.lelloman.read.testutils.rotateNatural
 import com.lelloman.read.testutils.screen.ArticlesListScreen
 import com.lelloman.read.testutils.screen.WalkthroughScreen
 import com.lelloman.read.ui.launcher.view.LauncherActivity
+import com.lelloman.testutils.rotateNatural
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

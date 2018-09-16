@@ -1,8 +1,8 @@
 package com.lelloman.read.testutils.screen
 
 import android.support.test.InstrumentationRegistry
-import com.lelloman.read.testutils.viewIsDisplayed
-import com.lelloman.read.testutils.viewWithTextIsDisplayed
+import com.lelloman.testutils.viewIsDisplayed
+import com.lelloman.testutils.viewWithTextIsDisplayed
 
 abstract class Screen {
 
