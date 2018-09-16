@@ -74,7 +74,6 @@ open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcas
     override fun inject() {
         DaggerAppComponent.builder()
             .baseApplicationModule(BaseApplicationModule(this))
-            .baseSettingsModule(baseSettingsModule)
             .build()
             .inject(this)
     }

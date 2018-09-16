@@ -9,10 +9,11 @@ import android.view.Menu
 import android.view.MenuItem
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
+import com.lelloman.common.view.BaseActivity
 import com.lelloman.read.R
 import com.lelloman.read.core.SemanticTimeProvider
-import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivityArticlesListBinding
+import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
@@ -24,6 +25,9 @@ class ArticlesListActivity :
 
     @Inject
     lateinit var semanticTimeProvider: SemanticTimeProvider
+
+    @Inject
+    lateinit var appSettings: AppSettings
 
     override val layoutResId = R.layout.activity_articles_list
 

@@ -1,6 +1,6 @@
 package com.lelloman.read.persistence.settings
 
-import com.lelloman.read.core.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.BaseViewModel
 
 fun BaseViewModel.clear() {
     val onCleared = BaseViewModel::class.java.getDeclaredMethod("onCleared")

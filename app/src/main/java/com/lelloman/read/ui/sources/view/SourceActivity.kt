@@ -3,8 +3,8 @@ package com.lelloman.read.ui.sources.view
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.lelloman.common.view.BaseActivity
 import com.lelloman.read.R
-import com.lelloman.read.core.view.BaseActivity
 import com.lelloman.read.databinding.ActivitySourceBinding
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
 import dagger.android.AndroidInjection

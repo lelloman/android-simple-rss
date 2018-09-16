@@ -25,6 +25,10 @@ class BaseApplicationSettingsImpl(
     override val useMeteredNetwork = useMeteredNetworkProperty.observable
     override val appTheme = appThemeProperty.observable
 
+    init {
+        readAllSettings()
+    }
+
     override fun readAllSettings() {
         useMeteredNetworkProperty.readValue()
         appThemeProperty.readValue()
