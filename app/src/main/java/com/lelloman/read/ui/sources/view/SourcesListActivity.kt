@@ -9,8 +9,9 @@ import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.utils.ItemSwipeListener
 import com.lelloman.common.view.BaseActivity
+import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.R
-import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.databinding.ActivitySourcesListBinding
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import dagger.android.AndroidInjection
@@ -24,6 +25,9 @@ class SourcesListActivity
     : BaseActivity<SourcesListViewModel, ActivitySourcesListBinding>() {
 
     private lateinit var adapter: SourcesAdapter
+
+    @Inject
+    lateinit var resourceProvider: ResourceProvider
 
     @Inject
     lateinit var semanticTimeProvider: SemanticTimeProvider
@@ -41,6 +45,7 @@ class SourcesListActivity
         AndroidInjection.inject(this)
 
         adapter = SourcesAdapter(
+            resourceProvider = resourceProvider,
             semanticTimeProvider = semanticTimeProvider,
             onSourceClickedListener = viewModel::onSourceClicked,
             onSourceIsActiveChangedListener = viewModel::onSourceIsActiveChanged

@@ -1,11 +1,11 @@
 package com.lelloman.read.feed
 
+import com.lelloman.common.testutils.MockLogger
+import com.lelloman.common.testutils.MockLoggerFactory
+import com.lelloman.common.testutils.MockTimeProvider
 import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.mock.MockAppSettings
-import com.lelloman.read.mock.MockLogger
-import com.lelloman.read.mock.MockLoggerFactory
-import com.lelloman.read.mock.MockTimeProvider
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.db.model.Article

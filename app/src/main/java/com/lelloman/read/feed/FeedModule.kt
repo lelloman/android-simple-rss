@@ -6,6 +6,7 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.read.core.FaviconBitmapProvider
 import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.finder.FeedFinder
@@ -23,6 +24,14 @@ import javax.inject.Singleton
 
 @Module
 class FeedModule {
+
+    @Singleton
+    @Provides
+    fun provideFaviconBitmapProvider(
+        loggerFactory: LoggerFactory
+    ) = FaviconBitmapProvider(
+        loggerFactory = loggerFactory
+    )
 
     @Singleton
     @Provides

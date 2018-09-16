@@ -1,12 +1,13 @@
 package com.lelloman.read.core.di
 
+import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.SemanticTimeProvider
+import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
@@ -35,9 +36,15 @@ import com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModelImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
+import javax.inject.Provider
+import javax.inject.Singleton
 
 @Module
 open class ViewModelModule {
+
+    @Singleton
+    @Provides
+    fun provideMap(): Map<Class<out ViewModel>, Provider<out ViewModel>> = mutableMapOf()
 
     @Provides
     open fun provideArticlesListViewModel(

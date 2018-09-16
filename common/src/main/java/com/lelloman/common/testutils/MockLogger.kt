@@ -1,4 +1,4 @@
-package com.lelloman.read.mock
+package com.lelloman.common.testutils
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.logger.Logger

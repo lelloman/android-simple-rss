@@ -2,8 +2,8 @@ package com.lelloman.read
 
 import android.content.Context
 import android.support.test.rule.ActivityTestRule
+import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.read.core.di.AppModule
 import com.lelloman.read.http.HttpModule
 import com.lelloman.read.testutils.MockHttpClient
 import com.lelloman.read.testutils.MockHttpClient.Companion.FANPAGE_ARTICLES_COUNT
@@ -32,7 +32,7 @@ class SmokeTests {
             it.httpModule = object : HttpModule() {
                 override fun provideOkHttpClient() = MockHttpClient()
             }
-            it.appModule = object : AppModule() {
+            it.baseApplicationModule = object : BaseApplicationModule(it) {
                 override fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker {
                     return object : MeteredConnectionChecker {
                         override fun isNetworkMetered() = isNetworkMetered

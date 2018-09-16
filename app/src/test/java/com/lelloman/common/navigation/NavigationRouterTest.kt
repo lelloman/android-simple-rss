@@ -1,9 +1,9 @@
 package com.lelloman.common.navigation
 
 import android.app.Activity
+import com.lelloman.common.testutils.MockLoggerFactory
 import com.lelloman.read.core.navigation.ReadNavigationScreen
 import com.lelloman.read.core.navigation.ReadNavigationScreen.Companion.ARG_URL
-import com.lelloman.read.mock.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import org.junit.Test

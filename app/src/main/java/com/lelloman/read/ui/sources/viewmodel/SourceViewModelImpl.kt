@@ -2,7 +2,7 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.SemanticTimeProvider
+import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import io.reactivex.Scheduler
 
@@ -36,7 +36,7 @@ class SourceViewModelImpl(
                 .subscribe {
                     sourceName.value = it.name
                     sourceUrl.value = it.url
-                    sourceLastFetched.value = semanticTimeProvider.getSourceLastFetchedString(it)
+                    sourceLastFetched.value = ""//semanticTimeProvider.getSourceLastFetchedString(it)
                 }
         }
     }

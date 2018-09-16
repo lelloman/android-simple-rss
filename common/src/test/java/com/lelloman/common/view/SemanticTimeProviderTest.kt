@@ -1,10 +1,9 @@
-package com.lelloman.read.core
+package com.lelloman.common.view
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.R
+import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.utils.TimeProvider
-import com.lelloman.read.R
-import com.lelloman.read.mock.MockResourceProvider
-import com.lelloman.read.testutils.dummySource
 import org.junit.Test
 import java.util.*
 
@@ -53,60 +52,51 @@ class SemanticTimeProviderTest {
     }
 
     @Test
-    fun `returns source last fetched negative time`() {
-        val source = dummySource().copy(lastFetched = -10_000)
-
-        val lastFetched = tested.getSourceLastFetchedString(source)
-
-        assertThat(lastFetched).isEqualTo("${R.string.last_refresh}:${R.string.never}")
-    }
-
-    @Test
     fun `returns source last fetched now`() {
-        val source = dummySource().copy(lastFetched = now)
+        val lastFetched = now
 
-        val lastFetched = tested.getSourceLastFetchedString(source)
+        val timeDiff = tested.getTimeDiffString(lastFetched)
 
-        assertThat(lastFetched).isEqualTo("${R.string.last_refresh}:${R.string.time_diff_seconds}:0")
+        assertThat(timeDiff).isEqualTo("${R.string.time_diff_seconds}:0")
     }
 
     @Test
     fun `returns source last fetched 10 sec ago`() {
-        val source = dummySource().copy(lastFetched = now - 10_000)
+        val lastFetched = now - 10_000
 
-        val lastFetched = tested.getSourceLastFetchedString(source)
+        val timeDiff = tested.getTimeDiffString(lastFetched)
 
-        assertThat(lastFetched).isEqualTo("${R.string.last_refresh}:${R.string.time_diff_seconds}:10")
+        assertThat(timeDiff).isEqualTo("${R.string.time_diff_seconds}:10")
     }
 
     @Test
     fun `returns source last fetched 5 min and 10 sec ago`() {
         val delta = 60_000 * 5 + 10_000
-        val source = dummySource().copy(lastFetched = now - delta)
+        val lastFetched = now - delta
 
-        val lastFetched = tested.getSourceLastFetchedString(source)
+        val timeDiff = tested.getTimeDiffString(lastFetched)
 
-        assertThat(lastFetched).isEqualTo("${R.string.last_refresh}:${R.string.time_diff_minutes}:5")
+        assertThat(timeDiff).isEqualTo("${R.string.time_diff_minutes}:5")
     }
 
     @Test
     fun `returns source last fetched 2 hours 5 min and 10 sec ago`() {
         val delta = 2 * 60_000 * 60 + 60_000 * 5 + 10_000
-        val source = dummySource().copy(lastFetched = now - delta)
+        val lastFetched = now - delta
 
-        val lastFetched = tested.getSourceLastFetchedString(source)
+        val timeDiff = tested.getTimeDiffString(lastFetched)
 
-        assertThat(lastFetched).isEqualTo("${R.string.last_refresh}:${R.string.time_diff_hours}:2")
+        assertThat(timeDiff).isEqualTo("${R.string.time_diff_hours}:2")
     }
 
     @Test
     fun `returns source last fetched 7 days 2 hours 5 min and 10 sec ago`() {
         val delta = 7 * (24 * 60_000 * 60) + 2 * 60_000 * 60 + 60_000 * 5 + 10_000
-        val source = dummySource().copy(lastFetched = now - delta)
+        val lastFetched = now - delta
 
-        val lastFetched = tested.getSourceLastFetchedString(source)
+        val timeDiff = tested.getTimeDiffString(lastFetched)
 
-        assertThat(lastFetched).isEqualTo("${R.string.last_refresh}:${R.string.time_diff_days}:7")
+        assertThat(timeDiff).isEqualTo("${R.string.time_diff_days}:7")
     }
 
     @Test

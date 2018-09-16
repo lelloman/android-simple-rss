@@ -7,6 +7,20 @@ import com.lelloman.common.di.qualifiers.NewThreadScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.logger.LoggerFactoryImpl
+import com.lelloman.common.navigation.NavigationRouter
+import com.lelloman.common.settings.BaseApplicationSettings
+import com.lelloman.common.utils.ActionTokenProvider
+import com.lelloman.common.utils.TimeProvider
+import com.lelloman.common.utils.TimeProviderImpl
+import com.lelloman.common.utils.UrlValidator
+import com.lelloman.common.utils.UrlValidatorImpl
+import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.common.view.MeteredConnectionCheckerImpl
+import com.lelloman.common.view.PicassoWrap
+import com.lelloman.common.view.PicassoWrapImpl
+import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.view.ResourceProviderImpl
+import com.lelloman.common.view.SemanticTimeProvider
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -39,4 +53,46 @@ open class BaseApplicationModule(private val application: Application) {
     @Provides
     fun provideLoggerFactory(): LoggerFactory = LoggerFactoryImpl()
 
+    @Singleton
+    @Provides
+    fun provideTimeProvider(): TimeProvider = TimeProviderImpl()
+
+    @Singleton
+    @Provides
+    fun provideResourceProvider(context: Context): ResourceProvider = ResourceProviderImpl(context)
+
+    @Provides
+    fun provideNavigationRouter(loggerFactory: LoggerFactory) = NavigationRouter(loggerFactory)
+
+    @Singleton
+    @Provides
+    open fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker = MeteredConnectionCheckerImpl(context)
+
+    @Singleton
+    @Provides
+    fun provideActionTokenProvider() = ActionTokenProvider()
+
+    @Singleton
+    @Provides
+    fun provideUrlValidator(): UrlValidator = UrlValidatorImpl()
+
+    @Singleton
+    @Provides
+    fun providePicassoWrap(
+        appSettings: BaseApplicationSettings,
+        meteredConnectionChecker: MeteredConnectionChecker
+    ): PicassoWrap = PicassoWrapImpl(
+        useMeteredNetwork = appSettings.useMeteredNetwork,
+        meteredConnectionChecker = meteredConnectionChecker
+    )
+
+    @Singleton
+    @Provides
+    fun provideSemanticTimeProvider(
+        timeProvider: TimeProvider,
+        resourceProvider: ResourceProvider
+    ) = SemanticTimeProvider(
+        timeProvider = timeProvider,
+        resourceProvider = resourceProvider
+    )
 }

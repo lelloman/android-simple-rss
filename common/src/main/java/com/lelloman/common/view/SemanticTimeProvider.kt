@@ -1,9 +1,7 @@
-package com.lelloman.read.core
+package com.lelloman.common.view
 
+import com.lelloman.common.R
 import com.lelloman.common.utils.TimeProvider
-import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.R
-import com.lelloman.read.persistence.db.model.Source
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -26,7 +24,7 @@ class SemanticTimeProvider(
         val totSeconds = ms / 1000
         val quantityStrings = resourceProvider.getStringArray(R.array.time_quantities)
 
-        if(ms <= 0L){
+        if (ms <= 0L) {
             return resourceProvider.getString(R.string.time_quantity_sec, 0)
         }
 
@@ -45,7 +43,7 @@ class SemanticTimeProvider(
             .joinToString(" ") { (_, string) -> string }
     }
 
-    private fun getTimeDiffString(timeUtcMs: Long): String {
+    fun getTimeDiffString(timeUtcMs: Long): String {
         var delta = (timeProvider.nowUtcMs() - timeUtcMs) / 1000
         if (delta < 0) {
             delta = 0
@@ -74,14 +72,5 @@ class SemanticTimeProvider(
         }
 
         return resourceProvider.getString(stringId, value)
-    }
-
-    fun getSourceLastFetchedString(source: Source): String {
-        val lastFetchedValue = if (source.lastFetched <= 0L) {
-            resourceProvider.getString(R.string.never)
-        } else {
-            getTimeDiffString(source.lastFetched)
-        }
-        return resourceProvider.getString(R.string.last_refresh, lastFetchedValue)
     }
 }

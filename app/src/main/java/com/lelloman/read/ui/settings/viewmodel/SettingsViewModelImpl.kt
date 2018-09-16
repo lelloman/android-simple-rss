@@ -8,7 +8,7 @@ import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.SemanticTimeProvider
+import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
 import io.reactivex.Scheduler

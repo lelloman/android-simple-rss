@@ -16,26 +16,6 @@
     <string name="empty_articles_sources_disabled">All the sources are disabled</string>
     <string name="empty_articles_must_refresh">No article available at the moment</string>
 
-    <string name="last_refresh">last refresh: %s</string>
-    <string name="never">never</string>
-
-    <string name="time_diff_seconds">%ss ago</string>
-    <string name="time_diff_minutes">%sm ago</string>
-    <string name="time_diff_hours">%sh ago</string>
-    <string name="time_diff_days">%sd ago</string>
-
-    <string name="time_quantity_days">%sd</string>
-    <string name="time_quantity_hours">%sh</string>
-    <string name="time_quantity_min">%sm</string>
-    <string name="time_quantity_sec">%ss</string>
-
-    <string-array name="time_quantities">
-        <item>@string/time_quantity_sec</item>
-        <item>@string/time_quantity_min</item>
-        <item>@string/time_quantity_hours</item>
-        <item>@string/time_quantity_days</item>
-    </string-array>
-
     <string name="test_feed_http_error">A network error occurred</string>
     <string name="test_feed_xml_error">"Source doesn't return a valid rss xml"</string>
     <string name="test_feed_empty_error">"Source returned an empty feed"</string>
@@ -70,4 +50,6 @@
     <string name="settings_theme_descr">Theme</string>
     <string name="settings_theme_title">Change the colors of the app.</string>
 
+    <string name="last_refresh">last refresh: %s</string>
+    <string name="never">never</string>
 </resources>
