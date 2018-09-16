@@ -40,11 +40,6 @@ dependencies {
     implementation project(':common')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
-    // support
-    implementation "com.android.support:cardview-v7:$support_lib_version"
-    implementation "com.android.support.constraint:constraint-layout:$constraint_layout_version"
-    implementation "android.arch.lifecycle:extensions:$lifecycle_version"
-
     // room
     implementation "android.arch.persistence.room:runtime:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"

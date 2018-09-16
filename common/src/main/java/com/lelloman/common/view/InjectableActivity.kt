@@ -1,4 +1,4 @@
-package com.lelloman.read.core.view
+package com.lelloman.common.view
 
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -7,7 +7,7 @@ import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.navigation.NavigationRouter
-import com.lelloman.read.persistence.settings.AppSettings
+import com.lelloman.common.settings.BaseApplicationSettings
 import dagger.android.AndroidInjection
 import io.reactivex.Scheduler
 import javax.inject.Inject
@@ -21,7 +21,7 @@ abstract class InjectableActivity : AppCompatActivity() {
     lateinit var navigationRouter: NavigationRouter
 
     @Inject
-    lateinit var appSettings: AppSettings
+    lateinit var baseAppSettings: BaseApplicationSettings
 
     @Inject
     @field:UiScheduler

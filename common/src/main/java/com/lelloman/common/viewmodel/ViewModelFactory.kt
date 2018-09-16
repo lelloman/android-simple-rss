@@ -1,4 +1,4 @@
-package com.lelloman.read.core.viewmodel
+package com.lelloman.common.viewmodel
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider

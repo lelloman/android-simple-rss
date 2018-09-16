@@ -2,7 +2,7 @@ package com.lelloman.read.ui.launcher.viewmodel
 
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.BaseViewModel
 
 abstract class LauncherViewModel(
     actionTokenProvider: ActionTokenProvider,

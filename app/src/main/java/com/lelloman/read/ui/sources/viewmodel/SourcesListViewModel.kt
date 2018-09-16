@@ -4,7 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.persistence.db.model.Source
 
 abstract class SourcesListViewModel(

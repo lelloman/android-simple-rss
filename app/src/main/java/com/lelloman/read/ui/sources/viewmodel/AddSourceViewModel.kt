@@ -3,7 +3,7 @@ package com.lelloman.read.ui.sources.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.BaseViewModel
 
 abstract class AddSourceViewModel(
     resourceProvider: ResourceProvider

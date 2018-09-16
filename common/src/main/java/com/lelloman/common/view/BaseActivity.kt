@@ -1,4 +1,4 @@
-package com.lelloman.read.core.view
+package com.lelloman.common.view
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -11,13 +11,13 @@ import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
 import android.view.View
 import android.widget.Toast
+import com.lelloman.common.R
 import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.view.actionevent.AnimationViewActionEvent
 import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.SwipePageActionEvent
 import com.lelloman.common.view.actionevent.ToastEvent
-import com.lelloman.read.R
-import com.lelloman.read.core.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.BaseViewModel
 import io.reactivex.disposables.Disposable
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
@@ -44,12 +44,12 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val customTheme = appSettings
+        val customTheme = baseAppSettings
             .appTheme
             .blockingFirst()
         theme.applyStyle(customTheme.resId, true)
 
-        themeChangesSubscription = appSettings
+        themeChangesSubscription = baseAppSettings
             .appTheme
             .filter { it != customTheme }
             .observeOn(uiScheduler)

@@ -5,7 +5,7 @@ import android.view.View
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.read.core.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.ui.common.viewmodel.IDiscoverUrlViewModel
 import com.lelloman.read.ui.walkthrough.ThemeListItem
 
