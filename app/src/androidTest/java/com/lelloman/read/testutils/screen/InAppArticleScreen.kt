@@ -2,7 +2,7 @@ package com.lelloman.read.testutils.screen
 
 import android.support.test.espresso.Espresso.pressBack
 import com.lelloman.read.R
-import com.lelloman.read.testutils.viewIsDisplayed
+import com.lelloman.testutils.viewIsDisplayed
 
 class InAppArticleScreen : Screen() {
     init {

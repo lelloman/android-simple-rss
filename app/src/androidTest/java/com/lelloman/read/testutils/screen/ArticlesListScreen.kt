@@ -4,15 +4,15 @@ import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import com.lelloman.read.R
-import com.lelloman.read.testutils.checkIsSwipeRefreshing
-import com.lelloman.read.testutils.checkRecyclerViewCount
-import com.lelloman.read.testutils.checkViewAtPositionHasImageGone
-import com.lelloman.read.testutils.checkViewAtPositionHasImageVisible
-import com.lelloman.read.testutils.checkViewAtPositionHasText
-import com.lelloman.read.testutils.clickOnRecyclerViewItem
-import com.lelloman.read.testutils.clickViewWithText
-import com.lelloman.read.testutils.openOverflowMenu
-import com.lelloman.read.testutils.viewWithId
+import com.lelloman.testutils.checkIsSwipeRefreshing
+import com.lelloman.testutils.checkRecyclerViewCount
+import com.lelloman.testutils.checkViewAtPositionHasImageGone
+import com.lelloman.testutils.checkViewAtPositionHasImageVisible
+import com.lelloman.testutils.checkViewAtPositionHasText
+import com.lelloman.testutils.clickOnRecyclerViewItem
+import com.lelloman.testutils.clickViewWithText
+import com.lelloman.testutils.openOverflowMenu
+import com.lelloman.testutils.viewWithId
 
 class ArticlesListScreen : Screen() {
 
@@ -48,9 +48,9 @@ class ArticlesListScreen : Screen() {
         return DiscoverSourcesScreen()
     }
 
-    fun isSwipeRefreshing() = apply { checkIsSwipeRefreshing(true) }
+    fun isSwipeRefreshing() = apply { checkIsSwipeRefreshing(true, R.id.swipe_refresh_layout) }
 
-    fun isNotSwipeRefreshing() = apply { checkIsSwipeRefreshing(false) }
+    fun isNotSwipeRefreshing() = apply { checkIsSwipeRefreshing(false, R.id.swipe_refresh_layout) }
 
     fun showsArticles(count: Int) = apply { checkRecyclerViewCount(count, recyclerViewId) }
 
@@ -58,9 +58,9 @@ class ArticlesListScreen : Screen() {
 
     fun showsArticleWithTitle(position: Int, title: String) = apply { checkViewAtPositionHasText(position, title, recyclerViewId) }
 
-    fun rotateLeft() = apply { com.lelloman.read.testutils.rotateLeft() }
-    fun rotateRight() = apply { com.lelloman.read.testutils.rotateRight() }
-    fun rotateNatural() = apply { com.lelloman.read.testutils.rotateNatural() }
+    fun rotateLeft() = apply { com.lelloman.testutils.rotateLeft() }
+    fun rotateRight() = apply { com.lelloman.testutils.rotateRight() }
+    fun rotateNatural() = apply { com.lelloman.testutils.rotateNatural() }
 
     fun clickOnArticle(position: Int) = with(clickOnRecyclerViewItem(position, recyclerViewId)) {
         InAppArticleScreen()
@@ -74,5 +74,5 @@ class ArticlesListScreen : Screen() {
         checkViewAtPositionHasImageGone(position, recyclerViewId, R.id.image)
     }
 
-    fun wait(seconds: Double) = apply { com.lelloman.read.testutils.wait(seconds) }
+    fun wait(seconds: Double) = apply { com.lelloman.testutils.wait(seconds) }
 }

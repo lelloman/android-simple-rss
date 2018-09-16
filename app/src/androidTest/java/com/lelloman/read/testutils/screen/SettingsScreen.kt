@@ -3,8 +3,8 @@ package com.lelloman.read.testutils.screen
 import android.support.test.espresso.Espresso.pressBack
 import com.lelloman.read.R
 import com.lelloman.read.testutils.setToggleSettingChecked
-import com.lelloman.read.testutils.viewIsDisplayed
-import com.lelloman.read.testutils.viewWithId
+import com.lelloman.testutils.viewIsDisplayed
+import com.lelloman.testutils.viewWithId
 
 class SettingsScreen : Screen() {
     init {

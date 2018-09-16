@@ -1,4 +1,4 @@
-package com.lelloman.read.testutils.matcher
+package com.lelloman.testutils.matcher
 
 import android.support.test.espresso.matcher.BoundedMatcher
 import android.support.v7.widget.RecyclerView
