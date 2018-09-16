@@ -4,13 +4,13 @@ import android.arch.lifecycle.Observer
 import android.view.View
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
+import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.view.actionevent.ViewActionEvent
 import com.lelloman.read.R
 import com.lelloman.read.core.navigation.ReadNavigationScreen
-import com.lelloman.read.mock.MockResourceProvider
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.clear

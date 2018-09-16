@@ -1,7 +1,9 @@
 package com.lelloman.read.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.read.core.SemanticTimeProvider
+import com.lelloman.common.testutils.MockResourceProvider
+import com.lelloman.common.view.SemanticTimeProvider
+import com.lelloman.read.R
 import com.lelloman.read.persistence.db.model.Source
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -11,10 +13,12 @@ import org.junit.Test
 
 class SourceListItemViewModelTest {
 
+    private val resourceProvider = MockResourceProvider()
     private val semanticTimeProvider: SemanticTimeProvider = mock()
     private val onIsActiveChanged: (Boolean) -> Unit = mock()
 
     private val tested = SourceListItemViewModel(
+        resourceProvider = resourceProvider,
         semanticTimeProvider = semanticTimeProvider,
         onIsActiveChanged = onIsActiveChanged
     )
@@ -33,10 +37,11 @@ class SourceListItemViewModelTest {
         val source = Source(
             name = "the name",
             url = "www.mipuzzanoipiedi.it",
-            isActive = true
+            isActive = true,
+            lastFetched = 1L
         )
         val lastFetchedString = "mipuzzanoipiediperdavver"
-        whenever(semanticTimeProvider.getSourceLastFetchedString(any())).thenReturn(lastFetchedString)
+        whenever(semanticTimeProvider.getTimeDiffString(any())).thenReturn(lastFetchedString)
 
         tested.bind(source)
 
@@ -44,7 +49,7 @@ class SourceListItemViewModelTest {
             assertThat(name).isEqualTo(source.name)
             assertThat(url).isEqualTo(source.url)
             assertThat(hash).isEqualTo(source.immutableHashCode)
-            assertThat(lastFetched.get()).isEqualTo(lastFetchedString)
+            assertThat(lastFetched.get()).isEqualTo("${R.string.last_refresh}:$lastFetchedString")
             assertThat(isActive).isEqualTo(source.isActive)
         }
     }

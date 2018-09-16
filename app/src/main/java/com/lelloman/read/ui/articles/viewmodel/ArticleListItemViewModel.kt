@@ -6,9 +6,9 @@ import android.arch.lifecycle.OnLifecycleEvent
 import android.databinding.BaseObservable
 import android.databinding.Bindable
 import com.lelloman.common.utils.ByteArrayWithId
+import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.read.BR
-import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings
 import io.reactivex.Scheduler

@@ -1,11 +1,11 @@
 package com.lelloman.read.feed.finder
 
+import com.lelloman.common.testutils.MockLoggerFactory
+import com.lelloman.common.testutils.MockUrlValidator
 import com.lelloman.read.html.Doc
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.html.element.ADocElement
 import com.lelloman.read.html.element.LinkDocElement
-import com.lelloman.read.mock.MockLoggerFactory
-import com.lelloman.read.mock.MockUrlValidator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

@@ -2,8 +2,8 @@ package com.lelloman.read.ui.articles.view
 
 import android.arch.lifecycle.Lifecycle
 import com.lelloman.common.view.BaseRecyclerViewAdapter
+import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.R
-import com.lelloman.read.core.SemanticTimeProvider
 import com.lelloman.read.databinding.ListItemArticleBinding
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.persistence.settings.AppSettings

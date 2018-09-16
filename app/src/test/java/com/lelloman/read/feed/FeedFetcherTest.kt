@@ -1,6 +1,8 @@
 package com.lelloman.read.feed
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.testutils.MockLoggerFactory
+import com.lelloman.common.testutils.MockMeteredConnectionChecker
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
 import com.lelloman.read.feed.fetcher.EmptySource
@@ -14,8 +16,6 @@ import com.lelloman.read.http.HttpClient
 import com.lelloman.read.http.HttpClientException
 import com.lelloman.read.http.HttpResponse
 import com.lelloman.read.mock.MockAppSettings
-import com.lelloman.read.mock.MockLoggerFactory
-import com.lelloman.read.mock.MockMeteredConnectionChecker
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.dummySource
 import com.nhaarman.mockito_kotlin.any
