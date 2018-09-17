@@ -29,6 +29,7 @@ DEBT:
 - [DEBT] FeedFinderIntegrationTest.findsLinksInHtml2 is blocking >_<
 - [DEBT] check if subscribing on new thread when doing http, should use a thread pool
 - [DEBT] handle deep links from outside (intent filter in manifest)
+- [DEBT] DeepLinkStartable is almost an abomination, the implementations are not even checking the screen parameter
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
@@ -44,6 +45,7 @@ BUGS:
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] there is no way to stop a discover url, not even a timeout
 - [BUG] smoke tests are flaky
+- [BUG] it seems that splitting base settings broke them, app theme changes are not being notified
 
 IN PROGRESS:
 - [DEBT] use only deep links for navigation

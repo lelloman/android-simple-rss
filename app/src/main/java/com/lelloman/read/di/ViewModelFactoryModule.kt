@@ -2,6 +2,7 @@ package com.lelloman.read.di
 
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import com.lelloman.common.di.qualifiers.ViewModelKey
 import com.lelloman.common.viewmodel.ViewModelFactory
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
