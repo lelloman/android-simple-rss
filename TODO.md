@@ -21,6 +21,8 @@ page in walkthrough
 - [DEBT] add smoke test: 2 sources active, count articles, disable 1 source, count...
 - [DEBT] remove robolectric now seriously
 - [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
+- [DEBT] use only deep links for navigation
+- [BUG] it seems that splitting base settings broke them, app theme changes are not being notified
 </s>
 
 DEBT:
@@ -45,7 +47,6 @@ BUGS:
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] there is no way to stop a discover url, not even a timeout
 - [BUG] smoke tests are flaky
-- [BUG] it seems that splitting base settings broke them, app theme changes are not being notified
 
 IN PROGRESS:
-- [DEBT] use only deep links for navigation
+- [FEATURE] add a device-info list screen
