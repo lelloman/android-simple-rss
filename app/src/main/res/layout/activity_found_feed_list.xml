@@ -27,7 +27,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:viewVisible="@{viewModel.isFindingFeeds}" />
 
-        <com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollNotifierRecyclerView
+        <com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollNotifierRecyclerView
             android:id="@+id/discover_recycler_view"
             android:layout_width="0dp"
             android:layout_height="0dp"

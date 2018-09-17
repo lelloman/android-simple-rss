@@ -9,7 +9,7 @@
             type="com.lelloman.read.ui.walkthrough.viewmodel.ThemeListItemViewModel" />
     </data>
 
-    <com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollCardView
+    <com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -46,5 +46,5 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_view" />
 
         </android.support.constraint.ConstraintLayout>
-    </com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollCardView>
+    </com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollCardView>
 </layout>

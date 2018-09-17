@@ -1,4 +1,4 @@
-package com.lelloman.read.widget.outsidescrollnotifier
+package com.lelloman.common.widget.outsidescrollnotifier
 
 import android.content.Context
 import android.support.v7.widget.CardView

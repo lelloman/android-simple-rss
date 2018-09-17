@@ -1,3 +1,5 @@
 package com.lelloman.deviceinfo.infoitem
 
-interface InfoItem
+import com.lelloman.common.utils.model.ModelWithId
+
+interface InfoItem : ModelWithId

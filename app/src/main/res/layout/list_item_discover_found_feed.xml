@@ -10,7 +10,7 @@
             type="com.lelloman.read.ui.discover.viewmodel.FoundFeedListItemViewModel" />
     </data>
 
-    <com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollCardView
+    <com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="12dp"
@@ -63,5 +63,5 @@
                 tools:text="Found 999 articles" />
 
         </android.support.constraint.ConstraintLayout>
-    </com.lelloman.read.widget.outsidescrollnotifier.OutsideScrollCardView>
+    </com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollCardView>
 </layout>

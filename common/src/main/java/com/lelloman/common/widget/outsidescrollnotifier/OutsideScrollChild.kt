@@ -1,4 +1,4 @@
-package com.lelloman.read.widget.outsidescrollnotifier
+package com.lelloman.common.widget.outsidescrollnotifier
 
 interface OutsideScrollChild {
     fun getHeight(): Int

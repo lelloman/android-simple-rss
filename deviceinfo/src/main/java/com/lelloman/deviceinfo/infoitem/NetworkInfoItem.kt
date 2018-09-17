@@ -1,3 +1,5 @@
 package com.lelloman.deviceinfo.infoitem
 
-class NetworkInfoItem : InfoItem
+class NetworkInfoItem(
+    override val id: Long
+) : InfoItem

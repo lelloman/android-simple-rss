@@ -18,9 +18,9 @@ class DeviceImpl(private val context: Context) : Device {
     private val screenDensityDpiSubject = BehaviorSubject.create<Int>()
     private val screenSizeDpSubject = BehaviorSubject.create<Resolution>()
 
-    override val screenResolution: Observable<Resolution> = screenResolutionSubject.hide()
+    override val screenResolutionPx: Observable<Resolution> = screenResolutionSubject.hide()
     override val screenDensityDpi: Observable<Int> = screenDensityDpiSubject.hide()
-    override val screenSizeDp: Observable<Resolution> = screenSizeDpSubject.hide()
+    override val screenResolutionDp: Observable<Resolution> = screenSizeDpSubject.hide()
 
     init {
         readScreenResolution()
@@ -45,7 +45,7 @@ class DeviceImpl(private val context: Context) : Device {
     }
 
     private fun readScreenSizeDp() {
-        val screenSizeDp = screenResolution.blockingFirst().let {
+        val screenSizeDp = screenResolutionPx.blockingFirst().let {
             val density = displayMetrics.density
             Resolution(
                 width = Math.round(it.width / density),
