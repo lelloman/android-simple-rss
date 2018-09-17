@@ -24,6 +24,9 @@ abstract class InjectableActivity : AppCompatActivity() {
     lateinit var baseAppSettings: BaseApplicationSettings
 
     @Inject
+    lateinit var resourceProvider: ResourceProvider
+
+    @Inject
     @field:UiScheduler
     lateinit var uiScheduler: Scheduler
 

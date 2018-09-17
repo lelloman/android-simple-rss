@@ -11,21 +11,16 @@ import android.view.MenuItem
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
 import com.lelloman.read.databinding.ActivityFoundFeedListBinding
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.ui.discover.viewmodel.FoundFeedListViewModel
 import dagger.android.AndroidInjection
-import javax.inject.Inject
 
 class FoundFeedListActivity
     : BaseActivity<FoundFeedListViewModel, ActivityFoundFeedListBinding>(),
     AddFoundFeedsConfirmationDialogFragment.Listener {
-
-    @Inject
-    lateinit var resourceProvider: ResourceProvider
 
     private lateinit var adapter: FoundFeedsAdapter
 

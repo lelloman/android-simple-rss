@@ -17,9 +17,9 @@ class DeviceImplTest {
 
     @Test
     fun returnsDisplayData() {
-        val resolutionTester = tested.screenResolution.test()
+        val resolutionTester = tested.screenResolutionPx.test()
         val dpiTester = tested.screenDensityDpi.test()
-        val sizeDpTester = tested.screenSizeDp.test()
+        val sizeDpTester = tested.screenResolutionDp.test()
 
         resolutionTester.assertValues(Resolution(1080, 1920))
         dpiTester.assertValues(420)
