@@ -4,7 +4,7 @@ import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
@@ -27,9 +27,9 @@ class MockViewModelModule : ViewModelModule() {
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         articlesRepository: ArticlesRepository,
-        resourceProvider: ResourceProvider,
         sourcesRepository: SourcesRepository,
         discoverRepository: DiscoverRepository,
+        dependencies: BaseViewModel.Dependencies,
         appSettings: AppSettings
     ): ArticlesListViewModel = articlesListViewModel
 
@@ -39,7 +39,7 @@ class MockViewModelModule : ViewModelModule() {
         @UiScheduler uiScheduler: Scheduler,
         sourcesRepository: SourcesRepository,
         articlesRepository: ArticlesRepository,
-        resourceProvider: ResourceProvider
+        dependencies: BaseViewModel.Dependencies
     ): SourcesListViewModel = sourcesListViewModel
 
     @Provides
@@ -47,7 +47,7 @@ class MockViewModelModule : ViewModelModule() {
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         sourcesRepository: SourcesRepository,
-        resourceProvider: ResourceProvider,
+        dependencies: BaseViewModel.Dependencies,
         feedFetcher: FeedFetcher,
         loggerFactory: LoggerFactory,
         urlValidator: UrlValidator

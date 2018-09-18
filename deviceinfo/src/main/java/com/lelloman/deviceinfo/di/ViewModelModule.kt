@@ -2,8 +2,7 @@ package com.lelloman.deviceinfo.di
 
 import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.common.utils.ActionTokenProvider
-import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.deviceinfo.device.Device
 import com.lelloman.deviceinfo.ui.InfoListViewModel
 import com.lelloman.deviceinfo.ui.InfoListViewModelImpl
@@ -24,12 +23,10 @@ open class ViewModelModule {
     open fun provideInfoListViewModel(
         @IoScheduler ioScheduler: Scheduler,
         device: Device,
-        resourceProvider: ResourceProvider,
-        actionTokenProvider: ActionTokenProvider
+        dependencies: BaseViewModel.Dependencies
     ): InfoListViewModel = InfoListViewModelImpl(
         device = device,
         ioScheduler = ioScheduler,
-        resourceProvider = resourceProvider,
-        actionTokenProvider = actionTokenProvider
+        dependencies = dependencies
     )
 }

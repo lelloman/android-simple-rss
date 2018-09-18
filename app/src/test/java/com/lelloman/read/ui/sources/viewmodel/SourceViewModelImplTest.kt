@@ -3,6 +3,7 @@ package com.lelloman.read.ui.sources.viewmodel
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
+import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.ui.common.repository.SourcesRepository
@@ -34,7 +35,11 @@ class SourceViewModelImplTest : AndroidArchTest() {
             uiScheduler = trampoline(),
             semanticTimeProvider = semanticTimeProvider,
             sourcesRepository = sourcesRepository,
-            resourceProvider = resourceProvider
+            dependencies = BaseViewModel.Dependencies(
+                resourceProvider = resourceProvider,
+                actionTokenProvider = mock(),
+                settings = mock()
+            )
         )
     }
 

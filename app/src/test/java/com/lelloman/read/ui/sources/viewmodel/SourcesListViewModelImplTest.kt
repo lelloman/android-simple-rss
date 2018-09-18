@@ -9,6 +9,7 @@ import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.view.actionevent.ViewActionEvent
+import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.R
 import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.db.model.Article
@@ -49,8 +50,11 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
             uiScheduler = trampoline(),
             sourcesRepository = sourcesRepository,
             articlesRepository = articlesRepository,
-            resourceProvider = resourceProvider,
-            actionTokenProvider = actionTokenProvider
+            dependencies = BaseViewModel.Dependencies(
+                settings = mock(),
+                resourceProvider = resourceProvider,
+                actionTokenProvider = actionTokenProvider
+            )
         )
     }
 

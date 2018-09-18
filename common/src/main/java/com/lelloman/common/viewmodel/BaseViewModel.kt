@@ -11,26 +11,45 @@ import com.lelloman.common.navigation.DeepLinkAndCloseNavigationEvent
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.navigation.NavigationScreen
+import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.SingleLiveData
+import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.actionevent.AnimationViewActionEvent
 import com.lelloman.common.view.actionevent.SnackEvent
+import com.lelloman.common.view.actionevent.ThemeChangedActionEvent
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.view.actionevent.ViewActionEvent
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BaseViewModel(
-    private val resourceProvider: ResourceProvider,
-    private val actionTokenProvider: ActionTokenProvider = ActionTokenProvider()
-) : ViewModel() {
+abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
+
+    private val settings = dependencies.settings
+    private val resourceProvider = dependencies.resourceProvider
+    private val actionTokenProvider = dependencies.actionTokenProvider
 
     private val subscriptions = CompositeDisposable()
 
     open val viewActionEvents = SingleLiveData<ViewActionEvent>()
 
     open fun onTokenAction(token: String) = Unit
+
+    open fun onSetupTheme(themeSetter: (AppTheme) -> Unit) {
+        val customTheme = settings
+            .appTheme
+            .blockingFirst()
+        themeSetter.invoke(customTheme)
+
+        subscription {
+            settings
+                .appTheme
+                .filter { it != customTheme }
+                .map(::ThemeChangedActionEvent)
+                .subscribe(viewActionEvents::postValue)
+        }
+    }
 
     open fun onCreate() = Unit
 
@@ -88,4 +107,10 @@ abstract class BaseViewModel(
         super.onCleared()
         subscriptions.dispose()
     }
+
+    class Dependencies(
+        val settings: BaseApplicationSettings,
+        val resourceProvider: ResourceProvider,
+        val actionTokenProvider: ActionTokenProvider
+    )
 }

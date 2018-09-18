@@ -1,13 +1,10 @@
 package com.lelloman.read.ui.articles.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.persistence.db.model.SourceArticle
 
-abstract class ArticlesListViewModel(
-    resourceProvider: ResourceProvider
-) : BaseViewModel(resourceProvider) {
+abstract class ArticlesListViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
 
     abstract val isLoading: MutableLiveData<Boolean>
 

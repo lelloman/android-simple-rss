@@ -1,13 +1,5 @@
 package com.lelloman.read.ui.launcher.viewmodel
 
-import com.lelloman.common.utils.ActionTokenProvider
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 
-abstract class LauncherViewModel(
-    actionTokenProvider: ActionTokenProvider,
-    resourceProvider: ResourceProvider
-) : BaseViewModel(
-    resourceProvider = resourceProvider,
-    actionTokenProvider = actionTokenProvider
-)
+abstract class LauncherViewModel(dependencies: Dependencies) : BaseViewModel(dependencies)

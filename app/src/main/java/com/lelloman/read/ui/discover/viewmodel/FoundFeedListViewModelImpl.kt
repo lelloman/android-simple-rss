@@ -4,9 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.LazyLiveData
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_FOUND_FEEDS
@@ -19,12 +17,8 @@ class FoundFeedListViewModelImpl(
     @UiScheduler uiScheduler: Scheduler,
     @IoScheduler private val ioScheduler: Scheduler,
     private val discoverRepository: DiscoverRepository,
-    resourceProvider: ResourceProvider,
-    actionTokenProvider: ActionTokenProvider
-) : FoundFeedListViewModel(
-    resourceProvider = resourceProvider,
-    actionTokenProvider = actionTokenProvider
-) {
+    dependencies: Dependencies
+) : FoundFeedListViewModel(dependencies) {
 
     override val isFindingFeeds: MutableLiveData<Boolean> by LazyLiveData {
         subscription {

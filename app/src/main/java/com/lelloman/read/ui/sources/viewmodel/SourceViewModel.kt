@@ -1,12 +1,9 @@
 package com.lelloman.read.ui.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 
-abstract class SourceViewModel(
-    resourceProvider: ResourceProvider
-) : BaseViewModel(resourceProvider) {
+abstract class SourceViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
 
     abstract val sourceName: MutableLiveData<String>
     abstract val sourceLastFetched: MutableLiveData<String>

@@ -6,10 +6,8 @@ import android.view.View
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.ui.common.repository.DiscoverRepository
@@ -18,14 +16,10 @@ import io.reactivex.Scheduler
 class DiscoverUrlViewModelImpl(
     @UiScheduler private val uiScheduler: Scheduler,
     @IoScheduler private val ioScheduler: Scheduler,
-    resourceProvider: ResourceProvider,
-    actionTokenProvider: ActionTokenProvider,
     private val discoverRepository: DiscoverRepository,
-    private val urlValidator: UrlValidator
-) : DiscoverUrlViewModel(
-    resourceProvider = resourceProvider,
-    actionTokenProvider = actionTokenProvider
-) {
+    private val urlValidator: UrlValidator,
+    dependencies: Dependencies
+) : DiscoverUrlViewModel(dependencies) {
     override val discoverUrl = ObservableField<String>()
 
     override val isFeedDiscoverLoading: MutableLiveData<Boolean> by LazyLiveData {
