@@ -61,6 +61,7 @@ class ArticlesListActivityTest {
         isLoadingLiveData = MutableLiveData()
         viewActionEvents = SingleLiveData()
 
+        TestApp.resetPersistence()
         TestApp.dependenciesUpdate { it.viewModelModule = viewModelModule }
         viewModel = viewModelModule.articlesListViewModel
         whenever(viewModel.articles).thenReturn(articlesLiveData)

@@ -6,6 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
+import android.support.annotation.VisibleForTesting
 import android.support.v4.view.ViewPager
 import android.util.AttributeSet
 import android.view.View
@@ -30,7 +31,8 @@ class PagerIndicator @JvmOverloads constructor(
         }
 
     private val emptyColor: Int
-    private val fillColor: Int
+    @VisibleForTesting
+    val fillColor: Int
 
     private val emptyPaint: Paint
     private val fillPaint: Paint

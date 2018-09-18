@@ -23,6 +23,7 @@ page in walkthrough
 - [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
 - [DEBT] use only deep links for navigation
 - [BUG] it seems that splitting base settings broke them, app theme changes are not being notified
+- [FEATURE] add a device-info list screen
 </s>
 
 DEBT:
@@ -49,4 +50,4 @@ BUGS:
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:
-- [FEATURE] add a device-info list screen
+- [DEBT] move logic from BaseActivity to a BaseActivityViewModel
