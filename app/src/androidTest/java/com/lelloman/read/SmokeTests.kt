@@ -1,19 +1,14 @@
 package com.lelloman.read
 
-import android.content.Context
 import android.support.test.rule.ActivityTestRule
-import com.lelloman.common.di.BaseApplicationModule
-import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.read.http.HttpModule
 import com.lelloman.read.testutils.MockHttpClient
 import com.lelloman.read.testutils.MockHttpClient.Companion.FANPAGE_ARTICLES_COUNT
 import com.lelloman.read.testutils.MockHttpClient.Companion.REPUBBLICA_ARTICLES_COUNT
 import com.lelloman.read.testutils.MockHttpClient.Companion.URL_ASD
-import com.lelloman.read.testutils.TestApp
 import com.lelloman.read.testutils.screen.ArticlesListScreen
 import com.lelloman.read.testutils.screen.WalkthroughScreen
+import com.lelloman.read.testutils.setUpTestAppWithMockedHttpStack
 import com.lelloman.read.ui.launcher.view.LauncherActivity
-import com.lelloman.testutils.rotateNatural
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -21,27 +16,13 @@ import org.junit.Test
 class SmokeTests {
 
     @get:Rule
-    val activityTestRule = ActivityTestRule<LauncherActivity>(LauncherActivity::class.java, true, false)
+    val activityTestRule = ActivityTestRule(LauncherActivity::class.java, true, false)
 
     private var isNetworkMetered = false
 
     @Before
     fun setUp() {
-        rotateNatural()
-        TestApp.dependenciesUpdate {
-            it.httpModule = object : HttpModule() {
-                override fun provideOkHttpClient() = MockHttpClient()
-            }
-            it.baseApplicationModule = object : BaseApplicationModule(it) {
-                override fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker {
-                    return object : MeteredConnectionChecker {
-                        override fun isNetworkMetered() = isNetworkMetered
-                    }
-                }
-            }
-        }
-        TestApp.resetPersistence()
-
+        setUpTestAppWithMockedHttpStack { isNetworkMetered }
         activityTestRule.launchActivity(null)
     }
 
