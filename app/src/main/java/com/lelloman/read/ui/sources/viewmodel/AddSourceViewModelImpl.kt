@@ -5,7 +5,6 @@ import android.databinding.ObservableField
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
 import com.lelloman.read.feed.fetcher.EmptySource
 import com.lelloman.read.feed.fetcher.FeedFetcher
@@ -17,14 +16,14 @@ import com.lelloman.read.ui.common.repository.SourcesRepository
 import io.reactivex.Scheduler
 
 class AddSourceViewModelImpl(
-    resourceProvider: ResourceProvider,
     private val sourcesRepository: SourcesRepository,
     private val ioScheduler: Scheduler,
     private val uiScheduler: Scheduler,
     private val feedFetcher: FeedFetcher,
     loggerFactory: LoggerFactory,
-    private val urlValidator: UrlValidator
-) : AddSourceViewModel(resourceProvider) {
+    private val urlValidator: UrlValidator,
+    dependencies: Dependencies
+) : AddSourceViewModel(dependencies) {
 
     override val sourceName = ObservableField<String>()
     override val sourceNameError = MutableLiveData<String>()

@@ -21,6 +21,7 @@ import com.lelloman.common.view.PicassoWrapImpl
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.ResourceProviderImpl
 import com.lelloman.common.view.SemanticTimeProvider
+import com.lelloman.common.viewmodel.BaseViewModel
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -94,5 +95,16 @@ open class BaseApplicationModule(private val application: Application) {
     ) = SemanticTimeProvider(
         timeProvider = timeProvider,
         resourceProvider = resourceProvider
+    )
+
+    @Provides
+    fun provideBaseViewModelDependencies(
+        baseApplicationSettings: BaseApplicationSettings,
+        resourceProvider: ResourceProvider,
+        actionTokenProvider: ActionTokenProvider
+    ) = BaseViewModel.Dependencies(
+        settings = baseApplicationSettings,
+        resourceProvider = resourceProvider,
+        actionTokenProvider = actionTokenProvider
     )
 }

@@ -16,9 +16,9 @@ import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.view.actionevent.AnimationViewActionEvent
 import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.SwipePageActionEvent
+import com.lelloman.common.view.actionevent.ThemeChangedActionEvent
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.viewmodel.BaseViewModel
-import io.reactivex.disposables.Disposable
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     : InjectableActivity() {
@@ -37,26 +37,15 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     @LayoutRes
     protected open val layoutResId = 0
 
-    private lateinit var themeChangesSubscription: Disposable
-
     private val logger by lazy { loggerFactory.getLogger(javaClass.simpleName) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val customTheme = baseAppSettings
-            .appTheme
-            .blockingFirst()
-        theme.applyStyle(customTheme.resId, true)
-
-        themeChangesSubscription = baseAppSettings
-            .appTheme
-            .filter { it != customTheme }
-            .observeOn(uiScheduler)
-            .subscribe {
-                logger.d("Theme changed from $customTheme to $it")
-                recreate()
-            }
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
+        viewModel.onSetupTheme {
+            theme.applyStyle(it.resId, true)
+        }
 
         if (hasInverseTheme) {
             theme.applyStyle(R.style.InverseTheme, true)
@@ -68,8 +57,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         binding = DataBindingUtil.inflate(layoutInflater, layoutResId, coordinatorLayout, true)
         binding.setLifecycleOwner(this)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(getViewModelClass())
-
         viewModel.viewActionEvents.observe(this, Observer {
             when (it) {
                 is NavigationEvent -> navigationRouter.onNavigationEvent(this, it)
@@ -77,15 +64,11 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 is SnackEvent -> showSnack(it)
                 is AnimationViewActionEvent -> onAnimationViewActionEvent(it)
                 is SwipePageActionEvent -> onSwipePageActionEvent(it)
+                is ThemeChangedActionEvent -> recreate()
             }
         })
 
         viewModel.onCreate()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        themeChangesSubscription.dispose()
     }
 
     private fun setupActionBar() {

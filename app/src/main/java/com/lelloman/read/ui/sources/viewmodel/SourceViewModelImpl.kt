@@ -1,7 +1,6 @@
 package com.lelloman.read.ui.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import io.reactivex.Scheduler
@@ -11,10 +10,8 @@ class SourceViewModelImpl(
     private val uiScheduler: Scheduler,
     private val semanticTimeProvider: SemanticTimeProvider,
     private val sourcesRepository: SourcesRepository,
-    resourceProvider: ResourceProvider
-) : SourceViewModel(
-    resourceProvider = resourceProvider
-) {
+    dependencies: Dependencies
+) : SourceViewModel(dependencies) {
 
     override val sourceName = MutableLiveData<String>()
     override val sourceLastFetched = MutableLiveData<String>()

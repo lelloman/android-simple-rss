@@ -4,7 +4,6 @@ import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.common.utils.LazyLiveData
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
 import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.db.model.Source
@@ -23,8 +22,8 @@ class ArticlesListViewModelImpl(
     private val sourcesRepository: SourcesRepository,
     private val discoverRepository: DiscoverRepository,
     private val appSettings: AppSettings,
-    resourceProvider: ResourceProvider
-) : ArticlesListViewModel(resourceProvider) {
+    dependencies: Dependencies
+) : ArticlesListViewModel(dependencies) {
 
     override val emptyViewVisible = MutableLiveData<Boolean>()
     override val emptyViewDescriptionText = MutableLiveData<String>()

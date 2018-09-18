@@ -6,6 +6,7 @@ import com.lelloman.common.testutils.MockLoggerFactory
 import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.actionevent.ToastEvent
+import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.R
 import com.lelloman.read.feed.fetcher.EmptySource
 import com.lelloman.read.feed.fetcher.FeedFetcher
@@ -40,7 +41,11 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
     override fun setUp() {
         tested = AddSourceViewModelImpl(
-            resourceProvider = MockResourceProvider(),
+            dependencies = BaseViewModel.Dependencies(
+                resourceProvider = MockResourceProvider(),
+                actionTokenProvider = mock(),
+                settings = mock()
+            ),
             sourcesRepository = sourcesRepository,
             uiScheduler = trampoline(),
             ioScheduler = trampoline(),

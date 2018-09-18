@@ -2,13 +2,10 @@ package com.lelloman.read.ui.settings.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
 
-abstract class SettingsViewModel(
-    resourceProvider: ResourceProvider
-) : BaseViewModel(resourceProvider) {
+abstract class SettingsViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
 
     abstract val minRefreshIntervals: MutableLiveData<List<String>>
     abstract val selectedMinRefreshInterval: ObservableField<Int>

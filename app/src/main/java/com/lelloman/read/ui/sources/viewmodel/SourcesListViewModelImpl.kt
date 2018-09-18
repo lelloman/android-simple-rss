@@ -2,9 +2,7 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
-import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.LazyLiveData
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.read.R
 import com.lelloman.read.navigation.ReadNavigationScreen
@@ -20,12 +18,8 @@ class SourcesListViewModelImpl(
     private val uiScheduler: Scheduler,
     private val sourcesRepository: SourcesRepository,
     private val articlesRepository: ArticlesRepository,
-    resourceProvider: ResourceProvider,
-    actionTokenProvider: ActionTokenProvider = ActionTokenProvider()
-) : SourcesListViewModel(
-    resourceProvider = resourceProvider,
-    actionTokenProvider = actionTokenProvider
-) {
+    dependencies: Dependencies
+) : SourcesListViewModel(dependencies) {
 
     override val sources: MutableLiveData<List<Source>> by LazyLiveData {
         subscription {

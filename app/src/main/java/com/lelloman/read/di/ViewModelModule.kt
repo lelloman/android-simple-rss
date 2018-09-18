@@ -4,10 +4,9 @@ import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory
-import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
+import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
@@ -51,18 +50,18 @@ open class ViewModelModule {
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         articlesRepository: ArticlesRepository,
-        resourceProvider: ResourceProvider,
         sourcesRepository: SourcesRepository,
         discoverRepository: DiscoverRepository,
+        dependencies: BaseViewModel.Dependencies,
         appSettings: AppSettings
     ): ArticlesListViewModel = ArticlesListViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         articlesRepository = articlesRepository,
-        resourceProvider = resourceProvider,
         sourcesRepository = sourcesRepository,
         discoverRepository = discoverRepository,
-        appSettings = appSettings
+        appSettings = appSettings,
+        dependencies = dependencies
     )
 
     @Provides
@@ -71,13 +70,13 @@ open class ViewModelModule {
         @UiScheduler uiScheduler: Scheduler,
         sourcesRepository: SourcesRepository,
         articlesRepository: ArticlesRepository,
-        resourceProvider: ResourceProvider
+        dependencies: BaseViewModel.Dependencies
     ): SourcesListViewModel = SourcesListViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         sourcesRepository = sourcesRepository,
         articlesRepository = articlesRepository,
-        resourceProvider = resourceProvider
+        dependencies = dependencies
     )
 
     @Provides
@@ -85,12 +84,12 @@ open class ViewModelModule {
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         sourcesRepository: SourcesRepository,
-        resourceProvider: ResourceProvider,
+        dependencies: BaseViewModel.Dependencies,
         feedFetcher: FeedFetcher,
         loggerFactory: LoggerFactory,
         urlValidator: UrlValidator
     ): AddSourceViewModel = AddSourceViewModelImpl(
-        resourceProvider = resourceProvider,
+        dependencies = dependencies,
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         sourcesRepository = sourcesRepository,
@@ -104,35 +103,35 @@ open class ViewModelModule {
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         semanticTimeProvider: SemanticTimeProvider,
-        resourceProvider: ResourceProvider,
+        dependencies: BaseViewModel.Dependencies,
         sourcesRepository: SourcesRepository
     ): SourceViewModel = SourceViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         semanticTimeProvider = semanticTimeProvider,
-        resourceProvider = resourceProvider,
+        dependencies = dependencies,
         sourcesRepository = sourcesRepository
     )
 
     @Provides
     open fun provideArticleViewModel(
-        resourceProvider: ResourceProvider
+        dependencies: BaseViewModel.Dependencies
     ): ArticleViewModel = ArticleViewModelImpl(
-        resourceProvider = resourceProvider
+        dependencies = dependencies
     )
 
     @Provides
     open fun provideSettingsViewModel(
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
-        resourceProvider: ResourceProvider,
+        dependencies: BaseViewModel.Dependencies,
         appSettings: AppSettings,
         semanticTimeProvider: SemanticTimeProvider
     ): SettingsViewModel = SettingsViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         appSettings = appSettings,
-        resourceProvider = resourceProvider,
+        dependencies = dependencies,
         semanticTimeProvider = semanticTimeProvider
     )
 
@@ -141,13 +140,11 @@ open class ViewModelModule {
         @UiScheduler uiScheduler: Scheduler,
         @IoScheduler ioScheduler: Scheduler,
         discoverRepository: DiscoverRepository,
-        resourceProvider: ResourceProvider,
-        actionTokenProvider: ActionTokenProvider,
+        dependencies: BaseViewModel.Dependencies,
         appSettings: AppSettings,
         urlValidator: UrlValidator
     ): WalkthroughViewModel = WalkthroughViewModelImpl(
-        resourceProvider = resourceProvider,
-        actionTokenProvider = actionTokenProvider,
+        dependencies = dependencies,
         appSettings = appSettings,
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
@@ -157,19 +154,16 @@ open class ViewModelModule {
 
     @Provides
     open fun provideLauncherViewModel(
-        resourceProvider: ResourceProvider,
-        actionTokenProvider: ActionTokenProvider,
+        dependencies: BaseViewModel.Dependencies,
         appSettings: AppSettings
     ): LauncherViewModel = LauncherViewModelImpl(
-        resourceProvider = resourceProvider,
-        actionTokenProvider = actionTokenProvider,
+        dependencies = dependencies,
         appSettings = appSettings
     )
 
     @Provides
     open fun provideFoundFeedListViewModel(
-        resourceProvider: ResourceProvider,
-        actionTokenProvider: ActionTokenProvider,
+        dependencies: BaseViewModel.Dependencies,
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
         discoverRepository: DiscoverRepository
@@ -177,8 +171,7 @@ open class ViewModelModule {
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         discoverRepository = discoverRepository,
-        resourceProvider = resourceProvider,
-        actionTokenProvider = actionTokenProvider
+        dependencies = dependencies
     )
 
     @Provides
@@ -187,14 +180,12 @@ open class ViewModelModule {
         @UiScheduler uiScheduler: Scheduler,
         discoverRepository: DiscoverRepository,
         urlValidator: UrlValidator,
-        resourceProvider: ResourceProvider,
-        actionTokenProvider: ActionTokenProvider
+        dependencies: BaseViewModel.Dependencies
     ): DiscoverUrlViewModel = DiscoverUrlViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
         discoverRepository = discoverRepository,
         urlValidator = urlValidator,
-        resourceProvider = resourceProvider,
-        actionTokenProvider = actionTokenProvider
+        dependencies = dependencies
     )
 }

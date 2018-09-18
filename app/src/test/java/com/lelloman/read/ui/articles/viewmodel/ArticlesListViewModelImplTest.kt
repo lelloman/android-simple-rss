@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.common.testutils.MockResourceProvider
+import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.R
 import com.lelloman.read.mock.MockAppSettings
 import com.lelloman.read.navigation.ReadNavigationScreen
@@ -42,8 +43,12 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             articlesRepository = articlesRepository,
             sourcesRepository = sourcesRepository,
             discoverRepository = discoveryRepository,
-            resourceProvider = resourceProvider,
-            appSettings = appSettings
+            appSettings = appSettings,
+            dependencies = BaseViewModel.Dependencies(
+                settings = appSettings,
+                resourceProvider = resourceProvider,
+                actionTokenProvider = mock()
+            )
         )
     }
 
