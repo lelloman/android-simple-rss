@@ -13,7 +13,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class DeviceImplTest {
 
-    private val tested = DeviceImpl(getInstrumentation().context)
+    private val tested = DeviceImpl(getInstrumentation().targetContext)
 
     @Test
     fun returnsDisplayData() {

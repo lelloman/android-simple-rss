@@ -1,6 +1,9 @@
 package com.lelloman.deviceinfo.device
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Point
 import android.net.ConnectivityManager
 import android.view.WindowManager
@@ -18,14 +21,29 @@ class DeviceImpl(private val context: Context) : Device {
     private val screenDensityDpiSubject = BehaviorSubject.create<Int>()
     private val screenSizeDpSubject = BehaviorSubject.create<Resolution>()
 
+    private val networkInterfacesSubject = BehaviorSubject.create<List<NetworkInterface>>()
+
     override val screenResolutionPx: Observable<Resolution> = screenResolutionSubject.hide()
     override val screenDensityDpi: Observable<Int> = screenDensityDpiSubject.hide()
     override val screenResolutionDp: Observable<Resolution> = screenSizeDpSubject.hide()
 
+    override val networkInterfaces: Observable<List<NetworkInterface>> = networkInterfacesSubject.hide()
+
+    private val connectivityActionReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            intent?.let {
+                readNetworkInterfaces()
+            }
+        }
+    }
+
     init {
+        context.registerReceiver(connectivityActionReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         readScreenResolution()
         readScreenDensity()
         readScreenSizeDp()
+
+        readNetworkInterfaces()
     }
 
     private fun readScreenResolution() {
@@ -55,14 +73,27 @@ class DeviceImpl(private val context: Context) : Device {
         screenSizeDpSubject.onNext(screenSizeDp)
     }
 
-//    override val networkInterfaces: List<NetworkInterface>
-//        get() =
-//            connectivityManager
-//                .allNetworks
-//                .map(connectivityManager::getNetworkInfo)
-//                .map {
-//                    NetworkInterface(
-//                        name = it.typeName
-//                    )
-//                }
+    private fun readNetworkInterfaces() = java.net.NetworkInterface
+        .getNetworkInterfaces()
+        .toList()
+        .map {
+            NetworkInterface(
+                name = it.displayName,
+                netAddresses = it.inetAddresses.toList().map { it.toString() },
+                hwAddress = it.hardwareAddress?.joinToString { java.lang.Integer.toHexString(it.toInt()) }
+                    ?: "-"
+            )
+        }
+        .also { networkInterfacesSubject.onNext(it) }
+
+//    private fun readNetworkInterfaces() = connectivityManager
+//        .allNetworks
+//        .map(connectivityManager::getNetworkInfo)
+//        .map {
+//            NetworkInterface(
+//                name = it.typeName,
+//                hasInternet = it.isConnected
+//            )
+//        }
+//        .also { networkInterfacesSubject.onNext(it) }
 }
