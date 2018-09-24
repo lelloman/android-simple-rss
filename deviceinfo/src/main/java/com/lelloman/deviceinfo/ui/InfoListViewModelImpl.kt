@@ -7,6 +7,7 @@ import com.lelloman.common.utils.model.Resolution
 import com.lelloman.deviceinfo.device.Device
 import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
 import com.lelloman.deviceinfo.infoitem.InfoItem
+import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
@@ -35,10 +36,26 @@ class InfoListViewModelImpl(
             }
     }
 
+    private val networkInfoItem by lazy {
+        device
+            .networkInterfaces
+            .map {
+                NetworkInfoItem(
+                    id = 2L,
+                    networkInterfaces = it
+                )
+            }
+    }
+
     override val deviceInfos: MutableLiveData<List<InfoItem>> by LazyLiveData {
         subscription {
-            displayInfoItem
-                .map { listOf(it) }
+            Observable
+                .combineLatest(
+                    arrayOf(
+                        displayInfoItem,
+                        networkInfoItem
+                    )
+                ) { it.toList() as List<InfoItem> }
                 .subscribeOn(ioScheduler)
                 .observeOn(ioScheduler)
                 .subscribe {

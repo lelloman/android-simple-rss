@@ -7,8 +7,10 @@ import android.text.Spanned
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.deviceinfo.R
+import com.lelloman.deviceinfo.device.NetworkInterface
 import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
 import com.lelloman.deviceinfo.infoitem.InfoItem
+import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
 
 class InfoItemListItemViewModel(
     private val resourceProvider: ResourceProvider
@@ -25,6 +27,7 @@ class InfoItemListItemViewModel(
 
     private fun toHtmlString(infoItem: InfoItem): Spanned = when (infoItem) {
         is DisplayInfoItem -> infoItem.toHtmlString()
+        is NetworkInfoItem -> infoItem.toHtmlString()
         else -> emptySpanned
     }
 
@@ -36,6 +39,24 @@ class InfoItemListItemViewModel(
         $resolutionDpString<br>
         $densityDpiString
         """.trimIndent())
+    }
+
+    private fun NetworkInfoItem.toHtmlString(): Spanned {
+        return fromHtml("""
+            ${this.networkInterfaces.joinToString("<br>") { networkInterfaceString(it) }}
+        """.trimIndent())
+    }
+
+    private fun networkInterfaceString(networkInterface: NetworkInterface): String {
+        val netAddresses = networkInterface
+            .netAddresses
+            .asSequence()
+            .mapIndexed { index, address ->
+                val spacing = "&emsp;${if (index == 0) "" else "&emsp;&emsp;"}"
+                "$spacing$address"
+            }
+            .joinToString("<br>")
+        return "<b>${networkInterface.name}</b><br>&emsp;hw: <b>${networkInterface.hwAddress}</b><br>&emsp;net:<b>$netAddresses</b>"
     }
 
     private fun fromHtml(text: String): Spanned = if (Build.VERSION.SDK_INT >= 24) {

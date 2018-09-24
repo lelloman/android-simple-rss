@@ -9,6 +9,6 @@ interface Device {
     val screenResolutionDp: Observable<Resolution>
     val screenDensityDpi: Observable<Int>
 
-//    val networkInterfaces: Observable<List<NetworkInterface>>
+    val networkInterfaces: Observable<List<NetworkInterface>>
 }
 
