@@ -58,8 +58,8 @@ class ArticlesListViewModelImpl(
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe {
-                    articles.value = it
-                    emptyViewVisible.value = it.isEmpty()
+                    articles.postValue(it)
+                    emptyViewVisible.postValue(it.isEmpty())
                 }
         }
     }
