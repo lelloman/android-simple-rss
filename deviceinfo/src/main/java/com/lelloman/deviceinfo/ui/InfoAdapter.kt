@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.common.utils.ModelWithIdListDiffCalculator
 import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.deviceinfo.R
-import com.lelloman.deviceinfo.databinding.ListItemInfoItemBinding
+import com.lelloman.deviceinfo.databinding.ListItemDisplayInfoItemBinding
+import com.lelloman.deviceinfo.databinding.ListItemNetworkInfoItemBinding
 import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
 import com.lelloman.deviceinfo.infoitem.InfoItem
 import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
@@ -72,51 +74,55 @@ class InfoAdapter(
     }
 
     enum class InfoListItem(
-        val viewModelBinder: (ViewDataBinding, InfoItemListItemViewModel) -> Unit,
+        val viewModelBinder: (ViewDataBinding, InfoItemListItemViewModel<*>) -> Unit,
         val binderCreator: (ViewGroup) -> ViewDataBinding,
-        val viewModelCreator: (ResourceProvider) -> InfoItemListItemViewModel
+        val viewModelCreator: (ResourceProvider) -> InfoItemListItemViewModel<InfoItem>
     ) {
 
         DISPLAY(
             viewModelBinder = { db, viewModel ->
-                (db as ListItemInfoItemBinding).let {
-                    db.viewModel = viewModel
+                (db as ListItemDisplayInfoItemBinding).let { _ ->
+                    (viewModel as DisplayInfoItemListItemViewModel).let { _ ->
+                        db.viewModel = viewModel
+                    }
                 }
             },
             binderCreator = { parent ->
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
-                    R.layout.list_item_info_item,
+                    R.layout.list_item_display_info_item,
                     parent,
                     false
                 )
             },
             viewModelCreator = { resourceProvider ->
-                InfoItemListItemViewModel(resourceProvider)
+                DisplayInfoItemListItemViewModel(resourceProvider) as InfoItemListItemViewModel<InfoItem>
             }),
         NETWORK(
             viewModelBinder = { db, viewModel ->
-                (db as ListItemInfoItemBinding).let {
-                    db.viewModel = viewModel
+                (db as ListItemNetworkInfoItemBinding).let { _->
+                    (viewModel as NetworkInfoItemListItemViewModel) .let { _ ->
+                        db.viewModel = viewModel
+                    }
                 }
             },
             binderCreator = { parent ->
                 DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
-                    R.layout.list_item_info_item,
+                    R.layout.list_item_network_info_item,
                     parent,
                     false
                 )
             },
-            viewModelCreator = { resourceProvider ->
-                InfoItemListItemViewModel(resourceProvider)
+            viewModelCreator = { _ ->
+                NetworkInfoItemListItemViewModel() as InfoItemListItemViewModel<InfoItem>
             })
     }
 
     class ViewHolder(
         val binding: ViewDataBinding,
         onClickListener: ((InfoItem) -> Unit)? = null,
-        val viewModel: InfoItemListItemViewModel
+        val viewModel: InfoItemListItemViewModel<InfoItem>
     ) : RecyclerView.ViewHolder(binding.root) {
 
         lateinit var item: InfoItem

@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.deviceinfo.ui.InfoItemListItemViewModel" />
+            type="com.lelloman.deviceinfo.ui.DisplayInfoItemListItemViewModel" />
     </data>
 
     <com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollCardView
