@@ -11,7 +11,10 @@ import com.lelloman.common.utils.model.Resolution
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 
-class DeviceImpl(private val context: Context) : Device {
+class DeviceImpl(
+    private val context: Context,
+    private val configurationChanges: Observable<Any>
+) : Device {
 
     private val connectivityManager by lazy { context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
     private val windowManager by lazy { context.getSystemService(Context.WINDOW_SERVICE) as WindowManager }
@@ -39,11 +42,20 @@ class DeviceImpl(private val context: Context) : Device {
 
     init {
         context.registerReceiver(connectivityActionReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        readScreen()
+
+        readNetworkInterfaces()
+
+        configurationChanges
+            .subscribe {
+                readScreen()
+            }
+    }
+
+    private fun readScreen() {
         readScreenResolution()
         readScreenDensity()
         readScreenSizeDp()
-
-        readNetworkInterfaces()
     }
 
     private fun readScreenResolution() {

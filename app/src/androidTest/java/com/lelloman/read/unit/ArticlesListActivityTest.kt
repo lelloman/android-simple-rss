@@ -9,12 +9,12 @@ import com.lelloman.read.di.MockViewModelModule
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.testutils.TestApp
 import com.lelloman.read.testutils.screen.ArticlesListScreen
-import com.lelloman.read.testutils.whenever
 import com.lelloman.read.ui.articles.view.ArticlesListActivity
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
 import com.lelloman.testutils.onUiThread
 import com.lelloman.testutils.rotateNatural
 import com.lelloman.testutils.wait
+import com.lelloman.testutils.whenever
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
