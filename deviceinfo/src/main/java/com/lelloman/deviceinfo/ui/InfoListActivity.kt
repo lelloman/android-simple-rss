@@ -22,8 +22,8 @@ class InfoListActivity : BaseActivity<InfoListViewModel, ActivityInfoListBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        binding.recyclerView.adapter = adapter
+        binding.recyclerViewInfoList.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewInfoList.adapter = adapter
         viewModel.deviceInfos.observe(this, adapter)
     }
 }

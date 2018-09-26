@@ -11,11 +11,6 @@ import com.lelloman.read.widget.ToggleSettingItemView
 import com.lelloman.testutils.rotateNatural
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
-import org.mockito.Mockito.`when`
-import org.mockito.stubbing.OngoingStubbing
-
-
-fun <T> whenever(methodCall: T): OngoingStubbing<T> = `when`(methodCall)
 
 fun setToggleSettingChecked(isChecked: Boolean) = object : ViewAction {
     override fun getDescription(): String = "setChecked($isChecked)"

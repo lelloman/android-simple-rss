@@ -4,6 +4,7 @@ import android.support.test.espresso.action.ViewActions
 import android.support.test.espresso.assertion.ViewAssertions.matches
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import com.lelloman.read.R
+import com.lelloman.testutils.Screen
 import com.lelloman.testutils.checkIsSwipeRefreshing
 import com.lelloman.testutils.checkRecyclerViewCount
 import com.lelloman.testutils.checkViewAtPositionHasImageGone

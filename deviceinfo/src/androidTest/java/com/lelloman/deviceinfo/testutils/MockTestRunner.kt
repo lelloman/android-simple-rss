@@ -1,4 +1,4 @@
-package com.lelloman.read.testutils
+package com.lelloman.deviceinfo.testutils
 
 import com.lelloman.testutils.TestApplicationRunner
 
