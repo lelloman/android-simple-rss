@@ -5,31 +5,34 @@ import android.text.Html
 import android.text.SpannableString
 import android.text.Spanned
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.deviceinfo.R
 import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
+import com.lelloman.deviceinfo.infoitem.InfoItem
 
 class DisplayInfoItemListItemViewModel(
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val onDisplayButtonClickListener: (InfoItem) -> Unit
 ) : InfoItemListItemViewModel<DisplayInfoItem>{
 
     private val emptySpanned = SpannableString("")
+    private lateinit var infoItem: DisplayInfoItem
 
-    var textHtml: Spanned = emptySpanned
+    var resolutionPx: Spanned = emptySpanned
         private set
 
-    override fun bind(item: DisplayInfoItem) {
-        textHtml = item.toHtmlString()
-    }
+    var resolutionDp: Spanned = emptySpanned
+        private set
 
-    private fun DisplayInfoItem.toHtmlString(): Spanned {
-        val resolutionPxString = resourceProvider.getString(R.string.screen_resolution_px, this.screenResolutionPx.width, this.screenResolutionPx.height)
-        val resolutionDpString = resourceProvider.getString(R.string.screen_resolution_dp, this.screenResolutionDp.width, this.screenResolutionDp.height)
-        val densityDpiString = resourceProvider.getString(R.string.screen_density_dpi, this.screenDensityDpi)
-        return fromHtml("""$resolutionPxString<br>
-        $resolutionDpString<br>
-        $densityDpiString
-        """.trimIndent())
+    var densityDpi: Spanned = emptySpanned
+        private set
+
+    fun onDisplayButtonClicked() = onDisplayButtonClickListener.invoke(infoItem)
+
+    override fun bind(item: DisplayInfoItem) {
+        this.infoItem = item
+        resolutionPx = fromHtml(resourceProvider.getString(R.string.screen_resolution_px, item.screenResolutionPx.width, item.screenResolutionPx.height))
+        resolutionDp = fromHtml(resourceProvider.getString(R.string.screen_resolution_dp, item.screenResolutionDp.width, item.screenResolutionDp.height))
+        densityDpi = fromHtml(resourceProvider.getString(R.string.screen_density_dpi, item.screenDensityDpi))
     }
 
     private fun fromHtml(text: String): Spanned = if (Build.VERSION.SDK_INT >= 24) {

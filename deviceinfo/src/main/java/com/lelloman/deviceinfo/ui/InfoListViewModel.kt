@@ -9,4 +9,6 @@ abstract class InfoListViewModel(dependencies: Dependencies) : BaseViewModel(dep
     abstract val hello: String
 
     abstract val deviceInfos: MutableLiveData<List<InfoItem>>
+
+    abstract fun onInfoItemClicked(infoItem: InfoItem)
 }

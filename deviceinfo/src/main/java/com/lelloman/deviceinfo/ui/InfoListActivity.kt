@@ -10,7 +10,12 @@ class InfoListActivity : BaseActivity<InfoListViewModel, ActivityInfoListBinding
 
     override val layoutResId = R.layout.activity_info_list
 
-    private val adapter by lazy { InfoAdapter(resourceProvider) }
+    private val adapter by lazy {
+        InfoAdapter(
+            resourceProvider = resourceProvider,
+            onItemClickListener = viewModel::onInfoItemClicked
+        )
+    }
 
     override fun getViewModelClass() = InfoListViewModel::class.java
 
