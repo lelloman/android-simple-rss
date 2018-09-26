@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.lelloman.common.utils.ModelWithIdListDiffCalculator
 import com.lelloman.common.view.ResourceProvider
-import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.deviceinfo.R
 import com.lelloman.deviceinfo.databinding.ListItemDisplayInfoItemBinding
 import com.lelloman.deviceinfo.databinding.ListItemNetworkInfoItemBinding
@@ -18,7 +17,7 @@ import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
 
 class InfoAdapter(
     private val resourceProvider: ResourceProvider,
-    private val onItemClickListener: ((InfoItem) -> Unit)? = null
+    private val onItemClickListener: (InfoItem) -> Unit
 ) : RecyclerView.Adapter<InfoAdapter.ViewHolder>(), Observer<List<InfoItem>> {
 
     private var data = emptyList<InfoItem>()
@@ -41,7 +40,7 @@ class InfoAdapter(
         return ViewHolder(
             binding = binding,
             onClickListener = onItemClickListener,
-            viewModel = infoListItem.viewModelCreator.invoke(resourceProvider)
+            viewModel = infoListItem.viewModelCreator.invoke(resourceProvider, onItemClickListener)
         )
     }
 
@@ -76,7 +75,7 @@ class InfoAdapter(
     enum class InfoListItem(
         val viewModelBinder: (ViewDataBinding, InfoItemListItemViewModel<*>) -> Unit,
         val binderCreator: (ViewGroup) -> ViewDataBinding,
-        val viewModelCreator: (ResourceProvider) -> InfoItemListItemViewModel<InfoItem>
+        val viewModelCreator: (ResourceProvider, (InfoItem) -> Unit) -> InfoItemListItemViewModel<InfoItem>
     ) {
 
         DISPLAY(
@@ -95,8 +94,11 @@ class InfoAdapter(
                     false
                 )
             },
-            viewModelCreator = { resourceProvider ->
-                DisplayInfoItemListItemViewModel(resourceProvider) as InfoItemListItemViewModel<InfoItem>
+            viewModelCreator = { resourceProvider, onClickListener ->
+                DisplayInfoItemListItemViewModel(
+                    resourceProvider = resourceProvider,
+                    onDisplayButtonClickListener = onClickListener
+                ) as InfoItemListItemViewModel<InfoItem>
             }),
         NETWORK(
             viewModelBinder = { db, viewModel ->
@@ -114,7 +116,7 @@ class InfoAdapter(
                     false
                 )
             },
-            viewModelCreator = { _ ->
+            viewModelCreator = { _, _ ->
                 NetworkInfoItemListItemViewModel() as InfoItemListItemViewModel<InfoItem>
             })
     }

@@ -63,4 +63,11 @@ class InfoListViewModelImpl(
                 }
         }
     }
+
+    override fun onInfoItemClicked(infoItem: InfoItem) = when (infoItem) {
+        is DisplayInfoItem -> {
+            shortToast("open display screen")
+        }
+        else -> Unit
+    }
 }
