@@ -48,10 +48,10 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         viewModel.onSetupTheme {
             theme.applyStyle(it.resId, true)
         }
-
         if (hasInverseTheme) {
             theme.applyStyle(R.style.InverseTheme, true)
         }
+
 
         if (hasBaseLayout) {
             setContentView(R.layout.activity_base)
@@ -63,6 +63,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         }
         binding.setLifecycleOwner(this)
 
+
         viewModel.viewActionEvents.observe(this, Observer {
             when (it) {
                 is NavigationEvent -> navigationRouter.onNavigationEvent(this, it)
@@ -73,9 +74,11 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 is ThemeChangedActionEvent -> recreate()
             }
         })
-
         viewModel.onCreate()
+        setViewModel(binding, viewModel)
     }
+
+    protected abstract fun setViewModel(binding: DB, viewModel: VM)
 
     private fun setupActionBar() {
         if (hasActionBar) {

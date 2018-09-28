@@ -70,14 +70,16 @@ dependencyUpdates.resolutionStrategy {
 
 task unitTest(dependsOn: ['app:testDebugUnitTest',
                           'common:testDebugUnitTest',
-                          'deviceinfo:testDebugUnitTest']) {
+                          'deviceinfo:testDebugUnitTest',
+                          'launcher:testDebugUnitTest']) {
     group = 'tests'
     description = "Run all unit tests"
 }
 
 task uiTest(dependsOn: ['app:connectedAndroidTest',
                         'common:connectedAndroidTest',
-                        'deviceinfo:connectedAndroidTest']) {
+                        'deviceinfo:connectedAndroidTest',
+                        'launcher:connectedAndroidTest']) {
     group = 'tests'
-    description = "Run all ui tests"
+    description = "Run all instrumentation tests"
 }

@@ -36,6 +36,10 @@ class SourcesListActivity
 
     override fun getViewModelClass() = SourcesListViewModel::class.java
 
+    override fun setViewModel(binding: ActivitySourcesListBinding, viewModel: SourcesListViewModel) {
+        binding.viewModel = viewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
@@ -50,7 +54,6 @@ class SourcesListActivity
         binding.sourcesRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.sourcesRecyclerView.adapter = adapter
         ItemSwipeListener.set(binding.sourcesRecyclerView) { viewModel.onSourceSwiped(adapter.getItem(it)) }
-        binding.viewModel = viewModel
         viewModel.sources.observe(this, adapter)
     }
 

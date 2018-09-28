@@ -20,9 +20,12 @@ class InfoListActivity : BaseActivity<InfoListViewModel, ActivityInfoListBinding
 
     override fun getViewModelClass() = InfoListViewModel::class.java
 
+    override fun setViewModel(binding: ActivityInfoListBinding, viewModel: InfoListViewModel) {
+        binding.viewModel = viewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.viewModel = viewModel
         binding.recyclerViewInfoList.layoutManager = LinearLayoutManager(this)
         binding.recyclerViewInfoList.adapter = adapter
         viewModel.deviceInfos.observe(this, adapter)

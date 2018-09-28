@@ -21,9 +21,12 @@ class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBind
 
     override fun getViewModelClass() = AddSourceViewModel::class.java
 
+    override fun setViewModel(binding: ActivityAddSourceBinding, viewModel: AddSourceViewModel) {
+        binding.viewModel = viewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding.viewModel = viewModel
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
             setDisplayHomeAsUpEnabled(true)

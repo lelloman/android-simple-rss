@@ -25,6 +25,10 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
 
     override fun getViewModelClass() = WalkthroughViewModel::class.java
 
+    override fun setViewModel(binding: ActivityWalkthroughBinding, viewModel: WalkthroughViewModel) {
+        binding.viewModel = viewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
@@ -34,7 +38,6 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
             lifecycleOwner = this,
             walkthroughViewModel = viewModel
         )
-        binding.viewModel = viewModel
         binding.viewPager.offscreenPageLimit = 20
         binding.viewPager.adapter = viewPagerAdapter
         binding.pagerIndicator.viewPager = binding.viewPager

@@ -2,6 +2,7 @@ package com.lelloman.read.testutils.screen
 
 import android.support.test.espresso.Espresso.pressBack
 import com.lelloman.read.R
+import com.lelloman.testutils.Screen
 import com.lelloman.testutils.checkRecyclerViewCount
 import com.lelloman.testutils.viewWithTextIsDisplayed
 

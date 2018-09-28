@@ -28,6 +28,8 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
 
     private lateinit var logger: Logger
 
+    override fun setViewModel(binding: ActivityArticleBinding, viewModel: ArticleViewModel) = Unit
+
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

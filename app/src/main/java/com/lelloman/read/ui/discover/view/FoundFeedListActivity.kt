@@ -30,6 +30,9 @@ class FoundFeedListActivity
 
     override fun getViewModelClass() = FoundFeedListViewModel::class.java
 
+    override fun setViewModel(binding: ActivityFoundFeedListBinding, viewModel: FoundFeedListViewModel) {
+        binding.viewModel = viewModel
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
@@ -48,8 +51,6 @@ class FoundFeedListActivity
         binding.discoverRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.discoverRecyclerView.adapter = adapter
         viewModel.foundFeeds.observe(this, adapter)
-
-        binding.viewModel = viewModel
 
         viewModel.isFindingFeeds.observe(this, Observer {
             addAllAction?.isEnabled = it != true

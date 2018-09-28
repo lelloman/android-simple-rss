@@ -7,7 +7,6 @@ import com.lelloman.common.view.BaseActivity
 import com.lelloman.read.R
 import com.lelloman.read.databinding.ActivitySourceBinding
 import com.lelloman.read.ui.sources.viewmodel.SourceViewModel
-import dagger.android.AndroidInjection
 
 class SourceActivity : BaseActivity<SourceViewModel, ActivitySourceBinding>() {
 
@@ -15,11 +14,12 @@ class SourceActivity : BaseActivity<SourceViewModel, ActivitySourceBinding>() {
 
     override fun getViewModelClass() = SourceViewModel::class.java
 
+    override fun setViewModel(binding: ActivitySourceBinding, viewModel: SourceViewModel) {
+        binding.viewModel = viewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
-
-        binding.viewModel = viewModel
         val sourceId = intent?.getLongExtra(ARG_SOURCE_ID, 0L)
         if (sourceId == null || sourceId == 0L) {
             finish()

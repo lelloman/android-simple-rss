@@ -17,10 +17,13 @@ class DiscoverUrlActivity : BaseActivity<DiscoverUrlViewModel, ActivityDiscoverU
 
     override fun getViewModelClass() = DiscoverUrlViewModel::class.java
 
+    override fun setViewModel(binding: ActivityDiscoverUrlBinding, viewModel: DiscoverUrlViewModel) {
+        binding.viewModel = viewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasActionBarBackButton()
-        binding.viewModel = viewModel
     }
     companion object {
 
