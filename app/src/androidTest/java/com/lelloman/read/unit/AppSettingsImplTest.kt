@@ -50,15 +50,6 @@ class AppSettingsImplTest {
         assertDefaultValues()
     }
 
-    private fun assertDefaultValues() = tested {
-        assertThat(sourceRefreshMinInterval.blockingFirst()).isEqualTo(DEFAULT_MIN_SOURCE_REFRESH_INTERVAL)
-        assertThat(articleListImagesEnabled.blockingFirst()).isEqualTo(DEFAULT_ARTICLES_LIST_IMAGES)
-        assertThat(useMeteredNetwork.blockingFirst()).isEqualTo(DEFAULT_USE_METERED_NETWORK)
-        assertThat(openArticlesInApp.blockingFirst()).isEqualTo(DEFAULT_OPEN_ARTICLES_IN_APP)
-        assertThat(shouldShowWalkthrough.blockingFirst()).isEqualTo(DEFAULT_SHOULD_SHOW_WALKTHROUGH)
-        assertThat(appTheme.blockingFirst()).isEqualTo(DEFAULT_APP_THEME)
-    }
-
     @Test
     fun setsAndGetsSourceRefreshMinInterval() {
         tested {
@@ -157,5 +148,14 @@ class AppSettingsImplTest {
         tested { reset() }
 
         tested { assertDefaultValues() }
+    }
+
+    private fun assertDefaultValues() = tested {
+        assertThat(sourceRefreshMinInterval.blockingFirst()).isEqualTo(DEFAULT_MIN_SOURCE_REFRESH_INTERVAL)
+        assertThat(articleListImagesEnabled.blockingFirst()).isEqualTo(DEFAULT_ARTICLES_LIST_IMAGES)
+        assertThat(useMeteredNetwork.blockingFirst()).isEqualTo(DEFAULT_USE_METERED_NETWORK)
+        assertThat(openArticlesInApp.blockingFirst()).isEqualTo(DEFAULT_OPEN_ARTICLES_IN_APP)
+        assertThat(shouldShowWalkthrough.blockingFirst()).isEqualTo(DEFAULT_SHOULD_SHOW_WALKTHROUGH)
+        assertThat(appTheme.blockingFirst()).isEqualTo(DEFAULT_APP_THEME)
     }
 }

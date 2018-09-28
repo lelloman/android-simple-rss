@@ -10,5 +10,7 @@ interface Device {
     val screenDensityDpi: Observable<Int>
 
     val networkInterfaces: Observable<List<NetworkInterface>>
+
+    val audioMode: Observable<AudioMode>
 }
 

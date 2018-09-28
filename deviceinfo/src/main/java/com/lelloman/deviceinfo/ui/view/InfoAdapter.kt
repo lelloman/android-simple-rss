@@ -10,11 +10,14 @@ import android.view.ViewGroup
 import com.lelloman.common.utils.ModelWithIdListDiffCalculator
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.deviceinfo.R
+import com.lelloman.deviceinfo.databinding.ListItemAudioInfoItemBinding
 import com.lelloman.deviceinfo.databinding.ListItemDisplayInfoItemBinding
 import com.lelloman.deviceinfo.databinding.ListItemNetworkInfoItemBinding
+import com.lelloman.deviceinfo.infoitem.AudioInfoItem
 import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
 import com.lelloman.deviceinfo.infoitem.InfoItem
 import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
+import com.lelloman.deviceinfo.ui.viewmodel.AudioInfoItemListItemViewModel
 import com.lelloman.deviceinfo.ui.viewmodel.DisplayInfoItemListItemViewModel
 import com.lelloman.deviceinfo.ui.viewmodel.InfoItemListItemViewModel
 import com.lelloman.deviceinfo.ui.viewmodel.NetworkInfoItemListItemViewModel
@@ -29,7 +32,8 @@ class InfoAdapter(
 
     private val infoListItemsMap = mapOf(
         DisplayInfoItem::class.java to Display,
-        NetworkInfoItem::class.java to Network
+        NetworkInfoItem::class.java to Network,
+        AudioInfoItem::class.java to Audio
     )
 
     private val viewTypesMap = infoListItemsMap
@@ -104,7 +108,7 @@ sealed class InfoListItem {
     abstract fun createVieModel(resourceProvider: ResourceProvider, onClickListener: (InfoItem) -> Unit): InfoItemListItemViewModel<InfoItem>
 }
 
-object Display : InfoListItem() {
+private object Display : InfoListItem() {
     override val ordinal = 1
     override fun createBinding(parent: ViewGroup): ViewDataBinding =
         DataBindingUtil.inflate(
@@ -129,7 +133,7 @@ object Display : InfoListItem() {
         }
 }
 
-object Network : InfoListItem() {
+private object Network : InfoListItem() {
     override val ordinal = 2
     override fun createBinding(parent: ViewGroup): ViewDataBinding {
         val binding: ListItemNetworkInfoItemBinding = DataBindingUtil.inflate(
@@ -155,4 +159,27 @@ object Network : InfoListItem() {
                 adapter.onChanged((viewHolder.item as NetworkInfoItem).networkInterfaces)
             }
         }
+}
+
+private object Audio : InfoListItem() {
+    override val ordinal = 3
+
+    override fun bindViewModel(viewHolder: InfoAdapter.ViewHolder) {
+        (viewHolder.binding as ListItemAudioInfoItemBinding).let { binding ->
+            (viewHolder.viewModel as AudioInfoItemListItemViewModel).let { viewModel ->
+                binding.viewModel = viewModel
+            }
+        }
+    }
+
+    override fun createBinding(parent: ViewGroup): ViewDataBinding = DataBindingUtil.inflate(
+        LayoutInflater.from(parent.context),
+        R.layout.list_item_audio_info_item,
+        parent,
+        false
+    )
+
+    override fun createVieModel(resourceProvider: ResourceProvider, onClickListener: (InfoItem) -> Unit)
+        : InfoItemListItemViewModel<InfoItem> =
+        AudioInfoItemListItemViewModel(resourceProvider) as InfoItemListItemViewModel<InfoItem>
 }

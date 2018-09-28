@@ -6,8 +6,6 @@ import com.lelloman.deviceinfo.infoitem.InfoItem
 
 abstract class InfoListViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
 
-    abstract val hello: String
-
     abstract val deviceInfos: MutableLiveData<List<InfoItem>>
 
     abstract fun onInfoItemClicked(infoItem: InfoItem)
