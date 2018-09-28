@@ -8,9 +8,8 @@ android {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         applicationId "com.lelloman.deviceinfo"
-        versionCode 1
-        versionName "1.0"
-
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
         testInstrumentationRunner "com.lelloman.deviceinfo.testutils.MockTestRunner"
 
     }

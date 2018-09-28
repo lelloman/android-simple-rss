@@ -34,6 +34,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected open val hasInverseTheme = false
 
+    protected open val hasBaseLayout = true
+
     @LayoutRes
     protected open val layoutResId = 0
 
@@ -51,10 +53,14 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             theme.applyStyle(R.style.InverseTheme, true)
         }
 
-        setContentView(R.layout.activity_base)
-        setupActionBar()
-        coordinatorLayout = findViewById(R.id.coordinator_layout)
-        binding = DataBindingUtil.inflate(layoutInflater, layoutResId, coordinatorLayout, true)
+        if (hasBaseLayout) {
+            setContentView(R.layout.activity_base)
+            setupActionBar()
+            coordinatorLayout = findViewById(R.id.coordinator_layout)
+            binding = DataBindingUtil.inflate(layoutInflater, layoutResId, coordinatorLayout, true)
+        } else {
+            binding = DataBindingUtil.setContentView(this, layoutResId)
+        }
         binding.setLifecycleOwner(this)
 
         viewModel.viewActionEvents.observe(this, Observer {
