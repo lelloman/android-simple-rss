@@ -1,1 +1,1 @@
-include ':app', ':common', ':deviceinfo', ':testutils'
+include ':app', ':common', ':deviceinfo', ':testutils', ':launcher'

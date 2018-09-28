@@ -1,13 +1,12 @@
-apply plugin: 'com.android.library'
-
+apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
+        applicationId "com.lelloman.launcher"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
@@ -27,32 +26,18 @@ android {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
-
-    // support
-    api "com.android.support:appcompat-v7:$support_lib_version"
-    api "com.android.support:recyclerview-v7:$support_lib_version"
-    api "com.android.support:design:$support_lib_version"
-    api "com.android.support:cardview-v7:$support_lib_version"
-    api "com.android.support.constraint:constraint-layout:$constraint_layout_version"
-    api "android.arch.lifecycle:extensions:$lifecycle_version"
-
-    // kotlin
-    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-
-    // rx
-    api "io.reactivex.rxjava2:rxandroid:$rx_android_version"
-    api "io.reactivex.rxjava2:rxjava:$rx_java_version"
+    implementation project(':common')
 
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"
     implementation "com.google.dagger:dagger-android:$dagger_version"
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
-
-    implementation "com.squareup.picasso:picasso:$picasso_version"
-    implementation "com.google.truth:truth:$truth_version"
 
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.persistence.room:testing:$room_version"

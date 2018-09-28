@@ -6,6 +6,8 @@ buildscript {
     ext.compileSdkVersion = 28
     ext.targetSdkVersion = 28
     ext.minSdkVersion = 21
+    ext.versionCode = 1
+    ext.versionName = "0.1"
 
     ext.android_plugin_version = '3.1.4'
     ext.constraint_layout_version = "1.1.3"
