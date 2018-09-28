@@ -3,4 +3,6 @@
     <string name="screen_resolution_px"><![CDATA[Resolution Px: <b>%s x %s</b>]]></string>
     <string name="screen_resolution_dp"><![CDATA[Resolution Dp: <b>%s x %s</b>]]></string>
     <string name="screen_density_dpi"><![CDATA[Density Dpi: <b>%s</b>]]></string>
+    <string name="mac_address">MAC:</string>
+    <string name="net_address">NET:</string>
 </resources>

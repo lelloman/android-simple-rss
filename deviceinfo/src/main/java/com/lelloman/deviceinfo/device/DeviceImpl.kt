@@ -88,8 +88,9 @@ class DeviceImpl(
     private fun readNetworkInterfaces() = java.net.NetworkInterface
         .getNetworkInterfaces()
         .toList()
-        .map {
+        .mapIndexed { index, it ->
             NetworkInterface(
+                id = index.toLong(),
                 name = it.displayName,
                 netAddresses = it.inetAddresses.toList().map { it.toString() },
                 hwAddress = it.hardwareAddress?.joinToString { java.lang.Integer.toHexString(it.toInt()) }

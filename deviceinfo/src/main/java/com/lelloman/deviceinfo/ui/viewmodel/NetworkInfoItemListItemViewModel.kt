@@ -1,10 +1,9 @@
-package com.lelloman.deviceinfo.ui
+package com.lelloman.deviceinfo.ui.viewmodel
 
 import android.os.Build
 import android.text.Html
 import android.text.SpannableString
 import android.text.Spanned
-import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.deviceinfo.device.NetworkInterface
 import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
 

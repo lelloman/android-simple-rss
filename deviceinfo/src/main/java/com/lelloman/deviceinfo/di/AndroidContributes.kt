@@ -1,6 +1,6 @@
 package com.lelloman.deviceinfo.di
 
-import com.lelloman.deviceinfo.ui.InfoListActivity
+import com.lelloman.deviceinfo.ui.view.InfoListActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

@@ -4,8 +4,8 @@ import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.deviceinfo.device.Device
-import com.lelloman.deviceinfo.ui.InfoListViewModel
-import com.lelloman.deviceinfo.ui.InfoListViewModelImpl
+import com.lelloman.deviceinfo.ui.viewmodel.InfoListViewModel
+import com.lelloman.deviceinfo.ui.viewmodel.InfoListViewModelImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler

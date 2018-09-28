@@ -1,4 +1,4 @@
-package com.lelloman.deviceinfo.ui
+package com.lelloman.deviceinfo.ui.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.di.qualifiers.IoScheduler

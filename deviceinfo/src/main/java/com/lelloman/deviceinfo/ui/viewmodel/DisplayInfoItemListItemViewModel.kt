@@ -1,4 +1,4 @@
-package com.lelloman.deviceinfo.ui
+package com.lelloman.deviceinfo.ui.viewmodel
 
 import android.os.Build
 import android.text.Html
@@ -12,7 +12,7 @@ import com.lelloman.deviceinfo.infoitem.InfoItem
 class DisplayInfoItemListItemViewModel(
     private val resourceProvider: ResourceProvider,
     private val onDisplayButtonClickListener: (InfoItem) -> Unit
-) : InfoItemListItemViewModel<DisplayInfoItem>{
+) : InfoItemListItemViewModel<DisplayInfoItem> {
 
     private val emptySpanned = SpannableString("")
     private lateinit var infoItem: DisplayInfoItem

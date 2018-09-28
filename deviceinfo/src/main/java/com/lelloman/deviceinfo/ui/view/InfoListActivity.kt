@@ -1,10 +1,11 @@
-package com.lelloman.deviceinfo.ui
+package com.lelloman.deviceinfo.ui.view
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.deviceinfo.R
 import com.lelloman.deviceinfo.databinding.ActivityInfoListBinding
+import com.lelloman.deviceinfo.ui.viewmodel.InfoListViewModel
 
 class InfoListActivity : BaseActivity<InfoListViewModel, ActivityInfoListBinding>() {
 
