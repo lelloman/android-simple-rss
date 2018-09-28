@@ -17,10 +17,12 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
 
     override fun getViewModelClass() = SettingsViewModel::class.java
 
+    override fun setViewModel(binding: ActivitySettingsBinding, viewModel: SettingsViewModel) {
+        binding.viewModel = viewModel
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasActionBarBackButton()
-        binding.viewModel = viewModel
     }
 
     companion object {

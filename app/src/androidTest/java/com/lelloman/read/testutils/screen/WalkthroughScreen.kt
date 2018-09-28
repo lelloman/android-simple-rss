@@ -8,6 +8,7 @@ import android.view.View
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.widget.PagerIndicator
 import com.lelloman.read.R
+import com.lelloman.testutils.Screen
 import com.lelloman.testutils.checkRecyclerViewCount
 import com.lelloman.testutils.clickView
 import com.lelloman.testutils.clickViewWithText

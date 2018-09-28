@@ -1,11 +1,14 @@
 package com.lelloman.launcher.di
 
 import android.arch.lifecycle.ViewModel
+import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.MainViewModel
 import com.lelloman.launcher.MainViewModelImpl
+import com.lelloman.launcher.packages.PackagesManager
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Scheduler
 import javax.inject.Provider
 import javax.inject.Singleton
 
@@ -18,8 +21,12 @@ open class ViewModelModule {
 
     @Provides
     open fun provideMainViewModel(
+        @IoScheduler ioScheduler: Scheduler,
+        packagesManager: PackagesManager,
         dependencies: BaseViewModel.Dependencies
     ): MainViewModel = MainViewModelImpl(
-        dependencies = dependencies
+        ioScheduler = ioScheduler,
+        dependencies = dependencies,
+        packagesManager = packagesManager
     )
 }

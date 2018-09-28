@@ -33,6 +33,10 @@ class ArticlesListActivity :
 
     override fun getViewModelClass() = ArticlesListViewModel::class.java
 
+    override fun setViewModel(binding: ActivityArticlesListBinding, viewModel: ArticlesListViewModel) {
+        binding.viewModel = viewModel
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
@@ -47,8 +51,6 @@ class ArticlesListActivity :
 
         binding.articlesRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.articlesRecyclerView.adapter = adapter
-
-        binding.viewModel = viewModel
 
         viewModel.articles.observe(this, adapter)
 

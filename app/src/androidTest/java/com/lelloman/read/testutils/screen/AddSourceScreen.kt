@@ -3,13 +3,14 @@ package com.lelloman.read.testutils.screen
 import android.graphics.drawable.VectorDrawable
 import android.support.test.espresso.Espresso.pressBack
 import android.widget.EditText
+import com.google.common.truth.Truth.assertThat
 import com.lelloman.read.R
+import com.lelloman.testutils.Screen
 import com.lelloman.testutils.clickView
 import com.lelloman.testutils.clickViewWithText
 import com.lelloman.testutils.typeInEditText
 import com.lelloman.testutils.viewIsDisplayed
 import com.lelloman.testutils.viewWithId
-import junit.framework.Assert
 
 class AddSourceScreen : Screen() {
     init {
@@ -26,10 +27,10 @@ class AddSourceScreen : Screen() {
 
     fun urlFieldHasNoDrawable() = apply {
         viewWithId(R.id.edit_text_source_url).check { view, noViewFoundException ->
-            Assert.assertTrue(view is EditText)
+            assertThat(view).isInstanceOf(EditText::class.java)
             (view as EditText).apply {
                 view.compoundDrawables.forEach {
-                    Assert.assertEquals(null, it)
+                    assertThat(it).isNull()
                 }
             }
         }
@@ -39,13 +40,13 @@ class AddSourceScreen : Screen() {
 
     fun urlFieldShowsOkDrawable() = apply {
         viewWithId(R.id.edit_text_source_url).check { view, noViewFoundException ->
-            Assert.assertTrue(view is EditText)
+            assertThat(view).isInstanceOf(EditText::class.java)
             (view as EditText).apply {
                 view.compoundDrawables.forEachIndexed { index, drawable ->
                     if (index != 2) {
-                        Assert.assertEquals(null, drawable)
+                        assertThat(drawable).isNull()
                     } else {
-                        Assert.assertTrue(drawable is VectorDrawable)
+                        assertThat(drawable).isInstanceOf(VectorDrawable::class.java)
                     }
                 }
             }

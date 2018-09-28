@@ -12,6 +12,7 @@ import android.view.View
 import com.lelloman.common.view.AppTheme
 import com.lelloman.read.R
 import com.lelloman.read.testutils.setToggleSettingChecked
+import com.lelloman.testutils.Screen
 import com.lelloman.testutils.viewIsDisplayed
 import com.lelloman.testutils.viewWithId
 import org.hamcrest.CoreMatchers.*
