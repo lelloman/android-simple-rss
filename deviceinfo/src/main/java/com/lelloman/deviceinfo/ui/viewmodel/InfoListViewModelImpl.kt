@@ -5,6 +5,7 @@ import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.model.Resolution
 import com.lelloman.deviceinfo.device.Device
+import com.lelloman.deviceinfo.infoitem.AudioInfoItem
 import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
 import com.lelloman.deviceinfo.infoitem.InfoItem
 import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
@@ -16,7 +17,6 @@ class InfoListViewModelImpl(
     private val device: Device,
     dependencies: Dependencies
 ) : InfoListViewModel(dependencies) {
-    override val hello = "asdasdasd"
 
     private val displayInfoItem by lazy {
         Observable
@@ -47,13 +47,25 @@ class InfoListViewModelImpl(
             }
     }
 
+    private val audioInfoItem by lazy {
+        device
+            .audioMode
+            .map {
+                AudioInfoItem(
+                    id = 3,
+                    audioMode = it
+                )
+            }
+    }
+
     override val deviceInfos: MutableLiveData<List<InfoItem>> by LazyLiveData {
         subscription {
             Observable
                 .combineLatest(
                     arrayOf(
                         displayInfoItem,
-                        networkInfoItem
+                        networkInfoItem,
+                        audioInfoItem
                     )
                 ) { it.toList() as List<InfoItem> }
                 .subscribeOn(ioScheduler)

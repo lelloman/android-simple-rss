@@ -25,6 +25,7 @@ page in walkthrough
 - [BUG] it seems that splitting base settings broke them, app theme changes are not being notified
 - [FEATURE] add a device-info list screen
 - [DEBT] move logic from BaseActivity to a BaseActivityViewModel
+- [FEATURE] add networks and audio manager device info
 </s>
 
 DEBT:
@@ -51,4 +52,3 @@ BUGS:
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:
-- [FEATURE] add networks and audio manager device info

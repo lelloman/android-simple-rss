@@ -7,7 +7,9 @@ import android.support.test.runner.AndroidJUnit4
 import com.lelloman.common.utils.SingleLiveData
 import com.lelloman.common.utils.model.Resolution
 import com.lelloman.common.view.actionevent.ViewActionEvent
+import com.lelloman.deviceinfo.device.AudioMode
 import com.lelloman.deviceinfo.device.NetworkInterface
+import com.lelloman.deviceinfo.infoitem.AudioInfoItem
 import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
 import com.lelloman.deviceinfo.infoitem.InfoItem
 import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
@@ -44,6 +46,9 @@ class InfoListActivityTest {
 
     private val displayInfoItem: DisplayInfoItem get() = infoItemsList[0] as DisplayInfoItem
     private val networkInfoItem: NetworkInfoItem get() = infoItemsList[1] as NetworkInfoItem
+    private val audioInfoItem: AudioInfoItem get() = infoItemsList[2] as AudioInfoItem
+
+    private val audioMode = AudioMode.IN_COMMUNICATION
 
     private val infoItemsList = listOf(
         DisplayInfoItem(
@@ -59,6 +64,10 @@ class InfoListActivityTest {
                 NetworkInterface(3L, "HhhhHhhh", "si si si", listOf("aaa", "ooo")),
                 NetworkInterface(4L, "wwwmipiacitu", "bo bo no", listOf("!"))
             )
+        ),
+        AudioInfoItem(
+            id = 3L,
+            audioMode = audioMode
         )
     )
 
@@ -100,5 +109,11 @@ class InfoListActivityTest {
             .showsNetworkInterface(networkInfoItem.networkInterfaces[0])
             .showsNetworkInterface(networkInfoItem.networkInterfaces[1])
             .showsNetworkInterface(networkInfoItem.networkInterfaces[2])
+    }
+
+    @Test
+    fun showsAudioMode() {
+        screen
+            .showsAudioMode(audioMode)
     }
 }

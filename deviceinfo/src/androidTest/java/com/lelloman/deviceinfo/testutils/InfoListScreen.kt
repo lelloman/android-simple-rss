@@ -3,6 +3,7 @@ package com.lelloman.deviceinfo.testutils
 import android.text.Html
 import com.lelloman.common.utils.model.Resolution
 import com.lelloman.deviceinfo.R
+import com.lelloman.deviceinfo.device.AudioMode
 import com.lelloman.deviceinfo.device.NetworkInterface
 import com.lelloman.testutils.Screen
 import com.lelloman.testutils.clickOnRecyclerViewItem
@@ -47,11 +48,11 @@ class InfoListScreen : Screen() {
         viewWithTextIsDisplayed(netAddresses)
     }
 
-    private fun stripHtml(string: String): String {
-        return Html.fromHtml(string).toString()
+    fun showsAudioMode(audioMode: AudioMode) = apply {
+        viewWithTextIsDisplayed(string(R.string.audio_mode, audioMode.name))
     }
 
-    fun showsToast(message: String) = apply {
-        viewWithTextIsDisplayed(message)
+    private fun stripHtml(string: String): String {
+        return Html.fromHtml(string).toString()
     }
 }

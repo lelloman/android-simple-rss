@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Point
+import android.media.AudioManager
 import android.net.ConnectivityManager
 import android.view.WindowManager
 import com.lelloman.common.utils.model.Resolution
@@ -17,6 +18,7 @@ class DeviceImpl(
 ) : Device {
 
     private val connectivityManager by lazy { context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager }
+    private val audioManager by lazy { context.getSystemService(Context.AUDIO_SERVICE) as AudioManager }
     private val windowManager by lazy { context.getSystemService(Context.WINDOW_SERVICE) as WindowManager }
     private val displayMetrics get() = context.resources.displayMetrics
 
@@ -26,11 +28,15 @@ class DeviceImpl(
 
     private val networkInterfacesSubject = BehaviorSubject.create<List<NetworkInterface>>()
 
+    private val audioModeSubject = BehaviorSubject.create<AudioMode>()
+
     override val screenResolutionPx: Observable<Resolution> = screenResolutionSubject.hide()
     override val screenDensityDpi: Observable<Int> = screenDensityDpiSubject.hide()
     override val screenResolutionDp: Observable<Resolution> = screenSizeDpSubject.hide()
 
     override val networkInterfaces: Observable<List<NetworkInterface>> = networkInterfacesSubject.hide()
+
+    override val audioMode: Observable<AudioMode> = audioModeSubject.hide()
 
     private val connectivityActionReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -45,6 +51,8 @@ class DeviceImpl(
         readScreen()
 
         readNetworkInterfaces()
+
+        audioModeSubject.onNext(AudioMode.fromAudioManagerMode(audioManager.mode))
 
         configurationChanges
             .subscribe {

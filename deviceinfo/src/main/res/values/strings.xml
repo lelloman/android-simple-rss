@@ -5,4 +5,5 @@
     <string name="screen_density_dpi"><![CDATA[Density Dpi: <b>%s</b>]]></string>
     <string name="mac_address">MAC:</string>
     <string name="net_address">NET:</string>
+    <string name="audio_mode">Audio mode: %s</string>
 </resources>
