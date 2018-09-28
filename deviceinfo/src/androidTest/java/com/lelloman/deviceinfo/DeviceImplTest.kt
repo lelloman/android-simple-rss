@@ -6,7 +6,7 @@ import android.support.test.runner.AndroidJUnit4
 import com.lelloman.common.utils.model.Resolution
 import com.lelloman.deviceinfo.device.DeviceImpl
 import com.lelloman.deviceinfo.testutils.TestApp
-import com.lelloman.deviceinfo.ui.InfoListActivity
+import com.lelloman.deviceinfo.ui.view.InfoListActivity
 import com.lelloman.testutils.rotateLeft
 import com.lelloman.testutils.rotateNatural
 import io.reactivex.observers.TestObserver

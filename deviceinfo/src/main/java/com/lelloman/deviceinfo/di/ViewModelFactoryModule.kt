@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
 import com.lelloman.common.di.qualifiers.ViewModelKey
 import com.lelloman.common.viewmodel.ViewModelFactory
-import com.lelloman.deviceinfo.ui.InfoListViewModel
+import com.lelloman.deviceinfo.ui.viewmodel.InfoListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap

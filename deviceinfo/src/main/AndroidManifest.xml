@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:name=".DeviceInfoApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.InfoListActivity">
+        <activity android:name=".ui.view.InfoListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

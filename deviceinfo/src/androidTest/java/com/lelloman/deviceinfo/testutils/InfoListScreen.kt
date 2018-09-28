@@ -3,6 +3,7 @@ package com.lelloman.deviceinfo.testutils
 import android.text.Html
 import com.lelloman.common.utils.model.Resolution
 import com.lelloman.deviceinfo.R
+import com.lelloman.deviceinfo.device.NetworkInterface
 import com.lelloman.testutils.Screen
 import com.lelloman.testutils.clickOnRecyclerViewItem
 import com.lelloman.testutils.viewWithTextIsDisplayed
@@ -31,6 +32,19 @@ class InfoListScreen : Screen() {
 
     fun clickOnItem(position: Int) = apply {
         clickOnRecyclerViewItem(position, R.id.recycler_view_info_list)
+    }
+
+    fun showsNetworkInterface(networkInterface: NetworkInterface) = apply {
+        viewWithTextIsDisplayed(networkInterface.name)
+        viewWithTextIsDisplayed(networkInterface.hwAddress)
+        val netAddresses = networkInterface.netAddresses.let { addresses ->
+            if (addresses.isEmpty()) {
+                "-"
+            } else {
+                addresses.joinToString("\n")
+            }
+        }
+        viewWithTextIsDisplayed(netAddresses)
     }
 
     private fun stripHtml(string: String): String {

@@ -1,4 +1,4 @@
-package com.lelloman.deviceinfo.ui
+package com.lelloman.deviceinfo.ui.viewmodel
 
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.deviceinfo.infoitem.InfoItem

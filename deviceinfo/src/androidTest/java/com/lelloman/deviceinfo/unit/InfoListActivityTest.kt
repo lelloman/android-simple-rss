@@ -7,13 +7,15 @@ import android.support.test.runner.AndroidJUnit4
 import com.lelloman.common.utils.SingleLiveData
 import com.lelloman.common.utils.model.Resolution
 import com.lelloman.common.view.actionevent.ViewActionEvent
+import com.lelloman.deviceinfo.device.NetworkInterface
 import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
 import com.lelloman.deviceinfo.infoitem.InfoItem
+import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
 import com.lelloman.deviceinfo.testutils.InfoListScreen
 import com.lelloman.deviceinfo.testutils.MockViewModelModule
 import com.lelloman.deviceinfo.testutils.TestApp
-import com.lelloman.deviceinfo.ui.InfoListActivity
-import com.lelloman.deviceinfo.ui.InfoListViewModel
+import com.lelloman.deviceinfo.ui.view.InfoListActivity
+import com.lelloman.deviceinfo.ui.viewmodel.InfoListViewModel
 import com.lelloman.testutils.rotateNatural
 import com.lelloman.testutils.whenever
 import org.junit.Before
@@ -40,7 +42,8 @@ class InfoListActivityTest {
     private val screenResolutionDp = Resolution(1234, 5678)
     private val screenResolutionPx = Resolution(9876, 5432)
 
-    private val displayInfoItem: DisplayInfoItem get() = infoItemsList[0]
+    private val displayInfoItem: DisplayInfoItem get() = infoItemsList[0] as DisplayInfoItem
+    private val networkInfoItem: NetworkInfoItem get() = infoItemsList[1] as NetworkInfoItem
 
     private val infoItemsList = listOf(
         DisplayInfoItem(
@@ -48,6 +51,14 @@ class InfoListActivityTest {
             screenDensityDpi = screenDensityDpi,
             screenResolutionPx = screenResolutionPx,
             screenResolutionDp = screenResolutionDp
+        ),
+        NetworkInfoItem(
+            id = 2L,
+            networkInterfaces = listOf(
+                NetworkInterface(1L, "LLKLLKL", "no no no", listOf("ccc", "iii")),
+                NetworkInterface(3L, "HhhhHhhh", "si si si", listOf("aaa", "ooo")),
+                NetworkInterface(4L, "wwwmipiacitu", "bo bo no", listOf("!"))
+            )
         )
     )
 
@@ -81,5 +92,13 @@ class InfoListActivityTest {
         screen.clickOnItem(infoItemsList.indexOf(displayInfoItem))
 
         verify(viewModel).onInfoItemClicked(displayInfoItem)
+    }
+
+    @Test
+    fun showsNetworkInterfaces() {
+        screen
+            .showsNetworkInterface(networkInfoItem.networkInterfaces[0])
+            .showsNetworkInterface(networkInfoItem.networkInterfaces[1])
+            .showsNetworkInterface(networkInfoItem.networkInterfaces[2])
     }
 }
