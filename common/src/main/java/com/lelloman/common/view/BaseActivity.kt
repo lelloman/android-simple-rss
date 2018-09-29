@@ -36,6 +36,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected open val hasBaseLayout = true
 
+    protected open val hasActionBarBackButton = false
+
     @LayoutRes
     protected open val layoutResId = 0
 
@@ -86,6 +88,14 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         } else {
             findViewById<AppBarLayout>(R.id.app_bar_layout).visibility = View.GONE
         }
+
+        if (hasActionBarBackButton) {
+            supportActionBar?.apply {
+                setDisplayHomeAsUpEnabled(true)
+                setDisplayShowHomeEnabled(true)
+                hasSupportActionBarBackButton = true
+            }
+        }
     }
 
     protected open fun onAnimationViewActionEvent(animationViewActionEvent: AnimationViewActionEvent) {
@@ -94,14 +104,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     protected open fun onSwipePageActionEvent(swipePageActionEvent: SwipePageActionEvent) {
 
-    }
-
-    protected fun setHasActionBarBackButton() {
-        supportActionBar?.apply {
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
-            hasSupportActionBarBackButton = true
-        }
     }
 
     override fun onSupportNavigateUp() = if (hasSupportActionBarBackButton) {

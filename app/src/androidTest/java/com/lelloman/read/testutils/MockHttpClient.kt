@@ -47,7 +47,7 @@ class MockHttpClient : OkHttpClient() {
                 val body = InstrumentationRegistry
                     .getContext()
                     .assets
-                    .open(fileResponses[url])
+                    .open(fileResponses[url]!!)
                     .bufferedReader()
                     .readText()
                     .toByteArray()

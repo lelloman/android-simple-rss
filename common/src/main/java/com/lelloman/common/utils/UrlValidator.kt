@@ -48,6 +48,6 @@ class UrlValidatorImpl : UrlValidator {
             return url
         }
 
-        return "http://$url"
+        return "https://$url"
     }
 }
