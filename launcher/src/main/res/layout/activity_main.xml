@@ -9,18 +9,25 @@
             type="com.lelloman.launcher.ui.MainViewModel" />
     </data>
 
-    <FrameLayout
+    <com.lelloman.common.widget.bottomdrawer.BottomDrawerLayout
+        android:id="@+id/bottom_drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
         tools:context=".ui.MainActivity">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_apps"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:scrollbars="vertical" />
+            android:gravity="center"
+            android:text="HOME"
+            android:textColor="#FFFFFFFF"
+            android:textSize="40dp" />
 
-    </FrameLayout>
+        <com.lelloman.launcher.ui.AppsDrawerView
+            android:id="@+id/apps_drawer_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.lelloman.common.widget.bottomdrawer.BottomDrawerLayout>
 </layout>
