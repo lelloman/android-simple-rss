@@ -63,12 +63,14 @@ class BottomDrawerFrame(context: Context)
         val pointerId = event.getPointerId(index)
         val velocityY = velocityTracker.getYVelocity(pointerId)
 
-        val kv = 1 - Math.min(Math.abs(velocityY / 3000.0), 1.0)
+        val kv = verticalOffset / (height - contentInterface.headerHeight)//1 - Math.min(Math.abs(velocityY / 3000.0), 1.0)
         val animationTime = (MIN_ANIMATION_TIME + DELTA_ANIMATION_TIME * kv).toInt()
         when {
-            velocityY > SWIPE_VELOCITY_THRESHOLD -> setState(BottomDrawerLayout.State.MINI, true, animationTime)
+            velocityY > SWIPE_VELOCITY_THRESHOLD || velocityY as Number == Float.NaN -> {
+                setState(BottomDrawerLayout.State.MINI, true, animationTime)
+            }
             velocityY < -SWIPE_VELOCITY_THRESHOLD -> setState(BottomDrawerLayout.State.FULL, true, animationTime)
-            verticalOffset > height / 1.5 -> setState(BottomDrawerLayout.State.MINI, true, animationTime)
+            verticalOffset > height / 2 -> setState(BottomDrawerLayout.State.MINI, true, animationTime)
             else -> setState(BottomDrawerLayout.State.FULL, true, animationTime)
         }
     }
@@ -127,14 +129,11 @@ class BottomDrawerFrame(context: Context)
         return true
     }
 
-    private fun handleActionUpOrCancel(event: MotionEvent) = if (!isWaitingForUpEvent) {
-        false
-    } else {
+    private fun handleActionUpOrCancel(event: MotionEvent) = isWaitingForUpEvent.apply {
         eventUp(event)
-        true
     }
 
-    private fun handleActionMove(event: MotionEvent)= if (!isWaitingForUpEvent) {
+    private fun handleActionMove(event: MotionEvent) = if (!isWaitingForUpEvent) {
         false
     } else {
 
@@ -189,8 +188,8 @@ class BottomDrawerFrame(context: Context)
 
     companion object {
         const val SWIPE_VELOCITY_THRESHOLD = 1000
-        const val MIN_ANIMATION_TIME = 250
-        const val MAX_ANIMATION_TIME = 400
+        const val MIN_ANIMATION_TIME = 80
+        const val MAX_ANIMATION_TIME = 380
         const val DELTA_ANIMATION_TIME = MAX_ANIMATION_TIME - MIN_ANIMATION_TIME
     }
 }
