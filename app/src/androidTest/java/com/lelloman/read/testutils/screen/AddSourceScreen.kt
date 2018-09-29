@@ -26,7 +26,7 @@ class AddSourceScreen : Screen() {
     fun clickTestUrl() = apply { clickView(R.id.button_test_source) }
 
     fun urlFieldHasNoDrawable() = apply {
-        viewWithId(R.id.edit_text_source_url).check { view, noViewFoundException ->
+        viewWithId(R.id.edit_text_source_url).check { view, _ ->
             assertThat(view).isInstanceOf(EditText::class.java)
             (view as EditText).apply {
                 view.compoundDrawables.forEach {

@@ -3,7 +3,6 @@ package com.lelloman.read.ui.discover.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
@@ -17,14 +16,12 @@ class DiscoverUrlActivity : BaseActivity<DiscoverUrlViewModel, ActivityDiscoverU
 
     override fun getViewModelClass() = DiscoverUrlViewModel::class.java
 
+    override val hasActionBarBackButton = true
+
     override fun setViewModel(binding: ActivityDiscoverUrlBinding, viewModel: DiscoverUrlViewModel) {
         binding.viewModel = viewModel
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasActionBarBackButton()
-    }
     companion object {
 
         var deepLinkStartable = object : DeepLinkStartable {

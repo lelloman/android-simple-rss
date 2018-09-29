@@ -3,7 +3,6 @@ package com.lelloman.read.ui.settings.view
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
@@ -15,14 +14,12 @@ class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding
 
     override val layoutResId = R.layout.activity_settings
 
+    override val hasActionBarBackButton = true
+
     override fun getViewModelClass() = SettingsViewModel::class.java
 
     override fun setViewModel(binding: ActivitySettingsBinding, viewModel: SettingsViewModel) {
         binding.viewModel = viewModel
-    }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasActionBarBackButton()
     }
 
     companion object {
