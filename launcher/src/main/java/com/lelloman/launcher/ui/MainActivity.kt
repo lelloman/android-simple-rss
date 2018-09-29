@@ -1,6 +1,7 @@
 package com.lelloman.launcher.ui
 
-import android.support.v7.widget.GridLayoutManager
+import android.os.Bundle
+import android.view.ViewTreeObserver
 import com.lelloman.common.utils.NavigationBarDetector
 import com.lelloman.common.utils.model.Position
 import com.lelloman.common.view.BaseActivity
@@ -38,24 +39,33 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
     override fun setViewModel(binding: ActivityMainBinding, viewModel: MainViewModel) {
         binding.viewModel = viewModel
-        binding.recyclerViewApps.layoutManager = GridLayoutManager(
-            this,
-            5
-        )
-        binding.recyclerViewApps.adapter = adapter
+        val recyclerView = binding.appsDrawerView.recyclerView
+        recyclerView.adapter = adapter
         viewModel.packages.observe(this, adapter)
 
         val navBarSpecs = navigationBarDetector.getNavigationBarSpecs()
         when (navBarSpecs.position) {
             Position.LEFT ->
-                binding.recyclerViewApps.setPadding(navBarSpecs.width, 0, 0, 0)
+                recyclerView.setPadding(navBarSpecs.width, 0, 0, 0)
             Position.BOTTOM ->
-                binding.recyclerViewApps.setPadding(0, 0, 0, navBarSpecs.height - statusBarHeight)
+                recyclerView.setPadding(0, 0, 0, navBarSpecs.height - statusBarHeight)
             else -> Unit
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val globalLayoutLister = object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                window.decorView.rootView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                binding.bottomDrawerLayout.setDrawerFrameVisibility(true)
+            }
+        }
+        window.decorView.rootView.viewTreeObserver.addOnGlobalLayoutListener(globalLayoutLister)
+    }
+
     override fun onBackPressed() {
         // no super, this--is--launcher ┌∩┐(◣_◢)┌∩┐
+        binding.bottomDrawerLayout.setMini()
     }
 }

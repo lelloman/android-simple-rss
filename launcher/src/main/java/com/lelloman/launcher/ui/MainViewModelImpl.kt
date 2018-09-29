@@ -3,7 +3,6 @@ package com.lelloman.launcher.ui
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.navigation.PackageIntentNavigationEvent
-import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.packages.Package
 import com.lelloman.launcher.packages.PackagesManager
@@ -15,12 +14,12 @@ class MainViewModelImpl(
     dependencies: BaseViewModel.Dependencies
 ) : MainViewModel(dependencies) {
 
-    override val packages: MutableLiveData<List<Package>> by LazyLiveData {
+    override val packages = MutableLiveData<List<Package>>().apply {
         subscription {
             packagesManager
                 .installedPackages
                 .subscribeOn(ioScheduler)
-                .subscribe(packages::postValue)
+                .subscribe { postValue(it) }
         }
     }
 
