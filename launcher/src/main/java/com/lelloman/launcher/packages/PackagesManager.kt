@@ -13,14 +13,13 @@ import io.reactivex.subjects.BehaviorSubject
 
 class PackagesManager(
     @IoScheduler private val ioScheduler: Scheduler,
-    context: Context
+    private val packageManager: PackageManager,
+    private val context: Context
 ) {
 
     private val installedPackagesSubject = BehaviorSubject.create<List<Package>>()
 
     val installedPackages: Observable<List<Package>> = installedPackagesSubject.hide()
-
-    private val packageManager: PackageManager = context.packageManager
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -57,6 +56,7 @@ class PackagesManager(
             .let { intent ->
                 packageManager
                     .queryIntentActivities(intent, 0)
+                    .asSequence()
                     .mapIndexed { index, resolveInfo ->
                         Package(
                             id = index.toLong(),
@@ -65,6 +65,8 @@ class PackagesManager(
                             drawable = resolveInfo.loadIcon(packageManager)
                         )
                     }
+                    .sortedBy { it.label.toString().toLowerCase() }
+                    .toList()
             }
     }
 }

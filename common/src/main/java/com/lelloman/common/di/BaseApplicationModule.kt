@@ -2,6 +2,7 @@ package com.lelloman.common.di
 
 import android.app.Application
 import android.content.Context
+import android.content.pm.PackageManager
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.NewThreadScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
@@ -63,7 +64,16 @@ open class BaseApplicationModule(private val application: Application) {
     fun provideResourceProvider(context: Context): ResourceProvider = ResourceProviderImpl(context)
 
     @Provides
-    fun provideNavigationRouter(loggerFactory: LoggerFactory) = NavigationRouter(loggerFactory)
+    fun providePackageManager(context: Context) = context.packageManager
+
+    @Provides
+    fun provideNavigationRouter(
+        loggerFactory: LoggerFactory,
+        packageManager: PackageManager
+    ) = NavigationRouter(
+        loggerFactory = loggerFactory,
+        packageManager = packageManager
+    )
 
     @Singleton
     @Provides

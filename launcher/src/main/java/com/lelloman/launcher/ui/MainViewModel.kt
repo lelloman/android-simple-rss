@@ -1,4 +1,4 @@
-package com.lelloman.launcher
+package com.lelloman.launcher.ui
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.viewmodel.BaseViewModel
@@ -9,4 +9,6 @@ abstract class MainViewModel(
 ) : BaseViewModel(dependencies) {
 
     abstract val packages: MutableLiveData<List<Package>>
+
+    abstract fun onPackageClicked(pkg: Package)
 }

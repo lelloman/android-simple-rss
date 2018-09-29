@@ -2,11 +2,15 @@ package com.lelloman.common.navigation
 
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.annotation.VisibleForTesting
 import com.lelloman.common.logger.LoggerFactory
 
-class NavigationRouter(loggerFactory: LoggerFactory) {
+class NavigationRouter(
+    private val packageManager: PackageManager,
+    loggerFactory: LoggerFactory
+) {
 
     private val logger = loggerFactory.getLogger(NavigationRouter::class.java.simpleName)
 
@@ -18,6 +22,7 @@ class NavigationRouter(loggerFactory: LoggerFactory) {
                 .setData(Uri.parse(navigationEvent.url))
             activity.startActivity(intent)
         }
+        is PackageIntentNavigationEvent -> handlePackageNavigationEvent(activity, navigationEvent)
         else -> {
         }
     }
@@ -35,4 +40,8 @@ class NavigationRouter(loggerFactory: LoggerFactory) {
         }
     }
 
+    private fun handlePackageNavigationEvent(activity: Activity, packageIntentNavigationEvent: PackageIntentNavigationEvent) {
+        val intent = packageManager.getLaunchIntentForPackage(packageIntentNavigationEvent.packageName)
+        activity.startActivity(intent)
+    }
 }

@@ -1,6 +1,6 @@
 package com.lelloman.launcher.di
 
-import com.lelloman.launcher.MainActivity
+import com.lelloman.launcher.ui.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

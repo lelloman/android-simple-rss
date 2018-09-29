@@ -1,7 +1,8 @@
-package com.lelloman.launcher
+package com.lelloman.launcher.ui
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.navigation.PackageIntentNavigationEvent
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.packages.Package
@@ -22,4 +23,7 @@ class MainViewModelImpl(
                 .subscribe(packages::postValue)
         }
     }
+
+    override fun onPackageClicked(pkg: Package) =
+        navigate(PackageIntentNavigationEvent(pkg.packageName))
 }
