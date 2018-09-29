@@ -39,7 +39,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     private val logger by lazy { loggerFactory.getLogger(javaClass.simpleName) }
 
-    private val statusBarHeight: Int
+    protected val statusBarHeight: Int
         get() {
             var result = 0
             val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
@@ -60,7 +60,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             theme.applyStyle(R.style.InverseTheme, true)
         }
         if (hasTransaprentNavigationBar) {
-            theme.applyStyle(R.style.TransparentNavigationBar, true)
+            theme.applyStyle(R.style.TransparentActivityWithWallpaper, true)
         }
 
         if (hasBaseLayout) {
