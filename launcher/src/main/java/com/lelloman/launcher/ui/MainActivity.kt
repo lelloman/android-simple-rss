@@ -13,6 +13,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override val layoutResId = R.layout.activity_main
 
     override val hasBaseLayout = false
+    override val hasTransaprentNavigationBar = true
 
     private val adapter = object : BaseRecyclerViewAdapter<Package, PackageListItemViewModel, ListItemPackageBinding>(
         onItemClickListener = { viewModel.onPackageClicked(it) }

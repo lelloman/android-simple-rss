@@ -49,5 +49,10 @@
         <item name="android:windowBackground">?attr/inverseWindowBackground</item>
     </style>
 
+    <style name="TransparentNavigationBar">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
     <attr name="inverseWindowBackground" format="color" />
 </resources>

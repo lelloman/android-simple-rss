@@ -28,20 +28,26 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     private lateinit var coordinatorLayout: CoordinatorLayout
 
-    private var hasSupportActionBarBackButton = false
-
     protected open val hasActionBar = true
-
     protected open val hasInverseTheme = false
-
     protected open val hasBaseLayout = true
-
     protected open val hasActionBarBackButton = false
+    protected open val hasTransaprentNavigationBar = false
 
     @LayoutRes
     protected open val layoutResId = 0
 
     private val logger by lazy { loggerFactory.getLogger(javaClass.simpleName) }
+
+    private val statusBarHeight: Int
+        get() {
+            var result = 0
+            val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+            if (resourceId > 0) {
+                result = resources.getDimensionPixelSize(resourceId)
+            }
+            return result
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +59,9 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         if (hasInverseTheme) {
             theme.applyStyle(R.style.InverseTheme, true)
         }
-
+        if (hasTransaprentNavigationBar) {
+            theme.applyStyle(R.style.TransparentNavigationBar, true)
+        }
 
         if (hasBaseLayout) {
             setContentView(R.layout.activity_base)
@@ -65,6 +73,11 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
         }
         binding.setLifecycleOwner(this)
 
+        if (hasTransaprentNavigationBar) {
+            findViewById<View>(android.R.id.content).apply {
+                setPadding(paddingLeft, statusBarHeight, paddingRight, paddingBottom)
+            }
+        }
 
         viewModel.viewActionEvents.observe(this, Observer {
             when (it) {
@@ -93,7 +106,6 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
             supportActionBar?.apply {
                 setDisplayHomeAsUpEnabled(true)
                 setDisplayShowHomeEnabled(true)
-                hasSupportActionBarBackButton = true
             }
         }
     }
@@ -106,7 +118,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
 
     }
 
-    override fun onSupportNavigateUp() = if (hasSupportActionBarBackButton) {
+    override fun onSupportNavigateUp() = if (hasActionBarBackButton) {
         onBackPressed()
         true
     } else {
