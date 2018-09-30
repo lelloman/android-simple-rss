@@ -15,7 +15,7 @@ class FoundFeedsScreen : Screen() {
     fun wait(seconds: Int) = apply { com.lelloman.testutils.wait(seconds.toDouble()) }
     fun hasText(text: String) = apply { viewWithTextIsDisplayed(text) }
 
-    fun backToDiscoverUrlScreen() = with(pressBack()) { DiscoverSourcesScreen() }
+    fun backToDiscoverUrlScreen() = pressBack().run { DiscoverSourcesScreen() }
 
     fun displaysFoundFeeds(count: Int) = apply {
         checkRecyclerViewCount(count, R.id.discover_recycler_view)

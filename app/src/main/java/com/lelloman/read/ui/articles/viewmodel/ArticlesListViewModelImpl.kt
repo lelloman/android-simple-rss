@@ -57,6 +57,7 @@ class ArticlesListViewModelImpl(
                 }
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
+                .doOnError { setNoArticleAvailableAtm() }
                 .subscribe {
                     articles.postValue(it)
                     emptyViewVisible.postValue(it.isEmpty())
@@ -96,6 +97,12 @@ class ArticlesListViewModelImpl(
 
     override fun onDiscoverSourceClicked() = navigate(ReadNavigationScreen.DISCOVER_URL)
 
+    private fun setNoArticleAvailableAtm(){
+        emptyViewDescriptionText.value = getString(R.string.empty_articles_must_refresh)
+        emptyViewButtonText.value = getString(R.string.refresh)
+        emptyViewAction = ::refresh
+    }
+
     private fun setEmptyViewValues(sources: List<Source>) {
         when {
             sources.isEmpty() -> {
@@ -108,11 +115,7 @@ class ArticlesListViewModelImpl(
                 emptyViewButtonText.value = getString(R.string.enable_sources)
                 emptyViewAction = { navigate(ReadNavigationScreen.SOURCES_LIST) }
             }
-            else -> {
-                emptyViewDescriptionText.value = getString(R.string.empty_articles_must_refresh)
-                emptyViewButtonText.value = getString(R.string.refresh)
-                emptyViewAction = ::refresh
-            }
+            else -> setNoArticleAvailableAtm()
         }
     }
 }

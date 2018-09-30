@@ -118,6 +118,7 @@ private object Display : InfoListItem() {
             false
         )
 
+    @Suppress("UNCHECKED_CAST")
     override fun createVieModel(resourceProvider: ResourceProvider, onClickListener: (InfoItem) -> Unit): InfoItemListItemViewModel<InfoItem> {
         return DisplayInfoItemListItemViewModel(
             resourceProvider = resourceProvider,
@@ -146,7 +147,8 @@ private object Network : InfoListItem() {
         return binding
     }
 
-    override fun createVieModel(resourceProvider: ResourceProvider, clickListener: (InfoItem) -> Unit): InfoItemListItemViewModel<InfoItem> {
+    override fun createVieModel(resourceProvider: ResourceProvider, onClickListener: (InfoItem) -> Unit): InfoItemListItemViewModel<InfoItem> {
+        @Suppress("UNCHECKED_CAST")
         return NetworkInfoItemListItemViewModel() as InfoItemListItemViewModel<InfoItem>
     }
 
@@ -179,6 +181,7 @@ private object Audio : InfoListItem() {
         false
     )
 
+    @Suppress("UNCHECKED_CAST")
     override fun createVieModel(resourceProvider: ResourceProvider, onClickListener: (InfoItem) -> Unit)
         : InfoItemListItemViewModel<InfoItem> =
         AudioInfoItemListItemViewModel(resourceProvider) as InfoItemListItemViewModel<InfoItem>

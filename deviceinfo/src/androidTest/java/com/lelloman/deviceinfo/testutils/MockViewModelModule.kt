@@ -9,7 +9,7 @@ import org.mockito.Mockito.mock
 
 class MockViewModelModule : ViewModelModule() {
 
-    var infoListViewModel = mock(InfoListViewModel::class.java)
+    var infoListViewModel: InfoListViewModel = mock(InfoListViewModel::class.java)
 
     override fun provideInfoListViewModel(ioScheduler: Scheduler, device: Device, dependencies: BaseViewModel.Dependencies): InfoListViewModel {
         return infoListViewModel

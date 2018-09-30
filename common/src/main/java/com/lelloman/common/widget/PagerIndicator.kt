@@ -148,26 +148,33 @@ class PagerIndicator @JvmOverloads constructor(
             filledCircleDstRect.top = bitmapY
             filledCircleDstRect.bottom = bitmapY + circleRadiusAndMarginTimes2
 
-            emptyCirclesBitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888)
-            Canvas(emptyCirclesBitmap).apply {
-                var x = circleRadiusAndMargin.toFloat()
-                val y = bitmapHeight / 2f
-                val radius = circleRadius.toFloat()
-                for (i in 0 until nIndicators) {
-                    drawCircle(x, y, radius, emptyPaint)
-                    x += circleRadiusAndMarginTimes2
+            emptyCirclesBitmap = Bitmap.createBitmap(bitmapWidth, bitmapHeight, Bitmap.Config.ARGB_8888)?.apply {
+                Canvas(this).apply {
+                    var x = circleRadiusAndMargin.toFloat()
+                    val y = bitmapHeight / 2f
+                    val radius = circleRadius.toFloat()
+                    for (i in 0 until nIndicators) {
+                        drawCircle(x, y, radius, emptyPaint)
+                        x += circleRadiusAndMarginTimes2
+                    }
                 }
             }
 
-            filledCircleBitmap = Bitmap.createBitmap(circleRadiusAndMarginTimes2, circleRadiusAndMarginTimes2, Bitmap.Config.ARGB_8888)
-            Canvas(filledCircleBitmap).apply {
-                drawCircle(
-                    circleRadiusAndMargin.toFloat(),
-                    circleRadiusAndMargin.toFloat(),
-                    circleRadius.toFloat(),
-                    fillPaint
-                )
-            }
+            filledCircleBitmap = Bitmap
+                .createBitmap(
+                    circleRadiusAndMarginTimes2,
+                    circleRadiusAndMarginTimes2,
+                    Bitmap.Config.ARGB_8888
+                ).apply {
+                    Canvas(this).apply {
+                        drawCircle(
+                            circleRadiusAndMargin.toFloat(),
+                            circleRadiusAndMargin.toFloat(),
+                            circleRadius.toFloat(),
+                            fillPaint
+                        )
+                    }
+                }
         }
     }
 
@@ -190,7 +197,7 @@ class PagerIndicator @JvmOverloads constructor(
         super.onDraw(canvas)
 
         emptyCirclesBitmap?.apply {
-            canvas.drawBitmap(this, null, circlesRect, null)
+            canvas.drawBitmap(this, null, circlesRect!!, null)
 
             var position = selectedIndicator
             val filledCircleInverseWidth = Math.round(offset * circleRadiusAndMarginTimes2)
@@ -202,7 +209,7 @@ class PagerIndicator @JvmOverloads constructor(
             filledCircleDstRect.left = filledCircleLeft
             filledCircleDstRect.right = filledCircleRight
 
-            canvas.drawBitmap(filledCircleBitmap, filledCircleSrcRect, filledCircleDstRect, null)
+            canvas.drawBitmap(filledCircleBitmap!!, filledCircleSrcRect, filledCircleDstRect, null)
 
             if (offset != 0f) {
                 position = selectedIndicator + 1
@@ -215,7 +222,7 @@ class PagerIndicator @JvmOverloads constructor(
                 filledCircleDstRect.left = filledCircleLeft
                 filledCircleDstRect.right = filledCircleRight
 
-                canvas.drawBitmap(filledCircleBitmap, filledCircleSrcRect, filledCircleDstRect, null)
+                canvas.drawBitmap(filledCircleBitmap!!, filledCircleSrcRect, filledCircleDstRect, null)
             }
         }
     }

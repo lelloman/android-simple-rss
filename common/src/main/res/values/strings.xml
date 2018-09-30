@@ -1,15 +1,15 @@
 <resources>
     <string name="app_name">common</string>
 
-    <string name="time_diff_seconds">%ss ago</string>
-    <string name="time_diff_minutes">%sm ago</string>
-    <string name="time_diff_hours">%sh ago</string>
-    <string name="time_diff_days">%sd ago</string>
+    <string name="time_diff_seconds">%1$ss ago</string>
+    <string name="time_diff_minutes">%1$sm ago</string>
+    <string name="time_diff_hours">%1$sh ago</string>
+    <string name="time_diff_days">%1$sd ago</string>
 
-    <string name="time_quantity_days">%sd</string>
-    <string name="time_quantity_hours">%sh</string>
-    <string name="time_quantity_min">%sm</string>
-    <string name="time_quantity_sec">%ss</string>
+    <string name="time_quantity_days">%1$sd</string>
+    <string name="time_quantity_hours">%1$sh</string>
+    <string name="time_quantity_min">%1$sm</string>
+    <string name="time_quantity_sec">%1$ss</string>
 
     <string-array name="time_quantities">
         <item>@string/time_quantity_sec</item>

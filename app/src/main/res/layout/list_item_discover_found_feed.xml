@@ -48,7 +48,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/text_view_feed_name"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_view_feed_name"
-                app:viewVisible="@{viewModel.feedUrlVisible}"
+                app:viewVisible="@{safeUnbox(viewModel.feedUrlVisible)}"
                 tools:text="https://www.somestupidwebsite/feed/bla/bla/bla/bla/bla/bla" />
 
             <TextView

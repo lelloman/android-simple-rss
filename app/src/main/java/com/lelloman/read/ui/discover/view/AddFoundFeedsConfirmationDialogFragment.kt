@@ -3,9 +3,10 @@ package com.lelloman.read.ui.discover.view
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
-import android.app.DialogFragment
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.DialogFragment
+import android.support.v4.app.FragmentActivity
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.read.R
@@ -32,7 +33,7 @@ class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
         val message = if (foundFeeds.isNotEmpty()) {
             getString(
                 R.string.add_all_sources_message,
-                foundFeeds.size,
+                foundFeeds.size.toString(),
                 foundFeeds.joinToString("\n") { "- ${it.name}" }
             )
         } else {
@@ -54,13 +55,13 @@ class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
 
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
-                if (context is Activity) {
+                if (context is FragmentActivity) {
                     val fragment = AddFoundFeedsConfirmationDialogFragment()
                     fragment.arguments = Bundle().apply {
                         val foundFeeds: ArrayList<FoundFeed> = deepLink.getSerializableArrayList(ARG_FOUND_FEEDS)!!
                         putParcelableArrayList(ARG_FOUND_FEEDS, foundFeeds)
                     }
-                    fragment.show(context.fragmentManager, AddFoundFeedsConfirmationDialogFragment::class.java.simpleName)
+                    fragment.show(context.supportFragmentManager, AddFoundFeedsConfirmationDialogFragment::class.java.simpleName)
                 } else {
                     throw IllegalArgumentException("Context argument must be an Activity")
                 }

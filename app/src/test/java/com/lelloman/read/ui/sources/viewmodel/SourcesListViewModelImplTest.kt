@@ -70,7 +70,8 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
     @Test
     fun `un-subscribes on cleared`() {
         val sourcesSubject = givenSourcesSubject()
-        val sources = tested.sources.value // create susbcription
+        @Suppress("UNUSED_VARIABLE") // create susbcription
+        val sources = tested.sources.value
         assertThat(sourcesSubject.hasObservers()).isTrue()
 
         tested.clear()
@@ -233,6 +234,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
 
     private fun givenCanInsertArticles() {
         whenever(articlesRepository.insertArticles(any())).thenAnswer {
+            @Suppress("UNCHECKED_CAST")
             val nArticles = (it.arguments[0] as List<Article>).size
             Single.just(Array(nArticles) { it.toLong() })
         }

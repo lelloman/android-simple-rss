@@ -21,10 +21,6 @@ class LiveDataTestObserver<T> : Observer<T> {
         assertThat(values).isEqualTo(expectedValue.toList())
     }
 
-    fun assertNoValues() {
-        assertThat(values).isEmpty()
-    }
-
     fun assertValuesCount(count: Int) {
         assertThat(values).hasSize(count)
     }

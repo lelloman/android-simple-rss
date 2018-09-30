@@ -22,33 +22,33 @@ interface OnKeyboardActionDoneListener {
 object BindingAdapters {
 
     @JvmStatic
-    @BindingAdapter("app:hash")
+    @BindingAdapter("hash")
     fun bindIdenticonHash(identiconView: ClassicIdenticonView, hash: Int) {
         identiconView.setHash(hash)
     }
 
     @JvmStatic
-    @BindingAdapter("app:viewVisible")
+    @BindingAdapter("viewVisible")
     fun bindViewVisibility(view: View, isVisible: Boolean) {
         view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     @JvmStatic
-    @BindingAdapter("app:isRefreshing")
+    @BindingAdapter("isRefreshing")
     fun bindIsSwipeRefreshing(view: SwipeRefreshLayout, isRefreshing: Boolean) {
         view.isRefreshing = isRefreshing
     }
 
     @JvmStatic
-    @BindingAdapter("app:error")
+    @BindingAdapter("error")
     fun bindError(view: TextInputLayout, text: String?) {
         view.error = text
         view.isErrorEnabled = !text.isNullOrBlank()
     }
 
     @JvmStatic
-    @BindingAdapter("app:imageUrl")
-    fun bindImageurl(view: ImageView, url: String?) {
+    @BindingAdapter("imageUrl")
+    fun bindImageUrl(view: ImageView, url: String?) {
         url?.let {
             ReadApplication.getPicassoWrap()
                 .loadUrlIntoImageView(
@@ -60,13 +60,13 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:imageBytes")
+    @BindingAdapter("imageBytes")
     fun bindImageViewImageBytes(view: ImageView, byteArrayWithId: ByteArrayWithId) {
         byteArrayWithId.bind(view::setImageBitmap)
     }
 
     @JvmStatic
-    @BindingAdapter("app:imageBytes")
+    @BindingAdapter("imageBytes")
     fun bindSourceImageViewImageBytes(view: SourceImageView, byteArrayWithId: ByteArrayWithId) {
         byteArrayWithId.bind(view::setImage)
     }
@@ -81,13 +81,13 @@ object BindingAdapters {
     }
 
     @JvmStatic
-    @BindingAdapter("app:editTextDrawable")
+    @BindingAdapter("editTextDrawable")
     fun bindEditTextDrawable(editText: EditText, resId: Int) {
         editText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, resId, 0)
     }
 
     @JvmStatic
-    @BindingAdapter("app:onKeyboardActionDoneListener")
+    @BindingAdapter("onKeyboardActionDoneListener")
     fun setOnKeyboardActionDoneListener(view: TextView, listener: OnKeyboardActionDoneListener?) {
         if (listener == null) {
             view.setOnEditorActionListener(null)

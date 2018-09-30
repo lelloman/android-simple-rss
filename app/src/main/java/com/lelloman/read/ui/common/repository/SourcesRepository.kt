@@ -59,7 +59,7 @@ class SourcesRepository @Inject constructor(
 
         isLoading = true
 
-        sourcesDao.getAll()
+        val ignored = sourcesDao.getAll()
             .subscribeOn(ioScheduler)
             .subscribe {
                 sourcesSubject.onNext(it)

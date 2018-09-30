@@ -64,7 +64,7 @@ open class BaseApplicationModule(private val application: Application) {
     fun provideResourceProvider(context: Context): ResourceProvider = ResourceProviderImpl(context)
 
     @Provides
-    fun providePackageManager(context: Context) = context.packageManager
+    fun providePackageManager(context: Context): PackageManager = context.packageManager
 
     @Provides
     fun provideNavigationRouter(

@@ -23,7 +23,7 @@ class SettingsScreen : Screen() {
         viewIsDisplayed(R.id.settings_root)
     }
 
-    fun backToArticlesList() = with(pressBack()) { ArticlesListScreen() }
+    fun backToArticlesList() = pressBack().run { ArticlesListScreen() }
 
     fun setOpenArticlesInApp(openInApp: Boolean) = apply {
         viewWithId(R.id.toggle_setting_open_articles_in_app).perform(setToggleSettingChecked(openInApp))

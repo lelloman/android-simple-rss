@@ -4,6 +4,7 @@ import android.os.Parcel
 import android.os.Parcelable
 import com.lelloman.common.utils.model.ModelWithId
 
+@Suppress("ArrayInDataClass")
 data class SourceArticle(
     override val id: Long,
     val title: String,
@@ -46,6 +47,7 @@ data class SourceArticle(
     }
 
     companion object {
+        @Suppress("unused")
         @JvmField
         val CREATOR: Parcelable.Creator<SourceArticle> = object : Parcelable.Creator<SourceArticle> {
             override fun createFromParcel(source: Parcel): SourceArticle = SourceArticle(source)

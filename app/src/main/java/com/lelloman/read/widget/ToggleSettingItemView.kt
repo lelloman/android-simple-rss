@@ -17,8 +17,6 @@ class ToggleSettingItemView
 
     override fun getLayoutId() = R.layout.view_toggle_setting_item
 
-    fun isChecked() = switch.isChecked
-
     fun setChecked(isChecked: Boolean) {
         switch.isChecked = isChecked
     }

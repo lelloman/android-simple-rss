@@ -25,7 +25,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:viewVisible="@{viewModel.isFindingFeeds}" />
+            app:viewVisible="@{safeUnbox(viewModel.isFindingFeeds)}" />
 
         <com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollNotifierRecyclerView
             android:id="@+id/discover_recycler_view"

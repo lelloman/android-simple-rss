@@ -29,6 +29,7 @@ data class FoundFeed(
     }
 
     companion object {
+        @Suppress("unused")
         @JvmField
         val CREATOR: Parcelable.Creator<FoundFeed> = object : Parcelable.Creator<FoundFeed> {
             override fun createFromParcel(source: Parcel): FoundFeed = FoundFeed(source)

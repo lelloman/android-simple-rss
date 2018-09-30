@@ -57,21 +57,21 @@
                 android:id="@+id/edit_text_source_url"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:enabled="@{!viewModel.testingUrl}"
+                android:enabled="@{safeUnbox(!viewModel.testingUrl)}"
                 android:hint="@string/hint_source_url"
                 android:imeOptions="actionNext"
                 android:inputType="textUri"
                 android:maxLines="1"
                 android:singleLine="true"
                 android:text="@={viewModel.sourceUrl}"
-                app:editTextDrawable="@{viewModel.sourceUrlDrawable}" />
+                app:editTextDrawable="@{safeUnbox(viewModel.sourceUrlDrawable)}" />
         </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/button_test_source"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:enabled="@{!viewModel.testingUrl}"
+            android:enabled="@{safeUnbox(!viewModel.testingUrl)}"
             android:onClickListener="@{(_) -> viewModel.onTestUrlClicked() }"
             android:text="@string/test_source"
             app:layout_constraintEnd_toEndOf="parent"

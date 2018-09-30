@@ -12,6 +12,7 @@ import com.lelloman.read.ui.sources.view.AddSourceActivity
 import com.lelloman.read.ui.sources.view.SourcesListActivity
 import com.lelloman.read.ui.walkthrough.view.WalkthroughActivity
 import kotlin.reflect.KClass
+import com.lelloman.common.navigation.DeepLink
 
 /**
  * Cannot change the names, [DeepLink] uses the names and if the values are changed in this enum

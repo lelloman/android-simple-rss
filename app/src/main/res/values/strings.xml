@@ -21,7 +21,7 @@
     <string name="test_feed_empty_error">"Source returned an empty feed"</string>
 
     <string name="refresh">Refresh</string>
-    <string name="source_deleted">%s deleted</string>
+    <string name="source_deleted">%1$s deleted</string>
     <string name="undo">UNDO</string>
     <string name="settings">Settings</string>
 
@@ -40,7 +40,7 @@
     <string name="ADD_ALL">ADD ALL</string>
     <string name="add_sources">Add sources</string>
     <string name="add_all_sources_empty_list">There is no source to add.</string>
-    <string name="add_all_sources_message">Add %d sources:\n%s</string>
+    <string name="add_all_sources_message">Add %1$s sources:\n%2$s</string>
     <string name="discover_sources">Discover source</string>
     <string name="NO">NO</string>
     <string name="YES">YES</string>
@@ -50,6 +50,6 @@
     <string name="settings_theme_descr">Theme</string>
     <string name="settings_theme_title">Change the colors of the app.</string>
 
-    <string name="last_refresh">last refresh: %s</string>
+    <string name="last_refresh">last refresh: %1$s</string>
     <string name="never">never</string>
 </resources>

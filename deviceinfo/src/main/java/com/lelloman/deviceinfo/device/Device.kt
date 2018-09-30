@@ -12,5 +12,7 @@ interface Device {
     val networkInterfaces: Observable<List<NetworkInterface>>
 
     val audioMode: Observable<AudioMode>
+
+    fun dispose()
 }
 

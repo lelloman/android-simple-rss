@@ -6,6 +6,7 @@ import android.arch.persistence.room.PrimaryKey
 import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.read.utils.Constants.SOURCE_TABLE_NAME
 
+@Suppress("ArrayInDataClass")
 @Entity(tableName = SOURCE_TABLE_NAME)
 data class Source(
     @PrimaryKey(autoGenerate = true) override val id: Long = 0L,

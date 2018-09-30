@@ -15,6 +15,7 @@ import com.lelloman.read.ui.walkthrough.view.WalkthroughActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
+@Suppress("unused")
 @Module
 interface AndroidContributes {
 
