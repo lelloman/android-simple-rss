@@ -37,10 +37,7 @@ class AppsDrawerView(
     init {
         setBackgroundColor(0)
         inflate(context, R.layout.view_apps_drawer, this)
-        recyclerView.layoutManager = object : GridLayoutManager(
-            context,
-            5
-        ) {
+        recyclerView.layoutManager = object : GridLayoutManager(context, 1) {
             override fun scrollVerticallyBy(dy: Int, recycler: RecyclerView.Recycler?, state: RecyclerView.State?): Int {
                 val scrollRange = super.scrollVerticallyBy(dy, recycler, state)
                 if (dy - scrollRange < 0) {
