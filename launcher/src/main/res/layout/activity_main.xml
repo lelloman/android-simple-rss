@@ -20,9 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="HOME"
-            android:textColor="#FFFFFFFF"
-            android:textSize="40dp" />
+            android:textColor="#FFFFFFFF"/>
 
         <com.lelloman.launcher.ui.view.AppsDrawerView
             android:id="@+id/apps_drawer_view"

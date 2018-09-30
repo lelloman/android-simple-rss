@@ -1,6 +1,9 @@
 package com.lelloman.launcher.ui.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import android.databinding.Observable
+import android.databinding.ObservableField
+import android.util.Log
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.navigation.PackageIntentNavigationEvent
 import com.lelloman.common.viewmodel.BaseViewModel
@@ -30,6 +33,9 @@ class MainViewModelImpl(
                     postValue(it)
                 }
         }
+    }
+
+    init {
     }
 
     override fun onPackageClicked(pkg: Package) =

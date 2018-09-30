@@ -21,8 +21,8 @@ abstract class BaseMultiTypeRecyclerViewAdapter<M : ModelWithId>(
 ) : RecyclerView.Adapter<BaseMultiTypeRecyclerViewAdapter.ViewHolder<M>>(),
     Observer<List<M>> {
 
-    private var data = emptyList<M>()
-    private val listItemDiffCalculator = ModelWithIdListDiffCalculator()
+    protected var data = emptyList<M>()
+    protected val listItemDiffCalculator = ModelWithIdListDiffCalculator()
 
     protected abstract val itemsMap: Map<Any, ItemType<M, BaseListItemViewModel<M>, ViewDataBinding>>
 
