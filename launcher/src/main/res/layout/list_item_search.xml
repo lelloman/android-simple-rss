@@ -19,6 +19,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center"
+            android:text="@={viewModel.appsSearchQuery}"
             android:textColor="@android:color/primary_text_dark"
             android:hint="@string/search_apps"
             android:textColorHint="?android:attr/colorAccent"

@@ -6,6 +6,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import com.lelloman.common.view.BaseMultiTypeRecyclerViewAdapter
 import com.lelloman.common.view.ItemType
 import com.lelloman.common.view.ResourceProvider
@@ -25,64 +27,117 @@ class AppsDrawerAdapter(
 ) : BaseMultiTypeRecyclerViewAdapter<AppsDrawerListItem>(
     onClickListener = onClickListener,
     resourceProvider = resourceProvider
-) {
+), Filterable {
     override val itemsMap: Map<Any, ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>>
         get() {
             val out = mutableMapOf<Any, ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>>()
-            out[PackageDrawerListItem::class.java] = PackageItem as ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>
-            out[SearchDrawerListItem::class.java] = SearchItem as ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>
+            out[PackageDrawerListItem::class.java] = packageItem as ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>
+            out[SearchDrawerListItem::class.java] = searchItem as ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>
             return out
         }
+
+    private var originalData: List<AppsDrawerListItem> = emptyList()
+
+    private var lastQuerySearch = ""
+
+    override fun getFilter() = object : Filter() {
+
+        override fun performFiltering(queryCharSequence: CharSequence?): FilterResults {
+            val queryString = queryCharSequence.toString()
+
+            val contactListFiltered = if (queryString.isEmpty()) {
+                originalData
+            } else {
+                val filteredList = mutableListOf<AppsDrawerListItem>()
+                for (item in originalData) {
+                    val shouldAdd = when (item) {
+                        is PackageDrawerListItem ->
+                            item.pkg.label.contains(queryString, ignoreCase = true) ||
+                                item.pkg.packageName.contains(queryString, ignoreCase = true)
+                        else -> true
+                    }
+                    if (shouldAdd) {
+                        filteredList.add(item)
+                    }
+                }
+                filteredList
+            }
+
+            val filterResults = FilterResults()
+            filterResults.values = contactListFiltered
+            return filterResults
+        }
+
+        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            (results?.values as? List<AppsDrawerListItem>)?.let { result ->
+                val diff = listItemDiffCalculator.computeDiff(data, result)
+                this@AppsDrawerAdapter.data = result
+                diff.dispatchUpdatesTo(this@AppsDrawerAdapter)
+            }
+        }
+    }
+
+    override fun onChanged(newData: List<AppsDrawerListItem>?) {
+        newData?.let {
+            originalData = newData
+            filter.filter(lastQuerySearch)
+        }
+    }
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         val layoutManger = recyclerView.layoutManager as GridLayoutManager
         layoutManger.spanCount = 5
         layoutManger.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int) = when(position) {
+            override fun getSpanSize(position: Int) = when (position) {
                 0 -> 5
                 else -> 1
             }
         }
     }
-}
 
-private object PackageItem : ItemType<PackageDrawerListItem, PackageListItemViewModel, ListItemPackageBinding> {
-    override val ordinal = 1
-    override fun createBinding(parent: ViewGroup): ListItemPackageBinding = DataBindingUtil.inflate(
-        LayoutInflater.from(parent.context),
-        R.layout.list_item_package,
-        parent,
-        false
-    )
-
-    override fun createViewModel(resourceProvider: ResourceProvider, onClickListener: ((Any) -> Unit)?) =
-        PackageListItemViewModel()
-
-    override fun bindViewModel(viewModel: PackageListItemViewModel, binding: ListItemPackageBinding, item: PackageDrawerListItem) {
-        binding.viewModel = viewModel
+    fun onQuerySearchChanged(query: String) {
+        lastQuerySearch = query
+        filter.filter(query)
     }
-}
 
-private object SearchItem : ItemType<SearchDrawerListItem, SearchListItemViewModel, ListItemSearchBinding> {
-    override val ordinal = 2
-    override fun createBinding(parent: ViewGroup): ViewDataBinding  {
-        val binding: ListItemSearchBinding = DataBindingUtil.inflate(
+    private val packageItem = object : ItemType<PackageDrawerListItem, PackageListItemViewModel, ListItemPackageBinding> {
+        override val ordinal = 1
+        override fun createBinding(parent: ViewGroup): ListItemPackageBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.list_item_search,
+            R.layout.list_item_package,
             parent,
             false
         )
-        val hint = binding.exitTextSearch.hint
-        binding.exitTextSearch.setOnFocusChangeListener { v, hasFocus ->
-            binding.exitTextSearch.hint = if(hasFocus) "" else hint
+
+        override fun createViewModel(resourceProvider: ResourceProvider, onClickListener: ((Any) -> Unit)?) =
+            PackageListItemViewModel()
+
+        override fun bindViewModel(viewModel: PackageListItemViewModel, binding: ListItemPackageBinding, item: PackageDrawerListItem) {
+            binding.viewModel = viewModel
         }
-        return binding
     }
 
-    override fun createViewModel(resourceProvider: ResourceProvider, onClickListener: ((Any) -> Unit)?) = SearchListItemViewModel()
+    private val searchItem = object : ItemType<SearchDrawerListItem, SearchListItemViewModel, ListItemSearchBinding> {
+        override val ordinal = 2
+        override fun createBinding(parent: ViewGroup): ViewDataBinding {
+            val binding: ListItemSearchBinding = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.list_item_search,
+                parent,
+                false
+            )
+            val hint = binding.exitTextSearch.hint
+            binding.exitTextSearch.setOnFocusChangeListener { v, hasFocus ->
+                binding.exitTextSearch.hint = if (hasFocus) "" else hint
+            }
+            return binding
+        }
 
-    override fun bindViewModel(viewModel: SearchListItemViewModel, binding: ListItemSearchBinding, item: SearchDrawerListItem) {
-        binding.viewModel = viewModel
+        override fun createViewModel(resourceProvider: ResourceProvider, onClickListener: ((Any) -> Unit)?) = SearchListItemViewModel(::onQuerySearchChanged)
+
+        override fun bindViewModel(viewModel: SearchListItemViewModel, binding: ListItemSearchBinding, item: SearchDrawerListItem) {
+            binding.viewModel = viewModel
+        }
     }
 }

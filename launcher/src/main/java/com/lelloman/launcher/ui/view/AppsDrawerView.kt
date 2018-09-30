@@ -5,7 +5,6 @@ import android.content.Context
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -74,15 +73,10 @@ class AppsDrawerView(
         val percent = verticalOffset / (height.toFloat() - headerHeight)
 
         headerView.alpha = pow(percent.toDouble(), 2.0).toFloat()
-//        setBackgroundColor((255 - (percent * 255).toInt()) * 0x1000000)
         fullView.alpha = 1f - percent
 
         val opened = percent <= 0f
         fullView.visibility = if (percent == 1f) View.GONE else View.VISIBLE
         headerView.visibility = if (opened) View.GONE else View.VISIBLE
-
-        if(percent == 0f || percent == 1f){
-            Log.d("ASD", "percent $percent")
-        }
     }
 }
