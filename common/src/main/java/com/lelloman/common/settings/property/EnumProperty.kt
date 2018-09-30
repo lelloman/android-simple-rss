@@ -22,7 +22,7 @@ class EnumProperty<T : Named>(
 ) : PrefsProperty<T>(key, default, prefs) {
 
     override fun getValueFromPrefs(prefs: SharedPreferences): T =
-        stringToEnum.invoke(prefs.getString(key, default.name))
+        stringToEnum.invoke(prefs.getString(key, default.name)!!)
 
     override fun putValueInPrefs(editor: SharedPreferences.Editor, value: T) {
         editor.putString(key, value.name)

@@ -37,7 +37,7 @@ class SemanticTimeProvider(
             .mapIndexed { index, quantity ->
                 quantity to quantityStrings[index].format(quantity)
             }
-            .filter { (quantity, string) ->
+            .filter { (quantity, _) ->
                 quantity > 0
             }
             .joinToString(" ") { (_, string) -> string }

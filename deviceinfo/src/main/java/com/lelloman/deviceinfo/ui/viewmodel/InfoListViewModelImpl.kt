@@ -58,6 +58,7 @@ class InfoListViewModelImpl(
             }
     }
 
+    @Suppress("UNCHECKED_CAST")
     override val deviceInfos: MutableLiveData<List<InfoItem>> by LazyLiveData {
         subscription {
             Observable

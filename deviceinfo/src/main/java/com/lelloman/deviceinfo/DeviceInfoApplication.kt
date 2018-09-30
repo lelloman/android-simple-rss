@@ -8,6 +8,7 @@ import com.lelloman.deviceinfo.di.AppModule
 import com.lelloman.deviceinfo.di.DaggerAppComponent
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ open class DeviceInfoApplication : BaseApplication(), HasActivityInjector {
 
     private val configurationChangesSubject = PublishSubject.create<Any>()
 
-    val configurationChanges = configurationChangesSubject.hide()
+    val configurationChanges: Observable<Any> = configurationChangesSubject.hide()
 
     override fun onConfigurationChanged(newConfig: Configuration?) {
         super.onConfigurationChanged(newConfig)

@@ -16,7 +16,7 @@ class DiscoverSourcesScreen : Screen() {
 
     fun typeUrl(url: String) = apply { typeInEditText(R.id.edit_text_url, url) }
 
-    fun clickOnDiscover() = with(clickView(R.id.button_discover)) {
+    fun clickOnDiscover() = clickView(R.id.button_discover).run {
         FoundFeedsScreen()
     }
 
@@ -24,5 +24,5 @@ class DiscoverSourcesScreen : Screen() {
 
     fun closeKeyboard() = apply { closeSoftKeyboard() }
 
-    fun backToArticlesList() = with(pressBack()) { ArticlesListScreen() }
+    fun backToArticlesList() = pressBack().run { ArticlesListScreen() }
 }

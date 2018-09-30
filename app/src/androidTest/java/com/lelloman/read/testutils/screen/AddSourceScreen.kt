@@ -17,7 +17,7 @@ class AddSourceScreen : Screen() {
         viewIsDisplayed(R.id.add_source_root)
     }
 
-    fun backToSourcesList() = with(pressBack()) { SourcesListScreen() }
+    fun backToSourcesList() = pressBack().run { SourcesListScreen() }
 
     fun typeSourceName(name: String) = apply { typeInEditText(R.id.edit_text_source_name, name) }
 
@@ -53,5 +53,5 @@ class AddSourceScreen : Screen() {
         }
     }
 
-    fun clickSave() = with(clickViewWithText(string(R.string.SAVE))) { SourcesListScreen() }
+    fun clickSave() = clickViewWithText(string(R.string.SAVE)).run { SourcesListScreen() }
 }

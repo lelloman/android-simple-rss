@@ -63,7 +63,7 @@ class ArticlesListScreen : Screen() {
     fun rotateRight() = apply { com.lelloman.testutils.rotateRight() }
     fun rotateNatural() = apply { com.lelloman.testutils.rotateNatural() }
 
-    fun clickOnArticle(position: Int) = with(clickOnRecyclerViewItem(position, recyclerViewId)) {
+    fun clickOnArticle(position: Int) = clickOnRecyclerViewItem(position, recyclerViewId).run {
         InAppArticleScreen()
     }
 

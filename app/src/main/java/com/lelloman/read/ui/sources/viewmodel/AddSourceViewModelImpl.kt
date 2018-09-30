@@ -101,20 +101,22 @@ class AddSourceViewModelImpl(
             sourceUrl.set(url)
             sourceNameError.value = ""
             sourceUrlError.value = ""
-            sourcesRepository
-                .insertSource(Source(
-                    name = name!!,
-                    url = url!!,
-                    isActive = true
-                ))
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
-                .doAfterTerminate { saving = false }
-                .subscribe({
-                    navigateBack()
-                }, {
-                    shortToast(getString(R.string.something_went_wrong))
-                })
+            subscription {
+                sourcesRepository
+                    .insertSource(Source(
+                        name = name!!,
+                        url = url!!,
+                        isActive = true
+                    ))
+                    .subscribeOn(ioScheduler)
+                    .observeOn(uiScheduler)
+                    .doAfterTerminate { saving = false }
+                    .subscribe({
+                        navigateBack()
+                    }, {
+                        shortToast(getString(R.string.something_went_wrong))
+                    })
+            }
         } else {
             val nameErrorValue = if (hasValidName) "" else getString(R.string.error_add_source_name)
             val urlErrorValue = if (hasValidUrl) "" else getString(R.string.error_add_source_url)

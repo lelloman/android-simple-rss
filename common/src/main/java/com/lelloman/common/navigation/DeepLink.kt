@@ -61,6 +61,7 @@ class DeepLink(val screen: NavigationScreen) {
             val base64Encoded = parameters[key] as String
             val bytes = Base64Util.decode(base64Encoded)
             val ois = ObjectInputStream(ByteArrayInputStream(bytes))
+            @Suppress("UNCHECKED_CAST")
             ois.readObject() as ArrayList<T>
         } else {
             null
@@ -69,9 +70,10 @@ class DeepLink(val screen: NavigationScreen) {
 
     private fun getParametersList() = parameters
         .entries
-        .toList()
+        .asSequence()
         .map { it.key to it.value }
         .sortedBy { (key, _) -> key }
+        .toList()
 
     override fun toString() = stringRepresentation
 

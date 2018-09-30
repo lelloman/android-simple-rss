@@ -19,7 +19,7 @@
             android:id="@+id/swipe_refresh_layout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:isRefreshing="@{viewModel.isLoading}"
+            app:isRefreshing="@{safeUnbox(viewModel.isLoading)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed"
-            app:viewVisible="@{viewModel.emptyViewVisible}"
+            app:viewVisible="@{safeUnbox(viewModel.emptyViewVisible)}"
             tools:text="EMPTY LIST" />
 
         <Button
@@ -57,7 +57,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_view_empty_list"
-            app:viewVisible="@{viewModel.emptyViewVisible}" />
+            app:viewVisible="@{safeUnbox(viewModel.emptyViewVisible)}" />
 
     </android.support.constraint.ConstraintLayout>
 </layout>

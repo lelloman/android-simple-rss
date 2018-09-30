@@ -43,11 +43,11 @@ class WalkthroughScreen : Screen() {
 
     fun typeInUrlIsDisplayed() = apply { viewWithTextIsDisplayed(string(R.string.type_in_url)) }
 
-    fun clickNo() = with(clickViewWithText(string(R.string.NO))) {
+    fun clickNo() = clickViewWithText(string(R.string.NO)).let {
         ArticlesListScreen()
     }
 
-    fun pressClose() = with(clickView(R.id.skip)) { ArticlesListScreen() }
+    fun pressClose() = clickView(R.id.skip).run { ArticlesListScreen() }
 
     fun assertPagerIndicatorColor(color: Int) = apply {
         onView(withId(R.id.pager_indicator))

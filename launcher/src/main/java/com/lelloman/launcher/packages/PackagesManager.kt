@@ -14,7 +14,7 @@ import io.reactivex.subjects.BehaviorSubject
 class PackagesManager(
     @IoScheduler private val ioScheduler: Scheduler,
     private val packageManager: PackageManager,
-    private val context: Context
+    context: Context
 ) {
 
     private val installedPackagesSubject = BehaviorSubject.create<List<Package>>()

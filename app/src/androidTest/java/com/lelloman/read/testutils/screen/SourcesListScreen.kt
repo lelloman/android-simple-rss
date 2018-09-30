@@ -20,7 +20,7 @@ class SourcesListScreen : Screen() {
         return AddSourceScreen()
     }
 
-    fun backToArticlesList() = with(pressBack()) { ArticlesListScreen() }
+    fun backToArticlesList() = pressBack().run { ArticlesListScreen() }
 
     fun showsSources(count: Int) = apply { checkRecyclerViewCount(count, recyclerViewId) }
 

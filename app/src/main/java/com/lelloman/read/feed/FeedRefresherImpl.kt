@@ -49,7 +49,7 @@ class FeedRefresherImpl(
         }
         isLoadingSubject.onNext(true)
 
-        Single
+        val ignored = Single
             .zip(
                 sourcesDao
                     .getActiveSources()

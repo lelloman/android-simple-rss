@@ -37,7 +37,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="4dp"
-            android:enabled="@{!viewModel.isFeedDiscoverLoading()}"
+            android:enabled="@{!safeUnbox(viewModel.isFeedDiscoverLoading())}"
             android:imeOptions="actionDone"
             android:singleLine="true"
             android:text="@={viewModel.discoverUrl}"
@@ -64,13 +64,13 @@
                 android:layout_marginTop="8dp"
                 android:onClick="@{viewModel::onDiscoverClicked}"
                 android:text="@string/discover"
-                app:viewVisible="@{!viewModel.isFeedDiscoverLoading()}" />
+                app:viewVisible="@{!safeUnbox(viewModel.isFeedDiscoverLoading())}" />
 
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                app:viewVisible="@{viewModel.isFeedDiscoverLoading()}" />
+                app:viewVisible="@{safeUnbox(viewModel.isFeedDiscoverLoading())}" />
         </FrameLayout>
 
     </android.support.constraint.ConstraintLayout>

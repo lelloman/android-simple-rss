@@ -78,20 +78,22 @@ class SourcesListViewModelImpl(
     }
 
     override fun onSourceSwiped(source: Source) {
-        sourcesRepository
-            .deleteSource(source)
-            .subscribeOn(ioScheduler)
-            .subscribe({
-                val message = getString(R.string.source_deleted, source.name)
-                val actionToken = makeActionToken()
-                deletedSourceMap[actionToken] = it
-                viewActionEvents.postValue(SnackEvent(
-                    message = message,
-                    actionLabel = getString(R.string.undo),
-                    actionToken = actionToken
-                ))
-            }, {
-                shortToast(getString(R.string.something_went_wrong))
-            })
+        subscription {
+            sourcesRepository
+                .deleteSource(source)
+                .subscribeOn(ioScheduler)
+                .subscribe({
+                    val message = getString(R.string.source_deleted, source.name)
+                    val actionToken = makeActionToken()
+                    deletedSourceMap[actionToken] = it
+                    viewActionEvents.postValue(SnackEvent(
+                        message = message,
+                        actionLabel = getString(R.string.undo),
+                        actionToken = actionToken
+                    ))
+                }, {
+                    shortToast(getString(R.string.something_went_wrong))
+                })
+        }
     }
 }

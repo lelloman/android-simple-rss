@@ -10,5 +10,5 @@ class InAppArticleScreen : Screen() {
         viewIsDisplayed(R.id.web_view)
     }
 
-    fun backToArticlesList() = with(pressBack()) { ArticlesListScreen() }
+    fun backToArticlesList() = pressBack().run { ArticlesListScreen() }
 }
