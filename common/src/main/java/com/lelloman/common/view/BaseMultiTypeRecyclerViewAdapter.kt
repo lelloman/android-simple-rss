@@ -3,7 +3,6 @@ package com.lelloman.common.view
 import android.arch.lifecycle.Observer
 import android.databinding.ViewDataBinding
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.ViewGroup
 import com.lelloman.common.utils.ModelWithIdListDiffCalculator
 import com.lelloman.common.utils.model.ModelWithId
@@ -69,11 +68,9 @@ abstract class BaseMultiTypeRecyclerViewAdapter<M : ModelWithId>(
 
     private fun getItem(position: Int): M = data[position]
 
-    private fun getItemType(item: Any): ItemType<M, BaseListItemViewModel<M>, ViewDataBinding> {
-        return itemsMap[item::class.java]!!.apply {
-            Log.d("ASD", "returning itemType $this for class ${item::class.java.name}")
-        }
-    }
+    private fun getItemType(item: Any): ItemType<M, BaseListItemViewModel<M>, ViewDataBinding> =
+        itemsMap[item::class.java]
+            ?: throw IllegalArgumentException("No ItemType defined for class ${item::class.java.name}")
 
     class ViewHolder<M : ModelWithId>(
         val binding: ViewDataBinding,

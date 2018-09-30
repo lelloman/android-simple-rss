@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.launcher.ui.PackageListItemViewModel" />
+            type="com.lelloman.launcher.ui.viewmodel.PackageListItemViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
