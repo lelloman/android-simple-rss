@@ -1,4 +1,4 @@
-package com.lelloman.launcher.ui
+package com.lelloman.launcher.ui.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.di.qualifiers.IoScheduler
@@ -6,6 +6,7 @@ import com.lelloman.common.navigation.PackageIntentNavigationEvent
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.packages.Package
 import com.lelloman.launcher.packages.PackagesManager
+import com.lelloman.launcher.ui.AppsDrawerListItem
 import io.reactivex.Scheduler
 
 class MainViewModelImpl(
@@ -14,10 +15,11 @@ class MainViewModelImpl(
     dependencies: BaseViewModel.Dependencies
 ) : MainViewModel(dependencies) {
 
-    override val packages = MutableLiveData<List<Package>>().apply {
+    override val packages = MutableLiveData<List<AppsDrawerListItem>>().apply {
         subscription {
             packagesManager
                 .installedPackages
+                .map { it.map(::PackageDrawerListItem) }
                 .subscribeOn(ioScheduler)
                 .subscribe { postValue(it) }
         }

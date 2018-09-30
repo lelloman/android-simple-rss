@@ -4,8 +4,8 @@ import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.packages.PackagesManager
-import com.lelloman.launcher.ui.MainViewModel
-import com.lelloman.launcher.ui.MainViewModelImpl
+import com.lelloman.launcher.ui.viewmodel.MainViewModel
+import com.lelloman.launcher.ui.viewmodel.MainViewModelImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler

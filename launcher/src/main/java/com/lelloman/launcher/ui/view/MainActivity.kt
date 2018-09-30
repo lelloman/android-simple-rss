@@ -1,15 +1,14 @@
-package com.lelloman.launcher.ui
+package com.lelloman.launcher.ui.view
 
 import android.os.Bundle
 import android.view.ViewTreeObserver
 import com.lelloman.common.utils.NavigationBarDetector
 import com.lelloman.common.utils.model.Position
 import com.lelloman.common.view.BaseActivity
-import com.lelloman.common.view.BaseRecyclerViewAdapter
 import com.lelloman.launcher.R
 import com.lelloman.launcher.databinding.ActivityMainBinding
-import com.lelloman.launcher.databinding.ListItemPackageBinding
 import com.lelloman.launcher.packages.Package
+import com.lelloman.launcher.ui.viewmodel.MainViewModel
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
@@ -22,20 +21,14 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     @Inject
     lateinit var navigationBarDetector: NavigationBarDetector
 
-    private val adapter = object : BaseRecyclerViewAdapter<Package, PackageListItemViewModel, ListItemPackageBinding>(
-        onItemClickListener = { viewModel.onPackageClicked(it) }
-    ) {
-
-        override val listItemLayoutResId = R.layout.list_item_package
-
-        override fun bindViewModel(binding: ListItemPackageBinding, viewModel: PackageListItemViewModel) {
-            binding.viewModel = viewModel
-        }
-
-        override fun createViewModel(viewHolder: BaseViewHolder<Package, PackageListItemViewModel, ListItemPackageBinding>) = PackageListItemViewModel()
-    }
+    private val adapter by lazy { AppsDrawerAdapter(::onAppsDrawerElementClicked, resourceProvider) }
 
     override fun getViewModelClass() = MainViewModel::class.java
+
+    private fun onAppsDrawerElementClicked(element: Any) = when (element) {
+        is Package -> viewModel.onPackageClicked(element)
+        else -> Unit
+    }
 
     override fun setViewModel(binding: ActivityMainBinding, viewModel: MainViewModel) {
         binding.viewModel = viewModel

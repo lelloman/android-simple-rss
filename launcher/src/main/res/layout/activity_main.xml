@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.launcher.ui.MainViewModel" />
+            type="com.lelloman.launcher.ui.viewmodel.MainViewModel" />
     </data>
 
     <com.lelloman.common.widget.bottomdrawer.BottomDrawerLayout
@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        tools:context=".ui.MainActivity">
+        tools:context=".ui.view.MainActivity">
 
         <TextView
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:textColor="#FFFFFFFF"
             android:textSize="40dp" />
 
-        <com.lelloman.launcher.ui.AppsDrawerView
+        <com.lelloman.launcher.ui.view.AppsDrawerView
             android:id="@+id/apps_drawer_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

@@ -1,4 +1,4 @@
-package com.lelloman.launcher.ui
+package com.lelloman.launcher.ui.view
 
 import android.annotation.SuppressLint
 import android.content.Context

@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.view.MainActivity"
             android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"
             android:launchMode="singleTask">
