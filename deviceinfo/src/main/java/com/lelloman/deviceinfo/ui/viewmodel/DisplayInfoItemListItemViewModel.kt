@@ -5,14 +5,15 @@ import android.text.Html
 import android.text.SpannableString
 import android.text.Spanned
 import com.lelloman.common.view.ResourceProvider
+import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.deviceinfo.R
 import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
 import com.lelloman.deviceinfo.infoitem.InfoItem
 
 class DisplayInfoItemListItemViewModel(
     private val resourceProvider: ResourceProvider,
-    private val onDisplayButtonClickListener: (InfoItem) -> Unit
-) : InfoItemListItemViewModel<DisplayInfoItem> {
+    private val onDisplayButtonClickListener: ((InfoItem) -> Unit)?
+) : BaseListItemViewModel<DisplayInfoItem> {
 
     private val emptySpanned = SpannableString("")
     private lateinit var infoItem: DisplayInfoItem
@@ -26,7 +27,7 @@ class DisplayInfoItemListItemViewModel(
     var densityDpi: Spanned = emptySpanned
         private set
 
-    fun onDisplayButtonClicked() = onDisplayButtonClickListener.invoke(infoItem)
+    fun onDisplayButtonClicked() = onDisplayButtonClickListener?.invoke(infoItem)
 
     override fun bind(item: DisplayInfoItem) {
         this.infoItem = item

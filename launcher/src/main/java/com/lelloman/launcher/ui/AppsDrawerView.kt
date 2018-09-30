@@ -43,8 +43,7 @@ class AppsDrawerView(
         ) {
             override fun scrollVerticallyBy(dy: Int, recycler: RecyclerView.Recycler?, state: RecyclerView.State?): Int {
                 val scrollRange = super.scrollVerticallyBy(dy, recycler, state)
-                val overscroll = dy - scrollRange
-                if (overscroll < 0) {
+                if (dy - scrollRange < 0) {
                     overscrolling = true
                     parentAsViewGroup.dispatchTouchEvent(MotionEvent.obtain(
                         System.currentTimeMillis(),
