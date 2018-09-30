@@ -66,12 +66,19 @@ private object PackageItem : ItemType<PackageDrawerListItem, PackageListItemView
 
 private object SearchItem : ItemType<SearchDrawerListItem, SearchListItemViewModel, ListItemSearchBinding> {
     override val ordinal = 2
-    override fun createBinding(parent: ViewGroup): ViewDataBinding = DataBindingUtil.inflate(
-        LayoutInflater.from(parent.context),
-        R.layout.list_item_search,
-        parent,
-        false
-    )
+    override fun createBinding(parent: ViewGroup): ViewDataBinding  {
+        val binding: ListItemSearchBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(parent.context),
+            R.layout.list_item_search,
+            parent,
+            false
+        )
+        val hint = binding.exitTextSearch.hint
+        binding.exitTextSearch.setOnFocusChangeListener { v, hasFocus ->
+            binding.exitTextSearch.hint = if(hasFocus) "" else hint
+        }
+        return binding
+    }
 
     override fun createViewModel(resourceProvider: ResourceProvider, onClickListener: ((Any) -> Unit)?) = SearchListItemViewModel()
 
