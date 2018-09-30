@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LLLauncher</string>
+    <string name="search_apps">Search apps</string>
 </resources>

@@ -9,6 +9,7 @@ import com.lelloman.launcher.R
 import com.lelloman.launcher.databinding.ActivityMainBinding
 import com.lelloman.launcher.packages.Package
 import com.lelloman.launcher.ui.viewmodel.MainViewModel
+import com.lelloman.launcher.ui.viewmodel.PackageDrawerListItem
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
@@ -26,7 +27,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun getViewModelClass() = MainViewModel::class.java
 
     private fun onAppsDrawerElementClicked(element: Any) = when (element) {
-        is Package -> viewModel.onPackageClicked(element)
+        is PackageDrawerListItem -> viewModel.onPackageClicked(element.pkg)
         else -> Unit
     }
 
