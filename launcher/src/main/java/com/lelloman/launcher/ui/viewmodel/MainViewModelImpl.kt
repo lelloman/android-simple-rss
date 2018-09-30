@@ -19,9 +19,16 @@ class MainViewModelImpl(
         subscription {
             packagesManager
                 .installedPackages
-                .map { it.map(::PackageDrawerListItem) }
+                .map {
+                    val out = mutableListOf<AppsDrawerListItem>()
+                    out.add(SearchDrawerListItem)
+                    out.addAll(it.map(::PackageDrawerListItem))
+                    out
+                }
                 .subscribeOn(ioScheduler)
-                .subscribe { postValue(it) }
+                .subscribe {
+                    postValue(it)
+                }
         }
     }
 
