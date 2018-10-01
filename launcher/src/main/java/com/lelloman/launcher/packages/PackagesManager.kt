@@ -8,6 +8,8 @@ import android.content.IntentFilter
 import android.content.pm.PackageManager
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.logger.LoggerFactory
+import com.lelloman.launcher.classification.ClassifiedPackage
+import com.lelloman.launcher.classification.PackageClassifier
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -16,6 +18,7 @@ import io.reactivex.subjects.BehaviorSubject
 class PackagesManager(
     @IoScheduler private val ioScheduler: Scheduler,
     private val packageManager: PackageManager,
+    private val packageClassifier: PackageClassifier,
     loggerFactory: LoggerFactory,
     context: Context
 ) {
@@ -24,6 +27,15 @@ class PackagesManager(
     private val installedPackagesSubject = BehaviorSubject.create<List<Package>>()
 
     val installedPackages: Observable<List<Package>> = installedPackagesSubject.hide()
+
+    val classifiedPackages: Observable<List<Package>> = installedPackagesSubject
+        .flatMapSingle(packageClassifier::classify)
+        .map { classifiedPackages ->
+            classifiedPackages
+                .sortedBy { it.score }
+                .subList(0, 10)
+                .map(ClassifiedPackage::pkg)
+        }
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -52,7 +64,7 @@ class PackagesManager(
         getPackagesFromPackageManager()
             .subscribeOn(ioScheduler)
             .observeOn(ioScheduler)
-            .subscribe( {
+            .subscribe({
                 installedPackagesSubject.onNext(it)
             }, {
                 logger.e("Error while querying packages", it)
