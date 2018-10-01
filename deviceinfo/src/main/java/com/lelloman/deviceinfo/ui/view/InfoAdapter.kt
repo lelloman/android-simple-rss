@@ -29,6 +29,7 @@ class InfoAdapter(
     onClickListener = onItemClickListener
 ) {
 
+    @Suppress("UNCHECKED_CAST")
     override val itemsMap: Map<Any, ItemType<InfoItem, BaseListItemViewModel<InfoItem>, ViewDataBinding>>
         get() {
             val out = mutableMapOf<Any, ItemType<InfoItem, BaseListItemViewModel<InfoItem>, ViewDataBinding>>()

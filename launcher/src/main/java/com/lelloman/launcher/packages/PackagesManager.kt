@@ -71,6 +71,7 @@ class PackagesManager(
                             id = index.toLong(),
                             label = resolveInfo.loadLabel(packageManager),
                             packageName = resolveInfo.activityInfo.packageName,
+                            activityName = resolveInfo.activityInfo.name,
                             drawable = resolveInfo.loadIcon(packageManager)
                         )
                     }
