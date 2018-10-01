@@ -1,6 +1,6 @@
-package com.lelloman.kotlinnn
+package com.lelloman.nn
 
-import com.lelloman.kotlinnn.dataset.DataSet1D
+import com.lelloman.nn.dataset.DataSet1D
 import java.awt.Color
 import java.awt.image.BufferedImage
 import java.io.File

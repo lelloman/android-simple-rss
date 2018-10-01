@@ -1,8 +1,8 @@
-package com.lelloman.kotlinnn.logicgateslearning
+package com.lelloman.nn.logicgateslearning
 
-import com.lelloman.kotlinnn.Training
-import com.lelloman.kotlinnn.optimizer.SGD
-import com.lelloman.kotlinnn.xorSample
+import com.lelloman.nn.Training
+import com.lelloman.nn.optimizer.SGD
+import com.lelloman.nn.xorSample
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 

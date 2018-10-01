@@ -1,9 +1,9 @@
-package com.lelloman.kotlinnn.optimizer
+package com.lelloman.nn.optimizer
 
-import com.lelloman.kotlinnn.Network
-import com.lelloman.kotlinnn.layer.DenseLayer
-import com.lelloman.kotlinnn.layer.InputLayer
-import com.lelloman.kotlinnn.layer.WeightsInitializer
+import com.lelloman.nn.Network
+import com.lelloman.nn.layer.DenseLayer
+import com.lelloman.nn.layer.InputLayer
+import com.lelloman.nn.layer.WeightsInitializer
 import com.nhaarman.mockito_kotlin.spy
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before

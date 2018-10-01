@@ -1,7 +1,7 @@
-package com.lelloman.kotlinnn.loss
+package com.lelloman.nn.loss
 
-import com.lelloman.kotlinnn.Network
-import com.lelloman.kotlinnn.dataset.DataSet1D
+import com.lelloman.nn.Network
+import com.lelloman.nn.dataset.DataSet1D
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import org.assertj.core.api.Assertions.assertThat
