@@ -1,13 +1,13 @@
-package com.lelloman.kotlinnn.logicgateslearning
+package com.lelloman.nn.logicgateslearning
 
-import com.lelloman.kotlinnn.Network
-import com.lelloman.kotlinnn.Training
-import com.lelloman.kotlinnn.activation.Activation
-import com.lelloman.kotlinnn.layer.DenseLayer
-import com.lelloman.kotlinnn.layer.GaussianWeightsInitializer
-import com.lelloman.kotlinnn.layer.InputLayer
-import com.lelloman.kotlinnn.layer.WeightsInitializer
-import com.lelloman.kotlinnn.logicGateDataSet
+import com.lelloman.nn.Network
+import com.lelloman.nn.Training
+import com.lelloman.nn.activation.Activation
+import com.lelloman.nn.layer.DenseLayer
+import com.lelloman.nn.layer.GaussianWeightsInitializer
+import com.lelloman.nn.layer.InputLayer
+import com.lelloman.nn.layer.WeightsInitializer
+import com.lelloman.nn.logicGateDataSet
 import java.util.*
 
 abstract class LogicGateTrainingTest {

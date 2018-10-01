@@ -1,6 +1,6 @@
-package com.lelloman.kotlinnn.layer
+package com.lelloman.nn.layer
 
-import com.lelloman.kotlinnn.activation.Activation
+import com.lelloman.nn.activation.Activation
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test

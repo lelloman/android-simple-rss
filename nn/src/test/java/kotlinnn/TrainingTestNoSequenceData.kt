@@ -1,9 +1,9 @@
-package com.lelloman.kotlinnn
+package com.lelloman.nn
 
-import com.lelloman.kotlinnn.dataset.DataSet1D
-import com.lelloman.kotlinnn.loss.Loss
-import com.lelloman.kotlinnn.loss.LossFunction
-import com.lelloman.kotlinnn.optimizer.SGD
+import com.lelloman.nn.dataset.DataSet1D
+import com.lelloman.nn.loss.Loss
+import com.lelloman.nn.loss.LossFunction
+import com.lelloman.nn.optimizer.SGD
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.spy

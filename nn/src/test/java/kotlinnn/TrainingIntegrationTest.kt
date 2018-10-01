@@ -1,11 +1,11 @@
-package com.lelloman.kotlinnn
+package com.lelloman.nn
 
-import com.lelloman.kotlinnn.activation.Activation
-import com.lelloman.kotlinnn.layer.DenseLayer
-import com.lelloman.kotlinnn.layer.GaussianWeightsInitializer
-import com.lelloman.kotlinnn.layer.InputLayer
-import com.lelloman.kotlinnn.layer.WeightsInitializer
-import com.lelloman.kotlinnn.optimizer.SGD
+import com.lelloman.nn.activation.Activation
+import com.lelloman.nn.layer.DenseLayer
+import com.lelloman.nn.layer.GaussianWeightsInitializer
+import com.lelloman.nn.layer.InputLayer
+import com.lelloman.nn.layer.WeightsInitializer
+import com.lelloman.nn.optimizer.SGD
 import org.assertj.core.api.Assertions
 import org.junit.Test
 import java.util.*

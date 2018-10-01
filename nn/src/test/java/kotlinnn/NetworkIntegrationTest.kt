@@ -1,7 +1,7 @@
-package com.lelloman.kotlinnn
+package com.lelloman.nn
 
-import com.lelloman.kotlinnn.layer.DenseLayer
-import com.lelloman.kotlinnn.layer.InputLayer
+import com.lelloman.nn.layer.DenseLayer
+import com.lelloman.nn.layer.InputLayer
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 

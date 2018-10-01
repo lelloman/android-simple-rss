@@ -1,11 +1,11 @@
-package com.lelloman.kotlinnn
+package com.lelloman.nn
 
-import com.lelloman.kotlinnn.activation.Activation
-import com.lelloman.kotlinnn.dataset.DataSet1D
-import com.lelloman.kotlinnn.layer.DenseLayer
-import com.lelloman.kotlinnn.layer.GaussianWeightsInitializer
-import com.lelloman.kotlinnn.layer.InputLayer
-import com.lelloman.kotlinnn.optimizer.Adagrad
+import com.lelloman.nn.activation.Activation
+import com.lelloman.nn.dataset.DataSet1D
+import com.lelloman.nn.layer.DenseLayer
+import com.lelloman.nn.layer.GaussianWeightsInitializer
+import com.lelloman.nn.layer.InputLayer
+import com.lelloman.nn.optimizer.Adagrad
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.util.*

@@ -1,4 +1,4 @@
-package com.lelloman.kotlinnn.optimizer
+package com.lelloman.nn.optimizer
 
 import org.junit.Test
 
