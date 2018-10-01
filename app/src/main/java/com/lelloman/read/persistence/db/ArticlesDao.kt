@@ -4,10 +4,10 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
+import com.lelloman.read.persistence.db.AppDatabase.Companion.ARTICLE_TABLE_NAME
+import com.lelloman.read.persistence.db.AppDatabase.Companion.SOURCE_TABLE_NAME
 import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.SourceArticle
-import com.lelloman.read.utils.Constants.ARTICLE_TABLE_NAME
-import com.lelloman.read.utils.Constants.SOURCE_TABLE_NAME
 import io.reactivex.Flowable
 
 @Dao

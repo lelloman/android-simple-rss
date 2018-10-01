@@ -4,8 +4,8 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
+import com.lelloman.read.persistence.db.AppDatabase.Companion.SOURCE_TABLE_NAME
 import com.lelloman.read.persistence.db.model.Source
-import com.lelloman.read.utils.Constants.SOURCE_TABLE_NAME
 import io.reactivex.Flowable
 
 @Dao

@@ -2,7 +2,6 @@ package com.lelloman.read.persistence.db
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import com.lelloman.read.utils.Constants
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,7 +12,7 @@ open class DbModule {
     @Singleton
     @Provides
     open fun provideDatabase(context: Context): AppDatabase = Room
-        .databaseBuilder(context, AppDatabase::class.java, Constants.APP_DATABASE_NAME)
+        .databaseBuilder(context, AppDatabase::class.java, AppDatabase.NAME)
         .build()
 
     @Singleton
