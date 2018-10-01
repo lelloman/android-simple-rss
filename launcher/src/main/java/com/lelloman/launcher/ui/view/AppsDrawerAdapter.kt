@@ -28,6 +28,7 @@ class AppsDrawerAdapter(
     onClickListener = onClickListener,
     resourceProvider = resourceProvider
 ), Filterable {
+    @Suppress("UNCHECKED_CAST")
     override val itemsMap: Map<Any, ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>>
         get() {
             val out = mutableMapOf<Any, ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>>()
@@ -69,6 +70,7 @@ class AppsDrawerAdapter(
         }
 
         override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+            @Suppress("UNCHECKED_CAST")
             (results?.values as? List<AppsDrawerListItem>)?.let { result ->
                 val diff = listItemDiffCalculator.computeDiff(data, result)
                 this@AppsDrawerAdapter.data = result

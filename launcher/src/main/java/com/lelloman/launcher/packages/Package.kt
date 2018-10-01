@@ -7,5 +7,6 @@ class Package(
     override val id: Long,
     val label: CharSequence,
     val packageName: String,
+    val activityName: String,
     val drawable: Drawable
 ) : ModelWithId

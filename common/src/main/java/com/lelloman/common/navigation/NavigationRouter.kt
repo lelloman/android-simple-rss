@@ -1,11 +1,13 @@
 package com.lelloman.common.navigation
 
 import android.app.Activity
+import android.content.ComponentName
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.annotation.VisibleForTesting
 import com.lelloman.common.logger.LoggerFactory
+
 
 class NavigationRouter(
     private val packageManager: PackageManager,
@@ -40,8 +42,17 @@ class NavigationRouter(
         }
     }
 
-    private fun handlePackageNavigationEvent(activity: Activity, packageIntentNavigationEvent: PackageIntentNavigationEvent) {
-        val intent = packageManager.getLaunchIntentForPackage(packageIntentNavigationEvent.packageName)
+    private fun handlePackageNavigationEvent(activity: Activity, event: PackageIntentNavigationEvent) {
+        val intent = if (event.activityName == null) {
+            packageManager.getLaunchIntentForPackage(event.packageName)
+        } else {
+            Intent(Intent.ACTION_MAIN).apply {
+                val componentName = ComponentName(event.packageName, event.activityName)
+                addCategory(Intent.CATEGORY_LAUNCHER)
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
+                component = componentName
+            }
+        }
         activity.startActivity(intent)
     }
 }
