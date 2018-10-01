@@ -1,0 +1,28 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm'
+}
+apply plugin: 'java-library'
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    testImplementation "org.assertj:assertj-core:$assert_j_version"
+    testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+}
+
+sourceCompatibility = "7"
+targetCompatibility = "7"
+
+repositories {
+    mavenCentral()
+}
+compileKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+compileTestKotlin {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
