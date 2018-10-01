@@ -8,7 +8,7 @@ import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
 import com.lelloman.common.utils.model.ModelWithId
-import com.lelloman.read.utils.Constants.ARTICLE_TABLE_NAME
+import com.lelloman.read.persistence.db.AppDatabase.Companion.ARTICLE_TABLE_NAME
 
 @Entity(
     tableName = ARTICLE_TABLE_NAME,
