@@ -1,13 +1,11 @@
 package com.lelloman.launcher.packages
 
 import android.annotation.SuppressLint
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.logger.LoggerFactory
+import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.classification.PackageClassifier
 import io.reactivex.Observable
@@ -18,9 +16,11 @@ import io.reactivex.subjects.BehaviorSubject
 class PackagesManager(
     @IoScheduler private val ioScheduler: Scheduler,
     private val packageManager: PackageManager,
-    private val packageClassifier: PackageClassifier,
+    packageClassifier: PackageClassifier,
     loggerFactory: LoggerFactory,
-    context: Context
+    broadcastReceiverWrap: BroadcastReceiverWrap,
+    val queryActivityIntent: Intent = Intent(Intent.ACTION_MAIN, null)
+        .addCategory(Intent.CATEGORY_LAUNCHER)
 ) {
 
     private val logger = loggerFactory.getLogger(PackagesManager::class.java.simpleName)
@@ -32,30 +32,36 @@ class PackagesManager(
         .flatMapSingle(packageClassifier::classify)
         .map { classifiedPackages ->
             classifiedPackages
+                .asSequence()
                 .sortedBy { it.score }
-                .subList(0, 10)
+                .take(10)
                 .map(ClassifiedPackage::pkg)
+                .toList()
         }
 
-    private val broadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            when (intent?.action) {
+    init {
+        @Suppress("UNUSED_VARIABLE")
+        val unused = broadcastReceiverWrap
+            .broadcasts
+            .subscribeOn(ioScheduler)
+            .observeOn(ioScheduler)
+            .subscribe { intent ->
+                when (intent.action) {
+                    Intent.ACTION_PACKAGE_ADDED,
+                    Intent.ACTION_PACKAGE_CHANGED,
+                    Intent.ACTION_PACKAGE_REMOVED,
+                    Intent.ACTION_PACKAGE_REPLACED -> updateInstalledPackages()
+                }
+            }
+        broadcastReceiverWrap.register(
+            dataScheme = "package",
+            actions = arrayOf(
                 Intent.ACTION_PACKAGE_ADDED,
                 Intent.ACTION_PACKAGE_CHANGED,
                 Intent.ACTION_PACKAGE_REMOVED,
-                Intent.ACTION_PACKAGE_REPLACED -> updateInstalledPackages()
-            }
-        }
-    }
-
-    init {
-        context.registerReceiver(broadcastReceiver, IntentFilter().apply {
-            addAction(Intent.ACTION_PACKAGE_ADDED)
-            addAction(Intent.ACTION_PACKAGE_CHANGED)
-            addAction(Intent.ACTION_PACKAGE_REMOVED)
-            addAction(Intent.ACTION_PACKAGE_REPLACED)
-            addDataScheme("package")
-        })
+                Intent.ACTION_PACKAGE_REPLACED
+            )
+        )
         updateInstalledPackages()
     }
 
@@ -72,23 +78,19 @@ class PackagesManager(
     }
 
     private fun getPackagesFromPackageManager(): Single<List<Package>> = Single.fromCallable {
-        Intent(Intent.ACTION_MAIN, null)
-            .addCategory(Intent.CATEGORY_LAUNCHER)
-            .let { intent ->
-                packageManager
-                    .queryIntentActivities(intent, 0)
-                    .asSequence()
-                    .mapIndexed { index, resolveInfo ->
-                        Package(
-                            id = index.toLong(),
-                            label = resolveInfo.loadLabel(packageManager),
-                            packageName = resolveInfo.activityInfo.packageName,
-                            activityName = resolveInfo.activityInfo.name,
-                            drawable = resolveInfo.loadIcon(packageManager)
-                        )
-                    }
-                    .sortedBy { it.label.toString().toLowerCase() }
-                    .toList()
+        packageManager
+            .queryIntentActivities(queryActivityIntent, 0)
+            .asSequence()
+            .mapIndexed { index, resolveInfo ->
+                Package(
+                    id = index.toLong(),
+                    label = resolveInfo.loadLabel(packageManager),
+                    packageName = resolveInfo.activityInfo.packageName,
+                    activityName = resolveInfo.activityInfo.name,
+                    drawable = resolveInfo.loadIcon(packageManager)
+                )
             }
+            .sortedBy { it.label.toString().toLowerCase() }
+            .toList()
     }
 }

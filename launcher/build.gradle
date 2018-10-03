@@ -43,7 +43,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation "android.arch.persistence.room:testing:$room_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
-    testImplementation "com.google.truth:truth:$truth_version"
+    testImplementation "org.assertj:assertj-core:$assert_j_version"
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
     androidTestImplementation project(':testutils')
