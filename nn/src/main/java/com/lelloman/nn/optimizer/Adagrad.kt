@@ -5,7 +5,7 @@ import java.util.*
 class Adagrad(eta: Double = 0.01) : SGD(eta) {
 
     private val prevGradientsSquaredSum by lazy {
-        Array(network.size, { DoubleArray(weightGradients[it].size) })
+        Array(network.size) { DoubleArray(weightGradients[it].size) }
     }
 
     override fun updateWeights() = (1 until network.size).forEach {

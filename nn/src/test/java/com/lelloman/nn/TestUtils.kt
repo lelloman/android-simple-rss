@@ -72,7 +72,7 @@ object SpiralDataSet {
         val x = 0.5 + r * Math.sin(t) / 2.0
         val y = 0.5 + r * Math.cos(t) / 2.0
 
-        doubleArrayOf(x, y) to DoubleArray(3, { (it == j).toDouble() })
+        doubleArrayOf(x, y) to DoubleArray(3) { (it == j).toDouble() }
     }
 
     fun make(size: Int, random: Random = Random()): DataSet1D {

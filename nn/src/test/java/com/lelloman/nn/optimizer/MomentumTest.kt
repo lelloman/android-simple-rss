@@ -50,8 +50,8 @@ class MomentumTest {
 
         momentum.updateWeights()
 
-        val expectedHiddenWeights = DoubleArray(hiddenLayer.weightsSize, { 0.1 + 0.2 * momentumValue })
-        val expectedOutputWeights = DoubleArray(outputLayer.weightsSize, { 0.1 + 0.2 * momentumValue })
+        val expectedHiddenWeights = DoubleArray(hiddenLayer.weightsSize) { 0.1 + 0.2 * momentumValue }
+        val expectedOutputWeights = DoubleArray(outputLayer.weightsSize) { 0.1 + 0.2 * momentumValue }
         assertThat(hiddenLayer.copyWeights()).isEqualTo(expectedHiddenWeights)
         assertThat(outputLayer.copyWeights()).isEqualTo(expectedOutputWeights)
     }

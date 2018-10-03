@@ -11,8 +11,8 @@ class NetworkIntegrationTest {
     private fun logistic(x: Double) = 1.0 / (1.0 + Math.exp(-x))
 
     /*
-        Network 1 ->
-        I O
+        Network 1
+        ->I ->O
      */
     private val network1: Network by lazy {
         val inputLayer = InputLayer(1)
@@ -43,9 +43,9 @@ class NetworkIntegrationTest {
     }
 
     /*
-        Network 2 ->
-        I O
-        B
+        Network 2
+        ->I ->O
+          B
      */
     private val network2: Network by lazy {
         val inputLayer = InputLayer(1)
@@ -77,9 +77,9 @@ class NetworkIntegrationTest {
     }
 
     /*
-        Network 3 ->
-        I
-        I O
+        Network 3
+        ->I
+        ->I ->O
         B
      */
     private val network3: Network by lazy {
@@ -124,10 +124,10 @@ class NetworkIntegrationTest {
     }
 
     /*
-        Network 4 ->
-        I O
-        I O
-        B
+        Network 4
+        ->I ->O
+        ->I ->O
+          B
      */
     private val network4: Network by lazy {
         val inputLayer = InputLayer(2)
@@ -178,9 +178,9 @@ class NetworkIntegrationTest {
 
     /*
        Network 5 ->
-       I H O
-       I H O
-       B
+       ->I ->H ->O
+       ->I ->H ->O
+         B
     */
     private val network5: Network by lazy {
         val inputLayer = InputLayer(2)

@@ -33,7 +33,7 @@ class InputLayer(sequenceLength: Int, size: Int)
         throw RuntimeException("Cannot compute activation of an InputLayer")
     }
 
-    override fun activationDerivative(sequenceIndex: Int, index: Int): Double {
+    override fun activationDerivative(sequenceIndex: Int, widthIndex: Int): Double {
         throw RuntimeException("Cannot compute derivative of the activation of an InputLayer")
     }
 }

@@ -1,5 +1,6 @@
 package com.lelloman.nn
 
+@Suppress("ArrayInDataClass")
 data class DataSample(val input: Array<DoubleArray>, val output: Array<DoubleArray>) {
 
     // TODO maybe check all elements inputWidth?

@@ -90,7 +90,7 @@ class CrossEntropyLossTest {
         )
 
         val network: Network = mock {
-            on { forwardPass(any()) }.thenAnswer { arrayOf(values[i++]) }
+            on { forwardPass(any()) }.thenAnswer { _ -> arrayOf(values[i++]) }
             on { output }.thenReturn(arrayOf(DoubleArray(3)))
         }
 

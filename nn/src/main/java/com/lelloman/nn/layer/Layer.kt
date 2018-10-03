@@ -3,7 +3,7 @@ package com.lelloman.nn.layer
 import com.lelloman.nn.activation.LayerActivation
 
 abstract class Layer(
-    val outputSeqLength: Int,
+    outputSeqLength: Int,
     val outputWidth: Int,
     val inputLayer: Layer?,
     val hasBias: Boolean,

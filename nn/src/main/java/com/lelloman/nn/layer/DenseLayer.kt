@@ -12,7 +12,7 @@ open class DenseLayer(size: Int,
     private val z = DoubleArray(size)
 
     override val weightsSize: Int by lazy { weights.size }
-    private val weights: DoubleArray = DoubleArray(size * inputLayer!!.outputWidth + (if (hasBias) size else 0), { 0.0 })
+    private val weights: DoubleArray = DoubleArray(size * inputLayer.outputWidth + (if (hasBias) size else 0)) { 0.0 }
 
     override fun setWeights(weights: DoubleArray) {
         if (weights.size != this.weightsSize) {
@@ -59,5 +59,5 @@ open class DenseLayer(size: Int,
         }
     }
 
-    override fun activationDerivative(sequenceIndex: Int, index: Int) = activation.derivative(sequenceIndex, index)
+    override fun activationDerivative(sequenceIndex: Int, widthIndex: Int) = activation.derivative(sequenceIndex, widthIndex)
 }

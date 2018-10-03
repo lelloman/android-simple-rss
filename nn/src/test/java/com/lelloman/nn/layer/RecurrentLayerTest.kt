@@ -56,7 +56,7 @@ class RecurrentLayerTest {
         val rnn = RecurrentLayer(2, inputLayer)
         assertThat(rnn.weightsSize).isEqualTo(weightsSize)
 
-        val weights = DoubleArray(weightsSize, { random.nextDouble() })
+        val weights = DoubleArray(weightsSize) { random.nextDouble() }
 
         rnn.setWeights(weights)
 
@@ -72,11 +72,11 @@ class RecurrentLayerTest {
         val rnn = RecurrentLayer(2, inputLayer)
         assertThat(rnn.weightsSize).isEqualTo(weightsSize)
 
-        val weights = DoubleArray(weightsSize, { random.nextDouble() })
-        val weightsDelta = DoubleArray(weightsSize, { random.nextDouble() })
+        val weights = DoubleArray(weightsSize) { random.nextDouble() }
+        val weightsDelta = DoubleArray(weightsSize) { random.nextDouble() }
 
         rnn.setWeights(weights)
-        rnn.deltaWeights(DoubleArray(weightsSize, { weightsDelta[it] }))
+        rnn.deltaWeights(DoubleArray(weightsSize) { weightsDelta[it] })
 
         weights.forEachIndexed { index, weight ->
             assertThat(rnn.weightAt(index)).isEqualTo(weight + weightsDelta[index])
@@ -160,10 +160,10 @@ class RecurrentLayerTest {
         val activationFun = Activation.LOGISTIC.factory.invoke(1, 2)
         val rnn = RecurrentLayer(2, inputLayer, hasBias = true, activation = Activation.LOGISTIC)
         val weightsSize = 2 * (2 + 1) + 2 * 2
-        val weights = DoubleArray(weightsSize, { random.nextDouble() })
+        val weights = DoubleArray(weightsSize) { random.nextDouble() }
         rnn.setWeights(weights)
-        val weightsW = DoubleArray(2 * (2 + 1), { weights[it] })
-        val weightsU = DoubleArray(2 * 2, { weights[weightsW.size + it] })
+        val weightsW = DoubleArray(2 * (2 + 1)) { weights[it] }
+        val weightsU = DoubleArray(2 * 2) { weights[weightsW.size + it] }
 
         val input0 = doubleArrayOf(random.nextDouble(), random.nextDouble())
         inputLayer.setActivation(arrayOf(input0))

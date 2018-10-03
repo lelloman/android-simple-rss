@@ -11,7 +11,7 @@ internal class CrossEntropyLoss : LossFunction {
 
     override fun onEpochStarted(sequenceLength: Int, outputSize: Int, dataSetSize: Int) {
         this.dataSetSize = dataSetSize
-        gradients = Array(sequenceLength, { DoubleArray(outputSize) })
+        gradients = Array(sequenceLength) { DoubleArray(outputSize) }
         loss = 0.0
     }
 
