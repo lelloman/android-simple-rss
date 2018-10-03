@@ -8,11 +8,11 @@ open class SGD(private var eta: Double = 0.01) {
     protected lateinit var network: Network
 
     internal val weightGradients by lazy {
-        Array(network.size, { DoubleArray(network.layerAt(it).weightsSize) })
+        Array(network.size) { DoubleArray(network.layerAt(it).weightsSize) }
     }
 
     internal val neuronErrors by lazy {
-        Array(network.size, { DoubleArray(network.layerAt(it).outputWidth) })
+        Array(network.size) { DoubleArray(network.layerAt(it).outputWidth) }
     }
 
     fun setup(network: Network) {

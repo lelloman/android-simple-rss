@@ -39,7 +39,7 @@ class TrainingTestNoSequenceData {
 
     @Before
     fun setUp() {
-        whenever(loss.factory).thenReturn({ lossFunction })
+        whenever(loss.factory).thenReturn { lossFunction }
         whenever(network.output).thenReturn(arrayOf(DoubleArray(dataDimension)))
         whenever(network.forwardPass(any())).thenReturn(arrayOf(DoubleArray(dataDimension)))
         whenever(lossFunction.getEpochLoss()).thenReturn(0.0)

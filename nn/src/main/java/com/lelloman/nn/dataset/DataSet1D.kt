@@ -41,7 +41,7 @@ class DataSet1D(input: Array<DoubleArray>,
         inputDimension = 1 to inputSize
         outputDimension = 1 to outputSize
 
-        samples = Array(size, { DataSample(arrayOf(input[it]), arrayOf(output[it])) })
+        samples = Array(size) { DataSample(arrayOf(input[it]), arrayOf(output[it])) }
     }
 
     class Builder(private val size: Int) {

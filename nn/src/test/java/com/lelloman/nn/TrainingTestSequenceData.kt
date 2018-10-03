@@ -26,16 +26,16 @@ class TrainingTestSequenceData {
     private val trainingSet = spy(DataSetV2.Builder(trainingSetSize)
         .add { _ ->
             DataSample(
-                Array(inputSeqLength, { DoubleArray(dataDimension) }),
-                Array(outputSeqLength, { DoubleArray(dataDimension) })
+                Array(inputSeqLength) { DoubleArray(dataDimension) },
+                Array(outputSeqLength) { DoubleArray(dataDimension) }
             )
         }
         .build())
     private val validationSet = DataSetV2.Builder(validationSetSize)
         .add { _ ->
             DataSample(
-                Array(inputSeqLength, { DoubleArray(dataDimension) }),
-                Array(outputSeqLength, { DoubleArray(dataDimension) })
+                Array(inputSeqLength) { DoubleArray(dataDimension) },
+                Array(outputSeqLength) { DoubleArray(dataDimension) }
             )
         }
         .build()
@@ -51,7 +51,7 @@ class TrainingTestSequenceData {
 
     @Before
     fun setUp() {
-        whenever(loss.factory).thenReturn({ lossFunction })
+        whenever(loss.factory).thenReturn { lossFunction }
         whenever(network.output).thenReturn(arrayOf(DoubleArray(dataDimension)))
         whenever(network.forwardPass(any())).thenReturn(arrayOf(DoubleArray(dataDimension)))
         whenever(lossFunction.getEpochLoss()).thenReturn(0.0)

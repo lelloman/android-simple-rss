@@ -2,8 +2,8 @@ package com.lelloman.nn.activation
 
 abstract class LayerActivation(val length: Int, val width: Int) {
 
-    val output = Array(length, { DoubleArray(width) })
-    protected val derivatives = Array(length, { DoubleArray(width) })
+    val output = Array(length) { DoubleArray(width) }
+    protected val derivatives = Array(length) { DoubleArray(width) }
 
     open fun perform(index: Int, z: DoubleArray) = output[index].let { output ->
         (0 until width).forEach {

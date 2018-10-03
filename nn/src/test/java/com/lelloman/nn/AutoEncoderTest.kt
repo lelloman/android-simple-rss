@@ -13,7 +13,7 @@ import java.util.*
 class AutoEncoderTest {
 
     @Test
-    fun `learns frequency with one neuron`() {
+    fun `learns frequency with one layer`() {
 
         val waveSampleSize = 16
         val random = Random(1)
@@ -33,11 +33,11 @@ class AutoEncoderTest {
         val ks = doubleArrayOf(0.1, 0.2, 0.4, 0.8, 1.6)
         val sample = { _: Int ->
             val k = ks[random.nextInt(ks.size)] + random.nextDouble() * 0.05
-            val wave = DoubleArray(waveSampleSize, { Math.sin(it * k) })
+            val wave = DoubleArray(waveSampleSize) { Math.sin(it * k) }
             wave to wave
         }
         ks.forEach { k ->
-            val s = DoubleArray(waveSampleSize, { Math.sin(it * k) })
+            val s = DoubleArray(waveSampleSize) { Math.sin(it * k) }
             println("k $k ${s.joinToString("")}")
         }
         val trainingSet = DataSet1D.Builder(10000)
@@ -63,10 +63,10 @@ class AutoEncoderTest {
         training.perform()
 
         ks.forEach { k ->
-            val wave = DoubleArray(waveSampleSize, { Math.sin(it * k) })
+            val wave = DoubleArray(waveSampleSize) { Math.sin(it * k) }
             val reconstructed = network.forwardPass(arrayOf(wave))[0]
-            val a = Array(wave.size, { "%+.2f".format(wave[it]) })
-            val b = Array(wave.size, { "%+.2f".format(reconstructed[it]) })
+            val a = Array(wave.size) { "%+.2f".format(wave[it]) }
+            val b = Array(wave.size) { "%+.2f".format(reconstructed[it]) }
             println("original: ${a.joinToString(",")}")
             println("network:  ${b.joinToString(",")}")
             println("")
