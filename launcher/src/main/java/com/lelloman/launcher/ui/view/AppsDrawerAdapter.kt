@@ -88,12 +88,12 @@ class AppsDrawerAdapter(
 
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
-        val layoutManger = recyclerView.layoutManager as GridLayoutManager
-        layoutManger.spanCount = 5
-        layoutManger.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int) = when (position) {
-                0 -> 5
-                else -> 1
+        recyclerView.layoutManager = GridLayoutManager(recyclerView.context, 5).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int) = when (position) {
+                    0 -> 5
+                    else -> 1
+                }
             }
         }
     }

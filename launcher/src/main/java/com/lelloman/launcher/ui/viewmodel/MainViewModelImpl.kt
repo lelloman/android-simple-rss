@@ -21,7 +21,7 @@ class MainViewModelImpl(
     private val timeProvider: TimeProvider
 ) : MainViewModel(dependencies) {
 
-    override val packages = MutableLiveData<List<AppsDrawerListItem>>().apply {
+    override val drawerApps = MutableLiveData<List<AppsDrawerListItem>>().apply {
         subscription {
             packagesManager
                 .installedPackages
@@ -38,21 +38,36 @@ class MainViewModelImpl(
         }
     }
 
+    override val classifiedApps = MutableLiveData<List<PackageDrawerListItem>>().apply {
+        subscription {
+            packagesManager
+                .classifiedPackages
+                .map {
+                    it.map(::PackageDrawerListItem)
+                }
+                .subscribeOn(ioScheduler)
+                .subscribe {
+                    postValue(it)
+                }
+        }
+    }
+
     override fun onPackageClicked(pkg: Package) {
         navigate(PackageIntentNavigationEvent(
             packageName = pkg.packageName,
             activityName = pkg.activityName
         ))
-
-        Completable
-            .fromAction {
-                packageLaunchDao.insert(PackageLaunch(
-                    timestampUtc = timeProvider.nowUtcMs(),
-                    packageName = pkg.packageName,
-                    activityName = pkg.activityName
-                ))
-            }
-            .subscribeOn(ioScheduler)
-            .subscribe()
+        insertPackageLaunch(pkg)
     }
+
+    private fun insertPackageLaunch(pkg: Package) = Completable
+        .fromAction {
+            packageLaunchDao.insert(PackageLaunch(
+                timestampUtc = timeProvider.nowUtcMs(),
+                packageName = pkg.packageName,
+                activityName = pkg.activityName
+            ))
+        }
+        .subscribeOn(ioScheduler)
+        .subscribe()
 }
