@@ -33,8 +33,7 @@ class PackagesManager(
         .map { classifiedPackages ->
             classifiedPackages
                 .asSequence()
-                .sortedBy { it.score }
-                .take(10)
+                .sortedByDescending { it.score }
                 .map(ClassifiedPackage::pkg)
                 .toList()
         }
@@ -77,7 +76,7 @@ class PackagesManager(
             })
     }
 
-    private fun getPackagesFromPackageManager(): Single<List<Package>> = Single.fromCallable {
+    private fun getPackagesFromPackageManager() = Single.fromCallable {
         packageManager
             .queryIntentActivities(queryActivityIntent, 0)
             .asSequence()

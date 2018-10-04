@@ -47,7 +47,7 @@ class MainActivityTest {
         viewModel = viewModelModule.mainViewModel
 
         whenever(viewModel.viewActionEvents).thenReturn(viewActionEvents)
-        whenever(viewModel.packages).thenReturn(packages)
+        whenever(viewModel.drawerApps).thenReturn(packages)
 
         TestApp.resetPersistence()
         TestApp.dependenciesUpdate { it.viewModelModule = viewModelModule }
