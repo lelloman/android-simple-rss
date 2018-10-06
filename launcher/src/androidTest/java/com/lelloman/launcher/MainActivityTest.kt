@@ -69,4 +69,6 @@ class MainActivityTest {
             viewWithTextIsDisplayed("label $it")
         }
     }
+
+
 }

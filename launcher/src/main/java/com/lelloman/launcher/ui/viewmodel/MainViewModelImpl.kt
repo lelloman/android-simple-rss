@@ -11,7 +11,10 @@ import com.lelloman.launcher.packages.PackagesManager
 import com.lelloman.launcher.persistence.model.PackageLaunch
 import com.lelloman.launcher.ui.AppsDrawerListItem
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Scheduler
+import io.reactivex.functions.BiFunction
+import io.reactivex.subjects.BehaviorSubject
 
 class MainViewModelImpl(
     @IoScheduler private val ioScheduler: Scheduler,
@@ -21,16 +24,27 @@ class MainViewModelImpl(
     private val timeProvider: TimeProvider
 ) : MainViewModel(dependencies) {
 
+    private val searchQuerySubject = BehaviorSubject.create<String>(). apply {
+        onNext("")
+    }
+
     override val drawerApps = MutableLiveData<List<AppsDrawerListItem>>().apply {
         subscription {
-            packagesManager
-                .installedPackages
-                .map {
-                    val out = mutableListOf<AppsDrawerListItem>()
-                    out.add(SearchDrawerListItem)
-                    out.addAll(it.map(::PackageDrawerListItem))
-                    out
-                }
+            Observable
+                .combineLatest(
+                    packagesManager
+                        .installedPackages
+                        .map {
+                            val out = mutableListOf<AppsDrawerListItem>()
+                            out.add(SearchDrawerListItem)
+                            out.addAll(it.map(::PackageDrawerListItem))
+                            out
+                        },
+                    searchQuerySubject.hide(),
+                    BiFunction<List<AppsDrawerListItem>, String, List<AppsDrawerListItem>> { items, query ->
+                        items.filter { !it.isFilteredOutBy(query) }
+                    }
+                )
                 .subscribeOn(ioScheduler)
                 .subscribe {
                     postValue(it)
@@ -58,6 +72,10 @@ class MainViewModelImpl(
             activityName = pkg.activityName
         ))
         insertPackageLaunch(pkg)
+    }
+
+    override fun onSearchQueryChanged(searchQuery: String) {
+        searchQuerySubject.onNext(searchQuery)
     }
 
     private fun insertPackageLaunch(pkg: Package) = Completable

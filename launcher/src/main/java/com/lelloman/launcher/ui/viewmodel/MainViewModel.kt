@@ -13,4 +13,5 @@ abstract class MainViewModel(
     abstract val classifiedApps: MutableLiveData<List<PackageDrawerListItem>>
 
     abstract fun onPackageClicked(pkg: Package)
+    abstract fun onSearchQueryChanged(searchQuery: String)
 }
