@@ -1,6 +1,6 @@
 package com.lelloman.launcher.classification
 
-import com.lelloman.launcher.packages.PackageLaunchDao
+import com.lelloman.launcher.persistence.PackageLaunchDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -2,7 +2,7 @@ package com.lelloman.launcher.classification
 
 import android.util.Log
 import com.lelloman.launcher.packages.Package
-import com.lelloman.launcher.packages.PackageLaunchDao
+import com.lelloman.launcher.persistence.PackageLaunchDao
 import com.lelloman.launcher.persistence.model.PackageLaunch
 import io.reactivex.Single
 

@@ -4,7 +4,7 @@ import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
-import com.lelloman.launcher.packages.PackageLaunchDao
+import com.lelloman.launcher.persistence.PackageLaunchDao
 import com.lelloman.launcher.packages.PackagesManager
 import com.lelloman.launcher.ui.launches.viewmodel.LaunchesViewModel
 import com.lelloman.launcher.ui.launches.viewmodel.LaunchesViewModelImpl
@@ -40,8 +40,14 @@ open class ViewModelModule {
 
     @Provides
     open fun provideLaunchesViewModel(
-        dependencies: BaseViewModel.Dependencies
+        @IoScheduler ioScheduler: Scheduler,
+        dependencies: BaseViewModel.Dependencies,
+        packageLaunchDao: PackageLaunchDao,
+        packagesManager: PackagesManager
     ) : LaunchesViewModel = LaunchesViewModelImpl(
-        dependencies = dependencies
+        ioScheduler = ioScheduler,
+        dependencies = dependencies,
+        packagesManager = packagesManager,
+        packageLaunchDao = packageLaunchDao
     )
 }

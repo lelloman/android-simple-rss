@@ -2,7 +2,7 @@ package com.lelloman.launcher.di
 
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
-import com.lelloman.launcher.packages.PackageLaunchDao
+import com.lelloman.launcher.persistence.PackageLaunchDao
 import com.lelloman.launcher.packages.PackagesManager
 import com.lelloman.launcher.ui.main.viewmodel.MainViewModel
 import io.reactivex.Scheduler

@@ -37,7 +37,8 @@ class PackagesManagerTest {
             loggerFactory = MockLoggerFactory(),
             broadcastReceiverWrap = broadcastReceiverWrap,
             queryActivityIntent = queryActivityIntent,
-            launchesPackage = LAUNCHES_PACKAGE
+            launchesPackage = LAUNCHES_PACKAGE,
+            mainPackage = MAIN_PACKAGE
         )
         block.invoke(tested)
     }
@@ -175,6 +176,13 @@ class PackagesManagerTest {
             label = "mwwww",
             packageName = "meeeeow",
             activityName = "fmfmfmfmfmfmf",
+            drawable = mock()
+        )
+        private val MAIN_PACKAGE = Package(
+            id = -2,
+            label = "woof",
+            packageName = "badum tsss",
+            activityName = "noooo",
             drawable = mock()
         )
         val RESOLVE_INFO_1 = Array(3, ::createResolveInfo).toList()

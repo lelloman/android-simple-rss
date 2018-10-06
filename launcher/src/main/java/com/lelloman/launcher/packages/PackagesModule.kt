@@ -9,7 +9,9 @@ import com.lelloman.common.view.ResourceProvider
 import com.lelloman.launcher.R
 import com.lelloman.launcher.classification.PackageClassifier
 import com.lelloman.launcher.di.qualifier.LaunchesActivityPackage
+import com.lelloman.launcher.di.qualifier.MainActivityPackage
 import com.lelloman.launcher.ui.launches.view.LaunchesActivity
+import com.lelloman.launcher.ui.main.view.MainActivity
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -24,9 +26,22 @@ class PackagesModule {
         resourceProvider: ResourceProvider
     ) = Package(
         id = -1,
-        label = "asd asd ",
+        label = resourceProvider.getString(R.string.launches_activity_label),
         packageName = context.packageName,
         activityName = LaunchesActivity::class.java.name,
+        drawable = resourceProvider.getDrawable(R.mipmap.ic_launcher)
+    )
+
+    @Provides
+    @MainActivityPackage
+    fun provideMainActivityPackage(
+        context: Context,
+        resourceProvider: ResourceProvider
+    ) = Package(
+        id = -2,
+        label = "",
+        packageName = context.packageName,
+        activityName = MainActivity::class.java.name,
         drawable = resourceProvider.getDrawable(R.mipmap.ic_launcher)
     )
 
@@ -37,13 +52,17 @@ class PackagesModule {
         loggerFactory: LoggerFactory,
         packageClassifier: PackageClassifier,
         broadcastReceiverWrap: BroadcastReceiverWrap,
-        @LaunchesActivityPackage launchesActivityPackage: Package
+        resourceProvider: ResourceProvider,
+        @LaunchesActivityPackage launchesActivityPackage: Package,
+        @MainActivityPackage mainActivityPackage: Package
     ) = PackagesManager(
         loggerFactory = loggerFactory,
         ioScheduler = ioScheduler,
         packageManager = packageManager,
         packageClassifier = packageClassifier,
         broadcastReceiverWrap = broadcastReceiverWrap,
-        launchesPackage = launchesActivityPackage
+        launchesPackage = launchesActivityPackage,
+        mainPackage = mainActivityPackage,
+        resourceProvider = resourceProvider
     )
 }
