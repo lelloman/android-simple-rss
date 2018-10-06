@@ -17,6 +17,7 @@ import com.lelloman.common.utils.TimeProviderImpl
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.common.view.BroadcastReceiverWrap
+import com.lelloman.common.view.ContentUriOpener
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.common.view.MeteredConnectionCheckerImpl
 import com.lelloman.common.view.PicassoWrap
@@ -129,4 +130,8 @@ open class BaseApplicationModule(private val application: Application) {
     @Provides
     @ApplicationPackageName
     fun provideApplicationPackageName(context: Context): String = context.packageName
+
+    @Provides
+    @Singleton
+    fun provideContentUriOpener(context: Context) = ContentUriOpener(context)
 }

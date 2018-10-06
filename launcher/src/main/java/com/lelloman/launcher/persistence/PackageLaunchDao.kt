@@ -15,4 +15,7 @@ interface PackageLaunchDao {
 
     @Insert
     fun insert(packageLaunch: PackageLaunch): Long
+
+    @Insert
+    fun insert(packageLaunches: Collection<PackageLaunch>)
 }
