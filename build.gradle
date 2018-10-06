@@ -3,9 +3,9 @@ apply plugin: "com.github.ben-manes.versions"
 
 buildscript {
 
-    ext.compileSdkVersion = 28
-    ext.targetSdkVersion = 28
-    ext.minSdkVersion = 21
+    ext.compileSdkVersionV = 28
+    ext.targetSdkVersionV = 28
+    ext.minSdkVersionV = 21
     ext.versionCode = 1
     ext.versionName = "0.1"
 
