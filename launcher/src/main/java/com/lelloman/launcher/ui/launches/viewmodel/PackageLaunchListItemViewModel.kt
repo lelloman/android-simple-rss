@@ -23,6 +23,6 @@ class PackageLaunchListItemViewModel(
         packageName = item.packageLaunch.packageName + "/" + item.packageLaunch.activityName
         val dateTimeString = semanticTimeProvider.getDateTimeString(item.packageLaunch.timestampUtc)
         val timeDiffString = semanticTimeProvider.getTimeDiffString(item.packageLaunch.timestampUtc)
-        dateTime =  "$dateTimeString - $timeDiffString"
+        dateTime = "$dateTimeString - $timeDiffString"
     }
 }
