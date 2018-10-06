@@ -6,8 +6,6 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import com.lelloman.common.view.BaseMultiTypeRecyclerViewAdapter
 import com.lelloman.common.view.ItemType
 import com.lelloman.common.view.ResourceProvider
@@ -23,11 +21,12 @@ import com.lelloman.launcher.ui.viewmodel.SearchListItemViewModel
 
 class AppsDrawerAdapter(
     onClickListener: (Any) -> Unit,
-    resourceProvider: ResourceProvider
+    resourceProvider: ResourceProvider,
+    onSearchQueryChanged: (String) -> Unit
 ) : BaseMultiTypeRecyclerViewAdapter<AppsDrawerListItem>(
     onClickListener = onClickListener,
     resourceProvider = resourceProvider
-), Filterable {
+) {
     @Suppress("UNCHECKED_CAST")
     override val itemsMap: Map<Any, ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>>
         get() {
@@ -37,70 +36,17 @@ class AppsDrawerAdapter(
             return out
         }
 
-    private var originalData: List<AppsDrawerListItem> = emptyList()
-
-    private var lastQuerySearch = ""
-
-    override fun getFilter() = object : Filter() {
-
-        override fun performFiltering(queryCharSequence: CharSequence?): FilterResults {
-            val queryString = queryCharSequence.toString()
-
-            val contactListFiltered = if (queryString.isEmpty()) {
-                originalData
-            } else {
-                val filteredList = mutableListOf<AppsDrawerListItem>()
-                for (item in originalData) {
-                    val shouldAdd = when (item) {
-                        is PackageDrawerListItem ->
-                            item.pkg.label.contains(queryString, ignoreCase = true) ||
-                                item.pkg.packageName.contains(queryString, ignoreCase = true)
-                        else -> true
-                    }
-                    if (shouldAdd) {
-                        filteredList.add(item)
-                    }
-                }
-                filteredList
-            }
-
-            val filterResults = FilterResults()
-            filterResults.values = contactListFiltered
-            return filterResults
-        }
-
-        override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-            @Suppress("UNCHECKED_CAST")
-            (results?.values as? List<AppsDrawerListItem>)?.let { result ->
-                val diff = listItemDiffCalculator.computeDiff(data, result)
-                this@AppsDrawerAdapter.data = result
-                diff.dispatchUpdatesTo(this@AppsDrawerAdapter)
-            }
-        }
-    }
-
-    override fun onChanged(newData: List<AppsDrawerListItem>?) {
-        newData?.let {
-            originalData = newData
-            filter.filter(lastQuerySearch)
-        }
-    }
-
     override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
         super.onAttachedToRecyclerView(recyclerView)
         recyclerView.layoutManager = GridLayoutManager(recyclerView.context, 5).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int) = when (position) {
-                    0 -> 5
-                    else -> 1
+                override fun getSpanSize(position: Int) = if (data[position].requiresFullRow) {
+                    5
+                } else {
+                    1
                 }
             }
         }
-    }
-
-    fun onQuerySearchChanged(query: String) {
-        lastQuerySearch = query
-        filter.filter(query)
     }
 
     private val packageItem = object : ItemType<PackageDrawerListItem, PackageListItemViewModel, ListItemPackageBinding> {
@@ -136,7 +82,7 @@ class AppsDrawerAdapter(
             return binding
         }
 
-        override fun createViewModel(resourceProvider: ResourceProvider, onClickListener: ((Any) -> Unit)?) = SearchListItemViewModel(::onQuerySearchChanged)
+        override fun createViewModel(resourceProvider: ResourceProvider, onClickListener: ((Any) -> Unit)?) = SearchListItemViewModel(onSearchQueryChanged)
 
         override fun bindViewModel(viewModel: SearchListItemViewModel, binding: ListItemSearchBinding, item: SearchDrawerListItem) {
             binding.viewModel = viewModel

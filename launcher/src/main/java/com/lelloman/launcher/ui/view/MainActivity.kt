@@ -26,7 +26,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     @Inject
     lateinit var navigationBarDetector: NavigationBarDetector
 
-    private val drawerAdapter by lazy { AppsDrawerAdapter(::onAppsDrawerElementClicked, resourceProvider) }
+    private val drawerAdapter by lazy {
+        AppsDrawerAdapter(
+            onClickListener = ::onAppsDrawerElementClicked,
+            resourceProvider = resourceProvider,
+            onSearchQueryChanged = viewModel::onSearchQueryChanged
+        )
+    }
 
     private val classifiedAdapter = object : BaseRecyclerViewAdapter<PackageDrawerListItem, PackageListItemViewModel, ListItemClassifiedPackageBinding>(
         onItemClickListener = this@MainActivity::onAppsDrawerElementClicked
@@ -73,8 +79,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
 
         val headerView = binding.header
         val fullView = binding.recyclerViewDrawer
-
-        BottomSheetBehavior.from(binding.bottomSheet).setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onSlide(p0: View, inversePercent: Float) {
                 val percent = 1 - inversePercent
                 headerView.alpha = Math.pow(percent.toDouble(), 2.0).toFloat()
@@ -85,14 +90,18 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                 headerView.visibility = if (opened) View.GONE else View.VISIBLE
             }
 
-            override fun onStateChanged(p0: View, p1: Int) {
-
+            override fun onStateChanged(view: View, state: Int) {
+                when (state) {
+                    BottomSheetBehavior.STATE_COLLAPSED -> binding.recyclerViewDrawer.scrollToPosition(0)
+                }
             }
-
         })
     }
 
+    private val bottomSheetBehavior by lazy { BottomSheetBehavior.from(binding.bottomSheet) }
+
     override fun onBackPressed() {
         // no super, this--is--launcher ┌∩┐(◣_◢)┌∩┐
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 }
