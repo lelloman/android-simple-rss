@@ -105,7 +105,7 @@ class UrlValidatorTest {
 
         val withProtocol = tested.maybePrependProtocol(original)
 
-        assertThat(withProtocol).isEqualTo("https/://$original")
+        assertThat(withProtocol).isEqualTo("https://$original")
     }
 
     @Test

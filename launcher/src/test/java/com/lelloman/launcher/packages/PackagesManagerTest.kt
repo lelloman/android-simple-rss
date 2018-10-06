@@ -84,9 +84,7 @@ class PackagesManagerTest {
             tester.assertValueCount(1)
             tester.values()[0].let { packages ->
                 assertThat(packages).hasSize(CLASSIFIED_PACKAGES_1.size)
-                packages.forEachIndexed { index, pkg ->
-                    assertThat(pkg).isEqualTo(CLASSIFIED_PACKAGES_1[index].pkg)
-                }
+                assertThat(packages).containsAll(CLASSIFIED_PACKAGES_1.map { it.pkg })
             }
         }
     }
@@ -123,9 +121,7 @@ class PackagesManagerTest {
             tester.assertValueCount(2)
             tester.values()[1].let { packages ->
                 assertThat(packages).hasSize(CLASSIFIED_PACKAGES_1.size)
-                packages.forEachIndexed { index, pkg ->
-                    assertThat(pkg).isEqualTo(CLASSIFIED_PACKAGES_1[index].pkg)
-                }
+                assertThat(packages).containsAll(CLASSIFIED_PACKAGES_1.map { it.pkg })
             }
         }
     }
