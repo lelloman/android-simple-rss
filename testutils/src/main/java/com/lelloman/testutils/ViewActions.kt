@@ -1,12 +1,10 @@
 package com.lelloman.testutils
 
-import android.support.test.espresso.action.Press
-import android.support.test.espresso.action.GeneralLocation
-import android.support.test.espresso.action.CoordinatesProvider
-import android.support.test.espresso.action.Swipe
 import android.support.test.espresso.ViewAction
+import android.support.test.espresso.action.CoordinatesProvider
 import android.support.test.espresso.action.GeneralSwipeAction
-import android.view.View
+import android.support.test.espresso.action.Press
+import android.support.test.espresso.action.Swipe
 
 
 fun swipeBottomSheetUp(): ViewAction = GeneralSwipeAction(

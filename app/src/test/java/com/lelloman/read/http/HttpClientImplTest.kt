@@ -18,11 +18,11 @@ class HttpClientImplTest {
 
     private val okHttpResponse: Response = mock()
     private val okHttpCall: Call = mock {
-        on { execute() }.thenAnswer { okHttpResponse }
+        on { execute() }.thenAnswer { _ -> okHttpResponse }
     }
 
     private val okHttpClient: OkHttpClient = mock {
-        on { newCall(any()) }.thenAnswer { okHttpCall }
+        on { newCall(any()) }.thenAnswer { _ -> okHttpCall }
     }
     private val loggerFactory = MockLoggerFactory()
     private val timeProvider = MockTimeProvider()

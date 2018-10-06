@@ -36,22 +36,22 @@ class AppSettingsImplTest {
 
     private val sharedPrefs: SharedPreferences = mock {
         on { getString(KEY_MIN_SOURCE_REFRESH_INTERVAL, DEFAULT_MIN_SOURCE_REFRESH_INTERVAL.name) }
-            .thenAnswer { prefInterval.name }
+            .thenAnswer { _ -> prefInterval.name }
 
         on { getBoolean(KEY_ARTICLE_LIST_IMAGES, DEFAULT_ARTICLES_LIST_IMAGES) }
-            .thenAnswer { prefArticlesImages }
+            .thenAnswer { _ -> prefArticlesImages }
 
         on { getBoolean(KEY_USE_METERED_NETWORK, DEFAULT_USE_METERED_NETWORK) }
-            .thenAnswer { prefUseMeteredNetwork }
+            .thenAnswer { _ -> prefUseMeteredNetwork }
 
         on { getBoolean(KEY_OPEN_ARTICLES_IN_APP, DEFAULT_OPEN_ARTICLES_IN_APP) }
-            .thenAnswer { prefOpenArticlesInApp }
+            .thenAnswer { _ -> prefOpenArticlesInApp }
 
         on { getBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, DEFAULT_SHOULD_SHOW_WALKTHROUGH) }
-            .thenAnswer { prefShouldShowWalkthrough }
+            .thenAnswer { _ -> prefShouldShowWalkthrough }
 
         on { getString(KEY_APP_THEME, DEFAULT_APP_THEME.name) }
-            .thenAnswer { prefAppTheme.name }
+            .thenAnswer { _ -> prefAppTheme.name }
 
         on { edit() }.thenReturn(sharedPrefsEditor)
     }

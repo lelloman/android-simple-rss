@@ -11,6 +11,7 @@ class NetworkInfoItemListItemViewModel : InfoItemListItemViewModel<NetworkInfoIt
 
     private val emptySpanned = SpannableString("")
 
+    @Suppress("MemberVisibilityCanBePrivate")
     var textHtml: Spanned = emptySpanned
         private set
 

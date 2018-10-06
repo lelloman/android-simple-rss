@@ -22,14 +22,14 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 
 class BagOfDependencies {
-    val timeProvider: TimeProvider
-    val htmlParser: HtmlParser
-    val meteredConnectionChecker: MeteredConnectionChecker
-    val httpClient: HttpClientImpl
+    private val timeProvider: TimeProvider
+    private val htmlParser: HtmlParser
+    private val meteredConnectionChecker: MeteredConnectionChecker
+    private val httpClient: HttpClientImpl
     val feedFinder: FeedFinder
-    val feedParser: FeedParser
-    val baseAppSettings: BaseApplicationSettings
-    val appSettings: AppSettings
+    private val feedParser: FeedParser
+    private val baseAppSettings: BaseApplicationSettings
+    private val appSettings: AppSettings
 
     init {
         val okHttpClient = OkHttpClient.Builder().build()

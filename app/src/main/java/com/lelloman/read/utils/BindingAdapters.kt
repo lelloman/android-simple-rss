@@ -21,6 +21,7 @@ interface OnKeyboardActionDoneListener {
 
 object BindingAdapters {
 
+    @Suppress("unused")
     @JvmStatic
     @BindingAdapter("hash")
     fun bindIdenticonHash(identiconView: ClassicIdenticonView, hash: Int) {

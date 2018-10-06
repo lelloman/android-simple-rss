@@ -18,7 +18,10 @@ import com.lelloman.common.navigation.DeepLink
  * Cannot change the names, [DeepLink] uses the names and if the values are changed in this enum
  * then older deep links might not work.
  */
-enum class ReadNavigationScreen(override val clazz: KClass<*>, deepLinkStartable: DeepLinkStartable? = null) : NavigationScreen {
+enum class ReadNavigationScreen(
+    override val clazz: KClass<*>,
+    override var deepLinkStartable: DeepLinkStartable? = null
+) : NavigationScreen {
     ADD_FOUND_FEEDS_CONFIRMATION(AddFoundFeedsConfirmationDialogFragment::class, deepLinkStartable = AddFoundFeedsConfirmationDialogFragment.deepLinkStartable),
     ADD_SOURCE(AddSourceActivity::class, deepLinkStartable = AddSourceActivity.deepLinkStartable),
     ARTICLE(ArticleActivity::class, deepLinkStartable = ArticleActivity.deepLinkStartable),
@@ -28,8 +31,6 @@ enum class ReadNavigationScreen(override val clazz: KClass<*>, deepLinkStartable
     SETTINGS(SettingsActivity::class, deepLinkStartable = SettingsActivity.deepLinkStartable),
     SOURCES_LIST(SourcesListActivity::class, deepLinkStartable = SourcesListActivity.deepLinkStartable),
     WALKTHROUGH(WalkthroughActivity::class, deepLinkStartable = WalkthroughActivity.deepLinkStartable);
-
-    override var deepLinkStartable: DeepLinkStartable? = deepLinkStartable
 
     companion object {
 

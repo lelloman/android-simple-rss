@@ -29,6 +29,7 @@ class SingleLiveData<T> : MutableLiveData<T>() {
     /**
      * Used for cases where T is Void, to make calls cleaner.
      */
+    @Suppress("unused")
     @MainThread
     fun call() {
         value = null

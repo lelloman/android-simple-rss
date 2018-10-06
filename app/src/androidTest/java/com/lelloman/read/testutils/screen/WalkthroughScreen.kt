@@ -43,7 +43,7 @@ class WalkthroughScreen : Screen() {
 
     fun typeInUrlIsDisplayed() = apply { viewWithTextIsDisplayed(string(R.string.type_in_url)) }
 
-    fun clickNo() = clickViewWithText(string(R.string.NO)).let {
+    fun clickNo() = clickViewWithText(string(R.string.NO)).also {
         ArticlesListScreen()
     }
 
