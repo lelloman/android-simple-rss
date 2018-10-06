@@ -15,6 +15,7 @@ import com.lelloman.launcher.testutils.TestApp
 import com.lelloman.launcher.ui.AppsDrawerListItem
 import com.lelloman.launcher.ui.view.MainActivity
 import com.lelloman.launcher.ui.viewmodel.MainViewModel
+import com.lelloman.launcher.ui.viewmodel.PackageDrawerListItem
 import com.lelloman.testutils.rotateNatural
 import com.lelloman.testutils.viewWithId
 import com.lelloman.testutils.wait
@@ -31,7 +32,8 @@ class MainActivityTest {
     private val viewModelModule = MockViewModelModule()
     private lateinit var viewModel: MainViewModel
 
-    private lateinit var packages: MutableLiveData<List<AppsDrawerListItem>>
+    private lateinit var drawerApps: MutableLiveData<List<AppsDrawerListItem>>
+    private lateinit var classifiedApps: MutableLiveData<List<PackageDrawerListItem>>
     private lateinit var viewActionEvents: SingleLiveData<ViewActionEvent>
 
     @get:Rule
@@ -41,13 +43,15 @@ class MainActivityTest {
     fun setUp() {
         rotateNatural()
 
-        packages = MutableLiveData()
+        drawerApps = MutableLiveData()
+        classifiedApps = MutableLiveData()
         viewActionEvents = SingleLiveData()
 
         viewModel = viewModelModule.mainViewModel
 
         whenever(viewModel.viewActionEvents).thenReturn(viewActionEvents)
-        whenever(viewModel.drawerApps).thenReturn(packages)
+        whenever(viewModel.drawerApps).thenReturn(drawerApps)
+        whenever(viewModel.classifiedApps).thenReturn(classifiedApps)
 
         TestApp.resetPersistence()
         TestApp.dependenciesUpdate { it.viewModelModule = viewModelModule }
@@ -56,7 +60,7 @@ class MainActivityTest {
     }
 
     @Test
-    fun asd(){
+    fun swipesDrawerUpAndShowsInstalledApps(){
         viewWithId(R.id.header).perform(object : ViewAction {
             override fun getDescription(): String {
                 return ""

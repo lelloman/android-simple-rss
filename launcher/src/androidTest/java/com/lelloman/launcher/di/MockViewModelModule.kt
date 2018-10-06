@@ -1,6 +1,8 @@
 package com.lelloman.launcher.di
 
+import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.launcher.packages.PackageLaunchDao
 import com.lelloman.launcher.packages.PackagesManager
 import com.lelloman.launcher.ui.viewmodel.MainViewModel
 import io.reactivex.Scheduler
@@ -13,6 +15,8 @@ class MockViewModelModule : ViewModelModule() {
     override fun provideMainViewModel(
         ioScheduler: Scheduler,
         packagesManager: PackagesManager,
-        dependencies: BaseViewModel.Dependencies
+        dependencies: BaseViewModel.Dependencies,
+        packageLaunchDao: PackageLaunchDao,
+        timeProvider: TimeProvider
     ): MainViewModel = mainViewModel
 }
