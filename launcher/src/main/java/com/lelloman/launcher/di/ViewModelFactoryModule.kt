@@ -25,5 +25,5 @@ abstract class ViewModelFactoryModule {
     @Binds
     @IntoMap
     @ViewModelKey(LaunchesViewModel::class)
-    abstract fun bindLaunchesViewModel(launchesViewModel: LaunchesViewModel) : ViewModel
+    abstract fun bindLaunchesViewModel(launchesViewModel: LaunchesViewModel): ViewModel
 }

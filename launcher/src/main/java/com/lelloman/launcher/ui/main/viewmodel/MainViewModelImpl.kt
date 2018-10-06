@@ -6,8 +6,8 @@ import com.lelloman.common.navigation.PackageIntentNavigationEvent
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.packages.Package
-import com.lelloman.launcher.persistence.PackageLaunchDao
 import com.lelloman.launcher.packages.PackagesManager
+import com.lelloman.launcher.persistence.PackageLaunchDao
 import com.lelloman.launcher.persistence.model.PackageLaunch
 import com.lelloman.launcher.ui.main.AppsDrawerListItem
 import io.reactivex.Completable
@@ -24,7 +24,7 @@ class MainViewModelImpl(
     private val timeProvider: TimeProvider
 ) : MainViewModel(dependencies) {
 
-    private val searchQuerySubject = BehaviorSubject.create<String>(). apply {
+    private val searchQuerySubject = BehaviorSubject.create<String>().apply {
         onNext("")
     }
 

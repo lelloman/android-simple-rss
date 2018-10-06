@@ -50,7 +50,7 @@ open class ViewModelModule {
         loggerFactory: LoggerFactory,
         packageLaunchesExporter: PackageLaunchesExporter,
         contentUriOpener: ContentUriOpener
-    ) : LaunchesViewModel = LaunchesViewModelImpl(
+    ): LaunchesViewModel = LaunchesViewModelImpl(
         loggerFactory = loggerFactory,
         contentUriOpener = contentUriOpener,
         ioScheduler = ioScheduler,

@@ -9,7 +9,7 @@ class SearchListItemViewModel(
 ) : BaseListItemViewModel<SearchDrawerListItem> {
 
     val appsSearchQuery = ObservableField<String>().apply {
-        addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback(){
+        addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {
             override fun onPropertyChanged(sender: Observable?, propertyId: Int) {
                 onSearchQueryChanged.invoke(this@apply.get()!!)
             }
