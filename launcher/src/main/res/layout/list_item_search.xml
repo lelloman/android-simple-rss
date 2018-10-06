@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.launcher.ui.viewmodel.SearchListItemViewModel" />
+            type="com.lelloman.launcher.ui.main.viewmodel.SearchListItemViewModel" />
     </data>
 
     <FrameLayout

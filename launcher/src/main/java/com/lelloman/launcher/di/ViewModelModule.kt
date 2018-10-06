@@ -6,8 +6,10 @@ import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.packages.PackageLaunchDao
 import com.lelloman.launcher.packages.PackagesManager
-import com.lelloman.launcher.ui.viewmodel.MainViewModel
-import com.lelloman.launcher.ui.viewmodel.MainViewModelImpl
+import com.lelloman.launcher.ui.launches.viewmodel.LaunchesViewModel
+import com.lelloman.launcher.ui.launches.viewmodel.LaunchesViewModelImpl
+import com.lelloman.launcher.ui.main.viewmodel.MainViewModel
+import com.lelloman.launcher.ui.main.viewmodel.MainViewModelImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -34,5 +36,12 @@ open class ViewModelModule {
         packagesManager = packagesManager,
         packageLaunchDao = packageLaunchDao,
         timeProvider = timeProvider
+    )
+
+    @Provides
+    open fun provideLaunchesViewModel(
+        dependencies: BaseViewModel.Dependencies
+    ) : LaunchesViewModel = LaunchesViewModelImpl(
+        dependencies = dependencies
     )
 }

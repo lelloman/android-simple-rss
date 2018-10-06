@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.launcher.ui.viewmodel.MainViewModel" />
+            type="com.lelloman.launcher.ui.main.viewmodel.MainViewModel" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/transparent"
-        tools:context=".ui.view.MainActivity">
+        tools:context=".ui.main.view.MainActivity">
 
         <TextView
             android:layout_width="match_parent"
@@ -48,8 +48,9 @@
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/recycler_view_classified"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
             </FrameLayout>
         </FrameLayout>
 

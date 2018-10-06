@@ -10,8 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
-            android:name=".ui.view.MainActivity"
+            android:name="com.lelloman.launcher.ui.main.view.MainActivity"
             android:clearTaskOnLaunch="true"
             android:excludeFromRecents="true"
             android:launchMode="singleTask">
@@ -24,6 +25,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name="com.lelloman.launcher.ui.launches.view.LaunchesActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

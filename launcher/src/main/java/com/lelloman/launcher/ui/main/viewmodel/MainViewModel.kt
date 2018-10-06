@@ -1,9 +1,9 @@
-package com.lelloman.launcher.ui.viewmodel
+package com.lelloman.launcher.ui.main.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.packages.Package
-import com.lelloman.launcher.ui.AppsDrawerListItem
+import com.lelloman.launcher.ui.main.AppsDrawerListItem
 
 abstract class MainViewModel(
     dependencies: Dependencies

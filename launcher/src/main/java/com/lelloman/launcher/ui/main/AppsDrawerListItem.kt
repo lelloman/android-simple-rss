@@ -1,4 +1,4 @@
-package com.lelloman.launcher.ui
+package com.lelloman.launcher.ui.main
 
 import com.lelloman.common.utils.model.ModelWithId
 

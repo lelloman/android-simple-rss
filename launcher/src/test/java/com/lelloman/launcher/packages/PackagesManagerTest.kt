@@ -36,7 +36,8 @@ class PackagesManagerTest {
             packageClassifier = packageClassifier,
             loggerFactory = MockLoggerFactory(),
             broadcastReceiverWrap = broadcastReceiverWrap,
-            queryActivityIntent = queryActivityIntent
+            queryActivityIntent = queryActivityIntent,
+            launchesPackage = LAUNCHES_PACKAGE
         )
         block.invoke(tested)
     }
@@ -66,9 +67,7 @@ class PackagesManagerTest {
             tester.assertValueCount(1)
             tester.values()[0].let { packages ->
                 assertThat(packages).hasSize(PACKAGES_1.size)
-                packages.forEachIndexed { index, pkg ->
-                    assertThat(pkg).isEqualTo(PACKAGES_1[index])
-                }
+                assertThat(packages).containsAll(PACKAGES_1.toList())
             }
         }
     }
@@ -101,9 +100,7 @@ class PackagesManagerTest {
             tester.assertValueCount(2)
             tester.values()[1].let { packages ->
                 assertThat(packages).hasSize(PACKAGES_1.size)
-                packages.forEachIndexed { index, pkg ->
-                    assertThat(pkg).isEqualTo(PACKAGES_1[index])
-                }
+                assertThat(packages).containsAll(PACKAGES_1.toList())
             }
         }
     }
@@ -173,8 +170,16 @@ class PackagesManagerTest {
             return resolveInfo
         }
 
+        private val LAUNCHES_PACKAGE = Package(
+            id = -1,
+            label = "mwwww",
+            packageName = "meeeeow",
+            activityName = "fmfmfmfmfmfmf",
+            drawable = mock()
+        )
         val RESOLVE_INFO_1 = Array(3, ::createResolveInfo).toList()
-        val PACKAGES_1 = Array(RESOLVE_INFO_1.size, ::createPackage).toList()
+        val PACKAGES_1 = arrayOf(LAUNCHES_PACKAGE)
+            .plus(Array(RESOLVE_INFO_1.size, ::createPackage).toList())
         val CLASSIFIED_PACKAGES_1 = Array(2) { createClassifiedPackage(it + 100) }.toList()
     }
 }

@@ -19,6 +19,7 @@ class PackagesManager(
     packageClassifier: PackageClassifier,
     loggerFactory: LoggerFactory,
     broadcastReceiverWrap: BroadcastReceiverWrap,
+    private val launchesPackage: Package,
     val queryActivityIntent: Intent = Intent(Intent.ACTION_MAIN, null)
         .addCategory(Intent.CATEGORY_LAUNCHER)
 ) {
@@ -66,17 +67,24 @@ class PackagesManager(
 
     @SuppressLint("CheckResult")
     private fun updateInstalledPackages() {
-        getPackagesFromPackageManager()
+        Single
+            .fromCallable {
+                getPackagesFromPackageManager().apply {
+                    add(launchesPackage)
+                    sortBy { it.label.toString() }
+                }
+            }
             .subscribeOn(ioScheduler)
             .observeOn(ioScheduler)
             .subscribe({
                 installedPackagesSubject.onNext(it)
             }, {
                 logger.e("Error while querying packages", it)
+                throw it
             })
     }
 
-    private fun getPackagesFromPackageManager() = Single.fromCallable {
+    private fun getPackagesFromPackageManager() =
         packageManager
             .queryIntentActivities(queryActivityIntent, 0)
             .asSequence()
@@ -89,7 +97,5 @@ class PackagesManager(
                     drawable = resolveInfo.loadIcon(packageManager)
                 )
             }
-            .sortedBy { it.label.toString().toLowerCase() }
-            .toList()
-    }
+            .toMutableList()
 }

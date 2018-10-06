@@ -1,8 +1,8 @@
-package com.lelloman.launcher.ui.viewmodel
+package com.lelloman.launcher.ui.main.viewmodel
 
 import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.launcher.packages.Package
-import com.lelloman.launcher.ui.AppsDrawerListItem
+import com.lelloman.launcher.ui.main.AppsDrawerListItem
 
 class PackageDrawerListItem(
     val pkg: Package

@@ -8,10 +8,10 @@ import com.lelloman.common.view.actionevent.ViewActionEvent
 import com.lelloman.launcher.di.MockViewModelModule
 import com.lelloman.launcher.testutils.TestApp
 import com.lelloman.launcher.testutils.pkg
-import com.lelloman.launcher.ui.AppsDrawerListItem
-import com.lelloman.launcher.ui.view.MainActivity
-import com.lelloman.launcher.ui.viewmodel.MainViewModel
-import com.lelloman.launcher.ui.viewmodel.PackageDrawerListItem
+import com.lelloman.launcher.ui.main.AppsDrawerListItem
+import com.lelloman.launcher.ui.main.view.MainActivity
+import com.lelloman.launcher.ui.main.viewmodel.MainViewModel
+import com.lelloman.launcher.ui.main.viewmodel.PackageDrawerListItem
 import com.lelloman.testutils.rotateNatural
 import com.lelloman.testutils.swipeBottomSheetUp
 import com.lelloman.testutils.viewWithId
