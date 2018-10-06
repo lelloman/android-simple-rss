@@ -1,6 +1,7 @@
 package com.lelloman.common.viewmodel
 
 import android.arch.lifecycle.ViewModel
+import android.net.Uri
 import android.os.Bundle
 import android.support.annotation.StringRes
 import android.support.design.widget.Snackbar
@@ -50,6 +51,8 @@ abstract class BaseViewModel(dependencies: Dependencies) : ViewModel() {
                 .subscribe(viewActionEvents::postValue)
         }
     }
+
+    open fun onContentPicked(uri: Uri, requestCode: Int) = Unit
 
     open fun onCreate() = Unit
 

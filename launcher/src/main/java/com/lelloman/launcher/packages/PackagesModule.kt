@@ -20,6 +20,13 @@ import io.reactivex.Scheduler
 class PackagesModule {
 
     @Provides
+    fun providePackageLaunchExporter(
+        context: Context
+    ) = PackageLaunchesExporter(
+        context = context
+    )
+
+    @Provides
     @LaunchesActivityPackage
     fun provideLaunchesActivityPackage(
         context: Context,

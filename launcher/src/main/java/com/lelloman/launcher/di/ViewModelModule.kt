@@ -2,10 +2,13 @@ package com.lelloman.launcher.di
 
 import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
+import com.lelloman.common.view.ContentUriOpener
 import com.lelloman.common.viewmodel.BaseViewModel
-import com.lelloman.launcher.persistence.PackageLaunchDao
+import com.lelloman.launcher.packages.PackageLaunchesExporter
 import com.lelloman.launcher.packages.PackagesManager
+import com.lelloman.launcher.persistence.PackageLaunchDao
 import com.lelloman.launcher.ui.launches.viewmodel.LaunchesViewModel
 import com.lelloman.launcher.ui.launches.viewmodel.LaunchesViewModelImpl
 import com.lelloman.launcher.ui.main.viewmodel.MainViewModel
@@ -43,10 +46,16 @@ open class ViewModelModule {
         @IoScheduler ioScheduler: Scheduler,
         dependencies: BaseViewModel.Dependencies,
         packageLaunchDao: PackageLaunchDao,
-        packagesManager: PackagesManager
+        packagesManager: PackagesManager,
+        loggerFactory: LoggerFactory,
+        packageLaunchesExporter: PackageLaunchesExporter,
+        contentUriOpener: ContentUriOpener
     ) : LaunchesViewModel = LaunchesViewModelImpl(
+        loggerFactory = loggerFactory,
+        contentUriOpener = contentUriOpener,
         ioScheduler = ioScheduler,
         dependencies = dependencies,
+        packageLaunchesExporter = packageLaunchesExporter,
         packagesManager = packagesManager,
         packageLaunchDao = packageLaunchDao
     )

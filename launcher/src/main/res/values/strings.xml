@@ -2,4 +2,8 @@
     <string name="app_name">LLLauncher</string>
     <string name="search_apps">Search apps</string>
     <string name="launches_activity_label">LLaunches</string>
+    <string name="Import">Import</string>
+    <string name="Export">Export</string>
+    <string name="file_share_authority">com.lelloman.launcher</string>
+    <string name="read_export_file_failed">Could not read export file.</string>
 </resources>

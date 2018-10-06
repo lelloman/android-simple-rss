@@ -1,7 +1,9 @@
 package com.lelloman.common.view
 
+import android.app.Activity
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
@@ -9,16 +11,20 @@ import android.support.annotation.LayoutRes
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.design.widget.Snackbar
+import android.support.v4.content.FileProvider
 import android.view.View
 import android.widget.Toast
 import com.lelloman.common.R
 import com.lelloman.common.navigation.NavigationEvent
 import com.lelloman.common.view.actionevent.AnimationViewActionEvent
+import com.lelloman.common.view.actionevent.PickFileActionEvent
+import com.lelloman.common.view.actionevent.ShareFileViewActionEvent
 import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.SwipePageActionEvent
 import com.lelloman.common.view.actionevent.ThemeChangedActionEvent
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.viewmodel.BaseViewModel
+
 
 abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     : InjectableActivity() {
@@ -33,6 +39,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     protected open val hasBaseLayout = true
     protected open val hasActionBarBackButton = false
     protected open val hasTransaprentNavigationBar = false
+
+    private val pendingActivityResultCodes = mutableSetOf<Int>()
 
     @LayoutRes
     protected open val layoutResId = 0
@@ -87,6 +95,8 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
                 is AnimationViewActionEvent -> onAnimationViewActionEvent(it)
                 is SwipePageActionEvent -> onSwipePageActionEvent(it)
                 is ThemeChangedActionEvent -> recreate()
+                is ShareFileViewActionEvent -> onShareFileViewActionEvent(it)
+                is PickFileActionEvent -> launchPickFileIntent(it)
             }
         })
         viewModel.onCreate()
@@ -94,6 +104,46 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     }
 
     protected abstract fun setViewModel(binding: DB, viewModel: VM)
+
+    private fun onShareFileViewActionEvent(event: ShareFileViewActionEvent) {
+        val uri = FileProvider.getUriForFile(this, event.authority, event.file)
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_STREAM, uri)
+        intent.type = "*/*"
+        startActivity(intent)
+    }
+
+    private fun launchPickFileIntent(pickFileActionEvent: PickFileActionEvent) {
+        val requestCode = pickFileActionEvent.requestCode
+        if (requestCode > 0xFF) {
+            logger.w("launchPickFileIntent() called with value greater that 0xFF, $requestCode")
+            return
+        }
+        pendingActivityResultCodes.add(requestCode)
+
+        val intent = Intent(Intent.ACTION_GET_CONTENT)
+        intent.type = "*/*"
+        startActivityForResult(intent, requestCode.or(GET_CONTENT_REQUEST_CODE_MASK))
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val subCode = requestCode.and(0xFF)
+        val expected = pendingActivityResultCodes.contains(subCode)
+        if (!expected) {
+            logger.w("Unexpected activityResult with code $requestCode")
+            return
+        }
+        pendingActivityResultCodes.remove(subCode)
+        if (requestCode.and(GET_CONTENT_REQUEST_CODE_MASK) != 0) {
+            if (resultCode == Activity.RESULT_OK) {
+                val uri = data?.data
+                uri?.let {
+                    viewModel.onContentPicked(uri, subCode)
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
 
     private fun setupActionBar() {
         if (hasActionBar) {
@@ -150,5 +200,9 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     }
 
     protected abstract fun getViewModelClass(): Class<VM>
+
+    private companion object {
+        const val GET_CONTENT_REQUEST_CODE_MASK = 0x100
+    }
 
 }

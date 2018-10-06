@@ -10,7 +10,6 @@ import android.view.MenuItem
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
-import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.R
 import com.lelloman.read.databinding.ActivityArticlesListBinding
 import com.lelloman.read.persistence.settings.AppSettings
@@ -22,9 +21,6 @@ class ArticlesListActivity :
     BaseActivity<ArticlesListViewModel, ActivityArticlesListBinding>() {
 
     private lateinit var adapter: ArticlesAdapter
-
-    @Inject
-    lateinit var semanticTimeProvider: SemanticTimeProvider
 
     @Inject
     lateinit var appSettings: AppSettings
