@@ -1,4 +1,4 @@
-package com.lelloman.launcher.packages
+package com.lelloman.launcher.persistence
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
@@ -10,7 +10,7 @@ import io.reactivex.Flowable
 @Dao
 interface PackageLaunchDao {
 
-    @Query("SELECT * FROM $PACKAGE_LAUNCH_TABLE_NAME")
+    @Query("SELECT * FROM $PACKAGE_LAUNCH_TABLE_NAME ORDER BY timestampUtc DESC")
     fun getAll(): Flowable<List<PackageLaunch>>
 
     @Insert

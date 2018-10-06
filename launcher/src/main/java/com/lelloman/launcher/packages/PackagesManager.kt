@@ -2,12 +2,18 @@ package com.lelloman.launcher.packages
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
+import android.graphics.drawable.Drawable
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.BroadcastReceiverWrap
+import com.lelloman.common.view.ResourceProvider
+import com.lelloman.launcher.R
 import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.classification.PackageClassifier
+import com.lelloman.launcher.persistence.model.PackageLaunch
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -20,6 +26,8 @@ class PackagesManager(
     loggerFactory: LoggerFactory,
     broadcastReceiverWrap: BroadcastReceiverWrap,
     private val launchesPackage: Package,
+    private val mainPackage: Package,
+    private val resourceProvider: ResourceProvider,
     val queryActivityIntent: Intent = Intent(Intent.ACTION_MAIN, null)
         .addCategory(Intent.CATEGORY_LAUNCHER)
 ) {
@@ -71,6 +79,9 @@ class PackagesManager(
             .fromCallable {
                 getPackagesFromPackageManager().apply {
                     add(launchesPackage)
+                    removeAll {
+                        it.packageName == mainPackage.packageName && it.activityName == mainPackage.activityName
+                    }
                     sortBy { it.label.toString() }
                 }
             }
@@ -82,6 +93,19 @@ class PackagesManager(
                 logger.e("Error while querying packages", it)
                 throw it
             })
+    }
+
+    fun getIconForPackageLaunch(packageLaunch: PackageLaunch): Drawable = try {
+        val resolveInfo = ResolveInfo()
+        resolveInfo.activityInfo = ActivityInfo()
+        resolveInfo.activityInfo.packageName = packageLaunch.packageName
+        resolveInfo.activityInfo.name = packageLaunch.activityName
+        val applicationInfo = packageManager.getApplicationInfo(packageLaunch.packageName, 0)
+        resolveInfo.activityInfo.applicationInfo = applicationInfo
+        resolveInfo.loadIcon(packageManager)
+    } catch (exception: Exception) {
+        logger.w("Error while trying to get icon for PackageLaunch", exception)
+        resourceProvider.getDrawable(R.mipmap.ic_launcher)
     }
 
     private fun getPackagesFromPackageManager() =

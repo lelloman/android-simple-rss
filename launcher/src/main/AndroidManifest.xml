@@ -25,8 +25,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.lelloman.launcher.ui.launches.view.LaunchesActivity"
-            android:exported="true"/>
+        <activity
+            android:name="com.lelloman.launcher.ui.launches.view.LaunchesActivity"
+            android:exported="true"
+            android:label="@string/launches_activity_label" />
     </application>
 
 </manifest>

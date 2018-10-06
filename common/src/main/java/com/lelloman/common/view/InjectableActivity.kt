@@ -27,6 +27,9 @@ abstract class InjectableActivity : AppCompatActivity() {
     lateinit var resourceProvider: ResourceProvider
 
     @Inject
+    lateinit var semanticTimeProvider: SemanticTimeProvider
+
+    @Inject
     @field:UiScheduler
     lateinit var uiScheduler: Scheduler
 

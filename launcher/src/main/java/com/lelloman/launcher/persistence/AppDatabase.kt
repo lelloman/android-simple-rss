@@ -2,7 +2,6 @@ package com.lelloman.launcher.persistence
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
-import com.lelloman.launcher.packages.PackageLaunchDao
 import com.lelloman.launcher.persistence.AppDatabase.Companion.VERSION
 import com.lelloman.launcher.persistence.model.PackageLaunch
 
