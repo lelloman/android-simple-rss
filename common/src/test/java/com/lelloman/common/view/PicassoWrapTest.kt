@@ -16,7 +16,7 @@ class PicassoWrapTest {
     private val useMeteredNetwork = BehaviorSubject.create<Boolean>()
     private val meteredConnectionChecker: MeteredConnectionChecker = mock()
     private val picassoRequestCreator: RequestCreator = mock {
-        on { networkPolicy(any()) }.thenAnswer { it.mock }
+        on { networkPolicy(any()) }.thenAnswer { networkPolicy -> networkPolicy.mock}
     }
 
     private val tested = PicassoWrapImpl(

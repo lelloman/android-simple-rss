@@ -46,7 +46,6 @@ class InfoListActivityTest {
 
     private val displayInfoItem: DisplayInfoItem get() = infoItemsList[0] as DisplayInfoItem
     private val networkInfoItem: NetworkInfoItem get() = infoItemsList[1] as NetworkInfoItem
-    private val audioInfoItem: AudioInfoItem get() = infoItemsList[2] as AudioInfoItem
 
     private val audioMode = AudioMode.IN_COMMUNICATION
 

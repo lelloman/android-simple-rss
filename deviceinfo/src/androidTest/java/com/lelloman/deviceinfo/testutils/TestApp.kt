@@ -10,10 +10,10 @@ import io.reactivex.Observable
 
 class TestApp : DeviceInfoApplication() {
 
-    var baseApplicationModule = BaseApplicationModule(this)
-    var baseSettingsModule = BaseSettingsModule()
+    private var baseApplicationModule = BaseApplicationModule(this)
+    private var baseSettingsModule = BaseSettingsModule()
     var viewModelModule = ViewModelModule()
-    var appModule = AppModule(this)
+    private var appModule = AppModule(this)
 
     override fun onCreate() {
         super.onCreate()

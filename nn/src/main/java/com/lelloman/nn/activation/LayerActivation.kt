@@ -1,6 +1,6 @@
 package com.lelloman.nn.activation
 
-abstract class LayerActivation(val length: Int, val width: Int) {
+abstract class LayerActivation(length: Int, val width: Int) {
 
     val output = Array(length) { DoubleArray(width) }
     protected val derivatives = Array(length) { DoubleArray(width) }

@@ -10,10 +10,10 @@ abstract class DataSet(private val random: Random) {
     abstract val inputDimension: Pair<Int, Int>
     abstract val outputDimension: Pair<Int, Int>
 
-    val randomizer by lazy { IntArray(size, { it }) }
+    val randomizer by lazy { IntArray(size) { it } }
 
     fun shuffle() {
-        val indices = MutableList(size, { it })
+        val indices = MutableList(size) { it }
         (0 until size).forEach {
             randomizer[it] = indices.removeAt(random.nextInt(indices.size))
         }

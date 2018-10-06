@@ -4,6 +4,4 @@ import com.lelloman.common.viewmodel.BaseViewModel
 
 abstract class LaunchesViewModel(
     dependencies: Dependencies
-) : BaseViewModel(dependencies) {
-
-}
+) : BaseViewModel(dependencies)

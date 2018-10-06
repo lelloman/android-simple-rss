@@ -17,6 +17,7 @@ open class SettingsItemView @JvmOverloads constructor(
     private val textViewDescription by lazy { findViewById<TextView>(R.id.text_view_description) }
 
     init {
+        @Suppress("LeakingThis")
         View.inflate(context, getLayoutId(), this)
         orientation = VERTICAL
 

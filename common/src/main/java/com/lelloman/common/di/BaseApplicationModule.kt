@@ -128,5 +128,5 @@ open class BaseApplicationModule(private val application: Application) {
 
     @Provides
     @ApplicationPackageName
-    fun provideApplicationPackageName(context: Context) = context.packageName
+    fun provideApplicationPackageName(context: Context): String = context.packageName
 }

@@ -28,10 +28,12 @@ class BroadcastReceiverWrap(private val context: Context) {
         })
     }
 
+    @Suppress("unused")
     fun register(actions: Array<String>) = register(
         dataScheme = null,
         actions = actions
     )
 
+    @Suppress("unused")
     fun unregister() = context.unregisterReceiver(broadcastReceiver)
 }

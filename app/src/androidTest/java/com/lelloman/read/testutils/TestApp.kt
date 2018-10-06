@@ -14,8 +14,8 @@ class TestApp : ReadApplication() {
 
     var baseApplicationModule = BaseApplicationModule(this)
     var viewModelModule = ViewModelModule()
-    var dbModule = DbModule()
-    var settingsModule = SettingsModule()
+    private var dbModule = DbModule()
+    private var settingsModule = SettingsModule()
     var httpModule = HttpModule()
 
     override var picassoWrap: PicassoWrap = object : PicassoWrap {

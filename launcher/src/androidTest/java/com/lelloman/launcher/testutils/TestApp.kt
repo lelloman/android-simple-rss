@@ -10,10 +10,10 @@ import com.lelloman.launcher.packages.PackagesModule
 
 class TestApp : LauncherApplication() {
 
-    var baseApplicationModule = BaseApplicationModule(this)
-    var baseSettingsModule = BaseSettingsModule()
-    var launcherApplicationModule = LauncherApplicationModule()
-    var packagesModule = PackagesModule()
+    private var baseApplicationModule = BaseApplicationModule(this)
+    private var baseSettingsModule = BaseSettingsModule()
+    private var launcherApplicationModule = LauncherApplicationModule()
+    private var packagesModule = PackagesModule()
     var viewModelModule = ViewModelModule()
 
     override fun onCreate() {

@@ -4,7 +4,7 @@ import org.junit.Test
 
 class AdagradTest {
     @Test
-    fun `todo`() {
+    fun todo() {
         TODO("implement")
     }
 }

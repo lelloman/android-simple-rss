@@ -236,7 +236,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         whenever(articlesRepository.insertArticles(any())).thenAnswer {
             @Suppress("UNCHECKED_CAST")
             val nArticles = (it.arguments[0] as List<Article>).size
-            Single.just(Array(nArticles) { it.toLong() })
+            Single.just(Array(nArticles) { id -> id.toLong() })
         }
     }
 
