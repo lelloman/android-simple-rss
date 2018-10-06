@@ -1,4 +1,4 @@
-package com.lelloman.launcher.ui.viewmodel
+package com.lelloman.launcher.ui.main.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.di.qualifiers.IoScheduler
@@ -9,7 +9,7 @@ import com.lelloman.launcher.packages.Package
 import com.lelloman.launcher.packages.PackageLaunchDao
 import com.lelloman.launcher.packages.PackagesManager
 import com.lelloman.launcher.persistence.model.PackageLaunch
-import com.lelloman.launcher.ui.AppsDrawerListItem
+import com.lelloman.launcher.ui.main.AppsDrawerListItem
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler

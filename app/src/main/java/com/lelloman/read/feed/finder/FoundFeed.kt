@@ -14,7 +14,7 @@ data class FoundFeed(
 
     constructor(source: Parcel) : this(
         source.readLong(),
-        source.readString(),
+        source.readString()!!,
         source.readInt(),
         source.readString()
     )

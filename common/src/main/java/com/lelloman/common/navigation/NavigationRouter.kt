@@ -11,6 +11,7 @@ import com.lelloman.common.logger.LoggerFactory
 
 class NavigationRouter(
     private val packageManager: PackageManager,
+    private val applicationPackageName: String,
     loggerFactory: LoggerFactory
 ) {
 
@@ -43,10 +44,10 @@ class NavigationRouter(
     }
 
     private fun handlePackageNavigationEvent(activity: Activity, event: PackageIntentNavigationEvent) {
-        val intent = if (event.activityName == null) {
-            packageManager.getLaunchIntentForPackage(event.packageName)
-        } else {
-            Intent(Intent.ACTION_MAIN).apply {
+        val intent = when {
+            event.activityName == null -> packageManager.getLaunchIntentForPackage(event.packageName)
+            event.packageName == applicationPackageName -> Intent(activity, Class.forName(event.activityName))
+            else -> Intent(Intent.ACTION_MAIN).apply {
                 val componentName = ComponentName(event.packageName, event.activityName)
                 addCategory(Intent.CATEGORY_LAUNCHER)
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED

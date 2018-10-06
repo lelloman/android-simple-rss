@@ -1,4 +1,4 @@
-package com.lelloman.launcher.ui.view
+package com.lelloman.launcher.ui.main.view
 
 import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.widget.GridLayoutManager
@@ -11,9 +11,9 @@ import com.lelloman.common.view.BaseRecyclerViewAdapter
 import com.lelloman.launcher.R
 import com.lelloman.launcher.databinding.ActivityMainBinding
 import com.lelloman.launcher.databinding.ListItemClassifiedPackageBinding
-import com.lelloman.launcher.ui.viewmodel.MainViewModel
-import com.lelloman.launcher.ui.viewmodel.PackageDrawerListItem
-import com.lelloman.launcher.ui.viewmodel.PackageListItemViewModel
+import com.lelloman.launcher.ui.main.viewmodel.MainViewModel
+import com.lelloman.launcher.ui.main.viewmodel.PackageDrawerListItem
+import com.lelloman.launcher.ui.main.viewmodel.PackageListItemViewModel
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {

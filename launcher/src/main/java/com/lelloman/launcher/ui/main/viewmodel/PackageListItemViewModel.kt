@@ -1,4 +1,4 @@
-package com.lelloman.launcher.ui.viewmodel
+package com.lelloman.launcher.ui.main.viewmodel
 
 import android.graphics.drawable.Drawable
 import com.lelloman.common.viewmodel.BaseListItemViewModel

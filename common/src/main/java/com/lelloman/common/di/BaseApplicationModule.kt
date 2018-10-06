@@ -3,6 +3,7 @@ package com.lelloman.common.di
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
+import com.lelloman.common.di.qualifiers.ApplicationPackageName
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.NewThreadScheduler
 import com.lelloman.common.di.qualifiers.UiScheduler
@@ -70,10 +71,12 @@ open class BaseApplicationModule(private val application: Application) {
     @Provides
     fun provideNavigationRouter(
         loggerFactory: LoggerFactory,
-        packageManager: PackageManager
+        packageManager: PackageManager,
+        @ApplicationPackageName packageName: String
     ) = NavigationRouter(
         loggerFactory = loggerFactory,
-        packageManager = packageManager
+        packageManager = packageManager,
+        applicationPackageName = packageName
     )
 
     @Singleton
@@ -122,4 +125,8 @@ open class BaseApplicationModule(private val application: Application) {
     @Provides
     fun provideBroadcastReceiverWrap(context: Context) =
         BroadcastReceiverWrap(context)
+
+    @Provides
+    @ApplicationPackageName
+    fun provideApplicationPackageName(context: Context) = context.packageName
 }

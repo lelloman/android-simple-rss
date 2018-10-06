@@ -1,4 +1,4 @@
-package com.lelloman.launcher.ui.view
+package com.lelloman.launcher.ui.main.view
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -13,11 +13,11 @@ import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.launcher.R
 import com.lelloman.launcher.databinding.ListItemPackageBinding
 import com.lelloman.launcher.databinding.ListItemSearchBinding
-import com.lelloman.launcher.ui.AppsDrawerListItem
-import com.lelloman.launcher.ui.viewmodel.PackageDrawerListItem
-import com.lelloman.launcher.ui.viewmodel.PackageListItemViewModel
-import com.lelloman.launcher.ui.viewmodel.SearchDrawerListItem
-import com.lelloman.launcher.ui.viewmodel.SearchListItemViewModel
+import com.lelloman.launcher.ui.main.AppsDrawerListItem
+import com.lelloman.launcher.ui.main.viewmodel.PackageDrawerListItem
+import com.lelloman.launcher.ui.main.viewmodel.PackageListItemViewModel
+import com.lelloman.launcher.ui.main.viewmodel.SearchDrawerListItem
+import com.lelloman.launcher.ui.main.viewmodel.SearchListItemViewModel
 
 class AppsDrawerAdapter(
     onClickListener: (Any) -> Unit,

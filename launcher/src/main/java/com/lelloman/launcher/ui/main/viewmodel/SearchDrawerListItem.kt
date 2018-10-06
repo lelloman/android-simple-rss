@@ -1,6 +1,6 @@
-package com.lelloman.launcher.ui.viewmodel
+package com.lelloman.launcher.ui.main.viewmodel
 
-import com.lelloman.launcher.ui.AppsDrawerListItem
+import com.lelloman.launcher.ui.main.AppsDrawerListItem
 
 object SearchDrawerListItem : AppsDrawerListItem {
     override val id = Long.MIN_VALUE

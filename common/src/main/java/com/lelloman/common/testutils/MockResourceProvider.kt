@@ -1,5 +1,6 @@
 package com.lelloman.common.testutils
 
+import android.graphics.drawable.Drawable
 import com.lelloman.common.view.ResourceProvider
 
 class MockResourceProvider(
@@ -19,5 +20,9 @@ class MockResourceProvider(
 
     fun registerStringArray(arrayId: Int, array: Array<String>) {
         arraysMap[arrayId] = array
+    }
+
+    override fun getDrawable(drawableId: Int): Drawable {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

@@ -14,9 +14,11 @@ import org.junit.Test
 
 class NavigationRouterTest {
 
+    private val applicationPackageName = "cra cra cra"
     private val tested = NavigationRouter(
         packageManager = mock(),
-        loggerFactory = MockLoggerFactory()
+        loggerFactory = MockLoggerFactory(),
+        applicationPackageName = applicationPackageName
     )
 
     private val starter: DeepLinkStartable = mock()

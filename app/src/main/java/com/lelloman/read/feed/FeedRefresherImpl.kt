@@ -49,6 +49,7 @@ class FeedRefresherImpl(
         }
         isLoadingSubject.onNext(true)
 
+        @Suppress("UNUSED_VARIABLE")
         val ignored = Single
             .zip(
                 sourcesDao
