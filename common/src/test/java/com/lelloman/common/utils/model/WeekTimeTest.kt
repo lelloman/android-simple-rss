@@ -4,11 +4,12 @@ import com.lelloman.common.utils.model.WeekTime.Companion.FRIDAY
 import com.lelloman.common.utils.model.WeekTime.Companion.MONDAY
 import com.lelloman.common.utils.model.WeekTime.Companion.SATURDAY
 import com.lelloman.common.utils.model.WeekTime.Companion.THURSDAY
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Test
 import java.util.*
 
-class TimeTest {
+class WeekTimeTest {
 
     private val random = Random()
 
@@ -70,5 +71,18 @@ class TimeTest {
                 hourOfDay = 24 + Math.abs(random.nextInt())
             )
         }.isInstanceOf(IllegalArgumentException::class.java)
+    }
+
+    @Test
+    fun `does not throw exception for valid arguments`() {
+        for (day in 1..7) {
+            for (hour in 0..23) {
+
+                val tested = WeekTime(hourOfDay = hour, dayOfWeek = day)
+
+                assertThat(tested.hourOfDay).isEqualTo(hour)
+                assertThat(tested.dayOfWeek).isEqualTo(day)
+            }
+        }
     }
 }
