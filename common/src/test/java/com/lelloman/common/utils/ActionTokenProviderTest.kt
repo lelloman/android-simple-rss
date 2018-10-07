@@ -1,6 +1,6 @@
 package com.lelloman.common.utils
 
-import com.google.common.truth.Truth.assertThat
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 class ActionTokenProviderTest {

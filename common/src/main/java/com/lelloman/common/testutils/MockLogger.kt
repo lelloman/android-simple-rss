@@ -1,7 +1,7 @@
 package com.lelloman.common.testutils
 
-import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.logger.Logger
+import org.assertj.core.api.Assertions.assertThat
 
 class MockLogger : Logger {
 
