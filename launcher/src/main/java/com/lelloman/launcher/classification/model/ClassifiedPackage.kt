@@ -1,4 +1,4 @@
-package com.lelloman.launcher.classification
+package com.lelloman.launcher.classification.model
 
 import com.lelloman.launcher.packages.Package
 

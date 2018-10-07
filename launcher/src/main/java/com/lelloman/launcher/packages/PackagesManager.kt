@@ -11,8 +11,8 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.launcher.R
-import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.classification.PackageClassifier
+import com.lelloman.launcher.classification.model.ClassifiedPackage
 import com.lelloman.launcher.persistence.model.PackageLaunch
 import io.reactivex.Observable
 import io.reactivex.Scheduler
