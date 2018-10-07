@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
 import com.lelloman.common.testutils.MockLoggerFactory
+import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.classification.PackageClassifier
@@ -38,7 +39,8 @@ class PackagesManagerTest {
             broadcastReceiverWrap = broadcastReceiverWrap,
             queryActivityIntent = queryActivityIntent,
             launchesPackage = LAUNCHES_PACKAGE,
-            mainPackage = MAIN_PACKAGE
+            mainPackage = MAIN_PACKAGE,
+            resourceProvider = MockResourceProvider()
         )
         block.invoke(tested)
     }

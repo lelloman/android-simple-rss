@@ -1,9 +1,10 @@
 package com.lelloman.common.view
 
-import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.R
 import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.utils.TimeProvider
+import com.lelloman.common.utils.model.WeekTime
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 import java.util.*
 
@@ -13,6 +14,7 @@ class SemanticTimeProviderTest {
 
     private val timeProvider = object : TimeProvider {
         override fun nowUtcMs() = now
+        override fun getParsedTime(timeMs: Long) = WeekTime(0, 0)
     }
 
     private val myTimestamp = 527505620_000L
