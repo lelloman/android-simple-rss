@@ -11,4 +11,7 @@ data class PackageLaunch(
     val timestampUtc: Long,
     val packageName: String,
     val activityName: String
-) : ModelWithId
+) : ModelWithId {
+
+    fun identifier() = "$packageName/$activityName"
+}

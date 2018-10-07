@@ -8,8 +8,8 @@ import android.graphics.drawable.Drawable
 import com.lelloman.common.testutils.MockLoggerFactory
 import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.view.BroadcastReceiverWrap
-import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.classification.PackageClassifier
+import com.lelloman.launcher.classification.model.ClassifiedPackage
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

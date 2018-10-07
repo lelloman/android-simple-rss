@@ -9,4 +9,7 @@ data class Package(
     val packageName: String,
     val activityName: String,
     val drawable: Drawable
-) : ModelWithId
+) : ModelWithId {
+
+    val identifier by lazy { "$packageName/$activityName" }
+}
