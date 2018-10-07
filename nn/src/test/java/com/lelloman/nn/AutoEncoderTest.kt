@@ -69,7 +69,6 @@ class AutoEncoderTest {
             val b = Array(wave.size) { "%+.2f".format(reconstructed[it]) }
             println("original: ${a.joinToString(",")}")
             println("network:  ${b.joinToString(",")}")
-            println("")
         }
         assertThat(success).isTrue()
     }
