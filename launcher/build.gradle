@@ -33,6 +33,7 @@ android {
 
 dependencies {
     implementation project(':common')
+    implementation project(':nn')
 
     // room
     implementation "android.arch.persistence.room:runtime:$room_version"
