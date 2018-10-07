@@ -7,7 +7,7 @@ import android.support.design.widget.Snackbar.SnackbarLayout
 import android.util.AttributeSet
 import android.view.View
 
-
+@Suppress("UNUSED_PARAMETER")
 class FabBehavior(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<FloatingActionButton>() {
 
     override fun layoutDependsOn(parent: CoordinatorLayout, child: FloatingActionButton, dependency: View): Boolean {

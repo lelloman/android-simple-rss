@@ -7,4 +7,5 @@ class MockLoggerFactory(private val logger: Logger = MockLogger()) : LoggerFacto
 
     override fun getLogger(tag: String) = logger
 
+    override fun getLogger(clazz: Class<*>) = logger
 }
