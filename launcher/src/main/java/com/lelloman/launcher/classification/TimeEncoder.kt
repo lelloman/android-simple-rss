@@ -1,6 +1,7 @@
 package com.lelloman.launcher.classification
 
 import android.support.annotation.VisibleForTesting
+import com.lelloman.common.utils.model.DayTime
 import com.lelloman.common.utils.model.WeekTime
 
 class TimeEncoder {
@@ -12,7 +13,7 @@ class TimeEncoder {
 
     fun encodeWeekTime(time: WeekTime): DoubleArray {
         val scalar = makeScalarWeekTime(time)
-        val percent = scalar / TIME_VALUES
+        val percent = scalar / WEEK_SCALAR_FACTOR
 
         return makeTimeDoubleArray(percent)
     }
@@ -47,10 +48,20 @@ class TimeEncoder {
         }
     }
 
+    fun encodeDayTime(dayTime: DayTime): DoubleArray {
+        val dayTimePercent = (dayTime.hour * 60 + dayTime.minute) / DAY_SCALAR_FACTOR
+        var a = dayTimePercent * 2
+        val growing = a > 1.0
+        if (growing) a = 2.0 - a
+        val b = dayTimePercent
+        return doubleArrayOf(a, b)
+    }
+
     @VisibleForTesting
     fun makeScalarWeekTime(time: WeekTime): Int = (time.dayOfWeek - 1) * 24 + time.hourOfDay
 
     private companion object {
-        const val TIME_VALUES = 24 * 7.0
+        const val DAY_SCALAR_FACTOR = 60 * 24.0
+        const val WEEK_SCALAR_FACTOR = 24 * 7.0
     }
 }

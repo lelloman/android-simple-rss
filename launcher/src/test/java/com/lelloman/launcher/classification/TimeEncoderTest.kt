@@ -1,5 +1,6 @@
 package com.lelloman.launcher.classification
 
+import com.lelloman.common.utils.model.DayTime
 import com.lelloman.common.utils.model.WeekTime
 import com.lelloman.common.utils.model.WeekTime.Companion.MONDAY
 import com.lelloman.common.utils.model.WeekTime.Companion.SATURDAY
@@ -18,7 +19,7 @@ class TimeEncoderTest {
     private val tested = TimeEncoder()
 
     @Test
-    fun `makes scalar time 1`() {
+    fun `makes scalar week time 1`() {
         val time = WeekTime(
             dayOfWeek = SUNDAY,
             hourOfDay = 0
@@ -30,7 +31,7 @@ class TimeEncoderTest {
     }
 
     @Test
-    fun `makes scalar time 2`() {
+    fun `makes scalar week time 2`() {
         val time = WeekTime(
             dayOfWeek = MONDAY,
             hourOfDay = 0
@@ -42,7 +43,7 @@ class TimeEncoderTest {
     }
 
     @Test
-    fun `makes scalar time 3`() {
+    fun `makes scalar week time 3`() {
         val time = WeekTime(
             dayOfWeek = WEDNESDAY,
             hourOfDay = 23
@@ -54,7 +55,7 @@ class TimeEncoderTest {
     }
 
     @Test
-    fun `makes scalar time 4`() {
+    fun `makes scalar week time 4`() {
         val time = WeekTime(
             dayOfWeek = SATURDAY,
             hourOfDay = 15
@@ -67,9 +68,6 @@ class TimeEncoderTest {
 
     @Test
     fun `sum of encoded time is always 1 and also pretty print`() {
-        fun DoubleArray.fancyPrint() = map { String.format("%.2f", it) }
-            .joinToString(",") { it }
-
         tested {
             for (day in 1..7) {
                 for (hour in 0 until 24) {
@@ -128,6 +126,64 @@ class TimeEncoderTest {
             doubleArrayOf(0.38, 0.0, 0.0, 0.0, 0.0, 0.0, 0.62)
         )
     }
+
+    @Test
+    fun `encodes noon`() {
+        val time = DayTime(hour = 12, minute = 0)
+
+        val encoded = tested.encodeDayTime(time)
+
+        assertThat(encoded).isRoughlyEqualTo(doubleArrayOf(
+            1.0, 0.5
+        ))
+    }
+
+    @Test
+    fun `encodes midnight`() {
+        val time = DayTime(hour = 0, minute = 0)
+
+        val encoded = tested.encodeDayTime(time)
+
+        assertThat(encoded).isRoughlyEqualTo(doubleArrayOf(
+            0.0, 0.0
+        ))
+    }
+
+    @Test
+    fun `encoded 5 15 am`() {
+        val time = DayTime(hour = 5, minute = 15)
+
+        val encoded = tested.encodeDayTime(time)
+
+        assertThat(encoded).isRoughlyEqualTo(doubleArrayOf(
+            0.43, 0.22
+        ))
+    }
+
+    @Test
+    fun `encoded 10 30 am`() {
+        val time = DayTime(hour = 10, minute = 30)
+
+        val encoded = tested.encodeDayTime(time)
+
+        assertThat(encoded).isRoughlyEqualTo(doubleArrayOf(
+            0.87, 0.43
+        ))
+    }
+
+    @Test
+    fun `encoded 8 58 pm`() {
+        val time = DayTime(hour = 20, minute = 58)
+
+        val encoded = tested.encodeDayTime(time)
+
+        assertThat(encoded).isRoughlyEqualTo(doubleArrayOf(
+            0.25, 0.87
+        ))
+    }
+
+    private fun DoubleArray.fancyPrint() = map { String.format("%.2f", it) }
+        .joinToString(",") { it }
 
     private fun tested(block: TimeEncoder.() -> Unit) =
         block.invoke(TimeEncoder())
