@@ -11,8 +11,8 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.launcher.R
+import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.classification.PackageClassifier
-import com.lelloman.launcher.classification.model.ClassifiedPackage
 import com.lelloman.launcher.persistence.model.PackageLaunch
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -22,7 +22,7 @@ import io.reactivex.subjects.BehaviorSubject
 class PackagesManager(
     @IoScheduler private val ioScheduler: Scheduler,
     private val packageManager: PackageManager,
-    packageClassifier: PackageClassifier,
+    private val packageClassifier: PackageClassifier,
     loggerFactory: LoggerFactory,
     broadcastReceiverWrap: BroadcastReceiverWrap,
     private val launchesPackage: Package,
@@ -34,18 +34,15 @@ class PackagesManager(
 
     private val logger = loggerFactory.getLogger(PackagesManager::class.java.simpleName)
     private val installedPackagesSubject = BehaviorSubject.create<List<Package>>()
+    private val classifiedPackagesSubject = BehaviorSubject.create<List<Package>>()
+    private val updatingPackagesSubject = BehaviorSubject.create<Boolean>().apply {
+        onNext(false)
+    }
 
     val installedPackages: Observable<List<Package>> = installedPackagesSubject.hide()
+    val updatingPackages: Observable<Boolean> = updatingPackagesSubject.hide()
 
-    val classifiedPackages: Observable<List<Package>> = installedPackagesSubject
-        .flatMapSingle(packageClassifier::classify)
-        .map { classifiedPackages ->
-            classifiedPackages
-                .asSequence()
-                .sortedByDescending { it.score }
-                .map(ClassifiedPackage::pkg)
-                .toList()
-        }
+    val classifiedPackages: Observable<List<Package>> = classifiedPackagesSubject.hide()
 
     init {
         @Suppress("UNUSED_VARIABLE")
@@ -74,7 +71,9 @@ class PackagesManager(
     }
 
     @SuppressLint("CheckResult")
-    private fun updateInstalledPackages() {
+    fun updateInstalledPackages() {
+        if (updatingPackagesSubject.blockingFirst()) return
+        updatingPackagesSubject.onNext(true)
         Single
             .fromCallable {
                 getPackagesFromPackageManager().apply {
@@ -87,8 +86,18 @@ class PackagesManager(
             }
             .subscribeOn(ioScheduler)
             .observeOn(ioScheduler)
+            .doOnSuccess(installedPackagesSubject::onNext)
+            .flatMap { packageClassifier.classify(it) }
+            .map { classifiedPackages ->
+                classifiedPackages
+                    .asSequence()
+                    .sortedByDescending { it.score }
+                    .map(ClassifiedPackage::pkg)
+                    .toList()
+            }
+            .doAfterTerminate { updatingPackagesSubject.onNext(false) }
             .subscribe({
-                installedPackagesSubject.onNext(it)
+                classifiedPackagesSubject.onNext(it)
             }, {
                 logger.e("Error while querying packages", it)
                 throw it

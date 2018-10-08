@@ -50,6 +50,10 @@ class LaunchesActivity : BaseActivity<LaunchesViewModel, ActivityLaunchesBinding
             viewModel.onImportClicked()
             true
         }
+        R.id.action_refresh -> {
+            viewModel.onRefreshClicked()
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 }

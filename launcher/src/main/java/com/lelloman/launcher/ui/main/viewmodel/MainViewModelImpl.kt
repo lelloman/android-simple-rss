@@ -33,7 +33,7 @@ class MainViewModelImpl(
             Observable
                 .combineLatest(
                     packagesManager
-                        .installedPackages
+                        .classifiedPackages//.installedPackages
                         .map {
                             val out = mutableListOf<AppsDrawerListItem>()
                             out.add(SearchDrawerListItem)
@@ -46,6 +46,9 @@ class MainViewModelImpl(
                     }
                 )
                 .subscribeOn(ioScheduler)
+                .doOnComplete {
+                    val a = 1
+                }
                 .subscribe {
                     postValue(it)
                 }
@@ -53,17 +56,17 @@ class MainViewModelImpl(
     }
 
     override val classifiedApps = MutableLiveData<List<PackageDrawerListItem>>().apply {
-        subscription {
-            packagesManager
-                .classifiedPackages
-                .map {
-                    it.map(::PackageDrawerListItem)
-                }
-                .subscribeOn(ioScheduler)
-                .subscribe {
-                    postValue(it)
-                }
-        }
+        //        subscription {
+//            packagesManager
+//                .classifiedPackages
+//                .map {
+//                    it.map(::PackageDrawerListItem)
+//                }
+//                .subscribeOn(ioScheduler)
+//                .subscribe {
+//                    postValue(it)
+//                }
+//        }
     }
 
     override fun onPackageClicked(pkg: Package) {

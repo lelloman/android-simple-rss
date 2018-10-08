@@ -9,7 +9,9 @@ abstract class LaunchesViewModel(
 ) : BaseViewModel(dependencies) {
 
     abstract val launches: MutableLiveData<List<PackageLaunchListItem>>
+    abstract val isLoading: MutableLiveData<Boolean>
 
     abstract fun onExportClicked()
     abstract fun onImportClicked()
+    abstract fun onRefreshClicked()
 }

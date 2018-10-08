@@ -29,7 +29,19 @@ class LaunchesViewModelImpl(
 ) : LaunchesViewModel(dependencies) {
 
     private var exportingLaunches = false
-    private val logger = loggerFactory.getLogger(LaunchesViewModelImpl::class.java.name)
+    private val logger = loggerFactory.getLogger(LaunchesViewModelImpl::class.java)
+
+    override val isLoading: MutableLiveData<Boolean> by LazyLiveData {
+        subscription {
+            packagesManager
+                .updatingPackages
+                .subscribeOn(ioScheduler)
+                .observeOn(ioScheduler)
+                .subscribe {
+                    isLoading.postValue(it)
+                }
+        }
+    }
 
     override val launches: MutableLiveData<List<PackageLaunchListItem>> by LazyLiveData {
         subscription {
@@ -53,6 +65,10 @@ class LaunchesViewModelImpl(
 
     override fun onImportClicked() {
         viewActionEvents.postValue(PickFileActionEvent(IMPORT_FILE_REQUEST_CODE))
+    }
+
+    override fun onRefreshClicked() {
+        packagesManager.updateInstalledPackages()
     }
 
     override fun onContentPicked(uri: Uri, requestCode: Int) {

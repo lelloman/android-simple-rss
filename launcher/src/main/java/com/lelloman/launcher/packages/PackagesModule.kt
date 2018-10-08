@@ -15,6 +15,7 @@ import com.lelloman.launcher.ui.main.view.MainActivity
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
+import javax.inject.Singleton
 
 @Module
 class PackagesModule {
@@ -53,6 +54,7 @@ class PackagesModule {
     )
 
     @Provides
+    @Singleton
     fun providePackagesManager(
         @IoScheduler ioScheduler: Scheduler,
         packageManager: PackageManager,
