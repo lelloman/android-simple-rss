@@ -1,18 +1,16 @@
 package com.lelloman.launcher.classification
 
-import com.lelloman.launcher.persistence.model.PackageLaunch
-
 class PackageLaunchEncoder(
-    launches: List<PackageLaunch>
+    identifiers: List<String>
 ) {
 
     private val encodingMap: Map<String, DoubleArray> // <identifier, one-hot>
     private val decodingMap: Map<DoubleArray, String> // <one-hot, identifier>
 
+    val encodedSize: Int
+
     init {
-        encodingMap = launches
-            .asSequence()
-            .map { it.identifier() }
+        encodingMap = identifiers
             .toSet()
             .let {
                 it.mapIndexed { index: Int, identifier: String ->
@@ -20,14 +18,16 @@ class PackageLaunchEncoder(
                 }
             }
             .toMap()
+        encodedSize = encodingMap.size
+
         decodingMap = encodingMap
             .entries
             .map { it.value to it.key }
             .toMap()
     }
 
-    fun encode(launch: PackageLaunch): DoubleArray {
-        return encodingMap[launch.identifier()]!!
+    fun encode(identifier: String): DoubleArray {
+        return encodingMap[identifier]!!
     }
 
     fun decode(encoded: DoubleArray) = encoded

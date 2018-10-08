@@ -6,4 +6,5 @@
     <string name="Export">Export</string>
     <string name="file_share_authority">com.lelloman.launcher</string>
     <string name="read_export_file_failed">Could not read export file.</string>
+    <string name="Refresh">Refresh</string>
 </resources>

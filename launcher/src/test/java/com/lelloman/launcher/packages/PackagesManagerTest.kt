@@ -8,8 +8,8 @@ import android.graphics.drawable.Drawable
 import com.lelloman.common.testutils.MockLoggerFactory
 import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.view.BroadcastReceiverWrap
+import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.classification.PackageClassifier
-import com.lelloman.launcher.classification.model.ClassifiedPackage
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -123,6 +123,33 @@ class PackagesManagerTest {
                 assertThat(packages).hasSize(CLASSIFIED_PACKAGES_1.size)
                 assertThat(packages).containsAll(CLASSIFIED_PACKAGES_1.map { it.pkg })
             }
+        }
+    }
+
+    @Test
+    fun `updates installed packages when update packages is called manually`() {
+        givenPackageManagerReturnsPackages1()
+        tested {
+            val tester = installedPackages.test()
+            tester.assertValueCount(1)
+
+            updateInstalledPackages()
+
+            tester.assertValueCount(2)
+        }
+    }
+
+    @Test
+    fun `updates classified packages when update packages is called manually`() {
+        givenPackageManagerReturnsPackages1()
+        givenPackageClassifierReturnsPackages1()
+        tested {
+            val tester = classifiedPackages.test()
+            tester.assertValueCount(1)
+
+            updateInstalledPackages()
+
+            tester.assertValueCount(2)
         }
     }
 

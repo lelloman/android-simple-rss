@@ -1,13 +1,12 @@
 package com.lelloman.common.utils
 
-import com.lelloman.common.utils.model.DayTime
-import com.lelloman.common.utils.model.WeekTime
+import com.lelloman.common.utils.model.Time
 
 interface TimeProvider {
 
     fun nowUtcMs(): Long
 
-    fun getParsedWeekTime(timeMs: Long): WeekTime
+    fun now(): Time
 
-    fun getParsedDayTime(timeMs: Long): DayTime
+    fun getTime(utcMs: Long): Time
 }

@@ -4,7 +4,6 @@ import android.databinding.BindingAdapter
 import android.graphics.Bitmap
 import android.support.design.widget.TextInputLayout
 import android.support.v4.widget.SwipeRefreshLayout
-import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
@@ -26,12 +25,6 @@ object BindingAdapters {
     @BindingAdapter("hash")
     fun bindIdenticonHash(identiconView: ClassicIdenticonView, hash: Int) {
         identiconView.setHash(hash)
-    }
-
-    @JvmStatic
-    @BindingAdapter("viewVisible")
-    fun bindViewVisibility(view: View, isVisible: Boolean) {
-        view.visibility = if (isVisible) View.VISIBLE else View.GONE
     }
 
     @JvmStatic

@@ -1,6 +1,5 @@
 package com.lelloman.launcher.classification
 
-import com.lelloman.launcher.classification.model.ClassifiedPackage
 import com.lelloman.launcher.packages.Package
 import io.reactivex.Single
 
