@@ -56,7 +56,7 @@ open class BaseApplicationModule(private val application: Application) {
 
     @Singleton
     @Provides
-    fun provideLoggerFactory(): LoggerFactory = LoggerFactoryImpl()
+    open fun provideLoggerFactory(): LoggerFactory = LoggerFactoryImpl()
 
     @Singleton
     @Provides

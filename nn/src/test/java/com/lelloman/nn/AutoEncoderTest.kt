@@ -67,7 +67,7 @@ class AutoEncoderTest {
             val reconstructed = network.forwardPass(arrayOf(wave))[0]
             val a = Array(wave.size) { "%+.2f".format(wave[it]) }
             val b = Array(wave.size) { "%+.2f".format(reconstructed[it]) }
-            println("original: ${a.joinToString(",")}")
+            println("\noriginal: ${a.joinToString(",")}")
             println("network:  ${b.joinToString(",")}")
         }
         assertThat(success).isTrue()

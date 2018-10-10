@@ -13,6 +13,10 @@ android {
         testInstrumentationRunner "com.lelloman.deviceinfo.testutils.MockTestRunner"
 
     }
+    compileOptions {
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
 
     dataBinding {
         enabled = true

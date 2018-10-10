@@ -9,7 +9,7 @@ class PackageLaunchEncoderTest {
     fun `encode and decodes`() {
         val identifiers = (0 until 10).map(Int::toString)
 
-        val tested = PackageLaunchEncoder(identifiers)
+        val tested = IdentifierEncoder(identifiers)
 
         val encoded = identifiers.map { tested.encode(it) }
         val decoded = encoded.map(tested::decode)
@@ -24,7 +24,7 @@ class PackageLaunchEncoderTest {
         val identifiers = (0 until 10).map(Int::toString)
             .let { it.plus(ArrayList(it)) }
 
-        val tested = PackageLaunchEncoder(identifiers)
+        val tested = IdentifierEncoder(identifiers)
 
         val encoded = identifiers.map { tested.encode(it) }
         val decoded = encoded.map(tested::decode)

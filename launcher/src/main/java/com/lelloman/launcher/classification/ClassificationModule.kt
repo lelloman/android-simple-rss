@@ -1,35 +1,46 @@
 package com.lelloman.launcher.classification
 
-import com.lelloman.common.logger.LoggerFactory
+import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.utils.TimeProvider
+import com.lelloman.launcher.logger.LauncherLoggerFactory
+import com.lelloman.launcher.packages.PackagesManager
+import com.lelloman.launcher.persistence.ClassifiedIdentifierDao
 import com.lelloman.launcher.persistence.PackageLaunchDao
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Scheduler
 import javax.inject.Singleton
 
 @Module
 class ClassificationModule {
 
     @Provides
-    @Singleton
-    fun provideNeuralNetFactory() = NeuralNetFactory()
+    fun provideTimeEncoder() = TimeEncoder()
 
     @Provides
-    fun provideTimeEncoder() = TimeEncoder()
+    fun providePackageLaunchEncoderProvider(): IdentifierEncoderProvider = object : IdentifierEncoderProvider {
+        override fun provideEncoder(identifiers: List<String>) = IdentifierEncoder(identifiers)
+    }
 
     @Provides
     @Singleton
     fun providePackageLaunchClassifier(
         packageLaunchDao: PackageLaunchDao,
-        loggerFactory: LoggerFactory,
-        neuralNetFactory: NeuralNetFactory,
+        loggerFactory: LauncherLoggerFactory,
         timeProvider: TimeProvider,
-        timeEncoder: TimeEncoder
-    ): PackageClassifier = PackageClassifierImpl(
+        timeEncoder: TimeEncoder,
+        packagesManager: PackagesManager,
+        classifiedIdentifierDao: ClassifiedIdentifierDao,
+        @IoScheduler ioScheduler: Scheduler,
+        launhesEncoderProvider: IdentifierEncoderProvider
+    ): PackageClassifier = PackageClassifier(
         packageLaunchDao = packageLaunchDao,
+        launchesEncoderProvider = launhesEncoderProvider,
         loggerFactory = loggerFactory,
         timeEncoder = timeEncoder,
         timeProvider = timeProvider,
-        neuralNetFactory = neuralNetFactory
+        packagesManager = packagesManager,
+        ioScheduler = ioScheduler,
+        classifiedIdentifierDao = classifiedIdentifierDao
     )
 }

@@ -3,13 +3,13 @@ package com.lelloman.launcher.packages
 import android.content.Context
 import android.content.pm.PackageManager
 import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.launcher.R
-import com.lelloman.launcher.classification.PackageClassifier
 import com.lelloman.launcher.di.qualifier.LaunchesActivityPackage
 import com.lelloman.launcher.di.qualifier.MainActivityPackage
+import com.lelloman.launcher.logger.LauncherLoggerFactory
+import com.lelloman.launcher.persistence.ClassifiedIdentifierDao
 import com.lelloman.launcher.ui.launches.view.LaunchesActivity
 import com.lelloman.launcher.ui.main.view.MainActivity
 import dagger.Module
@@ -58,17 +58,17 @@ class PackagesModule {
     fun providePackagesManager(
         @IoScheduler ioScheduler: Scheduler,
         packageManager: PackageManager,
-        loggerFactory: LoggerFactory,
-        packageClassifier: PackageClassifier,
+        loggerFactory: LauncherLoggerFactory,
         broadcastReceiverWrap: BroadcastReceiverWrap,
         resourceProvider: ResourceProvider,
         @LaunchesActivityPackage launchesActivityPackage: Package,
-        @MainActivityPackage mainActivityPackage: Package
+        @MainActivityPackage mainActivityPackage: Package,
+        classifiedPackageIdentifierDao: ClassifiedIdentifierDao
     ) = PackagesManager(
         loggerFactory = loggerFactory,
         ioScheduler = ioScheduler,
         packageManager = packageManager,
-        packageClassifier = packageClassifier,
+        classifiedPackageIdentifierDao = classifiedPackageIdentifierDao,
         broadcastReceiverWrap = broadcastReceiverWrap,
         launchesPackage = launchesActivityPackage,
         mainPackage = mainActivityPackage,

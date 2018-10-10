@@ -45,7 +45,7 @@ abstract class BaseActivity<VM : BaseViewModel, DB : ViewDataBinding>
     @LayoutRes
     protected open val layoutResId = 0
 
-    private val logger by lazy { loggerFactory.getLogger(javaClass.simpleName) }
+    private val logger by lazy { loggerFactory.getLogger(javaClass) }
 
     protected val statusBarHeight: Int
         get() {

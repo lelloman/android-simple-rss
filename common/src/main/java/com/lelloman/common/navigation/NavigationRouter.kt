@@ -15,7 +15,7 @@ class NavigationRouter(
     loggerFactory: LoggerFactory
 ) {
 
-    private val logger = loggerFactory.getLogger(NavigationRouter::class.java.simpleName)
+    private val logger = loggerFactory.getLogger(NavigationRouter::class.java)
 
     fun onNavigationEvent(activity: Activity, navigationEvent: NavigationEvent) = when (navigationEvent) {
         is DeepLinkNavigationEvent -> handleDeepLink(activity, navigationEvent)
