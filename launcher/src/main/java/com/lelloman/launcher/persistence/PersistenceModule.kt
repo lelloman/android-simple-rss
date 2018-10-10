@@ -17,5 +17,9 @@ open class PersistenceModule {
 
     @Singleton
     @Provides
-    open fun providePackageLaunchDato(appDatabase: AppDatabase) = appDatabase.packageLaunchDao()
+    open fun providePackageLaunchDao(appDatabase: AppDatabase) = appDatabase.packageLaunchDao()
+
+    @Singleton
+    @Provides
+    open fun provideClassifiedIdentifierDao(appDatabase: AppDatabase) = appDatabase.classifiedIdentifierDao()
 }

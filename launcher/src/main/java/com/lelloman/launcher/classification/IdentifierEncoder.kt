@@ -1,6 +1,6 @@
 package com.lelloman.launcher.classification
 
-class PackageLaunchEncoder(
+class IdentifierEncoder(
     identifiers: List<String>
 ) {
 

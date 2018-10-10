@@ -5,17 +5,18 @@ import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
-import com.lelloman.common.testutils.MockLoggerFactory
 import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.launcher.classification.ClassifiedPackage
-import com.lelloman.launcher.classification.PackageClassifier
+import com.lelloman.launcher.logger.LauncherLoggerFactory
+import com.lelloman.launcher.persistence.ClassifiedIdentifierDao
+import com.lelloman.launcher.persistence.model.ClassifiedIdentifier
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever
-import io.reactivex.Single
-import io.reactivex.schedulers.Schedulers.trampoline
+import io.reactivex.Flowable
+import io.reactivex.schedulers.TestScheduler
 import io.reactivex.subjects.PublishSubject
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -23,23 +24,27 @@ import org.junit.Test
 class PackagesManagerTest {
 
     private val packageManager: PackageManager = mock()
-    private val packageClassifier: PackageClassifier = mock()
     private val intentsSubject = PublishSubject.create<Intent>()
+    private val classifiedIdentifierDao: ClassifiedIdentifierDao = mock()
     private val broadcastReceiverWrap: BroadcastReceiverWrap = mock {
         on { broadcasts }.thenReturn(intentsSubject)
     }
     private val queryActivityIntent: Intent = mock()
+    private val ioScheduler = TestScheduler()
+    private val loggerFactory: LauncherLoggerFactory = mock {
+        on { getLogger(PackagesManager::class.java) }.thenReturn(mock())
+    }
 
     private fun tested(block: PackagesManager.() -> Unit) {
         val tested = PackagesManager(
-            ioScheduler = trampoline(),
+            ioScheduler = ioScheduler,
             packageManager = packageManager,
-            packageClassifier = packageClassifier,
-            loggerFactory = MockLoggerFactory(),
+            loggerFactory = loggerFactory,
             broadcastReceiverWrap = broadcastReceiverWrap,
             queryActivityIntent = queryActivityIntent,
             launchesPackage = LAUNCHES_PACKAGE,
             mainPackage = MAIN_PACKAGE,
+            classifiedPackageIdentifierDao = classifiedIdentifierDao,
             resourceProvider = MockResourceProvider()
         )
         block.invoke(tested)
@@ -47,6 +52,7 @@ class PackagesManagerTest {
 
     @Test
     fun `registers broadcast receiver upon instantiation`() {
+        givenIdentifiersDaoReturnsClassifiedIdentifiers1()
         tested {
             verify(broadcastReceiverWrap).register(
                 dataScheme = "package",
@@ -63,9 +69,11 @@ class PackagesManagerTest {
     @Test
     fun `updates installed packages when instantiated`() {
         givenPackageManagerReturnsPackages1()
+        givenIdentifiersDaoReturnsClassifiedIdentifiers1()
 
         tested {
             val tester = installedPackages.test()
+            ioScheduler.triggerActions()
 
             tester.assertValueCount(1)
             tester.values()[0].let { packages ->
@@ -78,10 +86,11 @@ class PackagesManagerTest {
     @Test
     fun `updates classified packages when instantiated`() {
         givenPackageManagerReturnsPackages1()
-        givenPackageClassifierReturnsPackages1()
-
+        givenIdentifiersDaoReturnsClassifiedIdentifiers1()
         tested {
             val tester = classifiedPackages.test()
+
+            ioScheduler.triggerActions()
 
             tester.assertValueCount(1)
             tester.values()[0].let { packages ->
@@ -94,11 +103,14 @@ class PackagesManagerTest {
     @Test
     fun `updates installed packages when broadcast is received`() {
         givenPackageManagerReturnsPackages1()
+        givenIdentifiersDaoReturnsClassifiedIdentifiers1()
         tested {
             val tester = installedPackages.test()
+            ioScheduler.triggerActions()
             tester.assertValueCount(1)
 
             broadcastIntentPackageAdded()
+            ioScheduler.triggerActions()
 
             tester.assertValueCount(2)
             tester.values()[1].let { packages ->
@@ -111,12 +123,14 @@ class PackagesManagerTest {
     @Test
     fun `updates classified packages when broadcast is received`() {
         givenPackageManagerReturnsPackages1()
-        givenPackageClassifierReturnsPackages1()
+        givenIdentifiersDaoReturnsClassifiedIdentifiers1()
         tested {
             val tester = classifiedPackages.test()
+            ioScheduler.triggerActions()
             tester.assertValueCount(1)
 
             broadcastIntentPackageAdded()
+            ioScheduler.triggerActions()
 
             tester.assertValueCount(2)
             tester.values()[1].let { packages ->
@@ -129,11 +143,14 @@ class PackagesManagerTest {
     @Test
     fun `updates installed packages when update packages is called manually`() {
         givenPackageManagerReturnsPackages1()
+        givenIdentifiersDaoReturnsClassifiedIdentifiers1()
         tested {
             val tester = installedPackages.test()
+            ioScheduler.triggerActions()
             tester.assertValueCount(1)
 
             updateInstalledPackages()
+            ioScheduler.triggerActions()
 
             tester.assertValueCount(2)
         }
@@ -142,14 +159,34 @@ class PackagesManagerTest {
     @Test
     fun `updates classified packages when update packages is called manually`() {
         givenPackageManagerReturnsPackages1()
-        givenPackageClassifierReturnsPackages1()
+        givenIdentifiersDaoReturnsClassifiedIdentifiers1()
         tested {
             val tester = classifiedPackages.test()
+            ioScheduler.triggerActions()
             tester.assertValueCount(1)
 
             updateInstalledPackages()
+            ioScheduler.triggerActions()
 
             tester.assertValueCount(2)
+        }
+    }
+
+    @Test
+    fun `publish updating packages true event when starting updating packages`() {
+        givenIdentifiersDaoReturnsClassifiedIdentifiers1()
+        givenPackageManagerReturnsPackages1()
+        tested {
+            ioScheduler.triggerActions()
+            val tester = updatingPackages.test()
+            tester.assertValues(false)
+
+            updateInstalledPackages()
+
+            tester.assertValues(false, true)
+
+            ioScheduler.triggerActions()
+            tester.assertValues(false, true, false)
         }
     }
 
@@ -157,8 +194,8 @@ class PackagesManagerTest {
         whenever(packageManager.queryIntentActivities(queryActivityIntent, 0)).thenReturn(RESOLVE_INFO_1)
     }
 
-    private fun givenPackageClassifierReturnsPackages1() {
-        whenever(packageClassifier.classify(any())).thenReturn(Single.just(CLASSIFIED_PACKAGES_1))
+    private fun givenIdentifiersDaoReturnsClassifiedIdentifiers1() {
+        whenever(classifiedIdentifierDao.getAll()).thenReturn(Flowable.just(CLASSIFIED_IDENTIFIERS_1))
     }
 
     private fun broadcastIntentPackageAdded() = intentsSubject.onNext(mockIntent("android.intent.action.PACKAGE_ADDED"))
@@ -176,11 +213,6 @@ class PackagesManagerTest {
             packageName = "packageName $index",
             activityName = "activityName $index",
             drawable = DRAWABLE
-        )
-
-        fun createClassifiedPackage(index: Int = 1) = ClassifiedPackage(
-            createPackage(index),
-            index.toDouble()
         )
 
         fun createActivityInfo(index: Int = 1): ActivityInfo {
@@ -217,6 +249,24 @@ class PackagesManagerTest {
         val RESOLVE_INFO_1 = Array(3, ::createResolveInfo).toList()
         val PACKAGES_1 = arrayOf(LAUNCHES_PACKAGE)
             .plus(Array(RESOLVE_INFO_1.size, ::createPackage).toList())
-        val CLASSIFIED_PACKAGES_1 = Array(2) { createClassifiedPackage(it + 100) }.toList()
+        val CLASSIFIED_IDENTIFIERS_1 = PACKAGES_1
+            .mapIndexed { index, pkg ->
+                ClassifiedIdentifier(
+                    id = index.toLong(),
+                    identifier = pkg.identifier,
+                    score = index.toDouble()
+                )
+            }
+        val CLASSIFIED_PACKAGES_1 = PACKAGES_1
+            .map { pkg ->
+                val score = CLASSIFIED_IDENTIFIERS_1
+                    .firstOrNull { it.identifier == pkg.identifier }
+                    ?.score
+                    ?: 0.0
+                ClassifiedPackage(
+                    pkg = pkg,
+                    score = score
+                )
+            }
     }
 }

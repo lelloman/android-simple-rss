@@ -2,6 +2,9 @@ package com.lelloman.read.unit
 
 import com.google.common.truth.Truth
 import com.lelloman.common.utils.TimeProvider
+import com.lelloman.common.utils.model.DayTime
+import com.lelloman.common.utils.model.Time
+import com.lelloman.common.utils.model.WeekTime
 import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.exception.InvalidFeedTagException
 import com.lelloman.read.feed.exception.MalformedXmlException
@@ -14,7 +17,9 @@ class FeedParserTest {
 
     private val time = 0L
     private val timeProvider = object : TimeProvider {
+        override fun now() = getTime(0)
         override fun nowUtcMs() = time
+        override fun getTime(utcMs: Long) = Time(WeekTime(0, 0), DayTime(0, 0))
     }
 
     private val tested = FeedParser(timeProvider)
