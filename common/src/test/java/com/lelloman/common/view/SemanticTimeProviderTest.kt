@@ -26,7 +26,7 @@ class SemanticTimeProviderTest {
 
     private val myTimestamp = 527505620_000L
 
-    val tested = SemanticTimeProvider(
+    val tested = SemanticTimeProviderImpl(
         timeProvider = timeProvider,
         resourceProvider = MockResourceProvider().apply {
             registerStringArray(R.array.time_quantities, TIME_QUANTITIES)
@@ -36,7 +36,7 @@ class SemanticTimeProviderTest {
 
     @Test
     fun `returns formatted time utc`() {
-        val tested = SemanticTimeProvider(
+        val tested = SemanticTimeProviderImpl(
             timeProvider = timeProvider,
             resourceProvider = MockResourceProvider(),
             givenTimeZone = TimeZone.getTimeZone("UTC")
@@ -49,7 +49,7 @@ class SemanticTimeProviderTest {
 
     @Test
     fun `returns formatted time europe rome`() {
-        val tested = SemanticTimeProvider(
+        val tested = SemanticTimeProviderImpl(
             timeProvider = timeProvider,
             resourceProvider = MockResourceProvider(),
             givenTimeZone = TimeZone.getTimeZone("Europe/Rome")

@@ -3,6 +3,7 @@ package com.lelloman.common.di
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
+import com.lelloman.common.LLContext
 import com.lelloman.common.di.qualifiers.ApplicationPackageName
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.NewThreadScheduler
@@ -25,6 +26,7 @@ import com.lelloman.common.view.PicassoWrapImpl
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.ResourceProviderImpl
 import com.lelloman.common.view.SemanticTimeProvider
+import com.lelloman.common.view.SemanticTimeProviderImpl
 import com.lelloman.common.viewmodel.BaseViewModel
 import dagger.Module
 import dagger.Provides
@@ -107,7 +109,7 @@ open class BaseApplicationModule(private val application: Application) {
     fun provideSemanticTimeProvider(
         timeProvider: TimeProvider,
         resourceProvider: ResourceProvider
-    ) = SemanticTimeProvider(
+    ): SemanticTimeProvider = SemanticTimeProviderImpl(
         timeProvider = timeProvider,
         resourceProvider = resourceProvider
     )
@@ -133,5 +135,31 @@ open class BaseApplicationModule(private val application: Application) {
 
     @Provides
     @Singleton
-    fun provideContentUriOpener(context: Context) = ContentUriOpener(context)
+    fun provideContentUriOpener(llContext: LLContext): ContentUriOpener = llContext
+
+    @Provides
+    @Singleton
+    fun provideLlContext(
+        context: Context,
+        timeProvider: TimeProvider,
+        @UiScheduler uiScheduler: Scheduler,
+        @IoScheduler ioScheduler: Scheduler,
+        @NewThreadScheduler newThreadScheduler: Scheduler,
+        loggerFactory: LoggerFactory,
+        meteredConnectionChecker: MeteredConnectionChecker,
+        urlValidator: UrlValidator,
+        picassoWrap: PicassoWrap,
+        semanticTimeProvider: SemanticTimeProvider
+    ) = LLContext(
+        context = context,
+        timeProvider = timeProvider,
+        ioScheduler = ioScheduler,
+        uiScheduler = uiScheduler,
+        newThreadScheduler = newThreadScheduler,
+        loggerFactory = loggerFactory,
+        meteredConnectionChecker = meteredConnectionChecker,
+        urlValidator = urlValidator,
+        picassoWrap = picassoWrap,
+        semanticTimeProvider = semanticTimeProvider
+    )
 }
