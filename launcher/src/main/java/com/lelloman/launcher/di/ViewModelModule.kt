@@ -8,7 +8,7 @@ import com.lelloman.common.view.ContentUriOpener
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.packages.PackageLaunchesExporter
 import com.lelloman.launcher.packages.PackagesManager
-import com.lelloman.launcher.persistence.PackageLaunchDao
+import com.lelloman.launcher.persistence.db.PackageLaunchDao
 import com.lelloman.launcher.ui.launches.viewmodel.LaunchesViewModel
 import com.lelloman.launcher.ui.launches.viewmodel.LaunchesViewModelImpl
 import com.lelloman.launcher.ui.main.viewmodel.MainViewModel

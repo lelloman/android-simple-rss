@@ -1,10 +1,10 @@
-package com.lelloman.launcher.persistence
+package com.lelloman.launcher.persistence.db
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import com.lelloman.launcher.persistence.AppDatabase.Companion.PACKAGE_LAUNCH_TABLE_NAME
-import com.lelloman.launcher.persistence.model.PackageLaunch
+import com.lelloman.launcher.persistence.db.AppDatabase.Companion.PACKAGE_LAUNCH_TABLE_NAME
+import com.lelloman.launcher.persistence.db.model.PackageLaunch
 import io.reactivex.Flowable
 
 @Dao

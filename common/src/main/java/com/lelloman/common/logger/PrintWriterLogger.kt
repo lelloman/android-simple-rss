@@ -21,8 +21,9 @@ class PrintWriterLogger(
 
     private fun writeMessage(msg: String, logType: String, throwable: Throwable? = null) {
         throwable?.printStackTrace(writer)
-        val message = "${SDF.format(timeProvider.nowUtcMs())} - $tag[$logType]: $msg"
+        val message = "${SDF.format(timeProvider.nowUtcMs())} [$logType] $tag: $msg\n"
         writer.write(message)
+        writer.flush()
     }
 
     private companion object {

@@ -11,7 +11,7 @@ import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.R
 import com.lelloman.launcher.packages.PackageLaunchesExporter
 import com.lelloman.launcher.packages.PackagesManager
-import com.lelloman.launcher.persistence.PackageLaunchDao
+import com.lelloman.launcher.persistence.db.PackageLaunchDao
 import com.lelloman.launcher.ui.launches.PackageLaunchListItem
 import io.reactivex.Completable
 import io.reactivex.Scheduler

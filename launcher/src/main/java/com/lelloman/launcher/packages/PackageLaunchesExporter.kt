@@ -1,7 +1,7 @@
 package com.lelloman.launcher.packages
 
 import android.content.Context
-import com.lelloman.launcher.persistence.model.PackageLaunch
+import com.lelloman.launcher.persistence.db.model.PackageLaunch
 import io.reactivex.Single
 import java.io.BufferedReader
 import java.io.File

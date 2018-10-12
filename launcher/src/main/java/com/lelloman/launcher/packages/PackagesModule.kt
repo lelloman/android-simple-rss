@@ -9,7 +9,7 @@ import com.lelloman.launcher.R
 import com.lelloman.launcher.di.qualifier.LaunchesActivityPackage
 import com.lelloman.launcher.di.qualifier.MainActivityPackage
 import com.lelloman.launcher.logger.LauncherLoggerFactory
-import com.lelloman.launcher.persistence.ClassifiedIdentifierDao
+import com.lelloman.launcher.persistence.db.ClassifiedIdentifierDao
 import com.lelloman.launcher.ui.launches.view.LaunchesActivity
 import com.lelloman.launcher.ui.main.view.MainActivity
 import dagger.Module

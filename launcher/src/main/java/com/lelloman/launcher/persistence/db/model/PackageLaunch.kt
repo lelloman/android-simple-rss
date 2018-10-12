@@ -1,9 +1,9 @@
-package com.lelloman.launcher.persistence.model
+package com.lelloman.launcher.persistence.db.model
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.lelloman.common.utils.model.ModelWithId
-import com.lelloman.launcher.persistence.AppDatabase.Companion.PACKAGE_LAUNCH_TABLE_NAME
+import com.lelloman.launcher.persistence.db.AppDatabase.Companion.PACKAGE_LAUNCH_TABLE_NAME
 
 @Entity(tableName = PACKAGE_LAUNCH_TABLE_NAME)
 data class PackageLaunch(
