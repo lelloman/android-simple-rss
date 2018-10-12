@@ -51,7 +51,6 @@ class FeedFinderIntegrationTest {
     private val htmlParser = HtmlParser()
 
     private val loggerFactory = object : LoggerFactory {
-        override fun getLogger(tag: String) = mock(Logger::class.java)
         override fun getLogger(clazz: Class<*>) = mock(Logger::class.java)
     }
 

@@ -33,7 +33,6 @@ class SourceViewModelImplTest : AndroidArchTest() {
         tested = SourceViewModelImpl(
             ioScheduler = trampoline(),
             uiScheduler = trampoline(),
-            semanticTimeProvider = semanticTimeProvider,
             sourcesRepository = sourcesRepository,
             dependencies = BaseViewModel.Dependencies(
                 resourceProvider = resourceProvider,

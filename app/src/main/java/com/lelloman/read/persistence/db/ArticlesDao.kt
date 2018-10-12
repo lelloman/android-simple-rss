@@ -10,6 +10,7 @@ import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.SourceArticle
 import io.reactivex.Flowable
 
+@Suppress("AndroidUnresolvedRoomSqlReference")
 @Dao
 interface ArticlesDao {
 

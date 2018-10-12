@@ -7,6 +7,7 @@ import com.lelloman.launcher.persistence.db.AppDatabase.Companion.PACKAGE_LAUNCH
 import com.lelloman.launcher.persistence.db.model.PackageLaunch
 import io.reactivex.Flowable
 
+@Suppress("AndroidUnresolvedRoomSqlReference")
 @Dao
 interface PackageLaunchDao {
 

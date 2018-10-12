@@ -24,7 +24,7 @@ class DiscoverRepository @Inject constructor(
     loggerFactory: LoggerFactory
 ) {
 
-    private val logger = loggerFactory.getLogger(javaClass.simpleName)
+    private val logger = loggerFactory.getLogger(javaClass)
 
     private val isFindingFeedsSubject = BehaviorSubject
         .create<Boolean>()

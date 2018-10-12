@@ -16,7 +16,7 @@ class FeedFinderParser(
     loggerFactory: LoggerFactory
 ) {
 
-    private val logger = loggerFactory.getLogger(javaClass.simpleName)
+    private val logger = loggerFactory.getLogger(javaClass)
 
     fun parseDoc(url: String, html: String): Maybe<Doc> = urlValidator
         .findBaseUrlWithProtocol(url)

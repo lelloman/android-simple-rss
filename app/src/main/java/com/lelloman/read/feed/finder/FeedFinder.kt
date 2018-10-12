@@ -16,7 +16,7 @@ class FeedFinder(
     loggerFactory: LoggerFactory
 ) {
 
-    private val logger = loggerFactory.getLogger(javaClass.simpleName)
+    private val logger = loggerFactory.getLogger(javaClass)
 
     private val loadingSubject: Subject<Boolean> = BehaviorSubject.create()
 

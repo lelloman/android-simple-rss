@@ -8,6 +8,7 @@
             type="com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel" />
     </data>
 
+    <!--suppress AndroidElementNotAllowed -->
     <merge xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         tools:parentTag="FrameLayout"

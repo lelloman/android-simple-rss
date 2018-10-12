@@ -1,5 +1,6 @@
 package com.lelloman.read.navigation
 
+import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.navigation.NavigationScreen
 import com.lelloman.read.ui.articles.view.ArticleActivity
@@ -12,7 +13,6 @@ import com.lelloman.read.ui.sources.view.AddSourceActivity
 import com.lelloman.read.ui.sources.view.SourcesListActivity
 import com.lelloman.read.ui.walkthrough.view.WalkthroughActivity
 import kotlin.reflect.KClass
-import com.lelloman.common.navigation.DeepLink
 
 /**
  * Cannot change the names, [DeepLink] uses the names and if the values are changed in this enum
@@ -44,12 +44,5 @@ enum class ReadNavigationScreen(
         private val namesMap = ReadNavigationScreen
             .values()
             .associateBy(NavigationScreen::name)
-
-        fun fromName(name: String): NavigationScreen? =
-            if (namesMap.containsKey(name)) {
-                namesMap[name]!!
-            } else {
-                null
-            }
     }
 }
