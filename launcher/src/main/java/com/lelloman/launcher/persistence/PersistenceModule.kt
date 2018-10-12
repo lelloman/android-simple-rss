@@ -2,6 +2,7 @@ package com.lelloman.launcher.persistence
 
 import android.arch.persistence.room.Room
 import android.content.Context
+import com.lelloman.launcher.persistence.db.AppDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -22,4 +23,10 @@ open class PersistenceModule {
     @Singleton
     @Provides
     open fun provideClassifiedIdentifierDao(appDatabase: AppDatabase) = appDatabase.classifiedIdentifierDao()
+
+    @Singleton
+    @Provides
+    open fun providePersistentClassificationInfo(
+        context: Context
+    ) = PersistentClassificationInfo(context)
 }

@@ -1,9 +1,9 @@
-package com.lelloman.launcher.persistence
+package com.lelloman.launcher.persistence.db
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import com.lelloman.launcher.persistence.model.ClassifiedIdentifier
+import com.lelloman.launcher.persistence.db.model.ClassifiedIdentifier
 import io.reactivex.Flowable
 
 @Dao

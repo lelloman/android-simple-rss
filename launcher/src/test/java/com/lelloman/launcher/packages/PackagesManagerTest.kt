@@ -9,8 +9,8 @@ import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.logger.LauncherLoggerFactory
-import com.lelloman.launcher.persistence.ClassifiedIdentifierDao
-import com.lelloman.launcher.persistence.model.ClassifiedIdentifier
+import com.lelloman.launcher.persistence.db.ClassifiedIdentifierDao
+import com.lelloman.launcher.persistence.db.model.ClassifiedIdentifier
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

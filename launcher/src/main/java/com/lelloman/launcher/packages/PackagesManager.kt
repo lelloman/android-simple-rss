@@ -12,9 +12,9 @@ import com.lelloman.common.view.ResourceProvider
 import com.lelloman.launcher.R
 import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.logger.LauncherLoggerFactory
-import com.lelloman.launcher.persistence.ClassifiedIdentifierDao
-import com.lelloman.launcher.persistence.model.ClassifiedIdentifier
-import com.lelloman.launcher.persistence.model.PackageLaunch
+import com.lelloman.launcher.persistence.db.ClassifiedIdentifierDao
+import com.lelloman.launcher.persistence.db.model.ClassifiedIdentifier
+import com.lelloman.launcher.persistence.db.model.PackageLaunch
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single

@@ -76,7 +76,7 @@ class AppsDrawerAdapter(
                 false
             )
             val hint = binding.exitTextSearch.hint
-            binding.exitTextSearch.setOnFocusChangeListener { v, hasFocus ->
+            binding.exitTextSearch.setOnFocusChangeListener { _, hasFocus ->
                 binding.exitTextSearch.hint = if (hasFocus) "" else hint
             }
             return binding

@@ -1,10 +1,10 @@
-package com.lelloman.launcher.persistence
+package com.lelloman.launcher.persistence.db
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
-import com.lelloman.launcher.persistence.AppDatabase.Companion.VERSION
-import com.lelloman.launcher.persistence.model.ClassifiedIdentifier
-import com.lelloman.launcher.persistence.model.PackageLaunch
+import com.lelloman.launcher.persistence.db.AppDatabase.Companion.VERSION
+import com.lelloman.launcher.persistence.db.model.ClassifiedIdentifier
+import com.lelloman.launcher.persistence.db.model.PackageLaunch
 
 @Database(
     entities = [

@@ -3,9 +3,10 @@ package com.lelloman.launcher
 import android.app.Activity
 import com.lelloman.common.BaseApplication
 import com.lelloman.common.utils.TimeProvider
-import com.lelloman.launcher.classification.PackageClassifier
+import com.lelloman.launcher.classification.ClassificationTrigger
 import com.lelloman.launcher.di.DaggerAppComponent
 import com.lelloman.launcher.di.LauncherBaseApplicationModule
+import com.lelloman.launcher.logger.LauncherLoggerFactory
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import io.reactivex.Observable
@@ -19,19 +20,15 @@ open class LauncherApplication : BaseApplication(), HasActivityInjector {
     lateinit var dispatchingActivityAndroidInjector: DispatchingAndroidInjector<Activity>
 
     @Inject
-    lateinit var packageClassifier: PackageClassifier
-
-    @Inject
     lateinit var timeProvider: TimeProvider
 
-    private val sharedPrefs by lazy { getSharedPreferences(SHARED_PREFS_NAME, MODE_PRIVATE) }
+    @Inject
+    lateinit var loggerFactory: LauncherLoggerFactory
 
-    private var lastClassificationTimeMs: Long
-        get() = sharedPrefs.getLong(KEY_LAST_CLASSIFICATION_TIME_MS, 0L)
-        set(value) = sharedPrefs
-            .edit()
-            .putLong(KEY_LAST_CLASSIFICATION_TIME_MS, value)
-            .apply()
+    @Inject
+    lateinit var classificationTrigger: ClassificationTrigger
+
+    private val logger by lazy { loggerFactory.getLogger(javaClass) }
 
     override fun activityInjector() = dispatchingActivityAndroidInjector
 
@@ -43,26 +40,18 @@ open class LauncherApplication : BaseApplication(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
-        @Suppress("UNUSED_VARIABLE")
-        val unused = Observable
-            .interval(30, TimeUnit.MINUTES)
+        startIntervalTimers()
+        logger.d("onCreate()")
+        classificationTrigger.start()
+    }
+
+    @Suppress("UNUSED_VARIABLE")
+    private fun startIntervalTimers() {
+        val anotherUnused = Observable
+            .interval(5, TimeUnit.MINUTES)
             .observeOn(Schedulers.io())
             .subscribe {
-                maybeTriggerPackageClassification()
+                logger.d("ping")
             }
-        maybeTriggerPackageClassification()
-    }
-
-    private fun maybeTriggerPackageClassification() {
-        val timeSinceLastClassification = timeProvider.nowUtcMs() - lastClassificationTimeMs
-        if (timeSinceLastClassification > 1000L * 60 * 45) {
-            packageClassifier.classifyWithNeuralNet()
-            lastClassificationTimeMs = timeProvider.nowUtcMs()
-        }
-    }
-
-    private companion object {
-        const val SHARED_PREFS_NAME = "LLLauncherPrefs"
-        const val KEY_LAST_CLASSIFICATION_TIME_MS = "LastClassificationTimeMs"
     }
 }

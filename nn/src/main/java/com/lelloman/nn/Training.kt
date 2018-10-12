@@ -24,7 +24,7 @@ class Training(private val network: Network,
         }
     }
 
-    private val loss = loss.factory.invoke()
+    val loss = loss.factory.invoke()
 
     init {
         if (trainingSet.sameDimensionAs(validationSet).not()) {
