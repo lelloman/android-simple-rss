@@ -7,7 +7,7 @@ import com.lelloman.common.logger.LoggerFactory
 class FaviconBitmapProvider(
     loggerFactory: LoggerFactory
 ) {
-    private val logger = loggerFactory.getLogger(FaviconBitmapProvider::class.java.simpleName)
+    private val logger = loggerFactory.getLogger(FaviconBitmapProvider::class.java)
     private val cache = mutableMapOf<Long, Bitmap?>()
 
     fun getFaviconBitmap(byteArray: ByteArray, id: Long): Bitmap? {

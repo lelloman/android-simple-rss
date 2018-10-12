@@ -11,9 +11,6 @@ class LauncherBaseApplicationModule(application: Application) :
 
     override fun provideLoggerFactory() = object : LoggerFactory {
         private val actual = LoggerFactoryImpl()
-        override fun getLogger(tag: String): Logger {
-            TODO("deprecated")
-        }
 
         override fun getLogger(clazz: Class<*>): Logger {
             if (clazz.name.startsWith("com.lelloman.launcher")) {

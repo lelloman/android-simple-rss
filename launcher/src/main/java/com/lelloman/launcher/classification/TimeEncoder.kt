@@ -53,8 +53,7 @@ class TimeEncoder {
         var a = dayTimePercent * 2
         val growing = a > 1.0
         if (growing) a = 2.0 - a
-        val b = dayTimePercent
-        return doubleArrayOf(a, b)
+        return doubleArrayOf(a, dayTimePercent)
     }
 
     @VisibleForTesting

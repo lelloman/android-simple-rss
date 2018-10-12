@@ -102,13 +102,11 @@ open class ViewModelModule {
     open fun provideSourceViewModel(
         @IoScheduler ioScheduler: Scheduler,
         @UiScheduler uiScheduler: Scheduler,
-        semanticTimeProvider: SemanticTimeProvider,
         dependencies: BaseViewModel.Dependencies,
         sourcesRepository: SourcesRepository
     ): SourceViewModel = SourceViewModelImpl(
         ioScheduler = ioScheduler,
         uiScheduler = uiScheduler,
-        semanticTimeProvider = semanticTimeProvider,
         dependencies = dependencies,
         sourcesRepository = sourcesRepository
     )

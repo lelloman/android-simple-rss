@@ -34,7 +34,7 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        logger = loggerFactory.getLogger(ArticleActivity::class.java.simpleName)
+        logger = loggerFactory.getLogger(ArticleActivity::class.java)
 
         val url = intent.getStringExtra(ARG_URL)
         if (url == null) {

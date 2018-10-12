@@ -99,8 +99,10 @@ class PackageClassifier(
         launches: List<PackageLaunch>,
         packages: List<Package>
     ) = launches
+        .asSequence()
         .map { it.identifier() }
         .plus(packages.map { it.identifier })
+        .toList()
         .let(identifierEncoderProvider::provideEncoder)
 
     internal fun shouldRetrainClassifier() =

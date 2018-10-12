@@ -55,7 +55,7 @@ open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcas
         super.onCreate()
         instance = this
         inject()
-        logger = loggerFactory.getLogger(javaClass.simpleName)
+        logger = loggerFactory.getLogger(javaClass)
 
         if (BuildConfig.DEBUG) {
             picassoWrap.enableImageSourceIndicator()

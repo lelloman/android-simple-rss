@@ -34,7 +34,7 @@ class AddSourceViewModelImpl(
 
     private var saving = false
 
-    private val logger = loggerFactory.getLogger(javaClass.simpleName)
+    private val logger = loggerFactory.getLogger(javaClass)
 
     override val testingUrl: MutableLiveData<Boolean> by LazyLiveData {
         testingUrl.postValue(false)

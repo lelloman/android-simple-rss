@@ -24,10 +24,6 @@ class LauncherLoggerFactory(
         ClassificationTrigger::class.java
     )
 
-    override fun getLogger(tag: String): Logger {
-        TODO("so you want to use the deprecated method uh?")
-    }
-
     override fun getLogger(clazz: Class<*>): Logger = if (fileLoggingClasses.contains(clazz)) {
         CompoundLogger(
             AndroidLogger(clazz.simpleName),

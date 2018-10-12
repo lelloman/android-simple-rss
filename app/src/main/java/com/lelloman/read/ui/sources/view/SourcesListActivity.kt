@@ -23,7 +23,7 @@ class SourcesListActivity
 
     private lateinit var adapter: SourcesAdapter
 
-    private val logger by lazy { loggerFactory.getLogger(SourcesListActivity::class.java.simpleName) }
+    private val logger by lazy { loggerFactory.getLogger(SourcesListActivity::class.java) }
 
     private var timerSubscription: Disposable? = null
 

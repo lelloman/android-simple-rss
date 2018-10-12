@@ -25,7 +25,7 @@ class FeedFetcher(
     loggerFactory: LoggerFactory
 ) {
 
-    private val logger = loggerFactory.getLogger(javaClass.simpleName)
+    private val logger = loggerFactory.getLogger(javaClass)
 
     fun fetchFeed(source: Source): Maybe<Pair<Source, List<Article>>> = appSettings
         .useMeteredNetwork

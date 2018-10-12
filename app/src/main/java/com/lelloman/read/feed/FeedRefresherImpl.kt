@@ -36,7 +36,7 @@ class FeedRefresherImpl(
         .hide()
         .distinctUntilChanged()
 
-    private val logger = loggerFactory.getLogger(javaClass.simpleName)
+    private val logger = loggerFactory.getLogger(javaClass)
 
     init {
         isLoadingSubject.onNext(false)

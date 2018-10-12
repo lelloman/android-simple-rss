@@ -12,7 +12,7 @@ class HttpClientImpl(
     private val timeProvider: TimeProvider
 ) : HttpClient {
 
-    private val logger = loggerFactory.getLogger(javaClass.simpleName)
+    private val logger = loggerFactory.getLogger(javaClass)
 
     override fun request(request: HttpRequest): Single<HttpResponse> = Single.fromCallable {
         try {
