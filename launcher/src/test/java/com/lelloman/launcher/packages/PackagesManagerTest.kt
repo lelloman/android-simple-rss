@@ -38,13 +38,14 @@ class PackagesManagerTest {
     private fun tested(block: PackagesManager.() -> Unit) {
         val tested = PackagesManager(
             ioScheduler = ioScheduler,
+            newThreadScheduler = ioScheduler,
             packageManager = packageManager,
             loggerFactory = loggerFactory,
             broadcastReceiverWrap = broadcastReceiverWrap,
             queryActivityIntent = queryActivityIntent,
             launchesPackage = LAUNCHES_PACKAGE,
             mainPackage = MAIN_PACKAGE,
-            classifiedPackageIdentifierDao = classifiedIdentifierDao,
+            classifiedIdentifierDao = classifiedIdentifierDao,
             resourceProvider = MockResourceProvider()
         )
         block.invoke(tested)
@@ -253,14 +254,14 @@ class PackagesManagerTest {
             .mapIndexed { index, pkg ->
                 ClassifiedIdentifier(
                     id = index.toLong(),
-                    identifier = pkg.identifier,
+                    identifier = pkg.identifier(),
                     score = index.toDouble()
                 )
             }
         val CLASSIFIED_PACKAGES_1 = PACKAGES_1
             .map { pkg ->
                 val score = CLASSIFIED_IDENTIFIERS_1
-                    .firstOrNull { it.identifier == pkg.identifier }
+                    .firstOrNull { it.identifier == pkg.identifier() }
                     ?.score
                     ?: 0.0
                 ClassifiedPackage(

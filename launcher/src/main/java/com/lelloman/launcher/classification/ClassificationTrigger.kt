@@ -1,6 +1,8 @@
 package com.lelloman.launcher.classification
 
 import com.lelloman.common.LLContext
+import com.lelloman.launcher.logger.ShouldLogToFile
+import com.lelloman.launcher.persistence.ClassifierPersistence
 import io.reactivex.Observable
 import java.util.concurrent.TimeUnit
 
@@ -9,7 +11,7 @@ class ClassificationTrigger(
     private val packageClassifier: PackageClassifier,
     private val llContext: LLContext,
     private val classifierPersistence: ClassifierPersistence
-) {
+) : ShouldLogToFile {
 
     fun start() {
         @Suppress("UNUSED_VARIABLE")

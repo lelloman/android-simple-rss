@@ -20,14 +20,14 @@ data class SourceArticle(
 
     constructor(source: Parcel) : this(
         source.readLong(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
+        source.readString()!!,
+        source.readString()!!,
+        source.readString()!!,
+        source.readString()!!,
         source.readString(),
         source.readLong(),
         source.readLong(),
-        source.readString(),
+        source.readString()!!,
         source.createByteArray()
     )
 

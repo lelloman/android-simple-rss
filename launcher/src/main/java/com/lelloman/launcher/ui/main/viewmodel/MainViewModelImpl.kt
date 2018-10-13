@@ -1,10 +1,12 @@
 package com.lelloman.launcher.ui.main.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.navigation.PackageIntentNavigationEvent
+import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.launcher.logger.LauncherLoggerFactory
+import com.lelloman.launcher.logger.ShouldLogToFile
 import com.lelloman.launcher.packages.Package
 import com.lelloman.launcher.packages.PackagesManager
 import com.lelloman.launcher.persistence.db.PackageLaunchDao
@@ -17,18 +19,21 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.BehaviorSubject
 
 class MainViewModelImpl(
-    @IoScheduler private val ioScheduler: Scheduler,
+    private val ioScheduler: Scheduler,
+    private val timeProvider: TimeProvider,
+    private val launcherLoggerFactoryFactory: LauncherLoggerFactory,
     private val packagesManager: PackagesManager,
     dependencies: BaseViewModel.Dependencies,
-    private val packageLaunchDao: PackageLaunchDao,
-    private val timeProvider: TimeProvider
-) : MainViewModel(dependencies) {
+    private val packageLaunchDao: PackageLaunchDao
+) : MainViewModel(dependencies), ShouldLogToFile {
+
+    private val logger = launcherLoggerFactoryFactory.getLogger(javaClass)
 
     private val searchQuerySubject = BehaviorSubject.create<String>().apply {
         onNext("")
     }
 
-    override val drawerApps = MutableLiveData<List<AppsDrawerListItem>>().apply {
+    override val drawerApps: MutableLiveData<List<AppsDrawerListItem>> by LazyLiveData {
         subscription {
             Observable
                 .combineLatest(
@@ -38,16 +43,21 @@ class MainViewModelImpl(
                             val out = mutableListOf<AppsDrawerListItem>()
                             out.add(SearchDrawerListItem)
                             out.addAll(it.map(::PackageDrawerListItem))
+                            logger.d("spitting out ${it.size} classifiedPackages")
                             out
                         },
-                    searchQuerySubject.hide(),
+                    searchQuerySubject
+                        .hide(),
                     BiFunction<List<AppsDrawerListItem>, String, List<AppsDrawerListItem>> { items, query ->
+                        logger.d("bifunctioning ${items.size} packages and query \"$query\"")
                         items.filter { !it.isFilteredOutBy(query) }
                     }
                 )
+                .doOnSubscribe { logger.d("drawerApps subscribed") }
                 .subscribeOn(ioScheduler)
                 .subscribe {
-                    postValue(it)
+                    logger.d("posting ${it.size} AppsDrawerListItem")
+                    drawerApps.postValue(it)
                 }
         }
     }

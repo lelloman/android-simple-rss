@@ -5,7 +5,9 @@ import com.lelloman.common.utils.model.DayTime
 import com.lelloman.common.utils.model.Time
 import com.lelloman.common.utils.model.WeekTime
 import com.lelloman.launcher.logger.LauncherLoggerFactory
+import com.lelloman.launcher.packages.Package
 import com.lelloman.launcher.packages.PackagesManager
+import com.lelloman.launcher.persistence.ClassifierPersistence
 import com.lelloman.launcher.persistence.PersistentClassificationInfo
 import com.lelloman.launcher.persistence.db.ClassifiedIdentifierDao
 import com.lelloman.launcher.persistence.db.PackageLaunchDao
@@ -37,9 +39,6 @@ class PackageClassifierTest {
     private val identifierEncoder: IdentifierEncoder = mock {
         on { encode(any()) }.thenReturn(doubleArrayOf(0.0))
     }
-    private val identifierEncoderProvider: IdentifierEncoderProvider = mock {
-        on { provideEncoder(any()) }.thenReturn(identifierEncoder)
-    }
     private val persistentClassificationInfo: PersistentClassificationInfo = mock()
     private val loggerFactory: LauncherLoggerFactory = mock { on { getLogger(PackageClassifier::class.java) }.thenReturn(mock()) }
     private val classifierPersistence: ClassifierPersistence = mock()
@@ -59,7 +58,6 @@ class PackageClassifierTest {
         timeEncoder = timeEncoder,
         persistentClassificationInfo = persistentClassificationInfo,
         classifiedIdentifierDao = classifiedIdentifierDao,
-        identifierEncoderProvider = identifierEncoderProvider,
         loggerFactory = loggerFactory,
         classifierPersistence = classifierPersistence,
         nnFactory = nnFactoryFactory
@@ -161,10 +159,43 @@ class PackageClassifierTest {
         verify(nnFactoryFactory).makeTraining(eq(classifier), any(), any())
     }
 
+    @Test
+    fun `creates and train classifier if should not train but there is not stored classifier`() {
+        val training: Training = mock {
+            on { loss }.thenReturn(mock())
+        }
+        whenever(nnFactoryFactory.makeTraining(any(), any(), any())).thenReturn(training)
+        givenShouldNotTrain()
+        givenClassifierPersistenceDoesNotReturnNetwork()
+
+        val classifier = tested.getClassifier(LAUNCHES, identifierEncoder)
+
+        verify(training).perform()
+        verify(nnFactoryFactory).makeTraining(eq(classifier), any(), any())
+    }
+
+    @Test
+    fun `makes encoder`() {
+        givenRealNnFactory()
+        val identifier1 = "asdasd"
+        val identifier2 = "meeeeow"
+        val identifier3 = "po po po po"
+        val launches = listOf(mockLaunch(identifier1), mockLaunch(identifier2))
+        val packages = listOf(mockPackage(identifier3), mockPackage(identifier1))
+
+        val encoder = tested.makeEncoder(launches, packages)
+
+        assertThat(encoder.encodedSize).isEqualTo(3)
+    }
+
     private val Int.hours get() = 1000L * 60 * 60 * this
 
     private fun givenClassifierPersistenceReturnsNetwork() = mock<Network>().apply {
         whenever(classifierPersistence.loadClassifier()).thenReturn(this)
+    }
+
+    private fun givenClassifierPersistenceDoesNotReturnNetwork() {
+        whenever(classifierPersistence.loadClassifier()).thenReturn(null)
     }
 
     private fun givenShouldTrain() {
@@ -197,12 +228,21 @@ class PackageClassifierTest {
                 it.arguments[2] as DataSet
             )
         }
+
+        whenever(nnFactoryFactory.makeIdentifierEncoder(any())).thenAnswer {
+            @Suppress("UNCHECKED_CAST")
+            NnFactory(llContext).makeIdentifierEncoder(it.arguments[0] as List<String>)
+        }
     }
 
     private companion object {
 
-        private fun mockLaunch(): PackageLaunch = mock {
-            on { identifier() }.thenReturn("")
+        private fun mockLaunch(identifier: String = ""): PackageLaunch = mock {
+            on { identifier() }.thenReturn(identifier)
+        }
+
+        private fun mockPackage(identifier: String = ""): Package = mock {
+            on { identifier() }.thenReturn(identifier)
         }
 
         val LAUNCHES = listOf(mockLaunch(), mockLaunch())

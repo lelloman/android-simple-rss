@@ -69,6 +69,10 @@ class NnFactory(
         )
     }
 
+    fun makeIdentifierEncoder(identifiers: List<String>): IdentifierEncoder {
+        return IdentifierEncoder(identifiers)
+    }
+
     companion object {
         val LOSS = Loss.MSE
     }

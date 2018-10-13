@@ -7,7 +7,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class SettingsModule {
+open class SettingsModule {
 
     @Singleton
     @Provides
