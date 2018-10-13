@@ -7,6 +7,7 @@ import com.lelloman.launcher.classification.ClassificationTrigger
 import com.lelloman.launcher.di.DaggerAppComponent
 import com.lelloman.launcher.di.LauncherBaseApplicationModule
 import com.lelloman.launcher.logger.LauncherLoggerFactory
+import com.lelloman.launcher.logger.ShouldLogToFile
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import io.reactivex.Observable
@@ -14,7 +15,7 @@ import io.reactivex.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-open class LauncherApplication : BaseApplication(), HasActivityInjector {
+open class LauncherApplication : BaseApplication(), HasActivityInjector, ShouldLogToFile {
 
     @Inject
     lateinit var dispatchingActivityAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -40,6 +41,10 @@ open class LauncherApplication : BaseApplication(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            logger.e("Uncaught exception in thread $thread", throwable)
+            System.exit(2)
+        }
         startIntervalTimers()
         logger.d("onCreate()")
         classificationTrigger.start()

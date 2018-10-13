@@ -7,7 +7,7 @@ import com.lelloman.launcher.persistence.db.AppDatabase.Companion.CLASSIFIED_IDE
 
 @Entity(tableName = CLASSIFIED_IDENTIFIER_TABLE_NAME)
 data class ClassifiedIdentifier(
-    @PrimaryKey(autoGenerate = true) override val id: Long,
+    @PrimaryKey(autoGenerate = true) override val id: Long = 0L,
     val identifier: String,
     val score: Double
 ) : ModelWithId

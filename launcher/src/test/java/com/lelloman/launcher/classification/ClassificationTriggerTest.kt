@@ -3,6 +3,7 @@ package com.lelloman.launcher.classification
 import com.lelloman.common.LLContext
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.launcher.classification.ClassificationTrigger.Companion.CLASSIFICATION_INTERVAL_MS
+import com.lelloman.launcher.persistence.ClassifierPersistence
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import com.nhaarman.mockito_kotlin.whenever

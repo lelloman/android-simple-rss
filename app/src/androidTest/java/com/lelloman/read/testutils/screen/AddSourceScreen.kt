@@ -41,6 +41,7 @@ class AddSourceScreen : Screen() {
     fun urlFieldShowsOkDrawable() = apply {
         viewWithId(R.id.edit_text_source_url).check { view, noViewFoundException ->
             assertThat(view).isInstanceOf(EditText::class.java)
+            assertThat(noViewFoundException).isNull()
             (view as EditText).apply {
                 view.compoundDrawables.forEachIndexed { index, drawable ->
                     if (index != 2) {

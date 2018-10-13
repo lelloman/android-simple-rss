@@ -7,6 +7,7 @@ import com.lelloman.launcher.di.DaggerAppComponent
 import com.lelloman.launcher.di.LauncherApplicationModule
 import com.lelloman.launcher.di.ViewModelModule
 import com.lelloman.launcher.packages.PackagesModule
+import com.lelloman.launcher.persistence.PersistenceModule
 
 class TestApp : LauncherApplication() {
 
@@ -14,6 +15,7 @@ class TestApp : LauncherApplication() {
     private var baseSettingsModule = BaseSettingsModule()
     private var launcherApplicationModule = LauncherApplicationModule()
     private var packagesModule = PackagesModule()
+    var persistenceModule = PersistenceModule()
     var viewModelModule = ViewModelModule()
 
     override fun onCreate() {
@@ -28,6 +30,7 @@ class TestApp : LauncherApplication() {
         .launcherApplicationModule(launcherApplicationModule)
         .packagesModule(packagesModule)
         .viewModelModule(viewModelModule)
+        .persistenceModule(persistenceModule)
         .build()
         .inject(this)
 

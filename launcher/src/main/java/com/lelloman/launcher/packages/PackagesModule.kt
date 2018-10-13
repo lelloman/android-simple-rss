@@ -3,6 +3,7 @@ package com.lelloman.launcher.packages
 import android.content.Context
 import android.content.pm.PackageManager
 import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.di.qualifiers.NewThreadScheduler
 import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.launcher.R
@@ -57,6 +58,7 @@ class PackagesModule {
     @Singleton
     fun providePackagesManager(
         @IoScheduler ioScheduler: Scheduler,
+        @NewThreadScheduler newThreadScheduler: Scheduler,
         packageManager: PackageManager,
         loggerFactory: LauncherLoggerFactory,
         broadcastReceiverWrap: BroadcastReceiverWrap,
@@ -66,9 +68,10 @@ class PackagesModule {
         classifiedPackageIdentifierDao: ClassifiedIdentifierDao
     ) = PackagesManager(
         loggerFactory = loggerFactory,
+        newThreadScheduler = newThreadScheduler,
         ioScheduler = ioScheduler,
         packageManager = packageManager,
-        classifiedPackageIdentifierDao = classifiedPackageIdentifierDao,
+        classifiedIdentifierDao = classifiedPackageIdentifierDao,
         broadcastReceiverWrap = broadcastReceiverWrap,
         launchesPackage = launchesActivityPackage,
         mainPackage = mainActivityPackage,

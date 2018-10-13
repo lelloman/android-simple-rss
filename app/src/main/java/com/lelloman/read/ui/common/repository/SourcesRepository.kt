@@ -59,7 +59,8 @@ class SourcesRepository @Inject constructor(
 
         isLoading = true
 
-        val ignored = sourcesDao.getAll()
+        @Suppress("UNUSED_VARIABLE")
+        val unused = sourcesDao.getAll()
             .subscribeOn(ioScheduler)
             .subscribe {
                 sourcesSubject.onNext(it)

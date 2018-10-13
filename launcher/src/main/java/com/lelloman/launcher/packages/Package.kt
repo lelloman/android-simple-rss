@@ -11,5 +11,5 @@ data class Package(
     val drawable: Drawable
 ) : ModelWithId {
 
-    val identifier by lazy { "$packageName/$activityName" }
+    fun identifier() = "$packageName/$activityName"
 }

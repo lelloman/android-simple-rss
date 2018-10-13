@@ -3,8 +3,10 @@ package com.lelloman.launcher.classification
 import com.lelloman.common.LLContext
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.launcher.logger.LauncherLoggerFactory
+import com.lelloman.launcher.logger.ShouldLogToFile
 import com.lelloman.launcher.packages.Package
 import com.lelloman.launcher.packages.PackagesManager
+import com.lelloman.launcher.persistence.ClassifierPersistence
 import com.lelloman.launcher.persistence.PersistentClassificationInfo
 import com.lelloman.launcher.persistence.db.ClassifiedIdentifierDao
 import com.lelloman.launcher.persistence.db.PackageLaunchDao
@@ -13,9 +15,7 @@ import com.lelloman.launcher.persistence.db.model.PackageLaunch
 import com.lelloman.nn.Network
 import com.lelloman.nn.dataset.DataSet
 import com.lelloman.nn.dataset.DataSet1D
-import io.reactivex.Completable
 import io.reactivex.Single
-import io.reactivex.functions.BiFunction
 import java.util.*
 
 class PackageClassifier(
@@ -24,12 +24,11 @@ class PackageClassifier(
     private val packagesManager: PackagesManager,
     private val timeEncoder: TimeEncoder,
     private val classifiedIdentifierDao: ClassifiedIdentifierDao,
-    private val identifierEncoderProvider: IdentifierEncoderProvider,
     private val classifierPersistence: ClassifierPersistence,
     private val persistentClassificationInfo: PersistentClassificationInfo,
     private val nnFactory: NnFactory,
     loggerFactory: LauncherLoggerFactory
-) {
+) : ShouldLogToFile {
 
     private val logger = loggerFactory.getLogger(PackageClassifier::class.java)
 
@@ -41,24 +40,16 @@ class PackageClassifier(
     private val random = Random()
 
     private val ioScheduler = llContext.ioScheduler
+    private val newThreadScheduler = llContext.newThreadScheduler
     private val timeProvider: TimeProvider = llContext
 
     private val randomTimeDisplace get() = ((random.nextDouble() - .5) * 10 * 60 * 1000).toLong()
 
-    fun classifyWithNeuralNet() {
-        @Suppress("UNUSED_VARIABLE")
-        val unused = Single
-            .zip(
-                allLaunches,
-                packagesManager.installedPackages.firstOrError(),
-                BiFunction<List<PackageLaunch>, List<Package>, Pair<List<PackageLaunch>, List<Package>>> { launches, packages ->
-                    launches to packages
-                }
-            )
-            .map { (launches, packages) ->
-                if (launches.isEmpty()) {
-                    return@map packages.map { ClassifiedPackage(it, 0.0) }
-                }
+    private fun performClassification(launches: List<PackageLaunch>, packages: List<Package>) = Single
+        .fromCallable {
+            if (launches.isEmpty()) {
+                packages.map { ClassifiedPackage(it, 0.0) }
+            } else {
                 logger.d("classifyWithNeuralNet() provided ${launches.size} launches")
 
                 val encoder = makeEncoder(
@@ -71,28 +62,42 @@ class PackageClassifier(
                 )
                 val classification = classifier.forwardPass(arrayOf(createEncodedInput()))[0]
                 packages.map {
-                    val encodedPackage = encoder.encode(it.identifier)
+                    val encodedPackage = encoder.encode(it.identifier())
                     ClassifiedPackage(
                         pkg = it,
                         score = getScoreForPackage(classification, encodedPackage)
                     )
                 }
             }
-            .flatMapCompletable { classifiedPackages ->
-                Completable.fromAction {
-                    classifiedIdentifierDao.deleteAll()
-                    classifiedIdentifierDao.insert(classifiedPackages.map {
-                        ClassifiedIdentifier(
-                            id = 0L,
-                            identifier = it.pkg.identifier,
-                            score = it.score
-                        )
-                    })
-                }
+        }
+
+    fun classifyWithNeuralNet() {
+        @Suppress("UNUSED_VARIABLE")
+        val unused = allLaunches
+            .flatMap { launches ->
+                packagesManager
+                    .getInstalledPackages()
+                    .map {
+                        launches to it
+                    }
             }
-            .subscribeOn(ioScheduler)
+            .flatMap { (launches, packages) ->
+                performClassification(launches, packages)
+            }
+            .subscribeOn(newThreadScheduler)
             .observeOn(ioScheduler)
-            .subscribe()
+            .subscribe({ classifiedPackages ->
+                logger.d("replacing classifier identifiers in db")
+                classifiedIdentifierDao.deleteAll()
+                classifiedIdentifierDao.insert(classifiedPackages.map {
+                    ClassifiedIdentifier(
+                        identifier = it.pkg.identifier(),
+                        score = it.score
+                    )
+                })
+            }, {
+                logger.e("error while classifyNeuralNet()", it)
+            })
     }
 
     internal fun makeEncoder(
@@ -101,9 +106,9 @@ class PackageClassifier(
     ) = launches
         .asSequence()
         .map { it.identifier() }
-        .plus(packages.map { it.identifier })
+        .plus(packages.map { it.identifier() })
         .toList()
-        .let(identifierEncoderProvider::provideEncoder)
+        .let(nnFactory::makeIdentifierEncoder)
 
     internal fun shouldRetrainClassifier() =
         timeProvider.nowUtcMs() - persistentClassificationInfo.lastTrainingTimeMs > CLASSIFIER_RETRAIN_INTERVAL_MS
@@ -111,17 +116,23 @@ class PackageClassifier(
     internal fun getClassifier(
         launches: List<PackageLaunch>,
         encoder: IdentifierEncoder
-    ): Network = if (shouldRetrainClassifier()) {
+    ): Network {
+        val shouldRetrainClassifier = shouldRetrainClassifier()
+        logger.d("getClassifier() should retrain $shouldRetrainClassifier")
+        if (!shouldRetrainClassifier) {
+            val storedClassifier = classifierPersistence.loadClassifier()
+            if (storedClassifier != null)
+                return storedClassifier
+        }
+
         val (trainingSet, validationSet) = createDataSet(launches, encoder)
         logger.d("created training (${trainingSet.size}) and validation (${validationSet.size}) dataset")
 
-        trainClassifier(
+        return trainClassifier(
             trainingSet = trainingSet,
             validationSet = validationSet,
             identifierEncoder = encoder
         )
-    } else {
-        classifierPersistence.loadClassifier()
     }
 
     internal fun trainClassifier(

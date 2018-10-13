@@ -6,6 +6,7 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.view.ContentUriOpener
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.launcher.logger.LauncherLoggerFactory
 import com.lelloman.launcher.packages.PackageLaunchesExporter
 import com.lelloman.launcher.packages.PackagesManager
 import com.lelloman.launcher.persistence.db.PackageLaunchDao
@@ -32,9 +33,11 @@ open class ViewModelModule {
         packagesManager: PackagesManager,
         dependencies: BaseViewModel.Dependencies,
         packageLaunchDao: PackageLaunchDao,
-        timeProvider: TimeProvider
+        timeProvider: TimeProvider,
+        launcherLoggerFactory: LauncherLoggerFactory
     ): MainViewModel = MainViewModelImpl(
         ioScheduler = ioScheduler,
+        launcherLoggerFactoryFactory = launcherLoggerFactory,
         dependencies = dependencies,
         packagesManager = packagesManager,
         packageLaunchDao = packageLaunchDao,

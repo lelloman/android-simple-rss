@@ -16,5 +16,5 @@ interface ClassifiedIdentifierDao {
     fun deleteAll()
 
     @Insert
-    fun insert(classifiedIdentifiers: List<ClassifiedIdentifier>)
+    fun insert(classifiedIdentifiers: List<ClassifiedIdentifier>): List<Long>
 }

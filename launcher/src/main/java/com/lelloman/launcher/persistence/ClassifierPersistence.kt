@@ -1,4 +1,4 @@
-package com.lelloman.launcher.classification
+package com.lelloman.launcher.persistence
 
 import com.lelloman.nn.Network
 
@@ -8,5 +8,5 @@ interface ClassifierPersistence {
 
     fun saveClassifier(network: Network)
 
-    fun loadClassifier(): Network
+    fun loadClassifier(): Network?
 }

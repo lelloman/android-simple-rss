@@ -7,14 +7,18 @@ import android.content.pm.PackageManager
 import android.content.pm.ResolveInfo
 import android.graphics.drawable.Drawable
 import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.di.qualifiers.NewThreadScheduler
 import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.launcher.R
 import com.lelloman.launcher.classification.ClassifiedPackage
 import com.lelloman.launcher.logger.LauncherLoggerFactory
+import com.lelloman.launcher.logger.ShouldLogToFile
 import com.lelloman.launcher.persistence.db.ClassifiedIdentifierDao
 import com.lelloman.launcher.persistence.db.model.ClassifiedIdentifier
 import com.lelloman.launcher.persistence.db.model.PackageLaunch
+import io.reactivex.BackpressureStrategy
+import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -23,16 +27,17 @@ import io.reactivex.subjects.BehaviorSubject
 
 class PackagesManager(
     @IoScheduler private val ioScheduler: Scheduler,
+    @NewThreadScheduler private val newThreadScheduler: Scheduler,
     private val packageManager: PackageManager,
     loggerFactory: LauncherLoggerFactory,
     broadcastReceiverWrap: BroadcastReceiverWrap,
     private val launchesPackage: Package,
-    classifiedPackageIdentifierDao: ClassifiedIdentifierDao,
+    classifiedIdentifierDao: ClassifiedIdentifierDao,
     private val mainPackage: Package,
     private val resourceProvider: ResourceProvider,
     val queryActivityIntent: Intent = Intent(Intent.ACTION_MAIN, null)
         .addCategory(Intent.CATEGORY_LAUNCHER)
-) {
+) : ShouldLogToFile {
 
     private val logger = loggerFactory.getLogger(PackagesManager::class.java)
     private val installedPackagesSubject = BehaviorSubject.create<List<Package>>()
@@ -40,17 +45,18 @@ class PackagesManager(
         onNext(false)
     }
 
-    val installedPackages: Observable<List<Package>> = installedPackagesSubject.hide()
+    val installedPackages: Observable<List<Package>> = installedPackagesSubject.hide().share()
     val updatingPackages: Observable<Boolean> = updatingPackagesSubject.hide()
 
-    val classifiedPackages: Observable<List<Package>> = Observable
+    val classifiedPackages: Observable<List<Package>> = Flowable
         .combineLatest(
-            classifiedPackageIdentifierDao.getAll().toObservable(),
-            installedPackages,
+            classifiedIdentifierDao.getAll(),
+            installedPackagesSubject.toFlowable(BackpressureStrategy.LATEST),
             BiFunction<List<ClassifiedIdentifier>, List<Package>, List<ClassifiedPackage>> { classified, installed ->
+                logger.d("bifunctioning ${classified.size} classified and ${installed.size} installed packages")
                 val classificationMap = classified.map { it.identifier to it.score }.toMap()
                 installed.map {
-                    val identifier = it.identifier
+                    val identifier = it.identifier()
                     val hasScore = classificationMap.containsKey(identifier)
                     ClassifiedPackage(
                         pkg = it,
@@ -60,12 +66,17 @@ class PackagesManager(
             }
         )
         .map { classifiedPackages ->
+            logger.d("spitting out ${classifiedPackages.size} packages")
             classifiedPackages
                 .asSequence()
                 .sortedByDescending { it.score }
                 .map(ClassifiedPackage::pkg)
                 .toList()
         }
+        .doOnSubscribe {
+            logger.d("classifiedPackages onSubscribe")
+        }
+        .toObservable()
 
     init {
         @Suppress("UNUSED_VARIABLE")
@@ -95,29 +106,35 @@ class PackagesManager(
 
     @SuppressLint("CheckResult")
     fun updateInstalledPackages() {
-        if (updatingPackagesSubject.blockingFirst()) return
+        val alreadyUpdating = updatingPackagesSubject.blockingFirst()
+        logger.d("updateInstalledPackages() alreadyUpdating = $alreadyUpdating")
+        if (alreadyUpdating) return
         updatingPackagesSubject.onNext(true)
 
-        Single
-            .fromCallable {
-                getPackagesFromPackageManager().apply {
-                    add(launchesPackage)
-                    removeAll {
-                        it.packageName == mainPackage.packageName && it.activityName == mainPackage.activityName
-                    }
-                    sortBy { it.label.toString() }
-                }
-            }
-            .subscribeOn(ioScheduler)
+        getInstalledPackages()
+            .subscribeOn(newThreadScheduler)
             .observeOn(ioScheduler)
             .doAfterTerminate { updatingPackagesSubject.onNext(false) }
             .subscribe({
+                logger.d("posting ${it.size} packages to installedPackagesSubject")
                 installedPackagesSubject.onNext(it)
             }, {
                 logger.e("Error while querying packages", it)
                 throw it
             })
     }
+
+    fun getInstalledPackages(): Single<List<Package>> = Single
+        .fromCallable {
+            getPackagesFromPackageManager().apply {
+                logger.d("got ${this.size} packages from android package manager")
+                add(launchesPackage)
+                removeAll {
+                    it.packageName == mainPackage.packageName && it.activityName == mainPackage.activityName
+                }
+                sortBy { it.label.toString() }
+            }
+        }
 
     fun getIconForPackageLaunch(packageLaunch: PackageLaunch): Drawable = try {
         val resolveInfo = ResolveInfo()
