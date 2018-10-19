@@ -40,9 +40,5 @@ enum class ReadNavigationScreen(
         const val ARG_URL = "Url"
 
         const val ARG_FOUND_FEEDS = "FoundFeeds"
-
-        private val namesMap = ReadNavigationScreen
-            .values()
-            .associateBy(NavigationScreen::name)
     }
 }

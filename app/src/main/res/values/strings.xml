@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Read</string>
     <string name="title_activity_sources_list">Sources</string>
     <string name="title_activity_add_source">Add source</string>
@@ -44,11 +44,12 @@
     <string name="NO">NO</string>
     <string name="YES">YES</string>
     <string name="walkthrough_metered_network_question">Do you want the app to use metered networks (mobile) to download feeds and images?</string>
-    <string name="walkthrough_first_page">bla bla</string>
+    <string name="walkthrough_first_page" tools:ignore="Typos">bla bla</string>
     <string name="OK">OK</string>
     <string name="settings_theme_descr">Theme</string>
     <string name="settings_theme_title">Change the colors of the app.</string>
 
     <string name="last_refresh">last refresh: %1$s</string>
     <string name="never">never</string>
+    <string name="close">Close</string>
 </resources>

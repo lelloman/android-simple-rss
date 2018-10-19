@@ -24,6 +24,7 @@
             android:onClick="@{viewModel::onCloseClicked}"
             android:src="@drawable/ic_close_white_24dp"
             app:layout_constraintStart_toStartOf="parent"
+            android:contentDescription="@string/close"
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v4.view.ViewPager
