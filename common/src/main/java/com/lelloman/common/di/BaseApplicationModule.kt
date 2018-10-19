@@ -44,17 +44,17 @@ open class BaseApplicationModule(private val application: Application) {
     @Singleton
     @Provides
     @IoScheduler
-    fun provideIoScheduler(): Scheduler = Schedulers.io()
+    open fun provideIoScheduler(): Scheduler = Schedulers.io()
 
     @Singleton
     @Provides
     @UiScheduler
-    fun provideUiScheduler(): Scheduler = AndroidSchedulers.mainThread()
+    open fun provideUiScheduler(): Scheduler = AndroidSchedulers.mainThread()
 
     @Singleton
     @Provides
     @NewThreadScheduler
-    fun provideNewThreadScheduler(): Scheduler = Schedulers.newThread()
+    open fun provideNewThreadScheduler(): Scheduler = Schedulers.newThread()
 
     @Singleton
     @Provides
@@ -69,7 +69,7 @@ open class BaseApplicationModule(private val application: Application) {
     fun provideResourceProvider(context: Context): ResourceProvider = ResourceProviderImpl(context)
 
     @Provides
-    fun providePackageManager(context: Context): PackageManager = context.packageManager
+    open fun providePackageManager(context: Context): PackageManager = context.packageManager
 
     @Provides
     fun provideNavigationRouter(

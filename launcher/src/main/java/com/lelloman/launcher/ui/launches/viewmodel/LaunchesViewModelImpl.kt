@@ -2,13 +2,13 @@ package com.lelloman.launcher.ui.launches.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.net.Uri
-import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.ContentUriOpener
 import com.lelloman.common.view.actionevent.PickFileActionEvent
 import com.lelloman.common.view.actionevent.ShareFileViewActionEvent
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.R
+import com.lelloman.launcher.logger.LauncherLoggerFactory
 import com.lelloman.launcher.packages.PackageLaunchesExporter
 import com.lelloman.launcher.packages.PackagesManager
 import com.lelloman.launcher.persistence.db.PackageLaunchDao
@@ -23,7 +23,7 @@ class LaunchesViewModelImpl(
     dependencies: BaseViewModel.Dependencies,
     private val packageLaunchDao: PackageLaunchDao,
     private val packagesManager: PackagesManager,
-    loggerFactory: LoggerFactory,
+    loggerFactory: LauncherLoggerFactory,
     private val packageLaunchesExporter: PackageLaunchesExporter,
     private val contentUriOpener: ContentUriOpener
 ) : LaunchesViewModel(dependencies) {

@@ -4,7 +4,7 @@ import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.launcher.packages.Package
 import com.lelloman.launcher.ui.main.AppsDrawerListItem
 
-class PackageDrawerListItem(
+data class PackageDrawerListItem(
     val pkg: Package
 ) : AppsDrawerListItem, ModelWithId by pkg {
 
