@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -18,11 +19,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:layout_gravity="center_vertical"
             android:gravity="center"
             android:text="@={viewModel.appsSearchQuery}"
             android:textColor="@android:color/primary_text_dark"
             android:hint="@string/search_apps"
             android:textColorHint="?android:attr/colorAccent"
-            android:layout_gravity="center_vertical" />
+            android:inputType="text"
+            tools:ignore="Autofill" />
     </FrameLayout>
 </layout>

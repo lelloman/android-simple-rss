@@ -35,7 +35,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/text_view_title"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:viewVisible="@{viewModel.imageVisible}" />
+                app:viewVisible="@{viewModel.imageVisible}"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/text_view_title"
@@ -69,7 +70,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/text_view_details"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/top_barrier"
-                app:viewVisible="@{safeUnbox(viewModel.faviconVisible)}" />
+                app:viewVisible="@{safeUnbox(viewModel.faviconVisible)}"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/text_view_details"

@@ -23,7 +23,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/text_view_package_name"/>
+            app:layout_constraintEnd_toStartOf="@+id/text_view_package_name"
+            tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/text_view_package_name"

@@ -1,12 +1,8 @@
 package com.lelloman.deviceinfo.device
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.graphics.Point
 import android.media.AudioManager
-import android.net.ConnectivityManager
 import android.view.WindowManager
 import com.lelloman.common.utils.model.Resolution
 import io.reactivex.Observable
@@ -38,18 +34,9 @@ class DeviceImpl(
 
     override val audioMode: Observable<AudioMode> = audioModeSubject.hide()
 
-    private val connectivityActionReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context?, intent: Intent?) {
-            intent?.let {
-                readNetworkInterfaces()
-            }
-        }
-    }
-
     private val subscriptions = CompositeDisposable()
 
     init {
-        context.registerReceiver(connectivityActionReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         readScreen()
 
         readNetworkInterfaces()
