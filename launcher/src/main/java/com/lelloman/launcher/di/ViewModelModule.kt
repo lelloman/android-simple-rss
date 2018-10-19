@@ -2,7 +2,6 @@ package com.lelloman.launcher.di
 
 import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.view.ContentUriOpener
 import com.lelloman.common.viewmodel.BaseViewModel
@@ -50,7 +49,7 @@ open class ViewModelModule {
         dependencies: BaseViewModel.Dependencies,
         packageLaunchDao: PackageLaunchDao,
         packagesManager: PackagesManager,
-        loggerFactory: LoggerFactory,
+        loggerFactory: LauncherLoggerFactory,
         packageLaunchesExporter: PackageLaunchesExporter,
         contentUriOpener: ContentUriOpener
     ): LaunchesViewModel = LaunchesViewModelImpl(

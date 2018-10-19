@@ -2,12 +2,15 @@ package com.lelloman.launcher
 
 import android.app.Activity
 import com.lelloman.common.BaseApplication
+import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.utils.TimeProvider
+import com.lelloman.common.viewmodel.ViewModelFactory
 import com.lelloman.launcher.classification.ClassificationTrigger
 import com.lelloman.launcher.di.DaggerAppComponent
 import com.lelloman.launcher.di.LauncherBaseApplicationModule
 import com.lelloman.launcher.logger.LauncherLoggerFactory
 import com.lelloman.launcher.logger.ShouldLogToFile
+import com.lelloman.launcher.persistence.db.AppDatabase
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import io.reactivex.Observable
@@ -28,6 +31,15 @@ open class LauncherApplication : BaseApplication(), HasActivityInjector, ShouldL
 
     @Inject
     lateinit var classificationTrigger: ClassificationTrigger
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    @Inject
+    lateinit var appSettings: BaseApplicationSettings
+
+    @Inject
+    lateinit var appDatabase: AppDatabase
 
     private val logger by lazy { loggerFactory.getLogger(javaClass) }
 

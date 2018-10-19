@@ -19,7 +19,7 @@ import io.reactivex.Scheduler
 import javax.inject.Singleton
 
 @Module
-class PackagesModule {
+open class PackagesModule {
 
     @Provides
     fun providePackageLaunchExporter(
@@ -30,7 +30,7 @@ class PackagesModule {
 
     @Provides
     @LaunchesActivityPackage
-    fun provideLaunchesActivityPackage(
+    open fun provideLaunchesActivityPackage(
         context: Context,
         resourceProvider: ResourceProvider
     ) = Package(
@@ -56,7 +56,7 @@ class PackagesModule {
 
     @Provides
     @Singleton
-    fun providePackagesManager(
+    open fun providePackagesManager(
         @IoScheduler ioScheduler: Scheduler,
         @NewThreadScheduler newThreadScheduler: Scheduler,
         packageManager: PackageManager,
