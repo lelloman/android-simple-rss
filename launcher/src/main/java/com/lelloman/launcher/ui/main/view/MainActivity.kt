@@ -67,6 +67,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         binding.recyclerViewClassified.adapter = classifiedAdapter
         viewModel.drawerApps.observe(this, drawerAdapter)
         viewModel.classifiedApps.observe(this, classifiedAdapter)
+        viewModel.homePages.observe(this, binding.homeView)
 
         val navBarSpecs = navigationBarDetector.getNavigationBarSpecs()
         when (navBarSpecs.position) {

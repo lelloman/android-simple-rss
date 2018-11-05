@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.navigation.PackageIntentNavigationEvent
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.TimeProvider
+import com.lelloman.common.utils.model.Resolution
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.launcher.logger.LauncherLoggerFactory
 import com.lelloman.launcher.logger.ShouldLogToFile
@@ -12,6 +13,7 @@ import com.lelloman.launcher.packages.PackagesManager
 import com.lelloman.launcher.persistence.db.PackageLaunchDao
 import com.lelloman.launcher.persistence.db.model.PackageLaunch
 import com.lelloman.launcher.ui.main.AppsDrawerListItem
+import com.lelloman.launcher.ui.main.HomePage
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -74,6 +76,20 @@ class MainViewModelImpl(
 //                    postValue(it)
 //                }
 //        }
+    }
+
+    private val pageResolution = Resolution(5, 5)
+    private val homePagesInternal = mutableListOf(
+        object : HomePage {
+            override val resolution = pageResolution
+        },
+        object : HomePage {
+            override val resolution = pageResolution
+        }
+    )
+
+    override val homePages: MutableLiveData<List<HomePage>> by LazyLiveData {
+        homePages.postValue(homePagesInternal)
     }
 
     override fun onPackageClicked(pkg: Package) {
