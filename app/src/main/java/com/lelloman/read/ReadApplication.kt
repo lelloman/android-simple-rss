@@ -55,6 +55,8 @@ open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcas
         super.onCreate()
         instance = this
         inject()
+        TODO("Maybe remove the \"inject()\" at the line above.")
+
         logger = loggerFactory.getLogger(javaClass)
 
         if (BuildConfig.DEBUG) {
