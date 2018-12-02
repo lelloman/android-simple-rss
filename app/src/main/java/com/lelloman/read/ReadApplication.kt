@@ -54,8 +54,6 @@ open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcas
     override fun onCreate() {
         super.onCreate()
         instance = this
-        inject()
-        TODO("Maybe remove the \"inject()\" at the line above.")
 
         logger = loggerFactory.getLogger(javaClass)
 
