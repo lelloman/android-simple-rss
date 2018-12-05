@@ -12,4 +12,10 @@ data class Author(
     @PrimaryKey(autoGenerate = true) override val id: Long = 0L,
     val firstName: String,
     val lastName: String
-) : ModelWithId
+) : ModelWithId {
+
+    companion object {
+        const val COLUMN_ID = "id"
+        const val COLUMN_LAST_NAME = "lastName"
+    }
+}
