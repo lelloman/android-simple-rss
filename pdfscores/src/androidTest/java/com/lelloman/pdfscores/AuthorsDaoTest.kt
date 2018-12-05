@@ -88,8 +88,10 @@ class AuthorsDaoTest {
         tester.assertValueAt(0) { it.isEmpty() }
 
         val n = 10
-        val authors = (0 until n).map(::author).toTypedArray()
-        val authorIds = tested.insert(*authors)
+        val authorIds = (0 until n)
+            .map(::author)
+            .toTypedArray()
+            .let(tested::insert)
 
         tester.awaitCount(++testerCount)
         tester.assertValueAt(testerCount - 1) {
@@ -126,10 +128,4 @@ class AuthorsDaoTest {
             it.size == 1 && it[0] == updatedAuthor
         }
     }
-
-    private fun author(index: Int = 1) = Author(
-        id = 0L,
-        firstName = "firstName $index",
-        lastName = "lastName $index"
-    )
 }

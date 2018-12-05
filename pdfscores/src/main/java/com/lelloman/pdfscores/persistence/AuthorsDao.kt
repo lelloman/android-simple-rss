@@ -5,12 +5,14 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
 import com.lelloman.pdfscores.persistence.AppDatabase.Companion.AUTHORS_TABLE_NAME
+import com.lelloman.pdfscores.persistence.Author.Companion.COLUMN_ID
+import com.lelloman.pdfscores.persistence.Author.Companion.COLUMN_LAST_NAME
 import io.reactivex.Flowable
 
 @Dao
 interface AuthorsDao {
 
-    @Query("SELECT * from $AUTHORS_TABLE_NAME ORDER BY lastName ASC")
+    @Query("SELECT * from $AUTHORS_TABLE_NAME ORDER BY $COLUMN_LAST_NAME ASC")
     fun getAll(): Flowable<List<Author>>
 
     @Insert
@@ -19,6 +21,6 @@ interface AuthorsDao {
     @Update
     fun update(vararg author: Author)
 
-    @Query("DELETE FROM $AUTHORS_TABLE_NAME WHERE id IN (:id)")
+    @Query("DELETE FROM $AUTHORS_TABLE_NAME WHERE $COLUMN_ID IN (:id)")
     fun delete(vararg id: Long)
 }
