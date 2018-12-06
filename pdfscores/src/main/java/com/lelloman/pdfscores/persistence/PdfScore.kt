@@ -7,7 +7,15 @@ import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.pdfscores.persistence.AppDatabase.Companion.PDF_SCORES_TABLE_NAME
-import com.lelloman.pdfscores.persistence.PdfScore.Companion.COLUMN_AUTHOR_ID
+import com.lelloman.pdfscores.persistence.PdfScoreModel.Companion.COLUMN_AUTHOR_ID
+
+interface PdfScore : ModelWithId {
+    val fileName: String
+    val created: Long
+    val lastOpened: Long
+    val title: String
+    val authorId: Long
+}
 
 @Entity(
     tableName = PDF_SCORES_TABLE_NAME,
@@ -20,16 +28,17 @@ import com.lelloman.pdfscores.persistence.PdfScore.Companion.COLUMN_AUTHOR_ID
     ],
     indices = [Index(COLUMN_AUTHOR_ID)]
 )
-data class PdfScore(
-    @PrimaryKey(autoGenerate = true) override val id: Long,
-    val fileName: String,
-    val created: Long,
-    val lastOpened: Long,
-    val title: String,
-    val authorId: Long
-) : ModelWithId {
+data class PdfScoreModel(
+    @PrimaryKey(autoGenerate = true) override val id: Long = 0L,
+    override val fileName: String,
+    override val created: Long,
+    override val lastOpened: Long,
+    override val title: String,
+    override val authorId: Long
+) : PdfScore {
 
     companion object {
         const val COLUMN_AUTHOR_ID = "authorId"
+        const val COLUMN_LAST_OPENED = "lastOpened"
     }
 }

@@ -23,4 +23,7 @@ interface AuthorsDao {
 
     @Query("DELETE FROM $AUTHORS_TABLE_NAME WHERE $COLUMN_ID IN (:id)")
     fun delete(vararg id: Long)
+
+    @Query("DELETE FROM $AUTHORS_TABLE_NAME")
+    fun deleteAll()
 }

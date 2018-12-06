@@ -1,7 +1,7 @@
 package com.lelloman.pdfscores.di
 
 import com.lelloman.common.view.InjectableActivity
-import com.lelloman.pdfscores.recentscores.RecentScoresActivity
+import com.lelloman.pdfscores.recentscores.view.RecentScoresActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 

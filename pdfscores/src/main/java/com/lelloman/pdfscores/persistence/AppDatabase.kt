@@ -4,7 +4,7 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import com.lelloman.pdfscores.persistence.AppDatabase.Companion.VERSION
 
-@Database(entities = [PdfScore::class, Author::class], version = VERSION)
+@Database(entities = [PdfScoreModel::class, Author::class], version = VERSION)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun authorsDao(): AuthorsDao
