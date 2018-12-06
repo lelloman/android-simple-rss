@@ -1,11 +1,14 @@
 package com.lelloman.pdfscores.di
 
 import android.arch.lifecycle.ViewModel
+import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.viewmodel.BaseViewModel
-import com.lelloman.pdfscores.recentscores.RecentScoresViewModel
-import com.lelloman.pdfscores.recentscores.RecentScoresViewModelImpl
+import com.lelloman.pdfscores.persistence.PdfScoresDao
+import com.lelloman.pdfscores.recentscores.viewmodel.RecentScoresViewModel
+import com.lelloman.pdfscores.recentscores.viewmodel.RecentScoresViewModelImpl
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Scheduler
 import javax.inject.Provider
 import javax.inject.Singleton
 
@@ -18,8 +21,12 @@ class ViewModelModule {
 
     @Provides
     open fun provideRecentScoresViewModel(
-        dependencies: BaseViewModel.Dependencies
+        dependencies: BaseViewModel.Dependencies,
+        @IoScheduler ioScheduler: Scheduler,
+        pdfScoresDao: PdfScoresDao
     ): RecentScoresViewModel = RecentScoresViewModelImpl(
-        dependencies = dependencies
+        dependencies = dependencies,
+        ioScheduler = ioScheduler,
+        pdfScoresDao = pdfScoresDao
     )
 }
