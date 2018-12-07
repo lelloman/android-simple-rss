@@ -1,7 +1,7 @@
-package com.lelloman.pdfscores.recentscores.viewmodel
+package com.lelloman.pdfscores.ui.recentscores.viewmodel
 
 import com.lelloman.common.viewmodel.BaseListItemViewModel
-import com.lelloman.pdfscores.recentscores.PdfScoreViewModelItem
+import com.lelloman.pdfscores.ui.recentscores.PdfScoreViewModelItem
 
 class PdfScoreListItemViewModel : BaseListItemViewModel<PdfScoreViewModelItem> {
 

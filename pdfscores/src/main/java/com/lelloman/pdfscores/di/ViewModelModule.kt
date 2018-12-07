@@ -4,8 +4,10 @@ import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.pdfscores.persistence.PdfScoresDao
-import com.lelloman.pdfscores.recentscores.viewmodel.RecentScoresViewModel
-import com.lelloman.pdfscores.recentscores.viewmodel.RecentScoresViewModelImpl
+import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModel
+import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModelImpl
+import com.lelloman.pdfscores.ui.recentscores.viewmodel.RecentScoresViewModel
+import com.lelloman.pdfscores.ui.recentscores.viewmodel.RecentScoresViewModelImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -28,5 +30,12 @@ class ViewModelModule {
         dependencies = dependencies,
         ioScheduler = ioScheduler,
         pdfScoresDao = pdfScoresDao
+    )
+
+    @Provides
+    open fun providePdfViewerViewModel(
+        dependencies: BaseViewModel.Dependencies
+    ): PdfViewerViewModel = PdfViewerViewModelImpl(
+        dependencies = dependencies
     )
 }

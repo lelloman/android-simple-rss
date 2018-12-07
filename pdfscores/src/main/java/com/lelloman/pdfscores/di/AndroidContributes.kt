@@ -1,7 +1,8 @@
 package com.lelloman.pdfscores.di
 
 import com.lelloman.common.view.InjectableActivity
-import com.lelloman.pdfscores.recentscores.view.RecentScoresActivity
+import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerActivity
+import com.lelloman.pdfscores.ui.recentscores.view.RecentScoresActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -14,4 +15,7 @@ interface AndroidContributes {
 
     @ContributesAndroidInjector
     fun contributeRecentScoresActivity(): RecentScoresActivity
+
+    @ContributesAndroidInjector
+    fun contributePdfViewerActivity(): PdfViewerActivity
 }

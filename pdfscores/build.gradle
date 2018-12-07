@@ -40,6 +40,8 @@ dependencies {
     implementation project(':common')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation 'com.github.lelloman:android-pdf-renderer:master-SNAPSHOT'
+
     // room
     implementation "android.arch.persistence.room:runtime:$room_version"
     kapt "android.arch.persistence.room:compiler:$room_version"
@@ -58,4 +60,8 @@ dependencies {
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
     androidTestImplementation project(':testutils')
+}
+
+repositories {
+    maven { url "https://jitpack.io" }
 }
