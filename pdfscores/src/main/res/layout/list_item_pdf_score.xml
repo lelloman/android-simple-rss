@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.pdfscores.recentscores.viewmodel.PdfScoreListItemViewModel" />
+            type="com.lelloman.pdfscores.ui.recentscores.viewmodel.PdfScoreListItemViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

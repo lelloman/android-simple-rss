@@ -42,7 +42,7 @@ open class PdfScoresApplication : BaseApplication(), HasActivityInjector {
 
         val scores = arrayOf(
             PdfScoreModel(
-                fileName = "assets:///bach_clavicembalo_ben_temperato.pdf",
+                fileName = "bach_clavicembalo_ben_temperato.pdf",
                 created = System.currentTimeMillis(),
                 lastOpened = System.currentTimeMillis(),
                 title = "Clavicembalo ben temperato",
@@ -56,7 +56,7 @@ open class PdfScoresApplication : BaseApplication(), HasActivityInjector {
     override fun onCreate() {
         super.onCreate()
 
-        val unused = Completable
+        Completable
             .fromAction(authorsDao::deleteAll)
             .andThen(insertTestDataIntoDb())
             .subscribeOn(Schedulers.io())

@@ -1,4 +1,4 @@
-package com.lelloman.pdfscores.recentscores.view
+package com.lelloman.pdfscores.ui.recentscores.view
 
 import android.support.v7.widget.LinearLayoutManager
 import com.lelloman.common.view.BaseActivity
@@ -6,15 +6,17 @@ import com.lelloman.common.view.BaseRecyclerViewAdapter
 import com.lelloman.pdfscores.R
 import com.lelloman.pdfscores.databinding.ActivityRecentScoresBinding
 import com.lelloman.pdfscores.databinding.ListItemPdfScoreBinding
-import com.lelloman.pdfscores.recentscores.PdfScoreViewModelItem
-import com.lelloman.pdfscores.recentscores.viewmodel.PdfScoreListItemViewModel
-import com.lelloman.pdfscores.recentscores.viewmodel.RecentScoresViewModel
+import com.lelloman.pdfscores.ui.recentscores.PdfScoreViewModelItem
+import com.lelloman.pdfscores.ui.recentscores.viewmodel.PdfScoreListItemViewModel
+import com.lelloman.pdfscores.ui.recentscores.viewmodel.RecentScoresViewModel
 
 class RecentScoresActivity : BaseActivity<RecentScoresViewModel, ActivityRecentScoresBinding>() {
 
     override val layoutResId = R.layout.activity_recent_scores
 
-    private val adapter = object : BaseRecyclerViewAdapter<PdfScoreViewModelItem, PdfScoreListItemViewModel, ListItemPdfScoreBinding>() {
+    private val adapter = object : BaseRecyclerViewAdapter<PdfScoreViewModelItem, PdfScoreListItemViewModel, ListItemPdfScoreBinding>(
+        onItemClickListener = { viewModel.onPdfScoreClicked(it) }
+    ) {
         override val listItemLayoutResId = R.layout.list_item_pdf_score
 
         override fun bindViewModel(binding: ListItemPdfScoreBinding, viewModel: PdfScoreListItemViewModel) {
@@ -24,7 +26,6 @@ class RecentScoresActivity : BaseActivity<RecentScoresViewModel, ActivityRecentS
         override fun createViewModel(viewHolder: BaseViewHolder<PdfScoreViewModelItem, PdfScoreListItemViewModel, ListItemPdfScoreBinding>): PdfScoreListItemViewModel {
             return PdfScoreListItemViewModel()
         }
-
     }
 
     override fun setViewModel(binding: ActivityRecentScoresBinding, viewModel: RecentScoresViewModel) {

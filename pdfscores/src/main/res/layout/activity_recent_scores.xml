@@ -7,13 +7,13 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.pdfscores.recentscores.viewmodel.RecentScoresViewModel" />
+            type="com.lelloman.pdfscores.ui.recentscores.viewmodel.RecentScoresViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".recentscores.view.RecentScoresActivity">
+        tools:context=".ui.recentscores.view.RecentScoresActivity">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerView"
