@@ -30,7 +30,7 @@ class PublicpdfScoresAppsFinderImpl(
         val resolveInfos = packageManager.queryIntentServices(Intent(ACTION_PDF_SCORES_PROVIDER), 0)
         val unused = Observable
             .fromIterable(resolveInfos)
-            .flatMap {
+            .flatMapMaybe {
                 val intent = Intent(ACTION_PDF_SCORES_PROVIDER).setComponent(
                     ComponentName(it.serviceInfo.packageName, it.serviceInfo.name)
                 )
@@ -43,6 +43,7 @@ class PublicpdfScoresAppsFinderImpl(
                     .onErrorResumeNext { t: Throwable ->
                         Observable.empty<IPublicPdfScoresService>()
                     }
+                    .firstElement()
             }
             .map {
                 object : PublicPdfScoresApp {
