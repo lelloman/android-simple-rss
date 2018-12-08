@@ -1,12 +1,12 @@
 package com.lelloman.pdfscores
 
 import com.lelloman.pdfscores.persistence.Author
-import com.lelloman.pdfscores.persistence.PdfScore
+import com.lelloman.pdfscores.persistence.PdfScoreModel
 
 
-fun pdfScore(index: Int = 1) = PdfScore(
+fun pdfScore(index: Int = 1) = PdfScoreModel(
     id = 0,
-    fileName = "fileName $index",
+    uri = "uri $index",
     created = index.toLong(),
     lastOpened = index.toLong(),
     title = "title $index",

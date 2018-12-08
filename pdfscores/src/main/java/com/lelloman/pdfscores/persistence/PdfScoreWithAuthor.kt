@@ -4,7 +4,7 @@ import com.lelloman.common.utils.model.ModelWithId
 
 data class PdfScoreWithAuthor(
     override var id: Long,
-    var fileName: String,
+    var uri: String,
     var created: Long,
     var lastOpened: Long,
     var title: String,

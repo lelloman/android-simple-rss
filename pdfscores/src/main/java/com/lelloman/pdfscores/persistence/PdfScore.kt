@@ -10,7 +10,7 @@ import com.lelloman.pdfscores.persistence.AppDatabase.Companion.PDF_SCORES_TABLE
 import com.lelloman.pdfscores.persistence.PdfScoreModel.Companion.COLUMN_AUTHOR_ID
 
 interface PdfScore : ModelWithId {
-    val fileName: String
+    val uri: String
     val created: Long
     val lastOpened: Long
     val title: String
@@ -30,7 +30,7 @@ interface PdfScore : ModelWithId {
 )
 data class PdfScoreModel(
     @PrimaryKey(autoGenerate = true) override val id: Long = 0L,
-    override val fileName: String,
+    override val uri: String,
     override val created: Long,
     override val lastOpened: Long,
     override val title: String,
