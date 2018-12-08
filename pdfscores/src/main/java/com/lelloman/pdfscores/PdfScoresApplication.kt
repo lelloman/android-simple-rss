@@ -42,7 +42,7 @@ open class PdfScoresApplication : BaseApplication(), HasActivityInjector {
 
         val scores = arrayOf(
             PdfScoreModel(
-                fileName = "asset:///bach_clavicembalo_ben_temperato.pdf",
+                uri = "asset:///bach_clavicembalo_ben_temperato.pdf",
                 created = System.currentTimeMillis(),
                 lastOpened = System.currentTimeMillis(),
                 title = "Clavicembalo ben temperato",

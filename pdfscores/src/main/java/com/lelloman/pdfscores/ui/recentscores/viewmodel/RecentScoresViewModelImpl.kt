@@ -39,7 +39,7 @@ class RecentScoresViewModelImpl(
 
     override fun onPdfScoreClicked(pdfScore: PdfScore) {
         DeepLink(PdfScoresScreen.PDF_VIEWER)
-            .putString(EXTRA_PDF_URI, pdfScore.fileName)
+            .putString(EXTRA_PDF_URI, pdfScore.uri)
             .let(::navigate)
     }
 }
