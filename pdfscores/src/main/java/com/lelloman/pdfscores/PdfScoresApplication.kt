@@ -1,6 +1,7 @@
 package com.lelloman.pdfscores
 
 import android.app.Activity
+import android.util.Log
 import com.lelloman.common.BaseApplication
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.pdfscores.di.DaggerAppComponent
@@ -8,6 +9,7 @@ import com.lelloman.pdfscores.persistence.Author
 import com.lelloman.pdfscores.persistence.AuthorsDao
 import com.lelloman.pdfscores.persistence.PdfScoreModel
 import com.lelloman.pdfscores.persistence.PdfScoresDao
+import com.lelloman.pdfscores.publicapi.PublicPdfScoresAppsFinder
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import io.reactivex.Completable
@@ -24,6 +26,9 @@ open class PdfScoresApplication : BaseApplication(), HasActivityInjector {
 
     @Inject
     lateinit var authorsDao: AuthorsDao
+
+    @Inject
+    lateinit var appsFinder: PublicPdfScoresAppsFinder
 
     override fun inject() = DaggerAppComponent
         .builder()
@@ -55,6 +60,15 @@ open class PdfScoresApplication : BaseApplication(), HasActivityInjector {
 
     override fun onCreate() {
         super.onCreate()
+
+        val unused = appsFinder
+            .pdfScoresApps
+            .subscribeOn(Schedulers.io())
+            .subscribe {
+                it.forEach {
+                    Log.d("ASDASD", "${it.packageName} ${it.publicApiVersion}")
+                }
+            }
 
         Completable
             .fromAction(authorsDao::deleteAll)
