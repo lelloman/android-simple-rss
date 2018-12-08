@@ -1,9 +1,9 @@
-package com.lelloman.pdfscores.persistence
+package com.lelloman.pdfscores.persistence.model
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import com.lelloman.common.utils.model.ModelWithId
-import com.lelloman.pdfscores.persistence.AppDatabase.Companion.AUTHORS_TABLE_NAME
+import com.lelloman.pdfscores.persistence.db.AppDatabase.Companion.AUTHORS_TABLE_NAME
 
 @Entity(
     tableName = AUTHORS_TABLE_NAME

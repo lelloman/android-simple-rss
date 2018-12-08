@@ -1,25 +1,28 @@
 package com.lelloman.pdfscores
 
 import android.app.Activity
+import android.app.Service
 import android.util.Log
 import com.lelloman.common.BaseApplication
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.pdfscores.di.DaggerAppComponent
-import com.lelloman.pdfscores.persistence.Author
-import com.lelloman.pdfscores.persistence.AuthorsDao
-import com.lelloman.pdfscores.persistence.PdfScoreModel
-import com.lelloman.pdfscores.persistence.PdfScoresDao
+import com.lelloman.pdfscores.persistence.db.AuthorsDao
+import com.lelloman.pdfscores.persistence.db.PdfScoresDao
 import com.lelloman.pdfscores.publicapi.PublicPdfScoresAppsFinder
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
+import dagger.android.HasServiceInjector
 import io.reactivex.Completable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-open class PdfScoresApplication : BaseApplication(), HasActivityInjector {
+open class PdfScoresApplication : BaseApplication(), HasActivityInjector, HasServiceInjector {
 
     @Inject
     lateinit var dispatchingActivityAndroidInjector: DispatchingAndroidInjector<Activity>
+
+    @Inject
+    lateinit var dispatchingServiceAndroidInjector: DispatchingAndroidInjector<Service>
 
     @Inject
     lateinit var pdfScoresDao: PdfScoresDao
@@ -38,25 +41,7 @@ open class PdfScoresApplication : BaseApplication(), HasActivityInjector {
 
     override fun activityInjector() = dispatchingActivityAndroidInjector
 
-    private fun insertTestDataIntoDb() = Completable.fromAction {
-        val bach = Author(
-            firstName = "Giovanni",
-            lastName = "Bach"
-        )
-        val bachId = authorsDao.insert(bach)[0]
-
-        val scores = arrayOf(
-            PdfScoreModel(
-                uri = "asset:///bach_clavicembalo_ben_temperato.pdf",
-                created = System.currentTimeMillis(),
-                lastOpened = System.currentTimeMillis(),
-                title = "Clavicembalo ben temperato",
-                authorId = bachId
-            )
-        )
-
-        pdfScoresDao.insert(*scores)
-    }
+    override fun serviceInjector() = dispatchingServiceAndroidInjector
 
     override fun onCreate() {
         super.onCreate()
@@ -72,7 +57,6 @@ open class PdfScoresApplication : BaseApplication(), HasActivityInjector {
 
         Completable
             .fromAction(authorsDao::deleteAll)
-            .andThen(insertTestDataIntoDb())
             .subscribeOn(Schedulers.io())
             .blockingAwait()
     }

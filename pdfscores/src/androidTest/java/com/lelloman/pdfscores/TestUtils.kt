@@ -1,7 +1,7 @@
 package com.lelloman.pdfscores
 
-import com.lelloman.pdfscores.persistence.Author
-import com.lelloman.pdfscores.persistence.PdfScoreModel
+import com.lelloman.pdfscores.persistence.model.Author
+import com.lelloman.pdfscores.persistence.model.PdfScoreModel
 
 
 fun pdfScore(index: Int = 1) = PdfScoreModel(

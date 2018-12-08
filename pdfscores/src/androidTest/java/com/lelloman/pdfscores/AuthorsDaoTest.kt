@@ -3,9 +3,9 @@ package com.lelloman.pdfscores
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry.getTargetContext
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.pdfscores.persistence.AppDatabase
-import com.lelloman.pdfscores.persistence.Author
-import com.lelloman.pdfscores.persistence.AuthorsDao
+import com.lelloman.pdfscores.persistence.db.AppDatabase
+import com.lelloman.pdfscores.persistence.db.AuthorsDao
+import com.lelloman.pdfscores.persistence.model.Author
 import org.junit.Before
 import org.junit.Test
 

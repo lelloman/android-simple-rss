@@ -1,7 +1,6 @@
 package com.lelloman.common.testutils
 
 import com.lelloman.common.logger.Logger
-import org.assertj.core.api.Assertions.assertThat
 
 class MockLogger : Logger {
 
@@ -20,10 +19,14 @@ class MockLogger : Logger {
     }
 
     fun assertNeverLoggedError() {
-        assertThat(loggedError).isFalse()
+        if (loggedError) {
+            throw AssertionError("An error WAS logged.")
+        }
     }
 
     fun assertLoggedError(msg: String, error: Throwable) {
-        assertThat(loggedErrors).contains(msg to error)
+        if (!loggedErrors.contains(msg to error)) {
+            throw AssertionError("The expected msg and error were not logged.")
+        }
     }
 }

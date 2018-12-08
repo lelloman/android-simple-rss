@@ -6,7 +6,7 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.FileProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.pdfscores.pdfrenderer.PdfDocumentFactory
-import com.lelloman.pdfscores.persistence.PdfScoresDao
+import com.lelloman.pdfscores.persistence.PdfScoresRepository
 import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModel
 import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModelImpl
 import com.lelloman.pdfscores.ui.recentscores.viewmodel.RecentScoresViewModel
@@ -28,11 +28,11 @@ class ViewModelModule {
     open fun provideRecentScoresViewModel(
         dependencies: BaseViewModel.Dependencies,
         @IoScheduler ioScheduler: Scheduler,
-        pdfScoresDao: PdfScoresDao
+        pdfScoresRepository: PdfScoresRepository
     ): RecentScoresViewModel = RecentScoresViewModelImpl(
         dependencies = dependencies,
         ioScheduler = ioScheduler,
-        pdfScoresDao = pdfScoresDao
+        pdfScoresRepository = pdfScoresRepository
     )
 
     @Provides

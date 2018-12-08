@@ -1,12 +1,13 @@
-package com.lelloman.pdfscores.persistence
+package com.lelloman.pdfscores.persistence.db
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
-import com.lelloman.pdfscores.persistence.AppDatabase.Companion.AUTHORS_TABLE_NAME
-import com.lelloman.pdfscores.persistence.Author.Companion.COLUMN_ID
-import com.lelloman.pdfscores.persistence.Author.Companion.COLUMN_LAST_NAME
+import com.lelloman.pdfscores.persistence.db.AppDatabase.Companion.AUTHORS_TABLE_NAME
+import com.lelloman.pdfscores.persistence.model.Author
+import com.lelloman.pdfscores.persistence.model.Author.Companion.COLUMN_ID
+import com.lelloman.pdfscores.persistence.model.Author.Companion.COLUMN_LAST_NAME
 import io.reactivex.Flowable
 
 @Dao

@@ -2,7 +2,7 @@ package com.lelloman.pdfscores.ui.recentscores.viewmodel
 
 import android.arch.lifecycle.LiveData
 import com.lelloman.common.viewmodel.BaseViewModel
-import com.lelloman.pdfscores.persistence.PdfScore
+import com.lelloman.pdfscores.persistence.model.PdfScore
 import com.lelloman.pdfscores.ui.recentscores.PdfScoreViewModelItem
 
 abstract class RecentScoresViewModel(

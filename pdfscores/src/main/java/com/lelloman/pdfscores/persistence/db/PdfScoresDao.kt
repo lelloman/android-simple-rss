@@ -1,10 +1,11 @@
-package com.lelloman.pdfscores.persistence
+package com.lelloman.pdfscores.persistence.db
 
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
-import com.lelloman.pdfscores.persistence.AppDatabase.Companion.PDF_SCORES_TABLE_NAME
-import com.lelloman.pdfscores.persistence.PdfScoreModel.Companion.COLUMN_LAST_OPENED
+import com.lelloman.pdfscores.persistence.db.AppDatabase.Companion.PDF_SCORES_TABLE_NAME
+import com.lelloman.pdfscores.persistence.model.PdfScoreModel
+import com.lelloman.pdfscores.persistence.model.PdfScoreModel.Companion.COLUMN_LAST_OPENED
 import io.reactivex.Flowable
 
 @Dao

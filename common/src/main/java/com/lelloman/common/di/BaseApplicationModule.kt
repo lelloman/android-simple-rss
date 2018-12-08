@@ -3,6 +3,7 @@ package com.lelloman.common.di
 import android.app.Application
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.AssetManager
 import com.lelloman.common.LLContext
 import com.lelloman.common.di.qualifiers.ApplicationPackageName
 import com.lelloman.common.di.qualifiers.IoScheduler
@@ -134,6 +135,10 @@ open class BaseApplicationModule(private val application: Application) {
     @Provides
     @ApplicationPackageName
     fun provideApplicationPackageName(context: Context): String = context.packageName
+
+    @Provides
+    @Singleton
+    fun provideAssetManager(context: Context): AssetManager = context.assets
 
     @Provides
     @Singleton
