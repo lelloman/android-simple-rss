@@ -9,6 +9,7 @@ import com.lelloman.launcher.di.MockViewModelModule
 import com.lelloman.launcher.testutils.TestApp
 import com.lelloman.launcher.testutils.pkg
 import com.lelloman.launcher.ui.main.AppsDrawerListItem
+import com.lelloman.launcher.ui.main.HomePage
 import com.lelloman.launcher.ui.main.view.MainActivity
 import com.lelloman.launcher.ui.main.viewmodel.MainViewModel
 import com.lelloman.launcher.ui.main.viewmodel.PackageDrawerListItem
@@ -31,6 +32,7 @@ class MainActivityTest {
     private lateinit var drawerApps: MutableLiveData<List<AppsDrawerListItem>>
     private lateinit var classifiedApps: MutableLiveData<List<PackageDrawerListItem>>
     private lateinit var viewActionEvents: SingleLiveData<ViewActionEvent>
+    private lateinit var homePages: MutableLiveData<List<HomePage>>
 
     @get:Rule
     val activityTestRule = ActivityTestRule(MainActivity::class.java, true, false)
@@ -46,12 +48,14 @@ class MainActivityTest {
         drawerApps = MutableLiveData()
         classifiedApps = MutableLiveData()
         viewActionEvents = SingleLiveData()
+        homePages = MutableLiveData()
 
         viewModel = viewModelModule.mainViewModel
 
         whenever(viewModel.viewActionEvents).thenReturn(viewActionEvents)
         whenever(viewModel.drawerApps).thenReturn(drawerApps)
         whenever(viewModel.classifiedApps).thenReturn(classifiedApps)
+        whenever(viewModel.homePages).thenReturn(homePages)
 
         TestApp.resetPersistence()
         TestApp.dependenciesUpdate { it.viewModelModule = viewModelModule }
