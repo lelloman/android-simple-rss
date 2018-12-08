@@ -3,6 +3,7 @@ package com.lelloman.pdfscores.di
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.settings.BaseSettingsModule
 import com.lelloman.pdfscores.PdfScoresApplication
+import com.lelloman.pdfscores.pdfrenderer.PdfRendererModule
 import com.lelloman.pdfscores.persistence.PersistenceModule
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -15,6 +16,7 @@ import javax.inject.Singleton
     BaseApplicationModule::class,
     BaseSettingsModule::class,
     PersistenceModule::class,
+    PdfRendererModule::class,
     ViewModelFactoryModule::class,
     ViewModelModule::class
 ])

@@ -13,6 +13,6 @@ enum class PdfScoresScreen(
     PDF_VIEWER(PdfViewerActivity::class, PdfViewerActivity.deepLinkStartable);
 
     companion object {
-        const val EXTRA_PDF_ASSET_FILE_NAME = "EXTRA_PDF_ASSET_FILE_NAME"
+        const val EXTRA_PDF_URI = "EXTRA_PDF_URI"
     }
 }

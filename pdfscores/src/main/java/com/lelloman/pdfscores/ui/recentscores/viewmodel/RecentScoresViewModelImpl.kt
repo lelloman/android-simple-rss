@@ -7,7 +7,7 @@ import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.pdfscores.persistence.PdfScore
 import com.lelloman.pdfscores.persistence.PdfScoresDao
 import com.lelloman.pdfscores.ui.PdfScoresScreen
-import com.lelloman.pdfscores.ui.PdfScoresScreen.Companion.EXTRA_PDF_ASSET_FILE_NAME
+import com.lelloman.pdfscores.ui.PdfScoresScreen.Companion.EXTRA_PDF_URI
 import com.lelloman.pdfscores.ui.recentscores.PdfScoreViewModelItem
 import io.reactivex.Scheduler
 
@@ -39,7 +39,7 @@ class RecentScoresViewModelImpl(
 
     override fun onPdfScoreClicked(pdfScore: PdfScore) {
         DeepLink(PdfScoresScreen.PDF_VIEWER)
-            .putString(EXTRA_PDF_ASSET_FILE_NAME, pdfScore.fileName)
+            .putString(EXTRA_PDF_URI, pdfScore.fileName)
             .let(::navigate)
     }
 }
