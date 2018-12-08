@@ -34,7 +34,7 @@ class SpiralLearningTest {
     private lateinit var trainingSet: DataSet1D
     private lateinit var validationSet: DataSet1D
 
-    private var saveImages = true
+    private var saveImages = false
     private val epochs = 1000
     private val batchSize = 10
     private val random
