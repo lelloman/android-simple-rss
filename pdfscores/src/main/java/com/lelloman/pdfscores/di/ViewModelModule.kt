@@ -2,7 +2,10 @@ package com.lelloman.pdfscores.di
 
 import android.arch.lifecycle.ViewModel
 import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.common.logger.LoggerFactory
+import com.lelloman.common.view.FileProvider
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.pdfscores.pdfrenderer.PdfDocumentFactory
 import com.lelloman.pdfscores.persistence.PdfScoresDao
 import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModel
 import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModelImpl
@@ -34,8 +37,14 @@ class ViewModelModule {
 
     @Provides
     open fun providePdfViewerViewModel(
-        dependencies: BaseViewModel.Dependencies
+        dependencies: BaseViewModel.Dependencies,
+        loggerFactory: LoggerFactory,
+        fileProvider: FileProvider,
+        pdfDocumentFactory: PdfDocumentFactory
     ): PdfViewerViewModel = PdfViewerViewModelImpl(
-        dependencies = dependencies
+        dependencies = dependencies,
+        loggerFactory = loggerFactory,
+        pdfDocumentFactory = pdfDocumentFactory,
+        fileProvider = fileProvider
     )
 }

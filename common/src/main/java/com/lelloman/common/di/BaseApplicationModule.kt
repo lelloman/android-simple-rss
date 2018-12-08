@@ -19,6 +19,8 @@ import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.common.view.BroadcastReceiverWrap
 import com.lelloman.common.view.ContentUriOpener
+import com.lelloman.common.view.FileProvider
+import com.lelloman.common.view.FileProviderImpl
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.common.view.MeteredConnectionCheckerImpl
 import com.lelloman.common.view.PicassoWrap
@@ -136,6 +138,10 @@ open class BaseApplicationModule(private val application: Application) {
     @Provides
     @Singleton
     fun provideContentUriOpener(llContext: LLContext): ContentUriOpener = llContext
+
+    @Provides
+    @Singleton
+    fun provideFileProvider(context: Context): FileProvider = FileProviderImpl(context)
 
     @Provides
     @Singleton
