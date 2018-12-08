@@ -1,4 +1,4 @@
-package com.lelloman.pdfscores.persistence
+package com.lelloman.pdfscores.persistence.model
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
@@ -6,8 +6,8 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 import android.arch.persistence.room.Index
 import android.arch.persistence.room.PrimaryKey
 import com.lelloman.common.utils.model.ModelWithId
-import com.lelloman.pdfscores.persistence.AppDatabase.Companion.PDF_SCORES_TABLE_NAME
-import com.lelloman.pdfscores.persistence.PdfScoreModel.Companion.COLUMN_AUTHOR_ID
+import com.lelloman.pdfscores.persistence.db.AppDatabase.Companion.PDF_SCORES_TABLE_NAME
+import com.lelloman.pdfscores.persistence.model.PdfScoreModel.Companion.COLUMN_AUTHOR_ID
 
 interface PdfScore : ModelWithId {
     val uri: String

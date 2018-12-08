@@ -12,7 +12,7 @@ import io.reactivex.Scheduler
 import io.reactivex.subjects.PublishSubject
 import java.util.concurrent.TimeUnit
 
-class PublicpdfScoresAppsFinderImpl(
+class PublicPdfScoresAppsFinderImpl(
     private val context: Context,
     private val packageManager: PackageManager,
     private val ioScheduler: Scheduler,
@@ -40,9 +40,7 @@ class PublicpdfScoresAppsFinderImpl(
                     .service
                     .timeout(3, TimeUnit.SECONDS)
                     .subscribeOn(newThreadScheduler)
-                    .onErrorResumeNext { t: Throwable ->
-                        Observable.empty<IPublicPdfScoresService>()
-                    }
+                    .onErrorResumeNext(Observable.empty<IPublicPdfScoresService>())
                     .firstElement()
             }
             .map {

@@ -19,7 +19,7 @@ class PublicApiModule {
         @IoScheduler ioScheduler: Scheduler,
         @NewThreadScheduler newThreadScheduler: Scheduler,
         context: Context
-    ): PublicPdfScoresAppsFinder = PublicpdfScoresAppsFinderImpl(
+    ): PublicPdfScoresAppsFinder = PublicPdfScoresAppsFinderImpl(
         context = context,
         newThreadScheduler = newThreadScheduler,
         packageManager = packageManager,

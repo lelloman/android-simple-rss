@@ -1,4 +1,4 @@
-package com.lelloman.pdfscores.persistence
+package com.lelloman.pdfscores.persistence.model
 
 import com.lelloman.common.utils.model.ModelWithId
 

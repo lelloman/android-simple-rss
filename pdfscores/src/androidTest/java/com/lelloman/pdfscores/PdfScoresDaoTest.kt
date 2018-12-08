@@ -3,11 +3,11 @@ package com.lelloman.pdfscores
 import android.arch.persistence.room.Room
 import android.database.sqlite.SQLiteConstraintException
 import android.support.test.InstrumentationRegistry.getTargetContext
-import com.lelloman.pdfscores.persistence.AppDatabase
-import com.lelloman.pdfscores.persistence.Author
-import com.lelloman.pdfscores.persistence.AuthorsDao
-import com.lelloman.pdfscores.persistence.PdfScore
-import com.lelloman.pdfscores.persistence.PdfScoresDao
+import com.lelloman.pdfscores.persistence.db.AppDatabase
+import com.lelloman.pdfscores.persistence.db.AuthorsDao
+import com.lelloman.pdfscores.persistence.db.PdfScoresDao
+import com.lelloman.pdfscores.persistence.model.Author
+import com.lelloman.pdfscores.persistence.model.PdfScore
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Before
 import org.junit.Test

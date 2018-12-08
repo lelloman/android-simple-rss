@@ -1,8 +1,10 @@
-package com.lelloman.pdfscores.persistence
+package com.lelloman.pdfscores.persistence.db
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
-import com.lelloman.pdfscores.persistence.AppDatabase.Companion.VERSION
+import com.lelloman.pdfscores.persistence.db.AppDatabase.Companion.VERSION
+import com.lelloman.pdfscores.persistence.model.Author
+import com.lelloman.pdfscores.persistence.model.PdfScoreModel
 
 @Database(entities = [PdfScoreModel::class, Author::class], version = VERSION)
 abstract class AppDatabase : RoomDatabase() {
