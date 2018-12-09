@@ -2,6 +2,7 @@ package com.lelloman.pdfscores.publicapi
 
 import android.content.Context
 import android.content.pm.PackageManager
+import com.lelloman.common.di.qualifiers.ApplicationPackageName
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.NewThreadScheduler
 import dagger.Module
@@ -18,11 +19,13 @@ class PublicApiModule {
         packageManager: PackageManager,
         @IoScheduler ioScheduler: Scheduler,
         @NewThreadScheduler newThreadScheduler: Scheduler,
-        context: Context
+        context: Context,
+        @ApplicationPackageName applicationPackageName: String
     ): PublicPdfScoresAppsFinder = PublicPdfScoresAppsFinderImpl(
         context = context,
         newThreadScheduler = newThreadScheduler,
         packageManager = packageManager,
-        ioScheduler = ioScheduler
+        ioScheduler = ioScheduler,
+        applicationPackageName = applicationPackageName
     )
 }

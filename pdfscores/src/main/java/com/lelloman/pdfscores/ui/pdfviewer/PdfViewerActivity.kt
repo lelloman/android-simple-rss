@@ -2,6 +2,8 @@ package com.lelloman.pdfscores.ui.pdfviewer
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
+import android.view.View.*
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
@@ -14,6 +16,8 @@ class PdfViewerActivity : BaseActivity<PdfViewerViewModel, ActivityPdfViewerBind
 
     override val layoutResId = R.layout.activity_pdf_viewer
 
+    override val hasActionBar = false
+
     override fun setViewModel(binding: ActivityPdfViewerBinding, viewModel: PdfViewerViewModel) {
         binding.viewModel = viewModel
         val file = File(filesDir, "tmp")
@@ -25,6 +29,11 @@ class PdfViewerActivity : BaseActivity<PdfViewerViewModel, ActivityPdfViewerBind
     }
 
     override fun getViewModelClass() = PdfViewerViewModel::class.java
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        window.decorView.systemUiVisibility = SYSTEM_UI_FLAG_IMMERSIVE_STICKY or SYSTEM_UI_FLAG_FULLSCREEN or SYSTEM_UI_FLAG_HIDE_NAVIGATION
+    }
 
     companion object {
         val deepLinkStartable = object : DeepLinkStartable {

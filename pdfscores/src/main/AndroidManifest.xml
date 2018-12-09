@@ -21,14 +21,10 @@
         </activity>
         <activity android:name=".ui.pdfviewer.PdfViewerActivity" />
 
-        <service
-            android:name=".publicapi.PublicPdfScoresService"
-            android:exported="true"
-            android:process=":publicapiservice">
-            <intent-filter>
-                <action android:name="com.lelloman.pdfscores.publicapi.ACTION_PDF_SCORES_PROVIDER" />
-            </intent-filter>
-        </service>
+        <provider
+            android:name=".publicapi.PublicApiContentProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="true" />
     </application>
 
 </manifest>
