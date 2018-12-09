@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModelProvider
 import com.lelloman.common.di.qualifiers.ViewModelKey
 import com.lelloman.common.viewmodel.ViewModelFactory
 import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModel
-import com.lelloman.pdfscores.ui.recentscores.viewmodel.RecentScoresViewModel
+import com.lelloman.pdfscores.ui.pdfscoreslist.viewmodel.PdfScoresListViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -18,8 +18,8 @@ abstract class ViewModelFactoryModule {
 
     @Binds
     @IntoMap
-    @ViewModelKey(RecentScoresViewModel::class)
-    abstract fun bindRecentScoresViewModel(recentScoresViewModel: RecentScoresViewModel): ViewModel
+    @ViewModelKey(PdfScoresListViewModel::class)
+    abstract fun bindRecentScoresViewModel(recentScoresViewModel: PdfScoresListViewModel): ViewModel
 
     @Binds
     @IntoMap

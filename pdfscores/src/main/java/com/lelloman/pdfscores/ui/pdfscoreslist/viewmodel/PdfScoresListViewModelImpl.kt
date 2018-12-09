@@ -1,4 +1,4 @@
-package com.lelloman.pdfscores.ui.recentscores.viewmodel
+package com.lelloman.pdfscores.ui.pdfscoreslist.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.navigation.DeepLink
@@ -8,23 +8,21 @@ import com.lelloman.pdfscores.persistence.PdfScoresRepository
 import com.lelloman.pdfscores.persistence.model.PdfScore
 import com.lelloman.pdfscores.ui.PdfScoresScreen
 import com.lelloman.pdfscores.ui.PdfScoresScreen.Companion.EXTRA_PDF_URI
-import com.lelloman.pdfscores.ui.recentscores.PdfScoreViewModelItem
+import com.lelloman.pdfscores.ui.pdfscoreslist.PdfScoreViewModelItem
 import io.reactivex.Scheduler
 
-class RecentScoresViewModelImpl(
+class PdfScoresListViewModelImpl(
     dependencies: BaseViewModel.Dependencies,
     private val pdfScoresRepository: PdfScoresRepository,
     private val ioScheduler: Scheduler
-) : RecentScoresViewModel(dependencies) {
+) : PdfScoresListViewModel(dependencies) {
 
     override val recentScores: MutableLiveData<List<PdfScoreViewModelItem>> by LazyLiveData {
         subscription {
             pdfScoresRepository
                 .getScores()
-                .map {
-                    it.map {
-                        PdfScoreViewModelItem(it)
-                    }
+                .map {scores ->
+                    scores.map(::PdfScoreViewModelItem)
                 }
                 .subscribeOn(ioScheduler)
                 .subscribe {

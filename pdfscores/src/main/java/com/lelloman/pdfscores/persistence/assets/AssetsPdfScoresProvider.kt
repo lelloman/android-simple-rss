@@ -9,4 +9,8 @@ interface AssetsPdfScoresProvider {
     val pdfScores: Observable<List<PdfScore>>
 
     val authors: Observable<List<Author>>
+
+    companion object {
+        const val COLLECTION_JSON_FILE_NAME = "collection.json"
+    }
 }

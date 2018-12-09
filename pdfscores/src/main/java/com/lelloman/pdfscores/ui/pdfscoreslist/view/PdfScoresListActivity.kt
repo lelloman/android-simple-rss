@@ -1,4 +1,4 @@
-package com.lelloman.pdfscores.ui.recentscores.view
+package com.lelloman.pdfscores.ui.pdfscoreslist.view
 
 import android.support.v7.widget.LinearLayoutManager
 import com.lelloman.common.view.BaseActivity
@@ -6,11 +6,11 @@ import com.lelloman.common.view.BaseRecyclerViewAdapter
 import com.lelloman.pdfscores.R
 import com.lelloman.pdfscores.databinding.ActivityRecentScoresBinding
 import com.lelloman.pdfscores.databinding.ListItemPdfScoreBinding
-import com.lelloman.pdfscores.ui.recentscores.PdfScoreViewModelItem
-import com.lelloman.pdfscores.ui.recentscores.viewmodel.PdfScoreListItemViewModel
-import com.lelloman.pdfscores.ui.recentscores.viewmodel.RecentScoresViewModel
+import com.lelloman.pdfscores.ui.pdfscoreslist.PdfScoreViewModelItem
+import com.lelloman.pdfscores.ui.pdfscoreslist.viewmodel.PdfScoreListItemViewModel
+import com.lelloman.pdfscores.ui.pdfscoreslist.viewmodel.PdfScoresListViewModel
 
-class RecentScoresActivity : BaseActivity<RecentScoresViewModel, ActivityRecentScoresBinding>() {
+class PdfScoresListActivity : BaseActivity<PdfScoresListViewModel, ActivityRecentScoresBinding>() {
 
     override val layoutResId = R.layout.activity_recent_scores
 
@@ -28,12 +28,12 @@ class RecentScoresActivity : BaseActivity<RecentScoresViewModel, ActivityRecentS
         }
     }
 
-    override fun setViewModel(binding: ActivityRecentScoresBinding, viewModel: RecentScoresViewModel) {
+    override fun setViewModel(binding: ActivityRecentScoresBinding, viewModel: PdfScoresListViewModel) {
         binding.viewModel = viewModel
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
         viewModel.recentScores.observe(this, adapter)
     }
 
-    override fun getViewModelClass() = RecentScoresViewModel::class.java
+    override fun getViewModelClass() = PdfScoresListViewModel::class.java
 }

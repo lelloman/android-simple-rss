@@ -2,6 +2,7 @@ package com.lelloman.pdfscores.persistence.assets
 
 import android.content.res.AssetManager
 import com.google.gson.GsonBuilder
+import com.lelloman.pdfscores.persistence.assets.AssetsPdfScoresProvider.Companion.COLLECTION_JSON_FILE_NAME
 import com.lelloman.pdfscores.persistence.model.Author
 import com.lelloman.pdfscores.persistence.model.PdfScore
 import io.reactivex.Observable
@@ -52,7 +53,6 @@ class AssetsPdfScoresProviderImpl(
     }
 
     private companion object {
-        const val COLLECTION_JSON_FILE_NAME = "collection.json"
         val gson by lazy { GsonBuilder().create() }
     }
 }
