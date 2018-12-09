@@ -9,8 +9,8 @@ import com.lelloman.pdfscores.pdfrenderer.PdfDocumentFactory
 import com.lelloman.pdfscores.persistence.PdfScoresRepository
 import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModel
 import com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModelImpl
-import com.lelloman.pdfscores.ui.recentscores.viewmodel.RecentScoresViewModel
-import com.lelloman.pdfscores.ui.recentscores.viewmodel.RecentScoresViewModelImpl
+import com.lelloman.pdfscores.ui.pdfscoreslist.viewmodel.PdfScoresListViewModel
+import com.lelloman.pdfscores.ui.pdfscoreslist.viewmodel.PdfScoresListViewModelImpl
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -29,7 +29,7 @@ class ViewModelModule {
         dependencies: BaseViewModel.Dependencies,
         @IoScheduler ioScheduler: Scheduler,
         pdfScoresRepository: PdfScoresRepository
-    ): RecentScoresViewModel = RecentScoresViewModelImpl(
+    ): PdfScoresListViewModel = PdfScoresListViewModelImpl(
         dependencies = dependencies,
         ioScheduler = ioScheduler,
         pdfScoresRepository = pdfScoresRepository

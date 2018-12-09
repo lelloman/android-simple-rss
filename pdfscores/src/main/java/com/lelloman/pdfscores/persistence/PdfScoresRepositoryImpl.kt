@@ -17,15 +17,19 @@ class PdfScoresRepositoryImpl(
 
     override fun getScores(): Flowable<List<PdfScore>> = Flowable
         .combineLatest(
-            pdfScoresDao.getAll(),
-            assetsPdfScoresProvider.pdfScores.toFlowable(BackpressureStrategy.LATEST),
-            BiFunction<List<PdfScore>, List<PdfScore>, List<PdfScore>> { scores1, scores2 ->
-                ArrayList<PdfScore>(scores1.size + scores2.size).apply {
-                    addAll(scores1)
-                    addAll(scores2)
+            arrayOf(
+                pdfScoresDao.getAll(),
+                assetsPdfScoresProvider.pdfScores.toFlowable(BackpressureStrategy.LATEST)
+            )
+        ) {
+            arrayOfListsOfScores ->
+            val totalSum = arrayOfListsOfScores.map { (it as List<PdfScore>).size }.sum()
+            ArrayList<PdfScore>(totalSum).apply {
+                arrayOfListsOfScores.forEach {
+                    this.addAll(it as List<PdfScore>)
                 }
             }
-        )
+        }
 
     override fun getAuthors(): Flowable<List<Author>> = Flowable
         .combineLatest(

@@ -1,4 +1,4 @@
-package com.lelloman.pdfscores.ui.recentscores
+package com.lelloman.pdfscores.ui.pdfscoreslist
 
 import com.lelloman.pdfscores.persistence.model.PdfScore
 

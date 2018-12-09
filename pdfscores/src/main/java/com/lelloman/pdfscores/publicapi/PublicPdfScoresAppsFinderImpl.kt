@@ -2,14 +2,13 @@ package com.lelloman.pdfscores.publicapi
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.AssetFileDescriptor
+import android.net.Uri
 import android.util.Log
 import com.lelloman.common.di.qualifiers.ApplicationPackageName
-import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Scheduler
-import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 
 class PublicPdfScoresAppsFinderImpl(
     private val context: Context,
@@ -32,6 +31,11 @@ class PublicPdfScoresAppsFinderImpl(
     }
 
     override fun getAssetCollectionFileUri(packageName: String) = "content://$packageName.provider/asset/collection"
+
+    override fun openAssetCollectionRootFile(uri: String) = context
+        .contentResolver
+        .openAssetFileDescriptor(Uri.parse(uri), "r")
+        ?: TODO("some fancy exception")
 
     private fun queryInstalledApps() = synchronized(this) {
         val resolveInfos = packageManager.getInstalledApplications(0)

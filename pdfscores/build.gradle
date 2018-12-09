@@ -18,7 +18,9 @@ android {
             }
         }
     }
-
+    aaptOptions {
+        noCompress "json"
+    }
     dataBinding {
         enabled = true
     }
