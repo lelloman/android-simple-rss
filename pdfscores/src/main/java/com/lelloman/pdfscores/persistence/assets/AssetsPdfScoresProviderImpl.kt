@@ -1,8 +1,7 @@
 package com.lelloman.pdfscores.persistence.assets
 
-import android.content.res.AssetManager
+import android.content.res.AssetFileDescriptor
 import com.google.gson.GsonBuilder
-import com.lelloman.pdfscores.persistence.assets.AssetsPdfScoresProvider.Companion.COLLECTION_JSON_FILE_NAME
 import com.lelloman.pdfscores.persistence.model.Author
 import com.lelloman.pdfscores.persistence.model.PdfScore
 import io.reactivex.Observable
@@ -11,7 +10,7 @@ import io.reactivex.Single
 import io.reactivex.subjects.BehaviorSubject
 
 class AssetsPdfScoresProviderImpl(
-    assetManager: AssetManager,
+    assetFileDescriptor: AssetFileDescriptor,
     ioScheduler: Scheduler
 ) : AssetsPdfScoresProvider {
 
@@ -24,12 +23,11 @@ class AssetsPdfScoresProviderImpl(
     init {
         val unused = Single
             .fromCallable {
-                assetManager
-                    .open(COLLECTION_JSON_FILE_NAME)
-                    .readBytes()
-                    .let {
-                        gson.fromJson(String(it), PdfScoresCollection::class.java)
-                    }
+                val jsonString = assetFileDescriptor
+                    .createInputStream()
+                    .bufferedReader()
+                    .readText()
+                gson.fromJson(jsonString, PdfScoresCollection::class.java)
             }
             .subscribeOn(ioScheduler)
             .observeOn(ioScheduler)

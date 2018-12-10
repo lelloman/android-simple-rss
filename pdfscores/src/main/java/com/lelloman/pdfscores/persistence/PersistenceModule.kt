@@ -2,13 +2,14 @@ package com.lelloman.pdfscores.persistence
 
 import android.arch.persistence.room.Room
 import android.content.Context
-import android.content.res.AssetManager
 import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.pdfscores.persistence.assets.AssetsPdfScoresProvider
-import com.lelloman.pdfscores.persistence.assets.AssetsPdfScoresProviderImpl
+import com.lelloman.common.di.qualifiers.NewThreadScheduler
+import com.lelloman.pdfscores.persistence.assets.AssetsPdfScoresProviderFactory
+import com.lelloman.pdfscores.persistence.assets.AssetsPdfScoresProviderFactoryImpl
 import com.lelloman.pdfscores.persistence.db.AppDatabase
 import com.lelloman.pdfscores.persistence.db.AuthorsDao
 import com.lelloman.pdfscores.persistence.db.PdfScoresDao
+import com.lelloman.pdfscores.publicapi.PublicPdfScoresAppsFinder
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -33,11 +34,9 @@ class PersistenceModule {
 
     @Provides
     @Singleton
-    fun provideAssetsPdfScoresProvider(
-        assetManager: AssetManager,
+    fun provideAssetsPdfScoresProviderFactory(
         @IoScheduler ioScheduler: Scheduler
-    ): AssetsPdfScoresProvider = AssetsPdfScoresProviderImpl(
-        assetManager = assetManager,
+    ): AssetsPdfScoresProviderFactory = AssetsPdfScoresProviderFactoryImpl(
         ioScheduler = ioScheduler
     )
 
@@ -46,10 +45,14 @@ class PersistenceModule {
     fun providePdfScoresRepository(
         pdfScoresDao: PdfScoresDao,
         authorsDao: AuthorsDao,
-        assetsPdfScoresProvider: AssetsPdfScoresProvider
+        @NewThreadScheduler newThreadScheduler: Scheduler,
+        assetsPdfScoresProviderFactory: AssetsPdfScoresProviderFactory,
+        appsFinder: PublicPdfScoresAppsFinder
     ): PdfScoresRepository = PdfScoresRepositoryImpl(
         pdfScoresDao = pdfScoresDao,
         authorsDao = authorsDao,
-        assetsPdfScoresProvider = assetsPdfScoresProvider
+        appsFinder = appsFinder,
+        assetsPdfScoresProviderFactory = assetsPdfScoresProviderFactory,
+        newThreadScheduler = newThreadScheduler
     )
 }
