@@ -36,11 +36,13 @@ android {
             dimension "version"
             applicationIdSuffix ".vanilla"
             versionNameSuffix "-vanilla"
+            buildConfigField "String", "DEFAULT_THEME", "\"DARCULA\""
         }
         collection {
             dimension "version"
             applicationIdSuffix ".collection"
             versionNameSuffix "-collection"
+            buildConfigField "String", "DEFAULT_THEME", "\"MOCKITO\""
         }
     }
 

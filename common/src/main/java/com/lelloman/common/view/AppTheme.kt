@@ -15,7 +15,7 @@ enum class AppTheme(
 
     companion object {
 
-        val DEFAULT = LIGHT
+        var DEFAULT = LIGHT
 
         private val namesMap = AppTheme
             .values()
