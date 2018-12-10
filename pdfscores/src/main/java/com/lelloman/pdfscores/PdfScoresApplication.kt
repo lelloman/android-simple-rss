@@ -5,6 +5,7 @@ import android.content.ContentProvider
 import android.util.Log
 import com.lelloman.common.BaseApplication
 import com.lelloman.common.di.BaseApplicationModule
+import com.lelloman.common.view.AppTheme
 import com.lelloman.pdfscores.di.DaggerAppComponent
 import com.lelloman.pdfscores.publicapi.PublicPdfScoresAppsFinder
 import dagger.android.DispatchingAndroidInjector
@@ -35,6 +36,7 @@ open class PdfScoresApplication : BaseApplication(), HasActivityInjector, HasCon
 
     override fun onCreate() {
         super.onCreate()
+        AppTheme.DEFAULT = AppTheme.fromName(BuildConfig.DEFAULT_THEME)
         val unused = publicPdfScoresAppsFinder
             .pdfScoresApps
             .map { apps ->
