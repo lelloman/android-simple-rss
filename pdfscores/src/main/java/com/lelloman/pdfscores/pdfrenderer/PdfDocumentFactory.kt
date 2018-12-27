@@ -5,5 +5,5 @@ import java.io.File
 
 interface PdfDocumentFactory {
 
-    fun makeFromFile(file: File): PdfDocument
+    fun make(file: File): PdfDocument
 }

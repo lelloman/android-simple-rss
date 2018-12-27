@@ -7,7 +7,7 @@ import android.view.View
 import com.lelloman.common.utils.NavigationBarDetector
 import com.lelloman.common.utils.model.Position
 import com.lelloman.common.view.BaseActivity
-import com.lelloman.common.view.BaseRecyclerViewAdapter
+import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.launcher.R
 import com.lelloman.launcher.databinding.ActivityMainBinding
 import com.lelloman.launcher.databinding.ListItemClassifiedPackageBinding

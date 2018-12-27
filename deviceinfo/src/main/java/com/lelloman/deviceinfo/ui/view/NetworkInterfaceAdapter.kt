@@ -1,6 +1,6 @@
 package com.lelloman.deviceinfo.ui.view
 
-import com.lelloman.common.view.BaseRecyclerViewAdapter
+import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.deviceinfo.R
 import com.lelloman.deviceinfo.databinding.ListItemNetworkInterfaceBinding
 import com.lelloman.deviceinfo.device.NetworkInterface

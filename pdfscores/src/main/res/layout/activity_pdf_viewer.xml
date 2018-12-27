@@ -9,11 +9,11 @@
             type="com.lelloman.pdfscores.ui.pdfviewer.PdfViewerViewModel" />
     </data>
 
-    <com.lelloman.pdfrenderer.PagedPdfView
+    <com.lelloman.pdfrenderer.PdfView
         android:id="@+id/pdfView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:pdfDocument="@{viewModel.pdfDocument}">
+        app:document="@{viewModel.pdfDocument}">
 
-    </com.lelloman.pdfrenderer.PagedPdfView>
+    </com.lelloman.pdfrenderer.PdfView>
 </layout>

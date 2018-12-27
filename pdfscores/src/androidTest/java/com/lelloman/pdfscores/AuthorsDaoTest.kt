@@ -5,7 +5,8 @@ import android.support.test.InstrumentationRegistry.getTargetContext
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.pdfscores.persistence.db.AppDatabase
 import com.lelloman.pdfscores.persistence.db.AuthorsDao
-import com.lelloman.pdfscores.persistence.model.Author
+import com.lelloman.pdfscores.testutils.author
+import com.lelloman.pdfscores.testutils.pdfScore
 import org.junit.Before
 import org.junit.Test
 
@@ -39,9 +40,9 @@ class AuthorsDaoTest {
 
     @Test
     fun addsOneAuthor() {
-        val author = Author(firstName = "MEEEEOW", lastName = "WOOF")
+        val author = author().copy(firstName = "MEEEEOW", lastName = "WOOF")
 
-        val authorId = tested.insert(author)[0]
+        val authorId = tested.insert(listOf(author))[0]
         val expectedAuthor = author.copy(id = authorId)
 
         val actualAuthors = tested.getAll().blockingFirst()
@@ -55,9 +56,9 @@ class AuthorsDaoTest {
         tester.awaitCount(++testerCount)
         tester.assertValueAt(testerCount - 1) { it.isEmpty() }
 
-        val author1 = Author(firstName = "BLBLBL", lastName = "ZZZ Last lastName")
-        val author2 = Author(firstName = "MR", lastName = "AAA First lastName")
-        val (authorId1, authorId2) = tested.insert(author1, author2)
+        val author1 = author().copy(firstName = "BLBLBL", lastName = "ZZZ Last lastName")
+        val author2 = author().copy(firstName = "MR", lastName = "AAA First lastName")
+        val (authorId1, authorId2) = tested.insert(listOf(author1, author2))
 
         tester.awaitCount(++testerCount)
         tester.assertValueAt(testerCount - 1) {
@@ -90,7 +91,6 @@ class AuthorsDaoTest {
         val n = 10
         val authorIds = (0 until n)
             .map(::author)
-            .toTypedArray()
             .let(tested::insert)
 
         tester.awaitCount(++testerCount)
@@ -112,8 +112,8 @@ class AuthorsDaoTest {
         tester.awaitCount(++testerCount)
         tester.assertValueAt(testerCount - 1) { it.isEmpty() }
 
-        val author = Author(firstName = "Alfredo", lastName = "Canale")
-        val authorId = tested.insert(author)[0]
+        val author = author()
+        val authorId = tested.insert(listOf(author))[0]
 
         tester.awaitCount(++testerCount)
         tester.assertValueAt(testerCount - 1) {

@@ -6,8 +6,8 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.lelloman.common.view.BaseMultiTypeRecyclerViewAdapter
-import com.lelloman.common.view.ItemType
+import com.lelloman.common.view.adapter.BaseMultiTypeRecyclerViewAdapter
+import com.lelloman.common.view.adapter.ItemType
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.launcher.R

@@ -9,6 +9,8 @@ import com.lelloman.pdfscores.persistence.db.PdfScoresDao
 import com.lelloman.pdfscores.persistence.model.Author
 import com.lelloman.pdfscores.persistence.model.PdfScore
 import org.assertj.core.api.Assertions.assertThatThrownBy
+import com.lelloman.pdfscores.testutils.pdfScore
+import com.lelloman.pdfscores.testutils.author
 import org.junit.Before
 import org.junit.Test
 
@@ -96,6 +98,6 @@ class PdfScoresDaoTest {
     }
 
     private fun givenDbContainsAuthor(author: Author = author()): Author = authorsDao
-        .insert(author)
+        .insert(listOf(author))
         .let { author.copy(id = it[0]) }
 }

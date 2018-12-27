@@ -1,10 +1,70 @@
 {
+  "some free uuids": [
+    "9e0206a2-217d-4a2a-b0c1-6d1076a2ddfc",
+    "c37e757e-a235-4b7c-9cb6-f4eb7d7d2c3d",
+    "7c99a918-26b0-431e-bfe9-ae02b582b63e",
+    "1e5b9c53-6e7a-4a7f-9f5e-1caa142bfc2e",
+    "94869de4-57b3-4400-9d22-7308fb1cca0a",
+    "18957917-6b44-424b-a11d-55d6d61dd097",
+    "4d31a606-f821-466b-a3ca-4157eff14cad",
+    "499238ff-d4b7-4bfd-aa57-b10ba4a9c2ae",
+    "77876923-2f8e-4151-8d6c-14eb63ddafef",
+    "5910f936-ef48-44d6-8d33-0c38f5f0a236",
+    "5bcbfb80-ad0f-44cf-b11f-af4adf9d43b5",
+    "28451d18-bdc6-405c-b792-7ce53a92b458",
+    "186b8bb8-8cc8-4ebb-a352-c985da91d952",
+    "ef284949-dea4-4613-be31-705ff0557684",
+    "79b4b85d-51d2-4b4c-a780-c737bca8ef22",
+    "5120f4cc-c245-4737-85ed-475863d26943",
+    "207d8534-583d-44b4-a9fc-53dd41e8c60c",
+    "36ab14ac-4ce4-4a98-bcba-c6920c763661",
+    "5f21f5a1-2e1b-46b4-b10c-6b666935791f",
+    "192fee09-0d93-4260-9e04-130876ed5d61",
+    "0da82ea0-ad7f-43d3-a43d-b4f43c4e7510",
+    "ab5fb31a-c504-47b1-8143-b3a9061f7984",
+    "e0d2b265-16e7-436c-a2fb-64d82bd96092",
+    "8ef4e76a-2437-4155-a969-8a17418fd680",
+    "1fd58112-8a07-4293-b908-0b8aaaebdcf5",
+    "0c2fe539-a96e-429b-95f9-cf17563fa768",
+    "b145890c-a3e0-4256-8050-2d5207a828c1",
+    "956adda2-a8ac-4094-9650-1875d105acf8",
+    "44a8a6af-b669-4b0b-b3d1-2bc176f8fbcd",
+    "2be73de0-f9aa-46e7-94a2-c2749e595833",
+    "ac3dba23-9125-406d-8d3f-53f53bdbd243",
+    "b75391fb-eb98-4b92-93be-56c97dcba378",
+    "fed571ff-b73a-4f74-aa83-21eee5da483e",
+    "be653211-f65b-463c-b4df-fe2212fb5986",
+    "153a5156-f912-49dc-8332-17cd2c249b51",
+    "540cebe1-231c-48e9-86d6-f08bd0647109",
+    "d7829e24-6342-43cd-a187-10bd03834cc0",
+    "8b2253e3-32d2-4a47-92ce-9411f4f41ff6",
+    "38a5bc75-79a0-48ba-8e97-80823c1d8572",
+    "cb708f5e-e142-4eee-92a4-9a900a82f4da",
+    "caad4c9a-326e-4c8a-9614-b78156d575eb",
+    "803a92c5-dc28-4e33-bed9-9b3ff8fdca13",
+    "dbf81ff8-0ac5-409c-9a96-806614c77d3a",
+    "3287797f-2c0d-4ff2-a8ac-aa47d76397eb",
+    "67c45321-d80c-4c29-8310-7c16f6a183e7",
+    "a4b5a5fd-8d6d-4ab1-bbbb-3e5ea9f94aeb",
+    "67ccf85f-eab8-496b-b485-cbbd094edb8f",
+    "9efd9f66-6e77-4812-aae3-29a527aaec74",
+    "1031c9e0-5198-4e91-a3de-2e7759c82021"
+  ],
   "version": 1,
   "authors": [
     {
       "id": 1,
       "firstName": "Johann Sebastian",
-      "lastName": "Bach"
+      "lastName": "Bach",
+      "isAsset": true,
+      "collectionId": "7be288f5-e440-4f3d-8799-c4a806945f3b"
+    },
+    {
+      "id": 2,
+      "firstName": "Domenico",
+      "lastName": "Scarlatti",
+      "isAsset": true,
+      "collectionId": "997c0e5a-22ad-4943-acc3-cff33981a3a2"
     }
   ],
   "pdfScores": [
@@ -14,7 +74,8 @@
       "created": 0,
       "lastOpened": 1,
       "title": "Clavicambalo ben temperato",
-      "authorId": 1
+      "authorId": 1,
+      "collectionId": "08d7b5e3-92c8-4c11-bf3d-0edf5236cf93"
     },
     {
       "id": 2,
@@ -22,7 +83,8 @@
       "created": 0,
       "lastOpened": 1,
       "title": "Concerto italiano",
-      "authorId": 1
+      "authorId": 1,
+      "collectionId": "4b009d17-dbb1-4a0b-9455-d76139c2f7c4"
     },
     {
       "id": 3,
@@ -30,7 +92,8 @@
       "created": 0,
       "lastOpened": 1,
       "title": "pastorale",
-      "authorId": 1
+      "authorId": 1,
+      "collectionId": "74c91712-999c-4b9a-9329-f6e55ce1059e"
     },
     {
       "id": 4,
@@ -38,7 +101,17 @@
       "created": 0,
       "lastOpened": 1,
       "title": "Suite in la min",
-      "authorId": 1
+      "authorId": 1,
+      "collectionId": "5960b757-6c32-4c84-93da-235ed082cad4"
+    },
+    {
+      "id": 5,
+      "uri": "asset:///scarlatti.pdf",
+      "created": 0,
+      "lastOpened": 1,
+      "title": "Sonatas collection",
+      "authorId": 2,
+      "collectionId": "d8271a14-c44b-48cb-a3ae-24b46072f84a"
     }
   ]
 }
