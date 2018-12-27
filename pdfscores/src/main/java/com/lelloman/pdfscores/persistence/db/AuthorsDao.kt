@@ -17,7 +17,7 @@ interface AuthorsDao {
     fun getAll(): Flowable<List<Author>>
 
     @Insert
-    fun insert(vararg author: Author): List<Long>
+    fun insert(authors: Collection<Author>) : List<Long>
 
     @Update
     fun update(vararg author: Author)

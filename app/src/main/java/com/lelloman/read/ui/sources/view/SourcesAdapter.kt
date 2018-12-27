@@ -1,7 +1,7 @@
 package com.lelloman.read.ui.sources.view
 
 import android.view.ViewGroup
-import com.lelloman.common.view.BaseRecyclerViewAdapter
+import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.R

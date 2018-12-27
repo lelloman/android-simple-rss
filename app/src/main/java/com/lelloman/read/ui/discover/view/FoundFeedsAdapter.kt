@@ -1,6 +1,6 @@
 package com.lelloman.read.ui.discover.view
 
-import com.lelloman.common.view.BaseRecyclerViewAdapter
+import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.read.R
 import com.lelloman.read.databinding.ListItemDiscoverFoundFeedBinding

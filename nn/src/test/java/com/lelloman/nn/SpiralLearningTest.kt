@@ -11,9 +11,11 @@ import com.lelloman.nn.optimizer.Momentum
 import com.lelloman.nn.optimizer.SGD
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import java.util.*
 
+@Ignore
 class SpiralLearningTest {
 
     inner class Callback(private val network: Network, private val folderName: String, private val limit: Double = 0.04)

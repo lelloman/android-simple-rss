@@ -4,6 +4,7 @@ import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import com.lelloman.pdfscores.persistence.db.AppDatabase.Companion.PDF_SCORES_TABLE_NAME
+import com.lelloman.pdfscores.persistence.model.PdfScore
 import com.lelloman.pdfscores.persistence.model.PdfScoreModel
 import com.lelloman.pdfscores.persistence.model.PdfScoreModel.Companion.COLUMN_LAST_OPENED
 import io.reactivex.Flowable
@@ -19,4 +20,7 @@ interface PdfScoresDao {
 
     @Insert
     fun insert(vararg pdfScore: PdfScoreModel): List<Long>
+
+    @Insert
+    fun insert(pdfScores: Collection<PdfScoreModel>): List<Long>
 }

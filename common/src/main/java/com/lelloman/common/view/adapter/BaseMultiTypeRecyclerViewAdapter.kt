@@ -1,4 +1,4 @@
-package com.lelloman.common.view
+package com.lelloman.common.view.adapter
 
 import android.arch.lifecycle.Observer
 import android.databinding.ViewDataBinding
@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
 import com.lelloman.common.utils.ModelWithIdListDiffCalculator
 import com.lelloman.common.utils.model.ModelWithId
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 
 interface ItemType<M : ModelWithId, VM : BaseListItemViewModel<M>, DB : ViewDataBinding> {

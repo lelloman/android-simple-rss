@@ -15,6 +15,8 @@ interface PdfScore : ModelWithId {
     val lastOpened: Long
     val title: String
     val authorId: Long
+    val isAsset: Boolean
+    val collectionId: String
 }
 
 @Entity(
@@ -34,7 +36,9 @@ data class PdfScoreModel(
     override val created: Long,
     override val lastOpened: Long,
     override val title: String,
-    override val authorId: Long
+    override val authorId: Long,
+    override val isAsset: Boolean,
+    override val collectionId: String
 ) : PdfScore {
 
     companion object {

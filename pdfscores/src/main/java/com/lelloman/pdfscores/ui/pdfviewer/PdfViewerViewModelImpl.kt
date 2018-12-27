@@ -4,9 +4,9 @@ import android.arch.lifecycle.MutableLiveData
 import android.media.UnsupportedSchemeException
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.FileProvider
+import com.lelloman.pdfscores.pdfrenderer.EmptyPdfDocument
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.pdfrenderer.PdfDocument
-import com.lelloman.pdfscores.pdfrenderer.EmptyPdfDocument
 import com.lelloman.pdfscores.pdfrenderer.PdfDocumentFactory
 import java.io.File
 import java.net.URI
@@ -44,7 +44,7 @@ class PdfViewerViewModelImpl(
             return
         }
 
-        val document = pdfDocumentFactory.makeFromFile(file)
+        val document = pdfDocumentFactory.make(file)
         pdfDocument.postValue(document)
     }
 

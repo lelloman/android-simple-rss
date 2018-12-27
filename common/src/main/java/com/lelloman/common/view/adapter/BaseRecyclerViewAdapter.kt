@@ -1,4 +1,4 @@
-package com.lelloman.common.view
+package com.lelloman.common.view.adapter
 
 import android.arch.lifecycle.Observer
 import android.databinding.DataBindingUtil

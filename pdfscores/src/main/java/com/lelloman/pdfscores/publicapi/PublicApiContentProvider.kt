@@ -6,7 +6,7 @@ import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
 import com.lelloman.pdfscores.BuildConfig
-import com.lelloman.pdfscores.persistence.assets.AssetsPdfScoresProvider
+import com.lelloman.pdfscores.persistence.assets.AssetsCollectionProvider
 import com.lelloman.pdfscores.persistence.db.AuthorsDao
 import java.io.FileNotFoundException
 import javax.inject.Inject
@@ -31,7 +31,7 @@ class PublicApiContentProvider : ContentProvider() {
     override fun getType(uri: Uri): String? = null
 
     override fun openAssetFile(uri: Uri, mode: String) = when (uriMatcher.match(uri)) {
-        PATH_ASSET_COLLECTION -> context.assets.openFd(AssetsPdfScoresProvider.COLLECTION_JSON_FILE_NAME)
+        PATH_ASSET_COLLECTION -> context.assets.openFd(AssetsCollectionProvider.COLLECTION_JSON_FILE_NAME)
         else -> throw FileNotFoundException("Could not find file for uri $uri")
     }
 

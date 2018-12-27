@@ -11,7 +11,9 @@ import com.lelloman.pdfscores.persistence.db.AppDatabase.Companion.AUTHORS_TABLE
 data class Author(
     @PrimaryKey(autoGenerate = true) override val id: Long = 0L,
     val firstName: String,
-    val lastName: String
+    val lastName: String,
+    val isAsset: Boolean,
+    val collectionId: String
 ) : ModelWithId {
 
     companion object {

@@ -4,7 +4,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import com.lelloman.common.view.BaseActivity
-import com.lelloman.common.view.BaseRecyclerViewAdapter
+import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.launcher.R
 import com.lelloman.launcher.databinding.ActivityLaunchesBinding
 import com.lelloman.launcher.databinding.ListItemPackageLaunchBinding
