@@ -3,7 +3,7 @@ package com.lelloman.launcher.ui.main.viewmodel
 import android.graphics.drawable.Drawable
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 
-class PackageListItemViewModel : BaseListItemViewModel<PackageDrawerListItem> {
+class PackageListItemViewModel : BaseListItemViewModel<Long, PackageDrawerListItem> {
 
     var label: CharSequence = ""
         private set

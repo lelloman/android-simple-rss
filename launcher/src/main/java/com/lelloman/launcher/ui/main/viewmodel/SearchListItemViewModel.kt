@@ -6,7 +6,7 @@ import com.lelloman.common.viewmodel.BaseListItemViewModel
 
 class SearchListItemViewModel(
     onSearchQueryChanged: (String) -> Unit
-) : BaseListItemViewModel<SearchDrawerListItem> {
+) : BaseListItemViewModel<Long, SearchDrawerListItem> {
 
     val appsSearchQuery = ObservableField<String>().apply {
         addOnPropertyChangedCallback(object : Observable.OnPropertyChangedCallback() {

@@ -53,65 +53,58 @@
   "version": 1,
   "authors": [
     {
-      "id": 1,
       "firstName": "Johann Sebastian",
       "lastName": "Bach",
       "isAsset": true,
-      "collectionId": "7be288f5-e440-4f3d-8799-c4a806945f3b"
+      "id": "7be288f5-e440-4f3d-8799-c4a806945f3b"
     },
     {
-      "id": 2,
       "firstName": "Domenico",
       "lastName": "Scarlatti",
       "isAsset": true,
-      "collectionId": "997c0e5a-22ad-4943-acc3-cff33981a3a2"
+      "id": "997c0e5a-22ad-4943-acc3-cff33981a3a2"
     }
   ],
   "pdfScores": [
     {
-      "id": 1,
       "uri": "asset:///bach_clavicembalo_ben_temperato.pdf",
       "created": 0,
       "lastOpened": 1,
       "title": "Clavicambalo ben temperato",
-      "authorId": 1,
-      "collectionId": "08d7b5e3-92c8-4c11-bf3d-0edf5236cf93"
+      "authorId": "7be288f5-e440-4f3d-8799-c4a806945f3b",
+      "id": "08d7b5e3-92c8-4c11-bf3d-0edf5236cf93"
     },
     {
-      "id": 2,
       "uri": "asset:///bach_concerto_italiano.pdf",
       "created": 0,
       "lastOpened": 1,
       "title": "Concerto italiano",
-      "authorId": 1,
-      "collectionId": "4b009d17-dbb1-4a0b-9455-d76139c2f7c4"
+      "authorId": "7be288f5-e440-4f3d-8799-c4a806945f3b",
+      "id": "4b009d17-dbb1-4a0b-9455-d76139c2f7c4"
     },
     {
-      "id": 3,
       "uri": "asset:///bach_pastorale.pdf",
       "created": 0,
       "lastOpened": 1,
       "title": "pastorale",
-      "authorId": 1,
-      "collectionId": "74c91712-999c-4b9a-9329-f6e55ce1059e"
+      "authorId": "7be288f5-e440-4f3d-8799-c4a806945f3b",
+      "id": "74c91712-999c-4b9a-9329-f6e55ce1059e"
     },
     {
-      "id": 4,
       "uri": "asset:///bach_suite_a_min.pdf",
       "created": 0,
       "lastOpened": 1,
       "title": "Suite in la min",
-      "authorId": 1,
-      "collectionId": "5960b757-6c32-4c84-93da-235ed082cad4"
+      "authorId": "7be288f5-e440-4f3d-8799-c4a806945f3b",
+      "id": "5960b757-6c32-4c84-93da-235ed082cad4"
     },
     {
-      "id": 5,
       "uri": "asset:///scarlatti.pdf",
       "created": 0,
       "lastOpened": 1,
       "title": "Sonatas collection",
-      "authorId": 2,
-      "collectionId": "d8271a14-c44b-48cb-a3ae-24b46072f84a"
+      "authorId": "997c0e5a-22ad-4943-acc3-cff33981a3a2",
+      "id": "d8271a14-c44b-48cb-a3ae-24b46072f84a"
     }
   ]
 }

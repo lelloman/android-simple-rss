@@ -16,4 +16,4 @@ data class Source(
     val isActive: Boolean,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var favicon: ByteArray? = null,
     val immutableHashCode: Int = name.hashCode() * url.hashCode()
-) : ModelWithId
+) : ModelWithId<Long>

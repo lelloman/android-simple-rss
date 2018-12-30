@@ -3,7 +3,7 @@ package com.lelloman.deviceinfo.ui.viewmodel
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.deviceinfo.device.NetworkInterface
 
-class NetworkInterfaceListItemViewModel : BaseListItemViewModel<NetworkInterface> {
+class NetworkInterfaceListItemViewModel : BaseListItemViewModel<Long, NetworkInterface> {
 
     var name = ""
         private set

@@ -13,7 +13,7 @@ import com.lelloman.deviceinfo.infoitem.InfoItem
 class DisplayInfoItemListItemViewModel(
     private val resourceProvider: ResourceProvider,
     private val onDisplayButtonClickListener: ((InfoItem) -> Unit)?
-) : BaseListItemViewModel<DisplayInfoItem> {
+) : BaseListItemViewModel<Long, DisplayInfoItem> {
 
     private val emptySpanned = SpannableString("")
     private lateinit var infoItem: DisplayInfoItem

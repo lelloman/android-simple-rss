@@ -3,12 +3,12 @@ package com.lelloman.common.utils
 import android.support.v7.util.DiffUtil
 import com.lelloman.common.utils.model.ModelWithId
 
-class ModelWithIdListDiffCalculator : DiffUtil.Callback() {
+class ModelWithIdListDiffCalculator<T> : DiffUtil.Callback() {
 
-    private var oldList = emptyList<ModelWithId>()
-    private var newList = emptyList<ModelWithId>()
+    private var oldList = emptyList<ModelWithId<T>>()
+    private var newList = emptyList<ModelWithId<T>>()
 
-    fun computeDiff(oldList: List<ModelWithId>, newList: List<ModelWithId>): DiffUtil.DiffResult {
+    fun computeDiff(oldList: List<ModelWithId<T>>, newList: List<ModelWithId<T>>): DiffUtil.DiffResult {
         this.oldList = oldList
         this.newList = newList
         return DiffUtil.calculateDiff(this)

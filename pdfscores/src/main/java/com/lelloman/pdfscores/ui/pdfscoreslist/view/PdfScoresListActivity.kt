@@ -2,10 +2,10 @@ package com.lelloman.pdfscores.ui.pdfscoreslist.view
 
 import android.support.v7.widget.LinearLayoutManager
 import com.lelloman.common.view.BaseActivity
+import com.lelloman.common.view.adapter.HeadersRecyclerViewAdapter
 import com.lelloman.pdfscores.R
 import com.lelloman.pdfscores.databinding.ActivityRecentScoresBinding
 import com.lelloman.pdfscores.databinding.ListItemPdfScoreBinding
-import com.lelloman.common.view.adapter.HeadersRecyclerViewAdapter
 import com.lelloman.pdfscores.ui.pdfscoreslist.PdfScoreViewModelItem
 import com.lelloman.pdfscores.ui.pdfscoreslist.viewmodel.PdfScoreListItemViewModel
 import com.lelloman.pdfscores.ui.pdfscoreslist.viewmodel.PdfScoresListViewModel
@@ -14,14 +14,14 @@ class PdfScoresListActivity : BaseActivity<PdfScoresListViewModel, ActivityRecen
 
     override val layoutResId = R.layout.activity_recent_scores
 
-    private val adapter = object : HeadersRecyclerViewAdapter<PdfScoreViewModelItem, PdfScoreListItemViewModel, ListItemPdfScoreBinding>(
+    private val adapter = object : HeadersRecyclerViewAdapter<String, PdfScoreViewModelItem, PdfScoreListItemViewModel, ListItemPdfScoreBinding>(
         onItemClickListener = { viewModel.onPdfScoreClicked(it) }
     ) {
         override val listItemLayoutResId = R.layout.list_item_pdf_score
 
-        override val headerExtractor: (PdfScoreViewModelItem) -> Pair<Long, String> = {
-            it.authorId to it.authorId.toString()
-        }
+        override fun getHeaderId(item: PdfScoreViewModelItem) = item.authorId.toString()
+
+        override fun getHeaderText(item: PdfScoreViewModelItem) = item.authorId.toString()
 
         override fun bindViewModel(binding: ListItemPdfScoreBinding, viewModel: PdfScoreListItemViewModel) {
             binding.viewModel = viewModel

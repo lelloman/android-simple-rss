@@ -34,7 +34,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         )
     }
 
-    private val classifiedAdapter = object : BaseRecyclerViewAdapter<PackageDrawerListItem, PackageListItemViewModel, ListItemClassifiedPackageBinding>(
+    private val classifiedAdapter = object : BaseRecyclerViewAdapter<Long, PackageDrawerListItem, PackageListItemViewModel, ListItemClassifiedPackageBinding>(
         onItemClickListener = this@MainActivity::onAppsDrawerElementClicked
     ) {
         override val listItemLayoutResId = R.layout.list_item_classified_package
@@ -50,7 +50,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             }
         }
 
-        override fun createViewModel(viewHolder: BaseViewHolder<PackageDrawerListItem, PackageListItemViewModel, ListItemClassifiedPackageBinding>) = PackageListItemViewModel()
+        override fun createViewModel(viewHolder: BaseViewHolder<Long, PackageDrawerListItem, PackageListItemViewModel, ListItemClassifiedPackageBinding>) = PackageListItemViewModel()
     }
 
     override fun getViewModelClass() = MainViewModel::class.java

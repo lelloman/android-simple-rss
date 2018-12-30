@@ -8,5 +8,4 @@ object SearchDrawerListItem : AppsDrawerListItem {
     override val requiresFullRow = true
 
     override fun isFilteredOutBy(searchQuery: String) = false
-
 }

@@ -10,7 +10,7 @@ data class FoundFeed(
     val url: String,
     val nArticles: Int,
     var name: String? = null
-) : ModelWithId, Parcelable, Serializable {
+) : ModelWithId<Long>, Parcelable, Serializable {
 
     constructor(source: Parcel) : this(
         source.readLong(),

@@ -7,4 +7,4 @@ import com.lelloman.launcher.persistence.db.model.PackageLaunch
 class PackageLaunchListItem(
     val packageLaunch: PackageLaunch,
     val icon: Drawable
-) : ModelWithId by packageLaunch
+) : ModelWithId<Long> by packageLaunch

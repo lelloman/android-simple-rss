@@ -6,9 +6,9 @@ import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.adapter.BaseMultiTypeRecyclerViewAdapter
 import com.lelloman.common.view.adapter.ItemType
-import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.launcher.R
 import com.lelloman.launcher.databinding.ListItemPackageBinding
@@ -23,16 +23,16 @@ class AppsDrawerAdapter(
     onClickListener: (Any) -> Unit,
     resourceProvider: ResourceProvider,
     onSearchQueryChanged: (String) -> Unit
-) : BaseMultiTypeRecyclerViewAdapter<AppsDrawerListItem>(
+) : BaseMultiTypeRecyclerViewAdapter<Long, AppsDrawerListItem>(
     onClickListener = onClickListener,
     resourceProvider = resourceProvider
 ) {
     @Suppress("UNCHECKED_CAST")
-    override val itemsMap: Map<Any, ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>>
+    override val itemsMap: Map<Any, ItemType<Long, AppsDrawerListItem, BaseListItemViewModel<Long, AppsDrawerListItem>, ViewDataBinding>>
         get() {
-            val out = mutableMapOf<Any, ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>>()
-            out[PackageDrawerListItem::class.java] = packageItem as ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>
-            out[SearchDrawerListItem::class.java] = searchItem as ItemType<AppsDrawerListItem, BaseListItemViewModel<AppsDrawerListItem>, ViewDataBinding>
+            val out = mutableMapOf<Any, ItemType<Long, AppsDrawerListItem, BaseListItemViewModel<Long, AppsDrawerListItem>, ViewDataBinding>>()
+            out[PackageDrawerListItem::class.java] = packageItem as ItemType<Long, AppsDrawerListItem, BaseListItemViewModel<Long, AppsDrawerListItem>, ViewDataBinding>
+            out[SearchDrawerListItem::class.java] = searchItem as ItemType<Long, AppsDrawerListItem, BaseListItemViewModel<Long, AppsDrawerListItem>, ViewDataBinding>
             return out
         }
 
@@ -49,7 +49,7 @@ class AppsDrawerAdapter(
         }
     }
 
-    private val packageItem = object : ItemType<PackageDrawerListItem, PackageListItemViewModel, ListItemPackageBinding> {
+    private val packageItem = object : ItemType<Long, PackageDrawerListItem, PackageListItemViewModel, ListItemPackageBinding> {
         override val ordinal = 1
         override fun createBinding(parent: ViewGroup): ListItemPackageBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -66,7 +66,7 @@ class AppsDrawerAdapter(
         }
     }
 
-    private val searchItem = object : ItemType<SearchDrawerListItem, SearchListItemViewModel, ListItemSearchBinding> {
+    private val searchItem = object : ItemType<Long, SearchDrawerListItem, SearchListItemViewModel, ListItemSearchBinding> {
         override val ordinal = 2
         override fun createBinding(parent: ViewGroup): ViewDataBinding {
             val binding: ListItemSearchBinding = DataBindingUtil.inflate(

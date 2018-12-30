@@ -9,13 +9,11 @@ import com.lelloman.pdfscores.persistence.db.AppDatabase.Companion.AUTHORS_TABLE
     tableName = AUTHORS_TABLE_NAME
 )
 data class Author(
-    @PrimaryKey(autoGenerate = true) override val id: Long = 0L,
+    @PrimaryKey override val id: String,
     val firstName: String,
     val lastName: String,
-    val isAsset: Boolean,
-    val collectionId: String
-) : ModelWithId {
-
+    val isAsset: Boolean
+) : ModelWithId<String> {
     companion object {
         const val COLUMN_ID = "id"
         const val COLUMN_LAST_NAME = "lastName"

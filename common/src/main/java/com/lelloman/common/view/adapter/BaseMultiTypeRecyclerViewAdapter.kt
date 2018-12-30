@@ -9,23 +9,23 @@ import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 
-interface ItemType<M : ModelWithId, VM : BaseListItemViewModel<M>, DB : ViewDataBinding> {
+interface ItemType<ID, M : ModelWithId<ID>, VM : BaseListItemViewModel<ID, M>, DB : ViewDataBinding> {
     val ordinal: Int
     fun createBinding(parent: ViewGroup): ViewDataBinding
     fun createViewModel(resourceProvider: ResourceProvider, onClickListener: ((Any) -> Unit)?): VM
     fun bindViewModel(viewModel: VM, binding: DB, item: M)
 }
 
-abstract class BaseMultiTypeRecyclerViewAdapter<M : ModelWithId>(
+abstract class BaseMultiTypeRecyclerViewAdapter<ID, M : ModelWithId<ID>>(
     private val onClickListener: ((Any) -> Unit)?,
     private val resourceProvider: ResourceProvider
-) : RecyclerView.Adapter<BaseMultiTypeRecyclerViewAdapter.ViewHolder<M>>(),
+) : RecyclerView.Adapter<BaseMultiTypeRecyclerViewAdapter.ViewHolder<ID, M>>(),
     Observer<List<M>> {
 
     protected var data = emptyList<M>()
-    private val listItemDiffCalculator = ModelWithIdListDiffCalculator()
+    private val listItemDiffCalculator = ModelWithIdListDiffCalculator<ID>()
 
-    protected abstract val itemsMap: Map<Any, ItemType<M, BaseListItemViewModel<M>, ViewDataBinding>>
+    protected abstract val itemsMap: Map<Any, ItemType<ID, M, BaseListItemViewModel<ID, M>, ViewDataBinding>>
 
     private val viewTypesMap by lazy {
         itemsMap
@@ -34,7 +34,7 @@ abstract class BaseMultiTypeRecyclerViewAdapter<M : ModelWithId>(
             .toMap()
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<M> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<ID, M> {
         val itemType = viewTypesMap[viewType]!!
         val binding = itemType.createBinding(parent)
 
@@ -50,7 +50,7 @@ abstract class BaseMultiTypeRecyclerViewAdapter<M : ModelWithId>(
     override fun getItemViewType(position: Int) =
         getItemType(getItem(position)).ordinal
 
-    override fun onBindViewHolder(viewHolder: ViewHolder<M>, position: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder<ID, M>, position: Int) {
         val item = getItem(position)
         val itemType = getItemType(item)
         viewHolder.bind(item)
@@ -69,13 +69,13 @@ abstract class BaseMultiTypeRecyclerViewAdapter<M : ModelWithId>(
 
     private fun getItem(position: Int): M = data[position]
 
-    private fun getItemType(item: Any): ItemType<M, BaseListItemViewModel<M>, ViewDataBinding> =
+    private fun getItemType(item: Any): ItemType<ID, M, BaseListItemViewModel<ID, M>, ViewDataBinding> =
         itemsMap[item::class.java]
             ?: throw IllegalArgumentException("No ItemType defined for class ${item::class.java.name}")
 
-    class ViewHolder<M : ModelWithId>(
+    class ViewHolder<ID, M : ModelWithId<ID>>(
         val binding: ViewDataBinding,
-        val viewModel: BaseListItemViewModel<M>,
+        val viewModel: BaseListItemViewModel<ID, M>,
         onClickListener: ((M) -> Unit)? = null
     ) : RecyclerView.ViewHolder(binding.root) {
 
