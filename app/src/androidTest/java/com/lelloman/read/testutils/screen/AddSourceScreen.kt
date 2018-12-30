@@ -4,13 +4,13 @@ import android.graphics.drawable.VectorDrawable
 import android.support.test.espresso.Espresso.pressBack
 import android.widget.EditText
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.instrumentedtestutils.Screen
+import com.lelloman.instrumentedtestutils.clickView
+import com.lelloman.instrumentedtestutils.clickViewWithText
+import com.lelloman.instrumentedtestutils.typeInEditText
+import com.lelloman.instrumentedtestutils.viewIsDisplayed
+import com.lelloman.instrumentedtestutils.viewWithId
 import com.lelloman.read.R
-import com.lelloman.testutils.Screen
-import com.lelloman.testutils.clickView
-import com.lelloman.testutils.clickViewWithText
-import com.lelloman.testutils.typeInEditText
-import com.lelloman.testutils.viewIsDisplayed
-import com.lelloman.testutils.viewWithId
 
 class AddSourceScreen : Screen() {
     init {
@@ -36,7 +36,7 @@ class AddSourceScreen : Screen() {
         }
     }
 
-    fun wait(seconds: Double) = apply { com.lelloman.testutils.wait(seconds) }
+    fun wait(seconds: Double) = apply { com.lelloman.instrumentedtestutils.wait(seconds) }
 
     fun urlFieldShowsOkDrawable() = apply {
         viewWithId(R.id.edit_text_source_url).check { view, noViewFoundException ->

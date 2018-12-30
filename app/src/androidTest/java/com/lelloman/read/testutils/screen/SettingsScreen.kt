@@ -10,11 +10,11 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.support.v7.widget.Toolbar
 import android.view.View
 import com.lelloman.common.view.AppTheme
+import com.lelloman.instrumentedtestutils.Screen
+import com.lelloman.instrumentedtestutils.viewIsDisplayed
+import com.lelloman.instrumentedtestutils.viewWithId
 import com.lelloman.read.R
 import com.lelloman.read.testutils.setToggleSettingChecked
-import com.lelloman.testutils.Screen
-import com.lelloman.testutils.viewIsDisplayed
-import com.lelloman.testutils.viewWithId
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.Description
 

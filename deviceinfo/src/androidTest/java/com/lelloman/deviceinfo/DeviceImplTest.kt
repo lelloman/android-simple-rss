@@ -7,8 +7,8 @@ import com.lelloman.common.utils.model.Resolution
 import com.lelloman.deviceinfo.device.DeviceImpl
 import com.lelloman.deviceinfo.testutils.TestApp
 import com.lelloman.deviceinfo.ui.view.InfoListActivity
-import com.lelloman.testutils.rotateLeft
-import com.lelloman.testutils.rotateNatural
+import com.lelloman.instrumentedtestutils.rotateLeft
+import com.lelloman.instrumentedtestutils.rotateNatural
 import io.reactivex.observers.TestObserver
 import org.junit.After
 import org.junit.Before

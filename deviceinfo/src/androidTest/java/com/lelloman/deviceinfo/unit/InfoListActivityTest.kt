@@ -18,8 +18,8 @@ import com.lelloman.deviceinfo.testutils.MockViewModelModule
 import com.lelloman.deviceinfo.testutils.TestApp
 import com.lelloman.deviceinfo.ui.view.InfoListActivity
 import com.lelloman.deviceinfo.ui.viewmodel.InfoListViewModel
-import com.lelloman.testutils.rotateNatural
-import com.lelloman.testutils.whenever
+import com.lelloman.instrumentedtestutils.rotateNatural
+import com.lelloman.instrumentedtestutils.whenever
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

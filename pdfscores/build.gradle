@@ -80,7 +80,7 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$assert_j_version"
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
-    androidTestImplementation project(':testutils')
+    androidTestImplementation 'com.github.lelloman:android-instrumented-tests-utils:-SNAPSHOT'
 }
 
 repositories {

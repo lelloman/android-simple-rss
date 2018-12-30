@@ -6,9 +6,9 @@ import android.support.test.espresso.ViewAction
 import android.view.View
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.instrumentedtestutils.rotateNatural
 import com.lelloman.read.http.HttpModule
 import com.lelloman.read.widget.ToggleSettingItemView
-import com.lelloman.testutils.rotateNatural
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 

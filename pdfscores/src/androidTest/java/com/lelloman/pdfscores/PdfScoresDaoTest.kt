@@ -8,9 +8,9 @@ import com.lelloman.pdfscores.persistence.db.AuthorsDao
 import com.lelloman.pdfscores.persistence.db.PdfScoresDao
 import com.lelloman.pdfscores.persistence.model.Author
 import com.lelloman.pdfscores.persistence.model.PdfScore
-import org.assertj.core.api.Assertions.assertThatThrownBy
-import com.lelloman.pdfscores.testutils.pdfScore
 import com.lelloman.pdfscores.testutils.author
+import com.lelloman.pdfscores.testutils.pdfScore
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.Before
 import org.junit.Test
 
@@ -45,7 +45,7 @@ class PdfScoresDaoTest {
         tester.awaitCount(++testerCount)
         tester.assertValueAt(0) { it.isEmpty() }
 
-        val pdfScore = pdfScore().copy(authorId = 0L)
+        val pdfScore = pdfScore().copy(authorId = "0")
 
         assertThatThrownBy { tested.insert(pdfScore) }
             .isInstanceOf(SQLiteConstraintException::class.java)
@@ -59,11 +59,11 @@ class PdfScoresDaoTest {
 
         val author = givenDbContainsAuthor()
         val pdfScore = pdfScore().copy(authorId = author.id)
-        val pdfScoreId = tested.insert(pdfScore)[0]
+        tested.insert(pdfScore)[0]
 
         tester.awaitCount(++testerCount)
         tester.assertValueAt(testerCount - 1) {
-            it.size == 1 && it[0] == pdfScore.copy(id = pdfScoreId)
+            it.size == 1 && it[0] == pdfScore.copy(id = pdfScore.id)
         }
     }
 

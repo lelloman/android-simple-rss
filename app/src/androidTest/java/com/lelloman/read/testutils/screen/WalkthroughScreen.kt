@@ -7,13 +7,13 @@ import android.support.test.espresso.matcher.ViewMatchers.withId
 import android.view.View
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.widget.PagerIndicator
+import com.lelloman.instrumentedtestutils.Screen
+import com.lelloman.instrumentedtestutils.checkRecyclerViewCount
+import com.lelloman.instrumentedtestutils.clickView
+import com.lelloman.instrumentedtestutils.clickViewWithText
+import com.lelloman.instrumentedtestutils.viewIsDisplayed
+import com.lelloman.instrumentedtestutils.viewWithTextIsDisplayed
 import com.lelloman.read.R
-import com.lelloman.testutils.Screen
-import com.lelloman.testutils.checkRecyclerViewCount
-import com.lelloman.testutils.clickView
-import com.lelloman.testutils.clickViewWithText
-import com.lelloman.testutils.viewIsDisplayed
-import com.lelloman.testutils.viewWithTextIsDisplayed
 import org.hamcrest.Description
 
 
@@ -38,8 +38,8 @@ class WalkthroughScreen : Screen() {
         clickViewWithText(AppTheme.LIGHT.name)
     }
 
-    fun swipeLeft() = apply { com.lelloman.testutils.swipeLeft(R.id.view_pager) }
-    fun swipeRight() = apply { com.lelloman.testutils.swipeRight(R.id.view_pager) }
+    fun swipeLeft() = apply { com.lelloman.instrumentedtestutils.swipeLeft(R.id.view_pager) }
+    fun swipeRight() = apply { com.lelloman.instrumentedtestutils.swipeRight(R.id.view_pager) }
 
     fun typeInUrlIsDisplayed() = apply { viewWithTextIsDisplayed(string(R.string.type_in_url)) }
 

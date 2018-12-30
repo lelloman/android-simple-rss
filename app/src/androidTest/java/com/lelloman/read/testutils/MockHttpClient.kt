@@ -1,7 +1,7 @@
 package com.lelloman.read.testutils
 
 import android.support.test.InstrumentationRegistry
-import com.lelloman.testutils.whenever
+import com.lelloman.instrumentedtestutils.whenever
 import okhttp3.Call
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
