@@ -71,7 +71,6 @@ dependencyUpdates.resolutionStrategy {
 }
 
 task unitTest(dependsOn: ['app:testDebugUnitTest',
-                          'common:testDebugUnitTest',
                           'deviceinfo:testDebugUnitTest',
                           'launcher:testDebugUnitTest',
                           'pdfscores:testCollectionDebugUnitTest']) {
@@ -80,7 +79,6 @@ task unitTest(dependsOn: ['app:testDebugUnitTest',
 }
 
 task uiTest(dependsOn: ['app:connectedAndroidTest',
-                        'common:connectedAndroidTest',
                         'deviceinfo:connectedAndroidTest',
                         'launcher:connectedAndroidTest',
                         'pdfscores:connectedAndroidTest']) {
