@@ -38,8 +38,9 @@ android {
 }
 
 dependencies {
-    implementation project(':common')
     implementation project(':nn')
+
+    implementation 'com.github.lelloman:android-common:-SNAPSHOT'
 
     // room
     implementation "android.arch.persistence.room:runtime:$room_version"

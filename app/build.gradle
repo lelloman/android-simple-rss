@@ -42,8 +42,9 @@ android {
 }
 
 dependencies {
-    implementation project(':common')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation 'com.github.lelloman:android-common:-SNAPSHOT'
 
     // room
     implementation "android.arch.persistence.room:runtime:$room_version"

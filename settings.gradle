@@ -1,1 +1,1 @@
-include ':app', ':common', ':deviceinfo', ':launcher', ':nn', ':pdfscores'
+include ':app', ':deviceinfo', ':launcher', ':nn', ':pdfscores'

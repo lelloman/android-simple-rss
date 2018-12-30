@@ -56,9 +56,9 @@ android {
 }
 
 dependencies {
-    implementation project(':common')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation 'com.github.lelloman:android-common:-SNAPSHOT'
     implementation 'com.github.lelloman:android-pdf-renderer:60880b24a2'
 
     // room
