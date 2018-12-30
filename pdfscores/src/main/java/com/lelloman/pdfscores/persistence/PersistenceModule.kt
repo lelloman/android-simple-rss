@@ -57,8 +57,7 @@ class PersistenceModule {
     fun provideAssetsCollectionInserter(
         assetsCollectionProvider: AssetsCollectionProvider,
         authorsDao: AuthorsDao,
-        pdfScoresDao: PdfScoresDao,
-        @NewThreadScheduler newThreadScheduler: Scheduler
+        pdfScoresDao: PdfScoresDao
     ): AssetsCollectionInserter = AssetsCollectionInserterImpl(
         assetsCollectionProvider = assetsCollectionProvider,
         authorsDao = authorsDao,
