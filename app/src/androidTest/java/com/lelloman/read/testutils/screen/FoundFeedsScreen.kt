@@ -1,10 +1,10 @@
 package com.lelloman.read.testutils.screen
 
 import android.support.test.espresso.Espresso.pressBack
+import com.lelloman.instrumentedtestutils.Screen
+import com.lelloman.instrumentedtestutils.checkRecyclerViewCount
+import com.lelloman.instrumentedtestutils.viewWithTextIsDisplayed
 import com.lelloman.read.R
-import com.lelloman.testutils.Screen
-import com.lelloman.testutils.checkRecyclerViewCount
-import com.lelloman.testutils.viewWithTextIsDisplayed
 
 class FoundFeedsScreen : Screen() {
 
@@ -12,7 +12,7 @@ class FoundFeedsScreen : Screen() {
         viewVisible(R.id.found_feed_list_root)
     }
 
-    fun wait(seconds: Int) = apply { com.lelloman.testutils.wait(seconds.toDouble()) }
+    fun wait(seconds: Int) = apply { com.lelloman.instrumentedtestutils.wait(seconds.toDouble()) }
     fun hasText(text: String) = apply { viewWithTextIsDisplayed(text) }
 
     fun backToDiscoverUrlScreen() = pressBack().run { DiscoverSourcesScreen() }

@@ -1,11 +1,11 @@
 package com.lelloman.read.testutils.screen
 
 import android.support.test.espresso.Espresso.pressBack
+import com.lelloman.instrumentedtestutils.Screen
+import com.lelloman.instrumentedtestutils.checkRecyclerViewCount
+import com.lelloman.instrumentedtestutils.clickView
+import com.lelloman.instrumentedtestutils.clickViewWithText
 import com.lelloman.read.R
-import com.lelloman.testutils.Screen
-import com.lelloman.testutils.checkRecyclerViewCount
-import com.lelloman.testutils.clickView
-import com.lelloman.testutils.clickViewWithText
 
 class SourcesListScreen : Screen() {
 

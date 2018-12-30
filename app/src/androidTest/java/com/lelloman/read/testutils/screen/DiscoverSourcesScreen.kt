@@ -2,11 +2,11 @@ package com.lelloman.read.testutils.screen
 
 import android.support.test.espresso.Espresso.closeSoftKeyboard
 import android.support.test.espresso.Espresso.pressBack
+import com.lelloman.instrumentedtestutils.Screen
+import com.lelloman.instrumentedtestutils.clickView
+import com.lelloman.instrumentedtestutils.typeInEditText
+import com.lelloman.instrumentedtestutils.viewWithTextIsDisplayed
 import com.lelloman.read.R
-import com.lelloman.testutils.Screen
-import com.lelloman.testutils.clickView
-import com.lelloman.testutils.typeInEditText
-import com.lelloman.testutils.viewWithTextIsDisplayed
 
 class DiscoverSourcesScreen : Screen() {
 

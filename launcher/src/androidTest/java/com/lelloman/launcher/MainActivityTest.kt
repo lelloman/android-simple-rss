@@ -5,6 +5,11 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import com.lelloman.common.utils.SingleLiveData
 import com.lelloman.common.view.actionevent.ViewActionEvent
+import com.lelloman.instrumentedtestutils.rotateNatural
+import com.lelloman.instrumentedtestutils.swipeBottomSheetUp
+import com.lelloman.instrumentedtestutils.viewWithId
+import com.lelloman.instrumentedtestutils.viewWithTextIsDisplayed
+import com.lelloman.instrumentedtestutils.whenever
 import com.lelloman.launcher.di.MockViewModelModule
 import com.lelloman.launcher.testutils.TestApp
 import com.lelloman.launcher.testutils.pkg
@@ -13,11 +18,6 @@ import com.lelloman.launcher.ui.main.HomePage
 import com.lelloman.launcher.ui.main.view.MainActivity
 import com.lelloman.launcher.ui.main.viewmodel.MainViewModel
 import com.lelloman.launcher.ui.main.viewmodel.PackageDrawerListItem
-import com.lelloman.testutils.rotateNatural
-import com.lelloman.testutils.swipeBottomSheetUp
-import com.lelloman.testutils.viewWithId
-import com.lelloman.testutils.viewWithTextIsDisplayed
-import com.lelloman.testutils.whenever
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test

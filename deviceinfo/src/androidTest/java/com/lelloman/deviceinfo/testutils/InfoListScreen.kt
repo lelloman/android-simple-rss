@@ -5,9 +5,9 @@ import com.lelloman.common.utils.model.Resolution
 import com.lelloman.deviceinfo.R
 import com.lelloman.deviceinfo.device.AudioMode
 import com.lelloman.deviceinfo.device.NetworkInterface
-import com.lelloman.testutils.Screen
-import com.lelloman.testutils.clickOnRecyclerViewItem
-import com.lelloman.testutils.viewWithTextIsDisplayed
+import com.lelloman.instrumentedtestutils.Screen
+import com.lelloman.instrumentedtestutils.clickOnRecyclerViewItem
+import com.lelloman.instrumentedtestutils.viewWithTextIsDisplayed
 
 class InfoListScreen : Screen() {
 

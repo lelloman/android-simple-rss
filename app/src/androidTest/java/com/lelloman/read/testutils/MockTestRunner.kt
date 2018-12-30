@@ -1,6 +1,6 @@
 package com.lelloman.read.testutils
 
-import com.lelloman.testutils.TestApplicationRunner
+import com.lelloman.instrumentedtestutils.TestApplicationRunner
 
 @Suppress("unused")
 class MockTestRunner : TestApplicationRunner() {
