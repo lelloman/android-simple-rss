@@ -9,7 +9,6 @@ data class Package(
     val packageName: String,
     val activityName: String,
     val drawable: Drawable
-) : ModelWithId {
-
+) : ModelWithId<Long> {
     fun identifier() = "$packageName/$activityName"
 }

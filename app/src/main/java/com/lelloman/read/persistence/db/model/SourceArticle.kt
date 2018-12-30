@@ -16,7 +16,7 @@ data class SourceArticle(
     val sourceId: Long,
     val sourceName: String,
     val favicon: ByteArray?
-) : ModelWithId, Parcelable {
+) : ModelWithId<Long>, Parcelable {
 
     constructor(source: Parcel) : this(
         source.readLong(),

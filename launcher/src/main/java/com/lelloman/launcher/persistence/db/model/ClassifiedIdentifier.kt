@@ -10,4 +10,4 @@ data class ClassifiedIdentifier(
     @PrimaryKey(autoGenerate = true) override val id: Long = 0L,
     val identifier: String,
     val score: Double
-) : ModelWithId
+) : ModelWithId<Long>

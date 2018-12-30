@@ -2,11 +2,10 @@
   "version": 1,
   "authors": [
     {
-      "id": 1,
       "firstName": "Johann Sebastian",
       "lastName": "Bach",
       "isAsset": true,
-      "collectionId": "7be288f5-e440-4f3d-8799-c4a806945f3b"
+      "id": "7be288f5-e440-4f3d-8799-c4a806945f3b"
     }
   ]
 }

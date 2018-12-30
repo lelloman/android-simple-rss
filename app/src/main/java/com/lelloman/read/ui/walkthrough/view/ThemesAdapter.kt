@@ -8,7 +8,7 @@ import com.lelloman.read.ui.walkthrough.viewmodel.ThemeListItemViewModel
 
 class ThemesAdapter(
     onThemeClickedListener: (ThemeListItem) -> Unit
-) : BaseRecyclerViewAdapter<ThemeListItem, ThemeListItemViewModel, ListItemThemeBinding>(
+) : BaseRecyclerViewAdapter<Long, ThemeListItem, ThemeListItemViewModel, ListItemThemeBinding>(
     onItemClickListener = onThemeClickedListener
 ) {
     override val listItemLayoutResId = R.layout.list_item_theme
@@ -17,6 +17,6 @@ class ThemesAdapter(
         binding.viewModel = viewModel
     }
 
-    override fun createViewModel(viewHolder: BaseViewHolder<ThemeListItem, ThemeListItemViewModel, ListItemThemeBinding>) =
+    override fun createViewModel(viewHolder: BaseViewHolder<Long, ThemeListItem, ThemeListItemViewModel, ListItemThemeBinding>) =
         ThemeListItemViewModel()
 }

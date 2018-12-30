@@ -12,7 +12,7 @@ class SourceListItemViewModel(
     private val resourceProvider: ResourceProvider,
     private val semanticTimeProvider: SemanticTimeProvider,
     private val onIsActiveChanged: (Boolean) -> Unit
-) : BaseListItemViewModel<Source> {
+) : BaseListItemViewModel<Long, Source> {
 
     private lateinit var source: Source
 

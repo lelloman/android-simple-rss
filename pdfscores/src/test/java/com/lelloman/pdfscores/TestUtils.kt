@@ -7,16 +7,15 @@ fun author(index: Int = 1) = Author(
     firstName = "first named $index",
     lastName = "last named $index",
     isAsset = false,
-    collectionId = "collection author $index"
+    id = "collection author $index"
 )
 
 fun pdfScore(index: Int = 1) = PdfScoreModel(
-    id = 0,
     uri = "uri $index",
     created = index.toLong(),
     lastOpened = index.toLong(),
     title = "title $index",
-    authorId = index.toLong(),
+    authorId = "author $index",
     isAsset = false,
-    collectionId = "collection pdf $index"
+    id = "collection pdf $index"
 )

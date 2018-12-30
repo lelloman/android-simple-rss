@@ -74,7 +74,7 @@ task unitTest(dependsOn: ['app:testDebugUnitTest',
                           'common:testDebugUnitTest',
                           'deviceinfo:testDebugUnitTest',
                           'launcher:testDebugUnitTest',
-                          'pdfscores:testDebugUnitTest']) {
+                          'pdfscores:testCollectionDebugUnitTest']) {
     group = 'tests'
     description = "Run all unit tests"
 }

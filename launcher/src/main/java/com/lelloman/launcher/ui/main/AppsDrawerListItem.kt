@@ -2,7 +2,7 @@ package com.lelloman.launcher.ui.main
 
 import com.lelloman.common.utils.model.ModelWithId
 
-interface AppsDrawerListItem : ModelWithId {
+interface AppsDrawerListItem : ModelWithId<Long> {
 
     val requiresFullRow: Boolean
 

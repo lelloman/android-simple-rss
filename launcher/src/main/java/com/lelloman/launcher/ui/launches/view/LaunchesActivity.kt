@@ -16,14 +16,14 @@ class LaunchesActivity : BaseActivity<LaunchesViewModel, ActivityLaunchesBinding
 
     override val layoutResId = R.layout.activity_launches
 
-    private val launchesAdapter = object : BaseRecyclerViewAdapter<PackageLaunchListItem, PackageLaunchListItemViewModel, ListItemPackageLaunchBinding>() {
+    private val launchesAdapter = object : BaseRecyclerViewAdapter<Long, PackageLaunchListItem, PackageLaunchListItemViewModel, ListItemPackageLaunchBinding>() {
         override val listItemLayoutResId = R.layout.list_item_package_launch
 
         override fun bindViewModel(binding: ListItemPackageLaunchBinding, viewModel: PackageLaunchListItemViewModel) {
             binding.viewModel = viewModel
         }
 
-        override fun createViewModel(viewHolder: BaseViewHolder<PackageLaunchListItem, PackageLaunchListItemViewModel, ListItemPackageLaunchBinding>) =
+        override fun createViewModel(viewHolder: BaseViewHolder<Long, PackageLaunchListItem, PackageLaunchListItemViewModel, ListItemPackageLaunchBinding>) =
             PackageLaunchListItemViewModel(semanticTimeProvider = semanticTimeProvider)
     }
 

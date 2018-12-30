@@ -29,7 +29,7 @@ data class Article(
     val imageUrl: String?,
     val time: Long,
     val sourceId: Long
-) : ModelWithId, Parcelable {
+) : ModelWithId<Long>, Parcelable {
 
     constructor(source: Parcel) : this(
         source.readLong(),

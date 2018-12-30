@@ -3,7 +3,7 @@ package com.lelloman.read.ui.walkthrough.viewmodel
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.read.ui.walkthrough.ThemeListItem
 
-class ThemeListItemViewModel : BaseListItemViewModel<ThemeListItem> {
+class ThemeListItemViewModel : BaseListItemViewModel<Long, ThemeListItem> {
 
     var name: String = ""
     private set

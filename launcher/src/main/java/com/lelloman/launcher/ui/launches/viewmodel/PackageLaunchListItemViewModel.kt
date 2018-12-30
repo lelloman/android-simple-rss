@@ -7,7 +7,7 @@ import com.lelloman.launcher.ui.launches.PackageLaunchListItem
 
 class PackageLaunchListItemViewModel(
     private val semanticTimeProvider: SemanticTimeProvider
-) : BaseListItemViewModel<PackageLaunchListItem> {
+) : BaseListItemViewModel<Long, PackageLaunchListItem> {
 
     var icon: Drawable? = null
         private set

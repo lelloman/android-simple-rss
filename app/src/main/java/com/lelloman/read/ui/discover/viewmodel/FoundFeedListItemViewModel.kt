@@ -7,7 +7,7 @@ import com.lelloman.read.feed.finder.FoundFeed
 
 class FoundFeedListItemViewModel(
     private val resourceProvider: ResourceProvider
-) : BaseListItemViewModel<FoundFeed> {
+) : BaseListItemViewModel<Long, FoundFeed> {
 
     var feedName = ""
         private set

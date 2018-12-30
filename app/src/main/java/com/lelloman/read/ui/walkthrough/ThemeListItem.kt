@@ -7,4 +7,4 @@ class ThemeListItem(
     override val id: Long,
     val theme: AppTheme,
     var isEnabled: Boolean
-) : ModelWithId
+) : ModelWithId<Long>

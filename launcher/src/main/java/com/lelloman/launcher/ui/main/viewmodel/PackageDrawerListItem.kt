@@ -6,7 +6,7 @@ import com.lelloman.launcher.ui.main.AppsDrawerListItem
 
 data class PackageDrawerListItem(
     val pkg: Package
-) : AppsDrawerListItem, ModelWithId by pkg {
+) : AppsDrawerListItem, ModelWithId<Long> by pkg {
 
     override val requiresFullRow = false
 

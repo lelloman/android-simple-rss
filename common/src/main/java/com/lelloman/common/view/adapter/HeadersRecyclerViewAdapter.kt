@@ -14,16 +14,14 @@ import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import java.util.*
 
-abstract class HeadersRecyclerViewAdapter<M : ModelWithId, VM : BaseListItemViewModel<M>, DB : ViewDataBinding>(
+abstract class HeadersRecyclerViewAdapter<ID, M : ModelWithId<ID>, VM : BaseListItemViewModel<ID, M>, DB : ViewDataBinding>(
     private val onItemClickListener: ((M) -> Unit)? = null
-) : RecyclerView.Adapter<HeadersRecyclerViewAdapter<M, VM, DB>.ViewHolder>(), Observer<List<M>> {
-
-    abstract val headerExtractor: (M) -> Pair<Long, String>
+) : RecyclerView.Adapter<HeadersRecyclerViewAdapter<ID, M, VM, DB>.ViewHolder>(), Observer<List<M>> {
 
     private var data = emptyList<M>()
-    private var dataWithHeaders = emptyList<ModelWithId>()
+    private var dataWithHeaders = emptyList<ModelWithId<ID>>()
 
-    private val listDiffCalculator = ModelWithIdListDiffCalculator()
+    private val listDiffCalculator = ModelWithIdListDiffCalculator<ID>()
 
     abstract val listItemLayoutResId: Int
 
@@ -31,11 +29,15 @@ abstract class HeadersRecyclerViewAdapter<M : ModelWithId, VM : BaseListItemView
 
     protected abstract fun createViewModel(): VM
 
+    protected abstract fun getHeaderId(item: M): ID
+
+    protected abstract fun getHeaderText(item: M): String
+
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val item = dataWithHeaders[position]
 
         when (viewHolder) {
-            is ItemViewHolder -> viewHolder.bind((item as ItemHolder<M>).item)
+            is ItemViewHolder -> viewHolder.bind((item as ItemHolder<ID, M>).item)
             is HeaderViewHolder -> viewHolder.bind(item as HeaderHolder)
         }
     }
@@ -43,13 +45,14 @@ abstract class HeadersRecyclerViewAdapter<M : ModelWithId, VM : BaseListItemView
     override fun onChanged(newData: List<M>?) {
         if (newData == null) return
 
-        val newDataWithHeaders = LinkedList<ModelWithId>()
-        var prevHeader: String? = null
+        val newDataWithHeaders = LinkedList<ModelWithId<ID>>()
+        var prevHeaderId: ID? = null
         newData.forEach {
-            val (headerId, header) = headerExtractor.invoke(it)
-            if (header != prevHeader) {
-                prevHeader = header
-                newDataWithHeaders.add(HeaderHolder(headerId, header))
+            val headerId = getHeaderId(it)
+            if (headerId != prevHeaderId) {
+                prevHeaderId = headerId
+                val headerText = getHeaderText(it)
+                newDataWithHeaders.add(HeaderHolder(headerId, headerText))
             }
             newDataWithHeaders.add(ItemHolder(it))
         }
@@ -61,7 +64,7 @@ abstract class HeadersRecyclerViewAdapter<M : ModelWithId, VM : BaseListItemView
     }
 
     override fun getItemViewType(position: Int) = when (dataWithHeaders[position]) {
-        is ItemHolder<*> -> VIEW_TYPE_ITEM
+        is ItemHolder<*, *> -> VIEW_TYPE_ITEM
         is HeaderHolder -> VIEW_TYPE_HEADER
         else -> throw IllegalStateException("Item at position $position is neither ItemHolder nor HeaderHolder.")
     }
@@ -126,12 +129,12 @@ abstract class HeadersRecyclerViewAdapter<M : ModelWithId, VM : BaseListItemView
 
     private inner class HeaderViewHolder(view: View) : ViewHolder(view) {
         private val textView = view.findViewById<TextView>(R.id.textView)
-        fun bind(headerHolder: HeaderHolder) {
+        fun bind(headerHolder: HeaderHolder<ID>) {
             textView.text = headerHolder.header
         }
     }
 
-    private class HeaderHolder(override val id: Long, val header: String) : ModelWithId
+    private class HeaderHolder<ID>(override val id: ID, val header: String) : ModelWithId<ID>
 
-    private class ItemHolder<M : ModelWithId>(val item: M) : ModelWithId by item
+    private class ItemHolder<ID, M : ModelWithId<ID>>(val item: M) : ModelWithId<ID> by item
 }

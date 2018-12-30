@@ -20,7 +20,7 @@ class ArticleListItemViewModel(
     uiScheduler: Scheduler,
     appSettings: AppSettings,
     private val semanticTimeProvider: SemanticTimeProvider
-) : LifecycleObserver, BaseListItemViewModel<SourceArticle>, BaseObservable() {
+) : LifecycleObserver, BaseListItemViewModel<Long, SourceArticle>, BaseObservable() {
 
     private val subscription = CompositeDisposable()
 
