@@ -18,7 +18,7 @@ import javax.inject.Provider
 import javax.inject.Singleton
 
 @Module
-class ViewModelModule {
+open class ViewModelModule {
 
     @Singleton
     @Provides
