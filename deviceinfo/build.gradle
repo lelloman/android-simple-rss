@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.github.lelloman:android-common:-SNAPSHOT'
+    implementation "com.github.lelloman:android-common:$lelloman_common_version"
 
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"
