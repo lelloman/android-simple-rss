@@ -40,7 +40,7 @@ android {
 dependencies {
     implementation project(':nn')
 
-    implementation 'com.github.lelloman:android-common:-SNAPSHOT'
+    implementation "com.github.lelloman:android-common:$lelloman_common_version"
 
     // room
     implementation "android.arch.persistence.room:runtime:$room_version"
