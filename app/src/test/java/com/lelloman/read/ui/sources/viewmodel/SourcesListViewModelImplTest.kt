@@ -4,7 +4,6 @@ import android.arch.lifecycle.Observer
 import android.view.View
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
-import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.ToastEvent
@@ -16,6 +15,7 @@ import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.clear
 import com.lelloman.read.testutils.AndroidArchTest
+import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.dummySource
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.ArticlesRepository

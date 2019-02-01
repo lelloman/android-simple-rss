@@ -1,14 +1,14 @@
 package com.lelloman.read.testutils
 
+import android.app.Application
 import android.support.test.InstrumentationRegistry
-import com.lelloman.common.logger.LoggerFactoryImpl
+import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.settings.BaseApplicationSettings
-import com.lelloman.common.settings.BaseApplicationSettingsImpl
+import com.lelloman.common.settings.BaseSettingsModule
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.TimeProviderImpl
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.common.view.MeteredConnectionCheckerImpl
 import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.finder.FeedFinder
@@ -33,15 +33,16 @@ class BagOfDependencies {
 
     init {
         val okHttpClient = OkHttpClient.Builder().build()
-        val loggerFactory = LoggerFactoryImpl()
+        val targetContext = InstrumentationRegistry.getTargetContext()
+        val baseAppModule = BaseApplicationModule(targetContext as Application)
+        val loggerFactory = baseAppModule.provideLoggerFactory()
         timeProvider = TimeProviderImpl()
         htmlParser = HtmlParser()
         val urlValidator = UrlValidatorImpl()
 
-        val targetContext = InstrumentationRegistry.getTargetContext()
-        meteredConnectionChecker = MeteredConnectionCheckerImpl(targetContext)
+        meteredConnectionChecker = baseAppModule.provideMeteredConnectionChecker(targetContext)
 
-        baseAppSettings = BaseApplicationSettingsImpl(targetContext)
+        baseAppSettings = BaseSettingsModule().provideBaseApplicationSettings(targetContext)
         appSettings = AppSettingsImpl(targetContext, baseAppSettings)
 
         feedParser = FeedParser(timeProvider)
