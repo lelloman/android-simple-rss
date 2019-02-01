@@ -1,6 +1,5 @@
 package com.lelloman.read.ui.common
 
-import com.lelloman.common.testutils.MockLoggerFactory
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.db.SourcesDao
@@ -31,7 +30,9 @@ class DiscoverRepositoryTest {
         ioScheduler = trampoline(),
         feedFinder = feedFinder,
         sourcesDao = sourcesDao,
-        loggerFactory = MockLoggerFactory()
+        loggerFactory = mock {
+            on{getLogger(any())}.thenReturn(mock())
+        }
     )
 
     @Test

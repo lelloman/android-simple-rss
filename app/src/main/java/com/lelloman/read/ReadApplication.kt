@@ -1,8 +1,9 @@
 package com.lelloman.read
 
 import android.app.Activity
+import android.app.Application
 import android.content.BroadcastReceiver
-import com.lelloman.common.BaseApplication
+import android.content.Context
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.logger.Logger
 import com.lelloman.common.logger.LoggerFactory
@@ -19,7 +20,7 @@ import dagger.android.HasBroadcastReceiverInjector
 import io.reactivex.plugins.RxJavaPlugins
 import javax.inject.Inject
 
-open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcastReceiverInjector {
+open class ReadApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector {
 
     @Inject
     lateinit var dispatchingActivityAndroidInjector: DispatchingAndroidInjector<Activity>
@@ -51,6 +52,11 @@ open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcas
 
     override fun broadcastReceiverInjector() = dispatchingReceiverAndroidInjector
 
+    override fun attachBaseContext(base: Context?) {
+        super.attachBaseContext(base)
+        inject()
+    }
+
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -71,7 +77,7 @@ open class ReadApplication : BaseApplication(), HasActivityInjector, HasBroadcas
         }
     }
 
-    override fun inject() = DaggerAppComponent
+    open fun inject() = DaggerAppComponent
         .builder()
         .baseApplicationModule(BaseApplicationModule(this))
         .build()

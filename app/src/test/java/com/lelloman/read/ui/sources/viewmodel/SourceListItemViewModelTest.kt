@@ -1,10 +1,10 @@
 package com.lelloman.read.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
-import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.R
 import com.lelloman.read.persistence.db.model.Source
+import com.lelloman.read.testutils.MockResourceProvider
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

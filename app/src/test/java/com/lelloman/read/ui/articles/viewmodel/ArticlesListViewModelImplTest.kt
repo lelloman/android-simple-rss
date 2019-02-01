@@ -3,7 +3,6 @@ package com.lelloman.read.ui.articles.viewmodel
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.navigation.ViewIntentNavigationEvent
-import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.R
 import com.lelloman.read.mock.MockAppSettings
@@ -12,6 +11,7 @@ import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_URL
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.db.model.SourceArticle
 import com.lelloman.read.testutils.AndroidArchTest
+import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.dummySourceArticle
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.ArticlesRepository

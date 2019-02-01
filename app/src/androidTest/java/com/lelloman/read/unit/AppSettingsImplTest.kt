@@ -4,10 +4,11 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.InstrumentationRegistry.getContext
 import android.support.test.runner.AndroidJUnit4
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_APP_THEME
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_USE_METERED_NETWORK
-import com.lelloman.common.settings.BaseApplicationSettingsImpl
+import com.lelloman.common.settings.BaseSettingsModule
 import com.lelloman.common.view.AppTheme
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_ARTICLES_LIST_IMAGES
@@ -23,8 +24,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class AppSettingsImplTest {
 
-    private val baseApplicationSettings: BaseApplicationSettings
-        get() = BaseApplicationSettingsImpl(getContext())
+    private val baseApplicationSettings: BaseApplicationSettings = BaseSettingsModule().provideBaseApplicationSettings(getContext())
 
     private fun tested(action: AppSettingsImpl.() -> Unit) = AppSettingsImpl(getContext(), baseApplicationSettings).run(action)
 

@@ -2,8 +2,6 @@ package com.lelloman.read.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.navigation.CloseScreenNavigationEvent
-import com.lelloman.common.testutils.MockLoggerFactory
-import com.lelloman.common.testutils.MockResourceProvider
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.viewmodel.BaseViewModel
@@ -17,6 +15,8 @@ import com.lelloman.read.feed.fetcher.UnknownError
 import com.lelloman.read.feed.fetcher.XmlError
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.AndroidArchTest
+import com.lelloman.read.testutils.MockLoggerFactory
+import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any

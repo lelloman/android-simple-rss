@@ -6,7 +6,7 @@ import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_AP
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_USE_METERED_NETWORK
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.KEY_APP_THEME
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.KEY_USE_METERED_NETWORK
-import com.lelloman.common.settings.BaseApplicationSettingsImpl
+import com.lelloman.common.settings.BaseSettingsModule
 import com.lelloman.common.view.AppTheme
 import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
@@ -158,5 +158,5 @@ class AppSettingsImplTest {
         tester.assertValues(AppTheme.DARCULA, AppTheme.LIGHT)
     }
 
-    private fun createAppSettingsImpl() = AppSettingsImpl(context, BaseApplicationSettingsImpl(context))
+    private fun createAppSettingsImpl() = AppSettingsImpl(context, BaseSettingsModule().provideBaseApplicationSettings(context))
 }

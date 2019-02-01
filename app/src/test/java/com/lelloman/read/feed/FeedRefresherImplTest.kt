@@ -1,8 +1,5 @@
 package com.lelloman.read.feed
 
-import com.lelloman.common.testutils.MockLogger
-import com.lelloman.common.testutils.MockLoggerFactory
-import com.lelloman.common.testutils.MockTimeProvider
 import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.mock.MockAppSettings
@@ -12,6 +9,9 @@ import com.lelloman.read.persistence.db.model.Article
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
+import com.lelloman.read.testutils.MockLogger
+import com.lelloman.read.testutils.MockLoggerFactory
+import com.lelloman.read.testutils.MockTimeProvider
 import com.lelloman.read.testutils.dummyArticle
 import com.lelloman.read.testutils.dummySource
 import com.nhaarman.mockito_kotlin.any
