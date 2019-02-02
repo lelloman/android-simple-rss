@@ -17,7 +17,6 @@ import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockLoggerFactory
 import com.lelloman.read.testutils.MockResourceProvider
-import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.anyOrNull
@@ -44,11 +43,11 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
             dependencies = BaseViewModel.Dependencies(
                 resourceProvider = MockResourceProvider(),
                 actionTokenProvider = mock(),
-                settings = mock()
+                settings = mock(),
+                uiScheduler = trampoline(),
+                ioScheduler = trampoline()
             ),
             sourcesRepository = sourcesRepository,
-            uiScheduler = trampoline(),
-            ioScheduler = trampoline(),
             feedFetcher = feedFetcher,
             loggerFactory = MockLoggerFactory(),
             urlValidator = urlValidator

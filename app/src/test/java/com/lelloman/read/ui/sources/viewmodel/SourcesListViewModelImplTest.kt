@@ -43,14 +43,14 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
 
     override fun setUp() {
         tested = SourcesListViewModelImpl(
-            ioScheduler = trampoline(),
-            uiScheduler = trampoline(),
             sourcesRepository = sourcesRepository,
             articlesRepository = articlesRepository,
             dependencies = BaseViewModel.Dependencies(
                 settings = mock(),
                 resourceProvider = resourceProvider,
-                actionTokenProvider = actionTokenProvider
+                actionTokenProvider = actionTokenProvider,
+                ioScheduler = trampoline(),
+                uiScheduler = trampoline()
             )
         )
     }

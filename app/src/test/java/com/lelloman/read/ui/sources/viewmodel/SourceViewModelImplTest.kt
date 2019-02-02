@@ -31,13 +31,13 @@ class SourceViewModelImplTest : AndroidArchTest() {
 
     override fun setUp() {
         tested = SourceViewModelImpl(
-            ioScheduler = trampoline(),
-            uiScheduler = trampoline(),
             sourcesRepository = sourcesRepository,
             dependencies = BaseViewModel.Dependencies(
                 resourceProvider = resourceProvider,
                 actionTokenProvider = mock(),
-                settings = mock()
+                settings = mock(),
+                ioScheduler = trampoline(),
+                uiScheduler = trampoline()
             )
         )
     }
