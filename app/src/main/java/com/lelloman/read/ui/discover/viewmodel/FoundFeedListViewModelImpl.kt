@@ -3,17 +3,24 @@ package com.lelloman.read.ui.discover.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.utils.LazyLiveData
+import com.lelloman.read.R
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_FOUND_FEEDS
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_NAME
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.read.ui.common.repository.DiscoverRepository
+import io.reactivex.functions.BiFunction
+import io.reactivex.subjects.BehaviorSubject
 
 class FoundFeedListViewModelImpl(
     private val discoverRepository: DiscoverRepository,
     dependencies: Dependencies
 ) : FoundFeedListViewModel(dependencies) {
+
+    private val foundFeedsCount = BehaviorSubject.createDefault(0)
+
+    private var hasFoundAtLeastOneFeed = false
 
     override val isFindingFeeds: MutableLiveData<Boolean> by LazyLiveData {
         subscription {
@@ -23,6 +30,12 @@ class FoundFeedListViewModelImpl(
                 .observeOn(uiScheduler)
                 .subscribe {
                     isFindingFeeds.postValue(it)
+                    if (!it && foundFeedsCount.value == 0) {
+                        navigateBack()
+                        if (!hasFoundAtLeastOneFeed) {
+                            longToast(getString(R.string.no_feed_found))
+                        }
+                    }
                 }
         }
     }
@@ -33,7 +46,19 @@ class FoundFeedListViewModelImpl(
                 .foundFeeds
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
-                .subscribe { foundFeeds.postValue(ArrayList(it)) }
+                .doOnNext {
+                    if (it.isNotEmpty()) hasFoundAtLeastOneFeed = true
+                    foundFeeds.postValue(ArrayList(it))
+                    foundFeedsCount.onNext(it.size)
+                }
+                .filter { it.isEmpty() }
+                .withLatestFrom(discoverRepository.isFindingFeeds, BiFunction<List<FoundFeed>, Boolean, Boolean> { feeds, isLoading ->
+                    feeds.isEmpty() && !isLoading
+                })
+                .filter { it }
+                .subscribe {
+                    navigateBack()
+                }
         }
     }
 

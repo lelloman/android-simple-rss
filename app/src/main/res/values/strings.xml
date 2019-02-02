@@ -52,4 +52,5 @@
     <string name="last_refresh">last refresh: %1$s</string>
     <string name="never">never</string>
     <string name="close">Close</string>
+    <string name="no_feed_found">"Didn't find any feed…"</string>
 </resources>
