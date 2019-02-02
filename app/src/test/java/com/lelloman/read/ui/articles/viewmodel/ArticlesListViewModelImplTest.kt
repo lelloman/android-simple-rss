@@ -37,8 +37,6 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
     override fun setUp() {
         tested = ArticlesListViewModelImpl(
-            ioScheduler = trampoline(),
-            uiScheduler = trampoline(),
             articlesRepository = articlesRepository,
             sourcesRepository = sourcesRepository,
             discoverRepository = discoveryRepository,
@@ -46,7 +44,9 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             dependencies = BaseViewModel.Dependencies(
                 settings = appSettings,
                 resourceProvider = resourceProvider,
-                actionTokenProvider = mock()
+                actionTokenProvider = mock(),
+                ioScheduler = trampoline(),
+                uiScheduler = trampoline()
             )
         )
     }

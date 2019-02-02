@@ -7,7 +7,6 @@ import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.navigation.NavigationRouter
 import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_URL
-import com.lelloman.read.testutils.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
 import org.junit.Test
@@ -17,7 +16,6 @@ class NavigationRouterTest {
     private val applicationPackageName = "cra cra cra"
     private val tested = NavigationRouter(
         packageManager = mock(),
-        loggerFactory = MockLoggerFactory(),
         applicationPackageName = applicationPackageName
     )
 
