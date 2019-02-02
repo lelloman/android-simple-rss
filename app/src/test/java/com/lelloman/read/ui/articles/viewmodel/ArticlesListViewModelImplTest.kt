@@ -1,6 +1,5 @@
 package com.lelloman.read.ui.articles.viewmodel
 
-import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.common.viewmodel.BaseViewModel
@@ -61,36 +60,33 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `navigates to sources list when click on sources button`() {
-        val viewActions = tested.viewActionEvents.test()
+        val tester = tested.viewActionEvents.test()
 
         tested.onSourcesClicked()
 
-        assertThat(viewActions.values).hasSize(1)
-        viewActions.values[0].apply {
-            (this as DeepLinkNavigationEvent).apply {
-                assertThat(deepLink.parametersCount).isEqualTo(0)
-                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.SOURCES_LIST)
-            }
+        tester.assertValueCount(1)
+        tester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 0
+                && it.deepLink.screen == ReadNavigationScreen.SOURCES_LIST
         }
     }
 
     @Test
     fun `navigates to article screen when article is clicked and open in app setting is true`() {
         givenOpenArticleInAppSettingEnabled()
-        val viewActions = tested.viewActionEvents.test()
+        val tester = tested.viewActionEvents.test()
         val link = "www.meow.com"
         val article = dummySourceArticle().copy(link = link)
 
         tested.onArticleClicked(article)
 
-        assertThat(viewActions.values).hasSize(1)
-        viewActions.values[0].apply {
-            assertThat(this).isInstanceOf(DeepLinkNavigationEvent::class.java)
-            (this as DeepLinkNavigationEvent).apply {
-                assertThat(deepLink.parametersCount).isEqualTo(1)
-                assertThat(deepLink.getString(ARG_URL)).isEqualTo(link)
-                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.ARTICLE)
-            }
+        tester.assertValueCount(1)
+        tester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 1
+                && it.deepLink.getString(ARG_URL) == link
+                && it.deepLink.screen == ReadNavigationScreen.ARTICLE
         }
     }
 
@@ -108,17 +104,15 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `navigates to settings screen when settings button is clicked`() {
-        val viewActions = tested.viewActionEvents.test()
+        val tester = tested.viewActionEvents.test()
 
         tested.onSettingsClicked()
 
-        assertThat(viewActions.values).hasSize(1)
-        viewActions.values[0].apply {
-            assertThat(this).isInstanceOf(DeepLinkNavigationEvent::class.java)
-            (this as DeepLinkNavigationEvent).apply {
-                assertThat(deepLink.parametersCount).isEqualTo(0)
-                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.SETTINGS)
-            }
+        tester.assertValueCount(1)
+        tester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 0
+                && it.deepLink.screen == ReadNavigationScreen.SETTINGS
         }
     }
 
@@ -168,12 +162,11 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         articlesTester.assertValues(emptyList())
         emptyTextTester.assertValues("${R.string.empty_articles_no_source}")
         emptyButtonTester.assertValues("${R.string.add_source}")
-        viewActionsTester.assertValuesCount(1)
-        viewActionsTester.values[0].apply {
-            (this as DeepLinkNavigationEvent).apply {
-                assertThat(deepLink.parametersCount).isEqualTo(0)
-                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.ADD_SOURCE)
-            }
+        viewActionsTester.assertValueCount(1)
+        viewActionsTester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 0
+                && it.deepLink.screen == ReadNavigationScreen.ADD_SOURCE
         }
     }
 
@@ -193,12 +186,11 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         articlesTester.assertValues(emptyList())
         emptyTextTester.assertValues("${R.string.empty_articles_sources_disabled}")
         emptyButtonTester.assertValues("${R.string.enable_sources}")
-        viewActionsTester.assertValuesCount(1)
-        viewActionsTester.values[0].apply {
-            (this as DeepLinkNavigationEvent).apply {
-                assertThat(deepLink.parametersCount).isEqualTo(0)
-                assertThat(deepLink.screen).isEqualTo(ReadNavigationScreen.SOURCES_LIST)
-            }
+        viewActionsTester.assertValueCount(1)
+        viewActionsTester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 0
+                && it.deepLink.screen == ReadNavigationScreen.SOURCES_LIST
         }
     }
 
@@ -219,7 +211,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         articlesTester.assertValues(emptyList())
         emptyTextTester.assertValues("${R.string.empty_articles_must_refresh}")
         emptyButtonTester.assertValues("${R.string.refresh}")
-        viewActionsTester.assertValuesCount(0)
+        viewActionsTester.assertValueCount(0)
         verify(articlesRepository).refresh()
     }
 

@@ -1,13 +1,11 @@
 package com.lelloman.read.ui.sources.viewmodel
 
-import android.arch.lifecycle.Observer
 import android.view.View
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.ToastEvent
-import com.lelloman.common.view.actionevent.ViewActionEvent
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.R
 import com.lelloman.read.navigation.ReadNavigationScreen
@@ -17,7 +15,6 @@ import com.lelloman.read.persistence.settings.clear
 import com.lelloman.read.testutils.AndroidArchTest
 import com.lelloman.read.testutils.MockResourceProvider
 import com.lelloman.read.testutils.dummySource
-import com.lelloman.read.testutils.test
 import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DeletedSource
 import com.lelloman.read.ui.common.repository.SourcesRepository
@@ -81,17 +78,14 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `navigates to add source when click on fab`() {
-        val invocations = mutableListOf<ViewActionEvent>()
-        val viewActionObserver = Observer<ViewActionEvent> {
-            invocations.add(it!!)
-        }
-        tested.viewActionEvents.observeForever(viewActionObserver)
+        val tester = tested.viewActionEvents.test()
 
         tested.onFabClicked(View(null))
 
-        assertThat(invocations.any {
+        tester.assertValueCount(1)
+        tester.assertValueAt(0) {
             it is DeepLinkNavigationEvent && it.deepLink.screen == ReadNavigationScreen.ADD_SOURCE
-        }).isTrue()
+        }
     }
 
     @Test
@@ -195,7 +189,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `shows toast if insert source fails`() {
-        val viewActions = tested.viewActionEvents.test()
+        val tester = tested.viewActionEvents.test()
         val token = "asdomar"
         val source = SOURCES[0]
         givenCanDeleteSource(DeletedSource(source = source, articles = emptyList()))
@@ -204,18 +198,16 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         whenever(sourcesRepository.insertSource(any())).thenReturn(Single.error(Exception()))
         givenCanInsertArticles()
         tested.onSourceSwiped(source)
-        viewActions.resetValues()
 
         tested.onTokenAction(token)
 
-        viewActions.assertValues(
-            ToastEvent("${R.string.something_went_wrong}")
-        )
+        tester.awaitCount(2)
+        assertThat(tester.values()).contains(ToastEvent("${R.string.something_went_wrong}"))
     }
 
     @Test
     fun `shows toast if insert articles failes`() {
-        val viewActions = tested.viewActionEvents.test()
+        val tester = tested.viewActionEvents.test()
         val token = "asdomar"
         val source = SOURCES[0]
         givenCanDeleteSource(DeletedSource(source = source, articles = emptyList()))
@@ -223,13 +215,11 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         givenCanInsertSource(123)
         whenever(articlesRepository.insertArticles(any())).thenReturn(Single.error(Exception()))
         tested.onSourceSwiped(source)
-        viewActions.resetValues()
 
         tested.onTokenAction(token)
 
-        viewActions.assertValues(
-            ToastEvent("${R.string.something_went_wrong}")
-        )
+        tester.awaitCount(2)
+        assertThat(tester.values()).contains(ToastEvent("${R.string.something_went_wrong}"))
     }
 
     private fun givenCanInsertArticles() {

@@ -13,11 +13,8 @@ import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 
 class ArticlesListViewModelImpl(
-    private val ioScheduler: Scheduler,
-    private val uiScheduler: Scheduler,
     private val articlesRepository: ArticlesRepository,
     private val sourcesRepository: SourcesRepository,
     private val discoverRepository: DiscoverRepository,
@@ -71,8 +68,8 @@ class ArticlesListViewModelImpl(
         emptyViewVisible.value = false
     }
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun onViewShown() {
+        super.onViewShown()
         discoverRepository.reset()
     }
 

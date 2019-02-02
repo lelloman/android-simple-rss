@@ -3,7 +3,7 @@ package com.lelloman.read.unit
 import android.arch.lifecycle.MutableLiveData
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import com.lelloman.common.utils.SingleLiveData
+import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.actionevent.ViewActionEvent
 import com.lelloman.instrumentedtestutils.onUiThread
 import com.lelloman.instrumentedtestutils.rotateNatural
@@ -15,6 +15,8 @@ import com.lelloman.read.testutils.TestApp
 import com.lelloman.read.testutils.screen.ArticlesListScreen
 import com.lelloman.read.ui.articles.view.ArticlesListActivity
 import com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -35,7 +37,8 @@ class ArticlesListActivityTest {
 
     private lateinit var articlesLiveData: MutableLiveData<List<SourceArticle>>
     private lateinit var isLoadingLiveData: MutableLiveData<Boolean>
-    private lateinit var viewActionEvents: SingleLiveData<ViewActionEvent>
+    private lateinit var viewActionEvents: Subject<ViewActionEvent>
+    private lateinit var themeChangedEvents: Subject<AppTheme>
 
     private lateinit var screen: ArticlesListScreen
 
@@ -59,7 +62,8 @@ class ArticlesListActivityTest {
         rotateNatural()
         articlesLiveData = MutableLiveData()
         isLoadingLiveData = MutableLiveData()
-        viewActionEvents = SingleLiveData()
+        viewActionEvents = PublishSubject.create()
+        themeChangedEvents = PublishSubject.create()
 
         TestApp.resetPersistence()
         TestApp.dependenciesUpdate { it.viewModelModule = viewModelModule }
@@ -67,6 +71,7 @@ class ArticlesListActivityTest {
         whenever(viewModel.articles).thenReturn(articlesLiveData)
         whenever(viewModel.isLoading).thenReturn(isLoadingLiveData)
         whenever(viewModel.viewActionEvents).thenReturn(viewActionEvents)
+        whenever(viewModel.themeChangedEvents).thenReturn(themeChangedEvents)
 
         activityTestRule.launchActivity(null)
         screen = ArticlesListScreen()

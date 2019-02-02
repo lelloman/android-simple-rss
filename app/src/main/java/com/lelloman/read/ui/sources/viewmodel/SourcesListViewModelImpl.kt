@@ -3,7 +3,6 @@ package com.lelloman.read.ui.sources.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import com.lelloman.common.utils.LazyLiveData
-import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.read.R
 import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.db.model.Source
@@ -11,11 +10,8 @@ import com.lelloman.read.ui.common.repository.ArticlesRepository
 import com.lelloman.read.ui.common.repository.DeletedSource
 import com.lelloman.read.ui.common.repository.SourcesRepository
 import io.reactivex.Completable
-import io.reactivex.Scheduler
 
 class SourcesListViewModelImpl(
-    private val ioScheduler: Scheduler,
-    private val uiScheduler: Scheduler,
     private val sourcesRepository: SourcesRepository,
     private val articlesRepository: ArticlesRepository,
     dependencies: Dependencies
@@ -86,11 +82,11 @@ class SourcesListViewModelImpl(
                     val message = getString(R.string.source_deleted, source.name)
                     val actionToken = makeActionToken()
                     deletedSourceMap[actionToken] = it
-                    viewActionEvents.postValue(SnackEvent(
+                    longSnack(
                         message = message,
                         actionLabel = getString(R.string.undo),
                         actionToken = actionToken
-                    ))
+                    )
                 }, {
                     shortToast(getString(R.string.something_went_wrong))
                 })
