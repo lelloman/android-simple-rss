@@ -13,6 +13,7 @@ import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FeedFinderHttpClient
+import com.lelloman.read.feed.finder.FeedFinderImpl
 import com.lelloman.read.feed.finder.FeedFinderParser
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClientImpl
@@ -73,7 +74,7 @@ class BagOfDependencies {
             loggerFactory = loggerFactory
         )
 
-        feedFinder = FeedFinder(
+        feedFinder = FeedFinderImpl(
             httpClient = feedFinderHttpClient,
             parser = feedFinderParser,
             feedFetcher = feedFetcher,

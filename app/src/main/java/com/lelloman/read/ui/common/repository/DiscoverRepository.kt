@@ -9,10 +9,8 @@ import com.lelloman.read.persistence.db.model.Source
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
-import io.reactivex.disposables.Disposable
-import io.reactivex.functions.BiFunction
+import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.ReplaySubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -35,33 +33,28 @@ class DiscoverRepository @Inject constructor(
         .distinctUntilChanged()
 
     private var lastFindFeedUrl: String? = null
-    private var findFeedSubscription: Disposable? = null
+    private var findFeedSubscriptions = CompositeDisposable()
 
     private val foundFeedsList = mutableListOf<FoundFeed>()
-    private val foundFeedsSubject = ReplaySubject.create<List<FoundFeed>>()
+    private val foundFeedsSubject = BehaviorSubject.create<List<FoundFeed>>()
     val foundFeeds: Observable<List<FoundFeed>> = foundFeedsSubject.hide()
 
-    fun reset(){
+    fun reset() {
         lastFindFeedUrl = null
-        findFeedSubscription?.dispose()
+        findFeedSubscriptions.clear()
         foundFeedsList.clear()
         isFindingFeedsSubject.onNext(false)
-        foundFeedsSubject.cleanupBuffer()
+        foundFeedsSubject.onNext(emptyList())
     }
 
     fun findFeeds(url: String) {
         if (isFindingFeeds.blockingFirst()) {
-            if (url == lastFindFeedUrl) {
-                return
-            } else {
-                findFeedSubscription?.dispose()
-                findFeedSubscription = null
-            }
+            logger.w("findFeeds($url) called but is already finding feeds for url $lastFindFeedUrl.")
+            return
         }
 
         lastFindFeedUrl = url
         foundFeedsList.clear()
-        foundFeedsSubject.cleanupBuffer()
         foundFeedsSubject.onNext(foundFeedsList)
 
         val foundFeedsStream = feedFinder
@@ -74,27 +67,13 @@ class DiscoverRepository @Inject constructor(
                 lastFindFeedUrl = null
             }
 
-        findFeedSubscription = Observable
-            .combineLatest<FoundFeed, List<Source>, Pair<FoundFeed, List<Source>>>(
-                foundFeedsStream,
-                sourcesDao.getAll().toObservable(),
-                BiFunction { foundFeed, allSources ->
-                    foundFeed to allSources
-                }
-            )
-            .subscribe { (foundFeed, allSources) ->
+        findFeedSubscriptions.add(foundFeedsStream
+            .subscribe { foundFeed ->
                 foundFeedsList.add(foundFeed)
-                foundFeedsList.removeAll { oldFoundFeed ->
-                    val alreadyInSources = allSources.any { it.url == oldFoundFeed.url }
-                    if (alreadyInSources) {
-                        logger.d("Filtering out found feed $oldFoundFeed because already in sources.")
-                    }
-                    alreadyInSources
-                }
                 logger.d("onNexting foundFeedList with size ${foundFeedsList.size}")
-                foundFeedsSubject.cleanupBuffer()
                 foundFeedsSubject.onNext(foundFeedsList)
             }
+        )
     }
 
     fun addFoundFeeds(foundFeeds: List<FoundFeed>): Completable = Completable.fromAction {

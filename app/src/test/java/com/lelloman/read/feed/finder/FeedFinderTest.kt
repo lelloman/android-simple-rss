@@ -20,7 +20,7 @@ class FeedFinderTest {
     private val parser: FeedFinderParser = mock()
     private val loggerFactory = MockLoggerFactory()
 
-    private val tested = FeedFinder(
+    private val tested = FeedFinderImpl(
         httpClient = httpClient,
         feedFetcher = feedFetcher,
         parser = parser,

@@ -38,6 +38,10 @@ class DiscoverUrlViewModelImpl(
         }
     }
 
+    override fun onViewShown() {
+        super.onViewShown()
+        discoverRepository.reset()
+    }
     override fun onKeyboardActionDone() {
         onDiscoverClicked(null)
     }
