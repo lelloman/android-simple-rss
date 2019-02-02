@@ -8,7 +8,8 @@ class LauncherViewModelImpl(
     dependencies: Dependencies
 ) : LauncherViewModel(dependencies) {
 
-    override fun onCreate() {
+    override fun onViewShown() {
+        super.onViewShown()
         if (appSettings.shouldShowWalkthrough.blockingFirst()) {
             navigateAndClose(ReadNavigationScreen.WALKTHROUGH)
         } else {

@@ -13,12 +13,9 @@ import com.lelloman.read.feed.fetcher.Success
 import com.lelloman.read.feed.fetcher.XmlError
 import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.common.repository.SourcesRepository
-import io.reactivex.Scheduler
 
 class AddSourceViewModelImpl(
     private val sourcesRepository: SourcesRepository,
-    private val ioScheduler: Scheduler,
-    private val uiScheduler: Scheduler,
     private val feedFetcher: FeedFetcher,
     loggerFactory: LoggerFactory,
     private val urlValidator: UrlValidator,

@@ -12,25 +12,23 @@ import com.lelloman.read.ui.settings.view.SettingsActivity
 import com.lelloman.read.ui.sources.view.AddSourceActivity
 import com.lelloman.read.ui.sources.view.SourcesListActivity
 import com.lelloman.read.ui.walkthrough.view.WalkthroughActivity
-import kotlin.reflect.KClass
 
 /**
  * Cannot change the names, [DeepLink] uses the names and if the values are changed in this enum
  * then older deep links might not work.
  */
 enum class ReadNavigationScreen(
-    override val clazz: KClass<*>,
-    override var deepLinkStartable: DeepLinkStartable? = null
+    override var deepLinkStartable: DeepLinkStartable
 ) : NavigationScreen {
-    ADD_FOUND_FEEDS_CONFIRMATION(AddFoundFeedsConfirmationDialogFragment::class, deepLinkStartable = AddFoundFeedsConfirmationDialogFragment.deepLinkStartable),
-    ADD_SOURCE(AddSourceActivity::class, deepLinkStartable = AddSourceActivity.deepLinkStartable),
-    ARTICLE(ArticleActivity::class, deepLinkStartable = ArticleActivity.deepLinkStartable),
-    ARTICLES_LIST(ArticlesListActivity::class, deepLinkStartable = ArticlesListActivity.deepLinkStartable),
-    DISCOVER_URL(DiscoverUrlActivity::class, deepLinkStartable = DiscoverUrlActivity.deepLinkStartable),
-    FOUND_FEED_LIST(FoundFeedListActivity::class, deepLinkStartable = FoundFeedListActivity.deepLinkStartable),
-    SETTINGS(SettingsActivity::class, deepLinkStartable = SettingsActivity.deepLinkStartable),
-    SOURCES_LIST(SourcesListActivity::class, deepLinkStartable = SourcesListActivity.deepLinkStartable),
-    WALKTHROUGH(WalkthroughActivity::class, deepLinkStartable = WalkthroughActivity.deepLinkStartable);
+    ADD_FOUND_FEEDS_CONFIRMATION(AddFoundFeedsConfirmationDialogFragment.deepLinkStartable),
+    ADD_SOURCE(AddSourceActivity.deepLinkStartable),
+    ARTICLE(ArticleActivity.deepLinkStartable),
+    ARTICLES_LIST(ArticlesListActivity.deepLinkStartable),
+    DISCOVER_URL(DiscoverUrlActivity.deepLinkStartable),
+    FOUND_FEED_LIST(FoundFeedListActivity.deepLinkStartable),
+    SETTINGS(SettingsActivity.deepLinkStartable),
+    SOURCES_LIST(SourcesListActivity.deepLinkStartable),
+    WALKTHROUGH(WalkthroughActivity.deepLinkStartable);
 
     companion object {
 

@@ -1,7 +1,6 @@
 package com.lelloman.deviceinfo.ui.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
-import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.model.Resolution
 import com.lelloman.deviceinfo.device.Device
@@ -10,10 +9,8 @@ import com.lelloman.deviceinfo.infoitem.DisplayInfoItem
 import com.lelloman.deviceinfo.infoitem.InfoItem
 import com.lelloman.deviceinfo.infoitem.NetworkInfoItem
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 
 class InfoListViewModelImpl(
-    @IoScheduler private val ioScheduler: Scheduler,
     private val device: Device,
     dependencies: Dependencies
 ) : InfoListViewModel(dependencies) {

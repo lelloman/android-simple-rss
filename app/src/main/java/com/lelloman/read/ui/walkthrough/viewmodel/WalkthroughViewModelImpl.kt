@@ -4,8 +4,6 @@ import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
 import android.os.Bundle
 import android.view.View
-import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
@@ -15,11 +13,8 @@ import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.lelloman.read.ui.walkthrough.ThemeListItem
-import io.reactivex.Scheduler
 
 class WalkthroughViewModelImpl(
-    @UiScheduler private val uiScheduler: Scheduler,
-    @IoScheduler private val ioScheduler: Scheduler,
     private val appSettings: AppSettings,
     private val discoveryRepository: DiscoverRepository,
     private val urlValidator: UrlValidator,
@@ -104,7 +99,7 @@ class WalkthroughViewModelImpl(
     }
 
     override fun onFirstPageOkClicked(view: View) {
-        viewActionEvents.postValue(SwipePageActionEvent(SwipePageActionEvent.Direction.RIGHT))
+        emitViewActionEvent(SwipePageActionEvent(SwipePageActionEvent.Direction.RIGHT))
     }
 
     private companion object {

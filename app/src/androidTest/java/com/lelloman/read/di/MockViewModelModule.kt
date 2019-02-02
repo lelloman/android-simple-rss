@@ -1,7 +1,5 @@
 package com.lelloman.read.di
 
-import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.viewmodel.BaseViewModel
@@ -14,7 +12,6 @@ import com.lelloman.read.ui.common.repository.SourcesRepository
 import com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.read.ui.sources.viewmodel.SourcesListViewModel
 import dagger.Provides
-import io.reactivex.Scheduler
 import org.mockito.Mockito.mock
 
 class MockViewModelModule : ViewModelModule() {
@@ -24,8 +21,6 @@ class MockViewModelModule : ViewModelModule() {
     private val addSourceViewModel: AddSourceViewModel = mock(AddSourceViewModel::class.java)
 
     override fun provideArticlesListViewModel(
-        @IoScheduler ioScheduler: Scheduler,
-        @UiScheduler uiScheduler: Scheduler,
         articlesRepository: ArticlesRepository,
         sourcesRepository: SourcesRepository,
         discoverRepository: DiscoverRepository,
@@ -35,8 +30,6 @@ class MockViewModelModule : ViewModelModule() {
 
     @Provides
     override fun provideSourcesListViewModel(
-        @IoScheduler ioScheduler: Scheduler,
-        @UiScheduler uiScheduler: Scheduler,
         sourcesRepository: SourcesRepository,
         articlesRepository: ArticlesRepository,
         dependencies: BaseViewModel.Dependencies
@@ -44,8 +37,6 @@ class MockViewModelModule : ViewModelModule() {
 
     @Provides
     override fun provideAddSourceViewModel(
-        @IoScheduler ioScheduler: Scheduler,
-        @UiScheduler uiScheduler: Scheduler,
         sourcesRepository: SourcesRepository,
         dependencies: BaseViewModel.Dependencies,
         feedFetcher: FeedFetcher,

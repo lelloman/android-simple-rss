@@ -3,18 +3,13 @@ package com.lelloman.read.ui.settings.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.Observable
 import android.databinding.ObservableField
-import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.persistence.settings.SourceRefreshInterval
-import io.reactivex.Scheduler
 
 class SettingsViewModelImpl(
-    @IoScheduler private val ioScheduler: Scheduler,
-    @UiScheduler private val uiScheduler: Scheduler,
     private val appSettings: AppSettings,
     semanticTimeProvider: SemanticTimeProvider,
     dependencies: Dependencies
@@ -40,6 +35,7 @@ class SettingsViewModelImpl(
     override val themes: MutableLiveData<List<String>> by LazyLiveData {
         subscription {
             appSettings.appTheme
+                .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe { selectedTheme.set(AppTheme.values().indexOf(it)) }
         }
