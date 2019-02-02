@@ -8,8 +8,8 @@ import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.read.feed.FeedParser
 import com.lelloman.read.feed.fetcher.FeedFetcher
-import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FeedFinderHttpClient
+import com.lelloman.read.feed.finder.FeedFinderImpl
 import com.lelloman.read.feed.finder.FeedFinderParser
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.html.HtmlParser
@@ -84,7 +84,7 @@ class FeedFinderIntegrationTest {
         urlValidator = urlValidator
     )
 
-    private val tested = FeedFinder(
+    private val tested = FeedFinderImpl(
         httpClient = feedFinderHttpClient,
         parser = feedFinderParser,
         feedFetcher = feedFetcher,

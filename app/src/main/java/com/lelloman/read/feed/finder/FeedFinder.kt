@@ -8,19 +8,25 @@ import io.reactivex.Scheduler
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 
-class FeedFinder(
+
+interface FeedFinder {
+    val loading: Observable<Boolean>
+    fun findValidFeedUrls(url: String): Observable<FoundFeed>
+}
+
+internal class FeedFinderImpl(
     private val httpClient: FeedFinderHttpClient,
     private val parser: FeedFinderParser,
     private val feedFetcher: FeedFetcher,
     private val newThreadScheduler: Scheduler,
     loggerFactory: LoggerFactory
-) {
+) : FeedFinder {
 
     private val logger = loggerFactory.getLogger(javaClass)
 
     private val loadingSubject: Subject<Boolean> = BehaviorSubject.create()
 
-    val loading: Observable<Boolean> = loadingSubject.hide()
+    override val loading: Observable<Boolean> = loadingSubject.hide()
 
     private var nextId = 1L
 
@@ -28,7 +34,7 @@ class FeedFinder(
         loadingSubject.onNext(false)
     }
 
-    fun findValidFeedUrls(url: String): Observable<FoundFeed> = mutableSetOf<String>().let { foundUrls ->
+    override fun findValidFeedUrls(url: String): Observable<FoundFeed> = mutableSetOf<String>().let { foundUrls ->
         httpClient
             .requestStringBodyAndBaseUrl(url)
             .subscribeOn(newThreadScheduler)

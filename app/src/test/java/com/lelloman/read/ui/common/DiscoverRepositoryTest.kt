@@ -1,5 +1,6 @@
 package com.lelloman.read.ui.common
 
+import com.lelloman.common.logger.Logger
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FoundFeed
 import com.lelloman.read.persistence.db.SourcesDao
@@ -7,7 +8,12 @@ import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.testutils.dummyFoundFeed
 import com.lelloman.read.ui.common.repository.DiscoverRepository
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.never
+import com.nhaarman.mockito_kotlin.reset
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import io.reactivex.BackpressureStrategy
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.PublishSubject
@@ -26,12 +32,14 @@ class DiscoverRepositoryTest {
         on { getAll() }.thenReturn(allSourcesSubject.toFlowable(BackpressureStrategy.LATEST))
     }
 
+    private val logger: Logger = mock()
+
     private val tested = DiscoverRepository(
         ioScheduler = trampoline(),
         feedFinder = feedFinder,
         sourcesDao = sourcesDao,
         loggerFactory = mock {
-            on{getLogger(any())}.thenReturn(mock())
+            on { getLogger(any()) }.thenReturn(logger)
         }
     )
 
@@ -98,7 +106,7 @@ class DiscoverRepositoryTest {
     }
 
     @Test
-    fun `restarts feed finding when find feeds is called a second time with different url`() {
+    fun `logs a warning and does nothing if find url is called while already finding`() {
         val url1 = "www.staceppa.it"
         val url2 = "www.staceppa.com"
         val tester = tested.foundFeeds.test()
@@ -107,10 +115,13 @@ class DiscoverRepositoryTest {
         tested.findFeeds(url1)
         tester.assertValueCount(1)
         tester.assertValueAt(0) { it.isEmpty() }
+        verify(logger, never()).w(any(), any())
+        reset(feedFinder)
 
         tested.findFeeds(url2)
-        tester.assertValueCount(2)
-        tester.assertValueAt(1) { it.isEmpty() }
+        tester.assertValueCount(1)
+        verify(logger).w(any(), eq(null))
+        verifyZeroInteractions(feedFinder)
     }
 
     @Test

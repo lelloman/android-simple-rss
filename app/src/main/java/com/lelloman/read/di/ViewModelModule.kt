@@ -6,6 +6,7 @@ import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.read.feed.fetcher.FeedFetcher
+import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.settings.AppSettings
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.read.ui.articles.viewmodel.ArticleViewModelImpl
@@ -135,10 +136,12 @@ open class ViewModelModule {
     @Provides
     open fun provideFoundFeedListViewModel(
         dependencies: BaseViewModel.Dependencies,
-        discoverRepository: DiscoverRepository
+        discoverRepository: DiscoverRepository,
+        sourcesDao: SourcesDao
     ): FoundFeedListViewModel = FoundFeedListViewModelImpl(
         discoverRepository = discoverRepository,
-        dependencies = dependencies
+        dependencies = dependencies,
+        sourcesDao = sourcesDao
     )
 
     @Provides

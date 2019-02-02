@@ -10,6 +10,7 @@ import com.lelloman.read.feed.fetcher.FaviconFetcher
 import com.lelloman.read.feed.fetcher.FeedFetcher
 import com.lelloman.read.feed.finder.FeedFinder
 import com.lelloman.read.feed.finder.FeedFinderHttpClient
+import com.lelloman.read.feed.finder.FeedFinderImpl
 import com.lelloman.read.feed.finder.FeedFinderParser
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
@@ -22,7 +23,7 @@ import io.reactivex.Scheduler
 import javax.inject.Singleton
 
 @Module
-class FeedModule {
+open class FeedModule {
 
     @Singleton
     @Provides
@@ -104,13 +105,13 @@ class FeedModule {
     )
 
     @Provides
-    fun provideFeedFinder(
+    open fun provideFeedFinder(
         httpClient: FeedFinderHttpClient,
         parser: FeedFinderParser,
         feedFetcher: FeedFetcher,
         loggerFactory: LoggerFactory,
         @NewThreadScheduler newThreadScheduler: Scheduler
-    ) = FeedFinder(
+    ): FeedFinder = FeedFinderImpl(
         httpClient = httpClient,
         parser = parser,
         feedFetcher = feedFetcher,

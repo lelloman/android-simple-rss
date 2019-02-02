@@ -9,12 +9,16 @@ import com.lelloman.read.navigation.ReadNavigationScreen
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_FOUND_FEEDS
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_NAME
 import com.lelloman.read.navigation.ReadNavigationScreen.Companion.ARG_SOURCE_URL
+import com.lelloman.read.persistence.db.SourcesDao
+import com.lelloman.read.persistence.db.model.Source
 import com.lelloman.read.ui.common.repository.DiscoverRepository
+import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.BehaviorSubject
 
 class FoundFeedListViewModelImpl(
     private val discoverRepository: DiscoverRepository,
+    private val sourcesDao: SourcesDao,
     dependencies: Dependencies
 ) : FoundFeedListViewModel(dependencies) {
 
@@ -42,8 +46,16 @@ class FoundFeedListViewModelImpl(
 
     override val foundFeeds: MutableLiveData<List<FoundFeed>> by LazyLiveData {
         subscription {
-            discoverRepository
-                .foundFeeds
+            Observable
+                .combineLatest(
+                    discoverRepository.foundFeeds,
+                    sourcesDao.getAll().toObservable(),
+                    BiFunction<List<FoundFeed>, List<Source>, List<FoundFeed>> { foundFeeds, dbSources ->
+                        foundFeeds.filter { foundFeed ->
+                            !dbSources.any { it.url == foundFeed.url }
+                        }
+                    }
+                )
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .doOnNext {

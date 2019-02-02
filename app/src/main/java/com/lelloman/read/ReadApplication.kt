@@ -18,6 +18,7 @@ import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasBroadcastReceiverInjector
 import io.reactivex.plugins.RxJavaPlugins
+import java.io.InterruptedIOException
 import javax.inject.Inject
 
 open class ReadApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector {
@@ -57,6 +58,12 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
         inject()
     }
 
+    private fun Throwable?.isHttpClientException(): Boolean =
+        this is HttpClientException || this?.cause.isHttpClientException()
+
+    private fun Throwable?.isInterruptedIoException(): Boolean =
+        this is InterruptedIOException || this?.cause.isInterruptedIoException()
+
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -67,13 +74,12 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
             picassoWrap.enableImageSourceIndicator()
         }
         RxJavaPlugins.setErrorHandler {
-            val isHttpClientException = it is HttpClientException || it.cause is HttpClientException || it.cause?.cause is HttpClientException
-            val httpClientExtraMsg = if (isHttpClientException) {
-                ". This might be an un-subscribed http call, in which case it should be fine."
-            } else {
-                ""
+            when {
+                it.isInterruptedIoException() && it.isHttpClientException() -> {
+                    logger.w("HttpClient/InterruptedIOException occurred")
+                }
+                else -> logger.e("RxJavaPlugin error handler", it)
             }
-            logger.e("RxJavaPlugin error handler$httpClientExtraMsg", it)
         }
     }
 
