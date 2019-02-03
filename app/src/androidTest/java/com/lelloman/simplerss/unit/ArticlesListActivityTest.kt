@@ -10,8 +10,11 @@ import com.lelloman.instrumentedtestutils.rotateNatural
 import com.lelloman.instrumentedtestutils.wait
 import com.lelloman.instrumentedtestutils.whenever
 import com.lelloman.simplerss.di.MockViewModelModule
+import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import com.lelloman.simplerss.testutils.TestApp
 import com.lelloman.simplerss.testutils.screen.ArticlesListScreen
+import com.lelloman.simplerss.ui.articles.view.ArticlesListActivity
+import com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.junit.After
@@ -27,12 +30,12 @@ import java.util.*
 class ArticlesListActivityTest {
 
     @get:Rule
-    val activityTestRule = ActivityTestRule<com.lelloman.simplerss.ui.articles.view.ArticlesListActivity>(com.lelloman.simplerss.ui.articles.view.ArticlesListActivity::class.java, true, false)
+    val activityTestRule = ActivityTestRule<ArticlesListActivity>(ArticlesListActivity::class.java, true, false)
 
     private val viewModelModule = MockViewModelModule()
-    private lateinit var viewModel: com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel
+    private lateinit var viewModel: ArticlesListViewModel
 
-    private lateinit var articlesLiveData: MutableLiveData<List<com.lelloman.simplerss.persistence.db.model.SourceArticle>>
+    private lateinit var articlesLiveData: MutableLiveData<List<SourceArticle>>
     private lateinit var isLoadingLiveData: MutableLiveData<Boolean>
     private lateinit var viewActionEvents: Subject<ViewActionEvent>
     private lateinit var themeChangedEvents: Subject<AppTheme>
@@ -40,7 +43,7 @@ class ArticlesListActivityTest {
     private lateinit var screen: ArticlesListScreen
 
     private val articles = Array(20) {
-        com.lelloman.simplerss.persistence.db.model.SourceArticle(
+        SourceArticle(
             id = it.toLong(),
             title = "Article $it",
             subtitle = "Subtitle $it",
@@ -136,7 +139,7 @@ class ArticlesListActivityTest {
     @Test
     fun retainsArticleOnRotation() {
         val random = Random()
-        val article = com.lelloman.simplerss.persistence.db.model.SourceArticle(
+        val article = SourceArticle(
             id = random.nextLong(),
             title = random.nextLong().toString(),
             subtitle = random.nextLong().toString(),

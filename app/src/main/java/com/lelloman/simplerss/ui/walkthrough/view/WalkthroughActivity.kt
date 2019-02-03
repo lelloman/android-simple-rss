@@ -10,11 +10,12 @@ import com.lelloman.common.view.BaseActivity
 import com.lelloman.common.view.actionevent.SwipePageActionEvent
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityWalkthroughBinding
+import com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel
 import dagger.android.AndroidInjection
 
-class WalkthroughActivity : BaseActivity<com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel, ActivityWalkthroughBinding>() {
+class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthroughBinding>() {
 
-    private lateinit var viewPagerAdapter: com.lelloman.simplerss.ui.walkthrough.view.WalkthroughPagerAdapter
+    private lateinit var viewPagerAdapter: WalkthroughPagerAdapter
 
     override val hasActionBar = false
 
@@ -22,9 +23,9 @@ class WalkthroughActivity : BaseActivity<com.lelloman.simplerss.ui.walkthrough.v
 
     override val layoutResId = R.layout.activity_walkthrough
 
-    override fun getViewModelClass() = com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel::class.java
+    override fun getViewModelClass() = WalkthroughViewModel::class.java
 
-    override fun setViewModel(binding: ActivityWalkthroughBinding, viewModel: com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel) {
+    override fun setViewModel(binding: ActivityWalkthroughBinding, viewModel: WalkthroughViewModel) {
         binding.viewModel = viewModel
     }
 
@@ -32,7 +33,7 @@ class WalkthroughActivity : BaseActivity<com.lelloman.simplerss.ui.walkthrough.v
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        viewPagerAdapter = com.lelloman.simplerss.ui.walkthrough.view.WalkthroughPagerAdapter(
+        viewPagerAdapter = WalkthroughPagerAdapter(
             context = this,
             lifecycleOwner = this,
             walkthroughViewModel = viewModel
@@ -53,7 +54,7 @@ class WalkthroughActivity : BaseActivity<com.lelloman.simplerss.ui.walkthrough.v
 
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, com.lelloman.simplerss.ui.walkthrough.view.WalkthroughActivity::class.java)
+                val intent = Intent(context, WalkthroughActivity::class.java)
                 if (context !is Activity) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }

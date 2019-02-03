@@ -13,16 +13,17 @@ import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.KEY_MIN
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.KEY_OPEN_ARTICLES_IN_APP
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.KEY_SHOULD_SHOW_WALKTHROUGH
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.SHARED_PREFS_NAME
+import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.Companion.fromName
 
 class AppSettingsImpl(
     context: Context,
     private val baseApplicationSettings: BaseApplicationSettings
-) : com.lelloman.simplerss.persistence.settings.AppSettings, BaseApplicationSettings by baseApplicationSettings {
+) : AppSettings, BaseApplicationSettings by baseApplicationSettings {
 
     private val prefs = context.getSharedPreferences(SHARED_PREFS_NAME, Context.MODE_PRIVATE)
 
     private val sourceRefreshMinIntervalProperty = prefs
-        .enumProperty(KEY_MIN_SOURCE_REFRESH_INTERVAL, DEFAULT_MIN_SOURCE_REFRESH_INTERVAL, com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.Companion::fromName)
+        .enumProperty(KEY_MIN_SOURCE_REFRESH_INTERVAL, DEFAULT_MIN_SOURCE_REFRESH_INTERVAL, ::fromName)
 
     private val articlesListImagesEnabledProperty = prefs
         .booleanProperty(KEY_ARTICLE_LIST_IMAGES, DEFAULT_ARTICLES_LIST_IMAGES)
@@ -56,7 +57,7 @@ class AppSettingsImpl(
         readAllSettings()
     }
 
-    override fun setSourceRefreshMinInterval(interval: com.lelloman.simplerss.persistence.settings.SourceRefreshInterval) =
+    override fun setSourceRefreshMinInterval(interval: SourceRefreshInterval) =
         sourceRefreshMinIntervalProperty.set(interval)
 
     override fun setArticlesListImagesEnabled(enabled: Boolean) =

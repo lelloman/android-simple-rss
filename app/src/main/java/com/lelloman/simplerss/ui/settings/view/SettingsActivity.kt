@@ -8,16 +8,17 @@ import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivitySettingsBinding
+import com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel
 
-class SettingsActivity : BaseActivity<com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel, ActivitySettingsBinding>() {
+class SettingsActivity : BaseActivity<SettingsViewModel, ActivitySettingsBinding>() {
 
     override val layoutResId = R.layout.activity_settings
 
     override val hasActionBarBackButton = true
 
-    override fun getViewModelClass() = com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel::class.java
+    override fun getViewModelClass() = SettingsViewModel::class.java
 
-    override fun setViewModel(binding: ActivitySettingsBinding, viewModel: com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel) {
+    override fun setViewModel(binding: ActivitySettingsBinding, viewModel: SettingsViewModel) {
         binding.viewModel = viewModel
     }
 
@@ -25,7 +26,7 @@ class SettingsActivity : BaseActivity<com.lelloman.simplerss.ui.settings.viewmod
 
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, com.lelloman.simplerss.ui.settings.view.SettingsActivity::class.java)
+                val intent = Intent(context, SettingsActivity::class.java)
                 if (context !is Activity) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }

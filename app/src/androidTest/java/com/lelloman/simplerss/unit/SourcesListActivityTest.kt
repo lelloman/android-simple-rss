@@ -7,8 +7,11 @@ import com.lelloman.common.view.actionevent.ViewActionEvent
 import com.lelloman.instrumentedtestutils.rotateNatural
 import com.lelloman.instrumentedtestutils.whenever
 import com.lelloman.simplerss.di.MockViewModelModule
+import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.testutils.TestApp
 import com.lelloman.simplerss.testutils.screen.SourcesListScreen
+import com.lelloman.simplerss.ui.sources.view.SourcesListActivity
+import com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import org.junit.Before
@@ -18,12 +21,12 @@ import org.junit.Test
 class SourcesListActivityTest {
 
     @get:Rule
-    val rule = ActivityTestRule<com.lelloman.simplerss.ui.sources.view.SourcesListActivity>(com.lelloman.simplerss.ui.sources.view.SourcesListActivity::class.java, true, false)
+    val rule = ActivityTestRule<SourcesListActivity>(SourcesListActivity::class.java, true, false)
 
     private val viewModelModule = MockViewModelModule()
-    private lateinit var viewModel: com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel
+    private lateinit var viewModel: SourcesListViewModel
 
-    private lateinit var sources: MutableLiveData<List<com.lelloman.simplerss.persistence.db.model.Source>>
+    private lateinit var sources: MutableLiveData<List<Source>>
     private lateinit var viewActionEvents: Subject<ViewActionEvent>
     private lateinit var emptyViewVisible: MutableLiveData<Boolean>
 
@@ -73,7 +76,7 @@ class SourcesListActivityTest {
 
     private fun launchActivity() = rule.launchActivity(null)
 
-    private fun source(index: Int) = com.lelloman.simplerss.persistence.db.model.Source(
+    private fun source(index: Int) = Source(
         id = index.toLong(),
         name = "source $index",
         url = "www.$index.com",

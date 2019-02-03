@@ -2,6 +2,7 @@ package com.lelloman.simplerss.ui.articles.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.simplerss.persistence.db.model.SourceArticle
 
 abstract class ArticlesListViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
 
@@ -11,7 +12,7 @@ abstract class ArticlesListViewModel(dependencies: Dependencies) : BaseViewModel
     abstract val emptyViewDescriptionText: MutableLiveData<String>
     abstract val emptyViewButtonText: MutableLiveData<String>
 
-    abstract val articles: MutableLiveData<List<com.lelloman.simplerss.persistence.db.model.SourceArticle>>
+    abstract val articles: MutableLiveData<List<SourceArticle>>
 
     abstract fun refresh()
 
@@ -19,7 +20,7 @@ abstract class ArticlesListViewModel(dependencies: Dependencies) : BaseViewModel
 
     abstract fun onEmptyViewButtonClicked()
 
-    abstract fun onArticleClicked(article: com.lelloman.simplerss.persistence.db.model.SourceArticle)
+    abstract fun onArticleClicked(article: SourceArticle)
 
     abstract fun onSettingsClicked()
 

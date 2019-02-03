@@ -6,13 +6,15 @@ import android.view.View
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
+import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
+import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 
 class DiscoverUrlViewModelImpl(
-    private val discoverRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository,
+    private val discoverRepository: DiscoverRepository,
     private val urlValidator: UrlValidator,
     dependencies: Dependencies
-) : com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel(dependencies) {
+) : DiscoverUrlViewModel(dependencies) {
     override val discoverUrl = ObservableField<String>()
 
     override val isFeedDiscoverLoading: MutableLiveData<Boolean> by LazyLiveData {
@@ -30,7 +32,7 @@ class DiscoverUrlViewModelImpl(
             discoverUrl.set(urlWithProtocol)
             discoverRepository.findFeeds(urlWithProtocol)
             navigate(
-                DeepLink(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.FOUND_FEED_LIST)
+                DeepLink(SimpleRssNavigationScreen.FOUND_FEED_LIST)
                     .putString(ARG_URL, urlWithProtocol)
             )
         }

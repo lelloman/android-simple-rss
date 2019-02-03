@@ -9,6 +9,11 @@ import com.lelloman.common.logger.Logger
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.PicassoWrap
 import com.lelloman.simplerss.di.DaggerAppComponent
+import com.lelloman.simplerss.feed.FaviconBitmapProvider
+import com.lelloman.simplerss.http.HttpClientException
+import com.lelloman.simplerss.persistence.db.AppDatabase
+import com.lelloman.simplerss.persistence.db.SourcesDao
+import com.lelloman.simplerss.persistence.settings.AppSettings
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
 import dagger.android.HasBroadcastReceiverInjector
@@ -25,19 +30,19 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
     lateinit var dispatchingReceiverAndroidInjector: DispatchingAndroidInjector<BroadcastReceiver>
 
     @Inject
-    lateinit var db: com.lelloman.simplerss.persistence.db.AppDatabase
+    lateinit var db: AppDatabase
 
     @Inject
-    lateinit var sourcesDao: com.lelloman.simplerss.persistence.db.SourcesDao
+    lateinit var sourcesDao: SourcesDao
 
     @Inject
     open lateinit var picassoWrap: PicassoWrap
 
     @Inject
-    lateinit var faviconBitmapProvider: com.lelloman.simplerss.feed.FaviconBitmapProvider
+    lateinit var faviconBitmapProvider: FaviconBitmapProvider
 
     @Inject
-    lateinit var appSettings: com.lelloman.simplerss.persistence.settings.AppSettings
+    lateinit var appSettings: AppSettings
 
     @Inject
     lateinit var loggerFactory: LoggerFactory
@@ -54,18 +59,18 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
     }
 
     private fun Throwable?.isHttpClientException(): Boolean =
-        this is com.lelloman.simplerss.http.HttpClientException || this?.cause.isHttpClientException()
+        this is HttpClientException || this?.cause.isHttpClientException()
 
     private fun Throwable?.isInterruptedIoException(): Boolean =
         this is InterruptedIOException || this?.cause.isInterruptedIoException()
 
     override fun onCreate() {
         super.onCreate()
-        com.lelloman.simplerss.SimpleRssApplication.Companion.instance = this
+        SimpleRssApplication.Companion.instance = this
 
         logger = loggerFactory.getLogger(javaClass)
 
-        if (com.lelloman.simplerss.BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             picassoWrap.enableImageSourceIndicator()
         }
         RxJavaPlugins.setErrorHandler {
@@ -87,10 +92,10 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
 
     companion object {
 
-        private lateinit var instance: com.lelloman.simplerss.SimpleRssApplication
+        private lateinit var instance: SimpleRssApplication
 
-        fun getPicassoWrap() = com.lelloman.simplerss.SimpleRssApplication.Companion.instance.picassoWrap
+        fun getPicassoWrap() = SimpleRssApplication.Companion.instance.picassoWrap
 
-        fun getFaviconBitmapProvider() = com.lelloman.simplerss.SimpleRssApplication.Companion.instance.faviconBitmapProvider
+        fun getFaviconBitmapProvider() = SimpleRssApplication.Companion.instance.faviconBitmapProvider
     }
 }

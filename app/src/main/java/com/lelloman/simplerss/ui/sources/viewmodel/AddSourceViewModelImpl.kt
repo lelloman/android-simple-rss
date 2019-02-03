@@ -6,14 +6,21 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.feed.fetcher.EmptySource
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.feed.fetcher.HttpError
+import com.lelloman.simplerss.feed.fetcher.Success
+import com.lelloman.simplerss.feed.fetcher.XmlError
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 
 class AddSourceViewModelImpl(
-    private val sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
-    private val feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher,
+    private val sourcesRepository: SourcesRepository,
+    private val feedFetcher: FeedFetcher,
     loggerFactory: LoggerFactory,
     private val urlValidator: UrlValidator,
     dependencies: Dependencies
-) : com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel(dependencies) {
+) : AddSourceViewModel(dependencies) {
 
     override val sourceName = ObservableField<String>()
     override val sourceNameError = MutableLiveData<String>()
@@ -55,15 +62,15 @@ class AddSourceViewModelImpl(
                     .doAfterTerminate { testingUrl.value = false }
                     .subscribe({
                         logger.d("test result: $it")
-                        if (it is com.lelloman.simplerss.feed.fetcher.Success) {
+                        if (it is Success) {
                             sourceUrlDrawable.value = R.drawable.ic_check_green_24dp
                             sourceUrlError.value = ""
                         } else {
                             sourceUrlDrawable.value = 0
                             val errorId = when (it) {
-                                com.lelloman.simplerss.feed.fetcher.HttpError -> R.string.test_feed_http_error
-                                com.lelloman.simplerss.feed.fetcher.XmlError -> R.string.test_feed_xml_error
-                                com.lelloman.simplerss.feed.fetcher.EmptySource -> R.string.test_feed_empty_error
+                                HttpError -> R.string.test_feed_http_error
+                                XmlError -> R.string.test_feed_xml_error
+                                EmptySource -> R.string.test_feed_empty_error
                                 else -> R.string.something_went_wrong
                             }
                             sourceUrlError.value = getString(errorId)
@@ -93,7 +100,7 @@ class AddSourceViewModelImpl(
             sourceUrlError.value = ""
             subscription {
                 sourcesRepository
-                    .insertSource(com.lelloman.simplerss.persistence.db.model.Source(
+                    .insertSource(Source(
                         name = name!!,
                         url = url!!,
                         isActive = true

@@ -9,15 +9,19 @@ import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.actionevent.SwipePageActionEvent
+import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
+import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
+import com.lelloman.simplerss.ui.walkthrough.ThemeListItem
 
 class WalkthroughViewModelImpl(
-    private val appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
-    private val discoveryRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository,
+    private val appSettings: AppSettings,
+    private val discoveryRepository: DiscoverRepository,
     private val urlValidator: UrlValidator,
     dependencies: Dependencies
-) : com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel(dependencies) {
+) : WalkthroughViewModel(dependencies) {
 
-    override val themes: MutableLiveData<List<com.lelloman.simplerss.ui.walkthrough.ThemeListItem>> by LazyLiveData {
+    override val themes: MutableLiveData<List<ThemeListItem>> by LazyLiveData {
         subscription {
             appSettings
                 .appTheme
@@ -27,7 +31,7 @@ class WalkthroughViewModelImpl(
                             .values()
                             .toList()
                             .mapIndexed { index, appTheme ->
-                                com.lelloman.simplerss.ui.walkthrough.ThemeListItem(
+                                ThemeListItem(
                                     id = index.toLong(),
                                     theme = appTheme,
                                     isEnabled = appTheme == selectedTheme
@@ -56,17 +60,17 @@ class WalkthroughViewModelImpl(
 
     override fun onSaveInstanceState(bundle: Bundle) {
         super.onSaveInstanceState(bundle)
-        bundle.putString(com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModelImpl.Companion.ARG_URL, discoverUrl.get())
+        bundle.putString(ARG_URL, discoverUrl.get())
     }
 
     override fun onRestoreInstanceState(bundle: Bundle) {
         super.onRestoreInstanceState(bundle)
-        bundle.getString(com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModelImpl.Companion.ARG_URL)?.let { discoverUrl.set(it) }
+        bundle.getString(ARG_URL)?.let { discoverUrl.set(it) }
     }
 
     override fun onCloseClicked(view: View) {
         appSettings.setShouldShowWalkthtough(false)
-        navigateAndClose(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ARTICLES_LIST)
+        navigateAndClose(SimpleRssNavigationScreen.ARTICLES_LIST)
     }
 
     override fun onKeyboardActionDone() {
@@ -78,20 +82,20 @@ class WalkthroughViewModelImpl(
             discoverUrl.set(urlWithProtocol)
             discoveryRepository.findFeeds(urlWithProtocol)
             navigate(
-                DeepLink(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.FOUND_FEED_LIST)
-                    .putString(com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModelImpl.Companion.ARG_URL, urlWithProtocol)
+                DeepLink(SimpleRssNavigationScreen.FOUND_FEED_LIST)
+                    .putString(ARG_URL, urlWithProtocol)
             )
         }
     }
 
     override fun onMeteredConnectionNoClicked(view: View) {
-        navigateAndClose(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ARTICLES_LIST)
+        navigateAndClose(SimpleRssNavigationScreen.ARTICLES_LIST)
         appSettings.setUseMeteredNetwork(false)
         appSettings.setShouldShowWalkthtough(false)
     }
 
     override fun onMeteredConnectionYesClicked(view: View) {
-        navigateAndClose(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ARTICLES_LIST)
+        navigateAndClose(SimpleRssNavigationScreen.ARTICLES_LIST)
         appSettings.setUseMeteredNetwork(true)
         appSettings.setShouldShowWalkthtough(false)
     }

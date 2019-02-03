@@ -4,11 +4,12 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import com.lelloman.simplerss.persistence.db.AppDatabase.Companion.VERSION
 import com.lelloman.simplerss.persistence.db.model.Article
+import com.lelloman.simplerss.persistence.db.model.Source
 
-@Database(entities = [com.lelloman.simplerss.persistence.db.model.Article::class, com.lelloman.simplerss.persistence.db.model.Source::class], version = VERSION)
+@Database(entities = [Article::class, Source::class], version = VERSION)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun sourcesDao(): com.lelloman.simplerss.persistence.db.SourcesDao
-    abstract fun articlesDao(): com.lelloman.simplerss.persistence.db.ArticlesDao
+    abstract fun sourcesDao(): SourcesDao
+    abstract fun articlesDao(): ArticlesDao
 
     companion object {
         const val SOURCE_TABLE_NAME = "Sources"

@@ -6,6 +6,17 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProviderImpl
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.simplerss.feed.FeedParser
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.feed.finder.FeedFinderHttpClient
+import com.lelloman.simplerss.feed.finder.FeedFinderImpl
+import com.lelloman.simplerss.feed.finder.FeedFinderParser
+import com.lelloman.simplerss.feed.finder.FoundFeed
+import com.lelloman.simplerss.html.HtmlParser
+import com.lelloman.simplerss.http.HttpClient
+import com.lelloman.simplerss.http.HttpRequest
+import com.lelloman.simplerss.http.HttpResponse
+import com.lelloman.simplerss.persistence.settings.AppSettings
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -15,29 +26,29 @@ import org.mockito.Mockito.mock
 
 class FeedFinderIntegrationTest {
 
-    private val httpClient = object : com.lelloman.simplerss.http.HttpClient {
+    private val httpClient = object : HttpClient {
 
-        private val urlMap = mutableMapOf<String, com.lelloman.simplerss.http.HttpResponse>()
+        private val urlMap = mutableMapOf<String, HttpResponse>()
 
         fun map(url: String, stringBody: String) = map(
             url = url,
-            httpResponse = com.lelloman.simplerss.http.HttpResponse(200, true, stringBody.toByteArray())
+            httpResponse = HttpResponse(200, true, stringBody.toByteArray())
         )
 
-        fun map(url: String, httpResponse: com.lelloman.simplerss.http.HttpResponse) {
+        fun map(url: String, httpResponse: HttpResponse) {
             urlMap[url] = httpResponse
         }
 
-        override fun request(request: com.lelloman.simplerss.http.HttpRequest): Single<com.lelloman.simplerss.http.HttpResponse> = Maybe
+        override fun request(request: HttpRequest): Single<HttpResponse> = Maybe
             .fromCallable {
                 urlMap[request.url]
-                    ?: com.lelloman.simplerss.http.HttpResponse(code = 404, isSuccessful = false, body = byteArrayOf())
+                    ?: HttpResponse(code = 404, isSuccessful = false, body = byteArrayOf())
             }
             .toSingle()
     }
 
     private val urlValidator = UrlValidatorImpl()
-    private val htmlParser = com.lelloman.simplerss.html.HtmlParser()
+    private val htmlParser = HtmlParser()
 
     private val loggerFactory = object : LoggerFactory {
         override fun getLogger(clazz: Class<*>) = mock(Logger::class.java)
@@ -47,19 +58,19 @@ class FeedFinderIntegrationTest {
         override fun isNetworkMetered() = false
     }
 
-    private val appSettings = mock(com.lelloman.simplerss.persistence.settings.AppSettings::class.java)
+    private val appSettings = mock(AppSettings::class.java)
 
     private val timeProvider = TimeProviderImpl()
 
-    private val feedParser = com.lelloman.simplerss.feed.FeedParser(timeProvider = timeProvider)
+    private val feedParser = FeedParser(timeProvider = timeProvider)
 
-    private val feedFinderParser = com.lelloman.simplerss.feed.finder.FeedFinderParser(
+    private val feedFinderParser = FeedFinderParser(
         urlValidator = urlValidator,
         htmlParser = htmlParser,
         loggerFactory = loggerFactory
     )
 
-    private val feedFetcher = com.lelloman.simplerss.feed.fetcher.FeedFetcher(
+    private val feedFetcher = FeedFetcher(
         httpClient = httpClient,
         feedParser = feedParser,
         htmlParser = htmlParser,
@@ -68,12 +79,12 @@ class FeedFinderIntegrationTest {
         loggerFactory = loggerFactory
     )
 
-    private val feedFinderHttpClient = com.lelloman.simplerss.feed.finder.FeedFinderHttpClient(
+    private val feedFinderHttpClient = FeedFinderHttpClient(
         httpClient = httpClient,
         urlValidator = urlValidator
     )
 
-    private val tested = com.lelloman.simplerss.feed.finder.FeedFinderImpl(
+    private val tested = FeedFinderImpl(
         httpClient = feedFinderHttpClient,
         parser = feedFinderParser,
         feedFetcher = feedFetcher,
@@ -81,7 +92,7 @@ class FeedFinderIntegrationTest {
         newThreadScheduler = Schedulers.newThread()
     )
 
-    private fun List<com.lelloman.simplerss.feed.finder.FoundFeed>.assertContains(url: String, nArticles: Int, name: String) {
+    private fun List<FoundFeed>.assertContains(url: String, nArticles: Int, name: String) {
         assertThat(any { it.url == url && it.nArticles == nArticles && it.name == name }).isTrue()
     }
 

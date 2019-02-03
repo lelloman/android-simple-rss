@@ -2,19 +2,23 @@ package com.lelloman.simplerss.feed.finder
 
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
+import com.lelloman.simplerss.html.Doc
+import com.lelloman.simplerss.html.HtmlParser
+import com.lelloman.simplerss.html.element.ADocElement
+import com.lelloman.simplerss.html.element.LinkDocElement
 import io.reactivex.Maybe
 import io.reactivex.Observable
 import io.reactivex.Single
 
 class FeedFinderParser(
     private val urlValidator: UrlValidator,
-    private val htmlParser: com.lelloman.simplerss.html.HtmlParser,
+    private val htmlParser: HtmlParser,
     loggerFactory: LoggerFactory
 ) {
 
     private val logger = loggerFactory.getLogger(javaClass)
 
-    fun parseDoc(url: String, html: String): Maybe<com.lelloman.simplerss.html.Doc> = urlValidator
+    fun parseDoc(url: String, html: String): Maybe<Doc> = urlValidator
         .findBaseUrlWithProtocol(url)
         .flatMap { baseUrl ->
             Maybe.fromCallable {
@@ -26,7 +30,7 @@ class FeedFinderParser(
         }
         .onErrorComplete()
 
-    fun findCandidateUrls(doc: com.lelloman.simplerss.html.Doc): Observable<String> = Single
+    fun findCandidateUrls(doc: Doc): Observable<String> = Single
         .fromCallable {
             val output = if (doc.url != null) {
                 mutableListOf("${doc.url}/feed")
@@ -37,14 +41,14 @@ class FeedFinderParser(
                 .apply {
                     doc.iterate { element ->
                         when (element) {
-                            is com.lelloman.simplerss.html.element.LinkDocElement -> {
+                            is LinkDocElement -> {
                                 when (element.linkType) {
                                     "application/rss+xml",
                                     "text/xml",
                                     "application/atom+xml" -> add(element.href)
                                 }
                             }
-                            is com.lelloman.simplerss.html.element.ADocElement -> {
+                            is ADocElement -> {
                                 if (element.href.contains(Regex("(feed|rss)"))) {
                                     add(element.href)
                                 }

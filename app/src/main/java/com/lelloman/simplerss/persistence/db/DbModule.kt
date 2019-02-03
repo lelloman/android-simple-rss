@@ -2,6 +2,7 @@ package com.lelloman.simplerss.persistence.db
 
 import android.arch.persistence.room.Room
 import android.content.Context
+import com.lelloman.simplerss.persistence.db.AppDatabase.Companion.NAME
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -11,15 +12,15 @@ open class DbModule {
 
     @Singleton
     @Provides
-    open fun provideDatabase(context: Context): com.lelloman.simplerss.persistence.db.AppDatabase = Room
-        .databaseBuilder(context, com.lelloman.simplerss.persistence.db.AppDatabase::class.java, com.lelloman.simplerss.persistence.db.AppDatabase.Companion.NAME)
+    open fun provideDatabase(context: Context): AppDatabase = Room
+        .databaseBuilder(context, AppDatabase::class.java, NAME)
         .build()
 
     @Singleton
     @Provides
-    open fun provideSourcesDao(db: com.lelloman.simplerss.persistence.db.AppDatabase) = db.sourcesDao()
+    open fun provideSourcesDao(db: AppDatabase) = db.sourcesDao()
 
     @Singleton
     @Provides
-    open fun provideArticlesDao(db: com.lelloman.simplerss.persistence.db.AppDatabase) = db.articlesDao()
+    open fun provideArticlesDao(db: AppDatabase) = db.articlesDao()
 }

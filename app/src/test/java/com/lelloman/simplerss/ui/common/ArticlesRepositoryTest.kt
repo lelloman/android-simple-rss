@@ -1,5 +1,8 @@
 package com.lelloman.simplerss.ui.common
 
+import com.lelloman.simplerss.feed.FeedRefresher
+import com.lelloman.simplerss.persistence.db.ArticlesDao
+import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
 import com.nhaarman.mockito_kotlin.anyVararg
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -11,16 +14,16 @@ import org.junit.Test
 
 class ArticlesRepositoryTest {
 
-    private val articlesDao: com.lelloman.simplerss.persistence.db.ArticlesDao = mock {
+    private val articlesDao: ArticlesDao = mock {
         on { getAllFromActiveSources() }.thenReturn(Flowable.just(emptyList()))
         on { insertAll(anyVararg()) }.thenReturn(emptyList())
     }
     private val feedRefresherIsLoadingSubject: Subject<Boolean> = PublishSubject.create()
-    private val feedRefresher: com.lelloman.simplerss.feed.FeedRefresher = mock {
+    private val feedRefresher: FeedRefresher = mock {
         on { isLoading }.thenReturn(feedRefresherIsLoadingSubject.hide())
     }
 
-    private val tested = com.lelloman.simplerss.ui.common.repository.ArticlesRepository(
+    private val tested = ArticlesRepository(
         articlesDao = articlesDao,
         feedRefresher = feedRefresher
     )

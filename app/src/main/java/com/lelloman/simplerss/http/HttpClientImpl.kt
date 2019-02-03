@@ -10,11 +10,11 @@ class HttpClientImpl(
     private val okHttpClient: OkHttpClient,
     loggerFactory: LoggerFactory,
     private val timeProvider: TimeProvider
-) : com.lelloman.simplerss.http.HttpClient {
+) : HttpClient {
 
     private val logger = loggerFactory.getLogger(javaClass)
 
-    override fun request(request: com.lelloman.simplerss.http.HttpRequest): Single<com.lelloman.simplerss.http.HttpResponse> = Single.fromCallable {
+    override fun request(request: HttpRequest): Single<HttpResponse> = Single.fromCallable {
         try {
             val okRequest = Request.Builder()
                 .url(request.url)
@@ -30,13 +30,13 @@ class HttpClientImpl(
             logger.d("<-- ${okRequest.method()} ${okResponse.code()} ${okRequest.url()} in ${t2 - t1}ms ${okResponse.headers()}")
             logger.d("response length: ${body.size}")
 
-            com.lelloman.simplerss.http.HttpResponse(
+            HttpResponse(
                 code = okResponse.code(),
                 isSuccessful = okResponse.isSuccessful,
                 body = body
             )
         } catch (exception: Exception) {
-            throw com.lelloman.simplerss.http.HttpClientException(exception)
+            throw HttpClientException(exception)
         }
     }
 }

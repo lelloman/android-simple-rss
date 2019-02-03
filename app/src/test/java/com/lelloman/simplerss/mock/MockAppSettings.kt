@@ -1,18 +1,20 @@
 package com.lelloman.simplerss.mock
 
 import com.lelloman.common.view.AppTheme
+import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
 import io.reactivex.Observable
 
 class MockAppSettings(
-    var providedSourceRefreshMinInterval: Observable<com.lelloman.simplerss.persistence.settings.SourceRefreshInterval> = Observable.empty(),
+    var providedSourceRefreshMinInterval: Observable<SourceRefreshInterval> = Observable.empty(),
     var providedArticleListImagesEnabled: Observable<Boolean> = Observable.empty(),
     var providedUseMeteredNetwork: Observable<Boolean> = Observable.empty(),
     var providedOpenArticlesInApp: Observable<Boolean> = Observable.empty(),
     private var providedShouldShowWalkthrough: Observable<Boolean> = Observable.empty(),
     private var providedAppTheme: Observable<AppTheme> = Observable.empty()
-) : com.lelloman.simplerss.persistence.settings.AppSettings {
+) : AppSettings {
 
-    override val sourceRefreshMinInterval: Observable<com.lelloman.simplerss.persistence.settings.SourceRefreshInterval> get() = providedSourceRefreshMinInterval
+    override val sourceRefreshMinInterval: Observable<SourceRefreshInterval> get() = providedSourceRefreshMinInterval
     override val articleListImagesEnabled: Observable<Boolean> get() = providedArticleListImagesEnabled
     override val useMeteredNetwork: Observable<Boolean> get() = providedUseMeteredNetwork
     override val openArticlesInApp: Observable<Boolean> get() = providedOpenArticlesInApp
@@ -23,7 +25,7 @@ class MockAppSettings(
 
     override fun readAllSettings() = Unit
 
-    override fun setSourceRefreshMinInterval(interval: com.lelloman.simplerss.persistence.settings.SourceRefreshInterval) = Unit
+    override fun setSourceRefreshMinInterval(interval: SourceRefreshInterval) = Unit
 
     override fun setArticlesListImagesEnabled(enabled: Boolean) = Unit
 

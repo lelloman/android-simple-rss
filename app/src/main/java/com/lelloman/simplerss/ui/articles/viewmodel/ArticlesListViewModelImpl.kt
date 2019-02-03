@@ -5,15 +5,23 @@ import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
+import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.persistence.db.model.SourceArticle
+import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
+import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import io.reactivex.Observable
 
 class ArticlesListViewModelImpl(
-    private val articlesRepository: com.lelloman.simplerss.ui.common.repository.ArticlesRepository,
-    private val sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
-    private val discoverRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository,
-    private val appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
+    private val articlesRepository: ArticlesRepository,
+    private val sourcesRepository: SourcesRepository,
+    private val discoverRepository: DiscoverRepository,
+    private val appSettings: AppSettings,
     dependencies: Dependencies
-) : com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel(dependencies) {
+) : ArticlesListViewModel(dependencies) {
 
     override val emptyViewVisible = MutableLiveData<Boolean>()
     override val emptyViewDescriptionText = MutableLiveData<String>()
@@ -30,7 +38,7 @@ class ArticlesListViewModelImpl(
         }
     }
 
-    override val articles: MutableLiveData<List<com.lelloman.simplerss.persistence.db.model.SourceArticle>> by LazyLiveData {
+    override val articles: MutableLiveData<List<SourceArticle>> by LazyLiveData {
         subscription {
             articlesRepository.fetchArticles()
                 .flatMap { articles ->
@@ -68,24 +76,24 @@ class ArticlesListViewModelImpl(
 
     override fun refresh() = articlesRepository.refresh()
 
-    override fun onSourcesClicked() = navigate(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.SOURCES_LIST)
+    override fun onSourcesClicked() = navigate(SimpleRssNavigationScreen.SOURCES_LIST)
 
     override fun onEmptyViewButtonClicked() {
         emptyViewAction?.invoke()
     }
 
-    override fun onArticleClicked(article: com.lelloman.simplerss.persistence.db.model.SourceArticle) = if (openArticlesInApp) {
+    override fun onArticleClicked(article: SourceArticle) = if (openArticlesInApp) {
         navigate(
-            DeepLink(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ARTICLE)
-                .putString(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ARG_URL, article.link)
+            DeepLink(SimpleRssNavigationScreen.ARTICLE)
+                .putString(ARG_URL, article.link)
         )
     } else {
         navigate(ViewIntentNavigationEvent(article.link))
     }
 
-    override fun onSettingsClicked() = navigate(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.SETTINGS)
+    override fun onSettingsClicked() = navigate(SimpleRssNavigationScreen.SETTINGS)
 
-    override fun onDiscoverSourceClicked() = navigate(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.DISCOVER_URL)
+    override fun onDiscoverSourceClicked() = navigate(SimpleRssNavigationScreen.DISCOVER_URL)
 
     private fun setNoArticleAvailableAtm() {
         emptyViewDescriptionText.value = getString(R.string.empty_articles_must_refresh)
@@ -93,17 +101,17 @@ class ArticlesListViewModelImpl(
         emptyViewAction = ::refresh
     }
 
-    private fun setEmptyViewValues(sources: List<com.lelloman.simplerss.persistence.db.model.Source>) {
+    private fun setEmptyViewValues(sources: List<Source>) {
         when {
             sources.isEmpty() -> {
                 emptyViewDescriptionText.value = getString(R.string.empty_articles_no_source)
                 emptyViewButtonText.value = getString(R.string.add_source)
-                emptyViewAction = { navigate(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ADD_SOURCE) }
+                emptyViewAction = { navigate(SimpleRssNavigationScreen.ADD_SOURCE) }
             }
-            !sources.any(com.lelloman.simplerss.persistence.db.model.Source::isActive) -> {
+            !sources.any(Source::isActive) -> {
                 emptyViewDescriptionText.value = getString(R.string.empty_articles_sources_disabled)
                 emptyViewButtonText.value = getString(R.string.enable_sources)
-                emptyViewAction = { navigate(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.SOURCES_LIST) }
+                emptyViewAction = { navigate(SimpleRssNavigationScreen.SOURCES_LIST) }
             }
             else -> setNoArticleAvailableAtm()
         }

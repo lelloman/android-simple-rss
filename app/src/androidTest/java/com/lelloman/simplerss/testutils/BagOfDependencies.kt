@@ -9,18 +9,28 @@ import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.TimeProviderImpl
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.simplerss.feed.FeedParser
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.feed.finder.FeedFinder
+import com.lelloman.simplerss.feed.finder.FeedFinderHttpClient
+import com.lelloman.simplerss.feed.finder.FeedFinderImpl
+import com.lelloman.simplerss.feed.finder.FeedFinderParser
+import com.lelloman.simplerss.html.HtmlParser
+import com.lelloman.simplerss.http.HttpClientImpl
+import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.persistence.settings.AppSettingsImpl
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
 
 class BagOfDependencies {
     private val timeProvider: TimeProvider
-    private val htmlParser: com.lelloman.simplerss.html.HtmlParser
+    private val htmlParser: HtmlParser
     private val meteredConnectionChecker: MeteredConnectionChecker
-    private val httpClient: com.lelloman.simplerss.http.HttpClientImpl
-    val feedFinder: com.lelloman.simplerss.feed.finder.FeedFinder
-    private val feedParser: com.lelloman.simplerss.feed.FeedParser
+    private val httpClient: HttpClientImpl
+    val feedFinder: FeedFinder
+    private val feedParser: FeedParser
     private val baseAppSettings: BaseApplicationSettings
-    private val appSettings: com.lelloman.simplerss.persistence.settings.AppSettings
+    private val appSettings: AppSettings
 
     init {
         val okHttpClient = OkHttpClient.Builder().build()
@@ -28,23 +38,23 @@ class BagOfDependencies {
         val baseAppModule = BaseApplicationModule(targetContext as Application)
         val loggerFactory = baseAppModule.provideLoggerFactory()
         timeProvider = TimeProviderImpl()
-        htmlParser = com.lelloman.simplerss.html.HtmlParser()
+        htmlParser = HtmlParser()
         val urlValidator = UrlValidatorImpl()
 
         meteredConnectionChecker = baseAppModule.provideMeteredConnectionChecker(targetContext)
 
         baseAppSettings = BaseSettingsModule().provideBaseApplicationSettings(targetContext)
-        appSettings = com.lelloman.simplerss.persistence.settings.AppSettingsImpl(targetContext, baseAppSettings)
+        appSettings = AppSettingsImpl(targetContext, baseAppSettings)
 
-        feedParser = com.lelloman.simplerss.feed.FeedParser(timeProvider)
+        feedParser = FeedParser(timeProvider)
 
-        httpClient = com.lelloman.simplerss.http.HttpClientImpl(
+        httpClient = HttpClientImpl(
             okHttpClient = okHttpClient,
             loggerFactory = loggerFactory,
             timeProvider = timeProvider
         )
 
-        val feedFetcher = com.lelloman.simplerss.feed.fetcher.FeedFetcher(
+        val feedFetcher = FeedFetcher(
             httpClient = httpClient,
             feedParser = feedParser,
             htmlParser = htmlParser,
@@ -53,18 +63,18 @@ class BagOfDependencies {
             loggerFactory = loggerFactory
         )
 
-        val feedFinderHttpClient = com.lelloman.simplerss.feed.finder.FeedFinderHttpClient(
+        val feedFinderHttpClient = FeedFinderHttpClient(
             httpClient = httpClient,
             urlValidator = urlValidator
         )
 
-        val feedFinderParser = com.lelloman.simplerss.feed.finder.FeedFinderParser(
+        val feedFinderParser = FeedFinderParser(
             urlValidator = urlValidator,
             htmlParser = htmlParser,
             loggerFactory = loggerFactory
         )
 
-        feedFinder = com.lelloman.simplerss.feed.finder.FeedFinderImpl(
+        feedFinder = FeedFinderImpl(
             httpClient = feedFinderHttpClient,
             parser = feedFinderParser,
             feedFetcher = feedFetcher,

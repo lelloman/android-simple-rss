@@ -3,14 +3,15 @@ package com.lelloman.simplerss.ui.launcher.view
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityLauncherBinding
+import com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel
 
-class LauncherActivity : BaseActivity<com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel, ActivityLauncherBinding>() {
+class LauncherActivity : BaseActivity<LauncherViewModel, ActivityLauncherBinding>() {
 
     override val layoutResId = R.layout.activity_launcher
 
-    override fun getViewModelClass() = com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel::class.java
+    override fun getViewModelClass() = LauncherViewModel::class.java
 
-    override fun setViewModel(binding: ActivityLauncherBinding, viewModel: com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel) {
+    override fun setViewModel(binding: ActivityLauncherBinding, viewModel: LauncherViewModel) {
         binding.viewModel = viewModel
     }
 }

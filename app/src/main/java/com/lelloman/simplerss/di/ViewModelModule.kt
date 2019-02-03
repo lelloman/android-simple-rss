@@ -5,6 +5,32 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.persistence.db.SourcesDao
+import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.ui.articles.viewmodel.ArticleViewModel
+import com.lelloman.simplerss.ui.articles.viewmodel.ArticleViewModelImpl
+import com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel
+import com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModelImpl
+import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
+import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
+import com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel
+import com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModelImpl
+import com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel
+import com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModelImpl
+import com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel
+import com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModelImpl
+import com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel
+import com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModelImpl
+import com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel
+import com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModelImpl
+import com.lelloman.simplerss.ui.sources.viewmodel.SourceViewModel
+import com.lelloman.simplerss.ui.sources.viewmodel.SourceViewModelImpl
+import com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel
+import com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModelImpl
+import com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel
+import com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModelImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Provider
@@ -19,12 +45,12 @@ open class ViewModelModule {
 
     @Provides
     open fun provideArticlesListViewModel(
-        articlesRepository: com.lelloman.simplerss.ui.common.repository.ArticlesRepository,
-        sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
-        discoverRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository,
+        articlesRepository: ArticlesRepository,
+        sourcesRepository: SourcesRepository,
+        discoverRepository: DiscoverRepository,
         dependencies: BaseViewModel.Dependencies,
-        appSettings: com.lelloman.simplerss.persistence.settings.AppSettings
-    ): com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel = com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModelImpl(
+        appSettings: AppSettings
+    ): ArticlesListViewModel = ArticlesListViewModelImpl(
         articlesRepository = articlesRepository,
         sourcesRepository = sourcesRepository,
         discoverRepository = discoverRepository,
@@ -34,10 +60,10 @@ open class ViewModelModule {
 
     @Provides
     open fun provideSourcesListViewModel(
-        sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
-        articlesRepository: com.lelloman.simplerss.ui.common.repository.ArticlesRepository,
+        sourcesRepository: SourcesRepository,
+        articlesRepository: ArticlesRepository,
         dependencies: BaseViewModel.Dependencies
-    ): com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel = com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModelImpl(
+    ): SourcesListViewModel = SourcesListViewModelImpl(
         sourcesRepository = sourcesRepository,
         articlesRepository = articlesRepository,
         dependencies = dependencies
@@ -45,12 +71,12 @@ open class ViewModelModule {
 
     @Provides
     open fun provideAddSourceViewModel(
-        sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
+        sourcesRepository: SourcesRepository,
         dependencies: BaseViewModel.Dependencies,
-        feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher,
+        feedFetcher: FeedFetcher,
         loggerFactory: LoggerFactory,
         urlValidator: UrlValidator
-    ): com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel = com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModelImpl(
+    ): AddSourceViewModel = AddSourceViewModelImpl(
         dependencies = dependencies,
         sourcesRepository = sourcesRepository,
         feedFetcher = feedFetcher,
@@ -61,8 +87,8 @@ open class ViewModelModule {
     @Provides
     open fun provideSourceViewModel(
         dependencies: BaseViewModel.Dependencies,
-        sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository
-    ): com.lelloman.simplerss.ui.sources.viewmodel.SourceViewModel = com.lelloman.simplerss.ui.sources.viewmodel.SourceViewModelImpl(
+        sourcesRepository: SourcesRepository
+    ): SourceViewModel = SourceViewModelImpl(
         dependencies = dependencies,
         sourcesRepository = sourcesRepository
     )
@@ -70,16 +96,16 @@ open class ViewModelModule {
     @Provides
     open fun provideArticleViewModel(
         dependencies: BaseViewModel.Dependencies
-    ): com.lelloman.simplerss.ui.articles.viewmodel.ArticleViewModel = com.lelloman.simplerss.ui.articles.viewmodel.ArticleViewModelImpl(
+    ): ArticleViewModel = ArticleViewModelImpl(
         dependencies = dependencies
     )
 
     @Provides
     open fun provideSettingsViewModel(
         dependencies: BaseViewModel.Dependencies,
-        appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
+        appSettings: AppSettings,
         semanticTimeProvider: SemanticTimeProvider
-    ): com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel = com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModelImpl(
+    ): SettingsViewModel = SettingsViewModelImpl(
         appSettings = appSettings,
         dependencies = dependencies,
         semanticTimeProvider = semanticTimeProvider
@@ -87,11 +113,11 @@ open class ViewModelModule {
 
     @Provides
     open fun provideWalkthroughViewModel(
-        discoverRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository,
+        discoverRepository: DiscoverRepository,
         dependencies: BaseViewModel.Dependencies,
-        appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
+        appSettings: AppSettings,
         urlValidator: UrlValidator
-    ): com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel = com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModelImpl(
+    ): WalkthroughViewModel = WalkthroughViewModelImpl(
         dependencies = dependencies,
         appSettings = appSettings,
         discoveryRepository = discoverRepository,
@@ -101,8 +127,8 @@ open class ViewModelModule {
     @Provides
     open fun provideLauncherViewModel(
         dependencies: BaseViewModel.Dependencies,
-        appSettings: com.lelloman.simplerss.persistence.settings.AppSettings
-    ): com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel = com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModelImpl(
+        appSettings: AppSettings
+    ): LauncherViewModel = LauncherViewModelImpl(
         dependencies = dependencies,
         appSettings = appSettings
     )
@@ -110,9 +136,9 @@ open class ViewModelModule {
     @Provides
     open fun provideFoundFeedListViewModel(
         dependencies: BaseViewModel.Dependencies,
-        discoverRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository,
-        sourcesDao: com.lelloman.simplerss.persistence.db.SourcesDao
-    ): com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel = com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModelImpl(
+        discoverRepository: DiscoverRepository,
+        sourcesDao: SourcesDao
+    ): FoundFeedListViewModel = FoundFeedListViewModelImpl(
         discoverRepository = discoverRepository,
         dependencies = dependencies,
         sourcesDao = sourcesDao
@@ -120,10 +146,10 @@ open class ViewModelModule {
 
     @Provides
     open fun provideDiscoverUrlViewModel(
-        discoverRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository,
+        discoverRepository: DiscoverRepository,
         urlValidator: UrlValidator,
         dependencies: BaseViewModel.Dependencies
-    ): com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel = com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModelImpl(
+    ): DiscoverUrlViewModel = DiscoverUrlViewModelImpl(
         discoverRepository = discoverRepository,
         urlValidator = urlValidator,
         dependencies = dependencies

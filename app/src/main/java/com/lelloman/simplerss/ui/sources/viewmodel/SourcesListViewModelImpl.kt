@@ -5,13 +5,18 @@ import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
+import com.lelloman.simplerss.ui.common.repository.DeletedSource
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import io.reactivex.Completable
 
 class SourcesListViewModelImpl(
-    private val sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
-    private val articlesRepository: com.lelloman.simplerss.ui.common.repository.ArticlesRepository,
+    private val sourcesRepository: SourcesRepository,
+    private val articlesRepository: ArticlesRepository,
     dependencies: Dependencies
-) : com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel(dependencies) {
+) : SourcesListViewModel(dependencies) {
 
     private val mutableEmptyViewVisible: MutableLiveData<Boolean> by LazyLiveData {
         mutableEmptyViewVisible.postValue(false)
@@ -19,7 +24,7 @@ class SourcesListViewModelImpl(
 
     override val emptyViewVisible: LiveData<Boolean> = mutableEmptyViewVisible
 
-    override val sources: MutableLiveData<List<com.lelloman.simplerss.persistence.db.model.Source>> by LazyLiveData {
+    override val sources: MutableLiveData<List<Source>> by LazyLiveData {
         subscription {
             sourcesRepository.fetchSources()
                 .subscribeOn(ioScheduler)
@@ -29,7 +34,7 @@ class SourcesListViewModelImpl(
         }
     }
 
-    private val deletedSourceMap: MutableMap<String, com.lelloman.simplerss.ui.common.repository.DeletedSource> = hashMapOf()
+    private val deletedSourceMap: MutableMap<String, DeletedSource> = hashMapOf()
 
     override fun onTokenAction(token: String) {
         deletedSourceMap[token]?.let { deletedSource ->
@@ -50,9 +55,9 @@ class SourcesListViewModelImpl(
     }
 
     override fun onFabClicked(view: View) =
-        navigate(com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ADD_SOURCE)
+        navigate(SimpleRssNavigationScreen.ADD_SOURCE)
 
-    override fun onSourceClicked(source: com.lelloman.simplerss.persistence.db.model.Source) {
+    override fun onSourceClicked(source: Source) {
         sourcesRepository
             .getSource(source.id)
             .firstOrError()
@@ -76,7 +81,7 @@ class SourcesListViewModelImpl(
             .subscribe()
     }
 
-    override fun onSourceSwiped(source: com.lelloman.simplerss.persistence.db.model.Source) {
+    override fun onSourceSwiped(source: Source) {
         subscription {
             sourcesRepository
                 .deleteSource(source)

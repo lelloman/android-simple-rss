@@ -1,7 +1,12 @@
 package com.lelloman.simplerss.ui.common
 
 import com.lelloman.common.logger.Logger
+import com.lelloman.simplerss.feed.finder.FeedFinder
+import com.lelloman.simplerss.feed.finder.FoundFeed
+import com.lelloman.simplerss.persistence.db.SourcesDao
+import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.testutils.dummyFoundFeed
+import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.mock
@@ -17,19 +22,19 @@ import org.junit.Test
 
 class DiscoverRepositoryTest {
 
-    private val feedFinderFindUrlsSubject: Subject<com.lelloman.simplerss.feed.finder.FoundFeed> = PublishSubject.create()
-    private val feedFinder: com.lelloman.simplerss.feed.finder.FeedFinder = mock {
+    private val feedFinderFindUrlsSubject: Subject<FoundFeed> = PublishSubject.create()
+    private val feedFinder: FeedFinder = mock {
         on { findValidFeedUrls(any()) }.thenReturn(feedFinderFindUrlsSubject.hide())
     }
 
-    private val allSourcesSubject = PublishSubject.create<List<com.lelloman.simplerss.persistence.db.model.Source>>()
-    private val sourcesDao: com.lelloman.simplerss.persistence.db.SourcesDao = mock {
+    private val allSourcesSubject = PublishSubject.create<List<Source>>()
+    private val sourcesDao: SourcesDao = mock {
         on { getAll() }.thenReturn(allSourcesSubject.toFlowable(BackpressureStrategy.LATEST))
     }
 
     private val logger: Logger = mock()
 
-    private val tested = com.lelloman.simplerss.ui.common.repository.DiscoverRepository(
+    private val tested = DiscoverRepository(
         ioScheduler = trampoline(),
         feedFinder = feedFinder,
         sourcesDao = sourcesDao,

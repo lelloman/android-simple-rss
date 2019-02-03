@@ -2,6 +2,13 @@ package com.lelloman.simplerss.feed
 
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
+import com.lelloman.simplerss.feed.fetcher.FaviconFetcher
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.persistence.db.ArticlesDao
+import com.lelloman.simplerss.persistence.db.SourcesDao
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -14,14 +21,14 @@ class FeedRefresherImpl(
     private val ioScheduler: Scheduler,
     private val newThreadScheduler: Scheduler,
     private val httpPoolScheduler: Scheduler,
-    private val sourcesDao: com.lelloman.simplerss.persistence.db.SourcesDao,
-    private val articlesDao: com.lelloman.simplerss.persistence.db.ArticlesDao,
+    private val sourcesDao: SourcesDao,
+    private val articlesDao: ArticlesDao,
     private val timeProvider: TimeProvider,
-    private val appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
-    private val faviconFetcher: com.lelloman.simplerss.feed.fetcher.FaviconFetcher,
+    private val appSettings: AppSettings,
+    private val faviconFetcher: FaviconFetcher,
     loggerFactory: LoggerFactory,
-    private val feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher
-) : com.lelloman.simplerss.feed.FeedRefresher {
+    private val feedFetcher: FeedFetcher
+) : FeedRefresher {
 
     private val isLoadingSubject = BehaviorSubject.create<Boolean>()
     override val isLoading: Observable<Boolean> = isLoadingSubject
@@ -50,7 +57,7 @@ class FeedRefresherImpl(
                 appSettings
                     .sourceRefreshMinInterval
                     .firstOrError(),
-                BiFunction<List<com.lelloman.simplerss.persistence.db.model.Source>, com.lelloman.simplerss.persistence.settings.SourceRefreshInterval, Pair<List<com.lelloman.simplerss.persistence.db.model.Source>, com.lelloman.simplerss.persistence.settings.SourceRefreshInterval>> { sources, minRefreshInterval ->
+                BiFunction<List<Source>, SourceRefreshInterval, Pair<List<Source>, SourceRefreshInterval>> { sources, minRefreshInterval ->
                     sources to minRefreshInterval
                 }
             )

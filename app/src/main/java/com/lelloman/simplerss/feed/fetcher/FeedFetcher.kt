@@ -2,21 +2,32 @@ package com.lelloman.simplerss.feed.fetcher
 
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.simplerss.feed.FeedParser
+import com.lelloman.simplerss.feed.ParsedFeed
+import com.lelloman.simplerss.feed.exception.InvalidFeedTagException
+import com.lelloman.simplerss.feed.exception.MalformedXmlException
+import com.lelloman.simplerss.html.HtmlParser
+import com.lelloman.simplerss.http.HttpClient
+import com.lelloman.simplerss.http.HttpClientException
+import com.lelloman.simplerss.http.HttpRequest
+import com.lelloman.simplerss.persistence.db.model.Article
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.persistence.settings.AppSettings
 import io.reactivex.Maybe
 import io.reactivex.Single
 
 class FeedFetcher(
-    private val httpClient: com.lelloman.simplerss.http.HttpClient,
-    private val feedParser: com.lelloman.simplerss.feed.FeedParser,
-    private val htmlParser: com.lelloman.simplerss.html.HtmlParser,
+    private val httpClient: HttpClient,
+    private val feedParser: FeedParser,
+    private val htmlParser: HtmlParser,
     private val meteredConnectionChecker: MeteredConnectionChecker,
-    private val appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
+    private val appSettings: AppSettings,
     loggerFactory: LoggerFactory
 ) {
 
     private val logger = loggerFactory.getLogger(javaClass)
 
-    fun fetchFeed(source: com.lelloman.simplerss.persistence.db.model.Source): Maybe<Pair<com.lelloman.simplerss.persistence.db.model.Source, List<com.lelloman.simplerss.persistence.db.model.Article>>> = appSettings
+    fun fetchFeed(source: Source): Maybe<Pair<Source, List<Article>>> = appSettings
         .useMeteredNetwork
         .firstOrError()
         .toMaybe()
@@ -26,7 +37,7 @@ class FeedFetcher(
         }
         .flatMap { _ ->
             httpClient
-                .request(com.lelloman.simplerss.http.HttpRequest(source.url))
+                .request(HttpRequest(source.url))
                 .filter { it.isSuccessful }
                 .flatMap {
                     feedParser
@@ -41,23 +52,23 @@ class FeedFetcher(
                 .map { source to it }
         }
 
-    fun testUrl(url: String): Single<com.lelloman.simplerss.feed.fetcher.TestResult> = httpClient
-        .request(com.lelloman.simplerss.http.HttpRequest(url))
+    fun testUrl(url: String): Single<TestResult> = httpClient
+        .request(HttpRequest(url))
         .flatMap { feedParser.parseFeeds(it.stringBody) }
         .map { parsedFeeds ->
             val articles = parsedFeeds.map { parsedFeedToArticle(dummySource(url), it) }
             if (articles.isEmpty()) {
-                com.lelloman.simplerss.feed.fetcher.EmptySource
+                EmptySource
             } else {
-                com.lelloman.simplerss.feed.fetcher.Success(articles.size, parsedFeeds.title)
+                Success(articles.size, parsedFeeds.title)
             }
         }
         .onErrorResumeNext { error: Throwable ->
             val result = when (error) {
-                is com.lelloman.simplerss.feed.exception.InvalidFeedTagException,
-                is com.lelloman.simplerss.feed.exception.MalformedXmlException -> com.lelloman.simplerss.feed.fetcher.XmlError
-                is com.lelloman.simplerss.http.HttpClientException -> com.lelloman.simplerss.feed.fetcher.HttpError
-                else -> com.lelloman.simplerss.feed.fetcher.UnknownError
+                is InvalidFeedTagException,
+                is MalformedXmlException -> XmlError
+                is HttpClientException -> HttpError
+                else -> UnknownError
             }
             Single.just(result)
         }
@@ -65,7 +76,7 @@ class FeedFetcher(
             logger.d("testUrl() $url result $it")
         }
 
-    private fun dummySource(url: String) = com.lelloman.simplerss.persistence.db.model.Source(
+    private fun dummySource(url: String) = Source(
         id = 0L,
         name = "dummy",
         url = url,
@@ -74,7 +85,7 @@ class FeedFetcher(
         favicon = null
     )
 
-    private fun parsedFeedToArticle(source: com.lelloman.simplerss.persistence.db.model.Source, parsedFeed: com.lelloman.simplerss.feed.ParsedFeed): com.lelloman.simplerss.persistence.db.model.Article {
+    private fun parsedFeedToArticle(source: Source, parsedFeed: ParsedFeed): Article {
         val (title, imagesUrl1) = htmlParser.parseTextAndImagesUrls(parsedFeed.title)
         val (subtitle, imagesUrl2) = htmlParser.parseTextAndImagesUrls(parsedFeed.subtitle)
 
@@ -84,7 +95,7 @@ class FeedFetcher(
             else -> null
         }
 
-        return com.lelloman.simplerss.persistence.db.model.Article(
+        return Article(
             id = 0L,
             title = title,
             subtitle = subtitle,

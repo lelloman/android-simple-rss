@@ -6,9 +6,18 @@ import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.feed.fetcher.EmptySource
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.feed.fetcher.HttpError
+import com.lelloman.simplerss.feed.fetcher.Success
+import com.lelloman.simplerss.feed.fetcher.TestResult
+import com.lelloman.simplerss.feed.fetcher.UnknownError
+import com.lelloman.simplerss.feed.fetcher.XmlError
+import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.testutils.AndroidArchTest
 import com.lelloman.simplerss.testutils.MockLoggerFactory
 import com.lelloman.simplerss.testutils.MockResourceProvider
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.anyOrNull
 import com.nhaarman.mockito_kotlin.mock
@@ -23,14 +32,14 @@ import org.junit.Test
 
 class AddSourceViewModelImplTest : AndroidArchTest() {
 
-    private val sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository = mock()
-    private val feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher = mock()
+    private val sourcesRepository: SourcesRepository = mock()
+    private val feedFetcher: FeedFetcher = mock()
     private val urlValidator: UrlValidator = mock()
 
-    private lateinit var tested: com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModelImpl
+    private lateinit var tested: AddSourceViewModelImpl
 
     override fun setUp() {
-        tested = com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModelImpl(
+        tested = AddSourceViewModelImpl(
             dependencies = BaseViewModel.Dependencies(
                 resourceProvider = MockResourceProvider(),
                 actionTokenProvider = mock(),
@@ -65,7 +74,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
         val originalUrl = "original url"
         val urlWithProtocol = "url with protocol"
         givenHasValidUrlSet(originalUrl, urlWithProtocol)
-        givenFeedFetcherTestsUrl(com.lelloman.simplerss.feed.fetcher.EmptySource)
+        givenFeedFetcherTestsUrl(EmptySource)
 
         tested.onTestUrlClicked()
 
@@ -76,7 +85,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `if it is testing url does not triget url testing again`() {
         givenHasValidUrlSet()
-        val feedFetcherSubject = SingleSubject.create<com.lelloman.simplerss.feed.fetcher.TestResult>()
+        val feedFetcherSubject = SingleSubject.create<TestResult>()
         whenever(feedFetcher.testUrl(any())).thenReturn(feedFetcherSubject)
         tested.onTestUrlClicked()
         assertThat(tested.testingUrl.value).isTrue()
@@ -90,7 +99,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `if feed fetcher throws an error shows toast`() {
         val actionEventsObserver = tested.viewActionEvents.test()
-        whenever(feedFetcher.testUrl(any())).thenReturn(Single.error<com.lelloman.simplerss.feed.fetcher.TestResult>(Exception()))
+        whenever(feedFetcher.testUrl(any())).thenReturn(Single.error<TestResult>(Exception()))
         givenHasValidUrlSet()
 
         tested.onTestUrlClicked()
@@ -102,7 +111,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows green check and hides error message if feed fetcher test is successful`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(com.lelloman.simplerss.feed.fetcher.Success(0, null))
+        givenFeedFetcherTestsUrl(Success(0, null))
 
         tested.onTestUrlClicked()
 
@@ -116,7 +125,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows error and hides green check if feed fetcher test result is http error`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(com.lelloman.simplerss.feed.fetcher.HttpError)
+        givenFeedFetcherTestsUrl(HttpError)
 
         tested.onTestUrlClicked()
 
@@ -130,7 +139,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows error and hides green check if feed fetcher test result is empty source`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(com.lelloman.simplerss.feed.fetcher.EmptySource)
+        givenFeedFetcherTestsUrl(EmptySource)
 
         tested.onTestUrlClicked()
 
@@ -144,7 +153,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows error and hides green check if feed fetcher test result is xml error`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(com.lelloman.simplerss.feed.fetcher.XmlError)
+        givenFeedFetcherTestsUrl(XmlError)
 
         tested.onTestUrlClicked()
 
@@ -158,7 +167,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
     @Test
     fun `shows error and hides green check if feed fetcher test result is unknown error`() {
         givenHasValidUrlSet()
-        givenFeedFetcherTestsUrl(com.lelloman.simplerss.feed.fetcher.UnknownError)
+        givenFeedFetcherTestsUrl(UnknownError)
 
         tested.onTestUrlClicked()
 
@@ -229,7 +238,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
         tested.onSaveClicked()
 
-        verify(sourcesRepository).insertSource(com.lelloman.simplerss.persistence.db.model.Source(
+        verify(sourcesRepository).insertSource(Source(
             name = name,
             url = url,
             isActive = true
@@ -287,7 +296,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
         whenever(urlValidator.isValidUrl(anyOrNull())).thenReturn(false)
     }
 
-    private fun givenFeedFetcherTestsUrl(testResult: com.lelloman.simplerss.feed.fetcher.TestResult) {
+    private fun givenFeedFetcherTestsUrl(testResult: TestResult) {
         whenever(feedFetcher.testUrl(any())).thenReturn(Single.just(testResult))
     }
 }

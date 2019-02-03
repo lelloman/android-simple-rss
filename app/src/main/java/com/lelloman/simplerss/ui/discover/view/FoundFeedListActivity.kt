@@ -13,22 +13,24 @@ import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityFoundFeedListBinding
+import com.lelloman.simplerss.feed.finder.FoundFeed
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
+import com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel
 import dagger.android.AndroidInjection
 
 class FoundFeedListActivity
-    : BaseActivity<com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel, ActivityFoundFeedListBinding>(),
-    com.lelloman.simplerss.ui.discover.view.AddFoundFeedsConfirmationDialogFragment.Listener {
+    : BaseActivity<FoundFeedListViewModel, ActivityFoundFeedListBinding>(),
+    AddFoundFeedsConfirmationDialogFragment.Listener {
 
-    private lateinit var adapter: com.lelloman.simplerss.ui.discover.view.FoundFeedsAdapter
+    private lateinit var adapter: FoundFeedsAdapter
 
     private var addAllAction: MenuItem? = null
 
     override val layoutResId = R.layout.activity_found_feed_list
 
-    override fun getViewModelClass() = com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel::class.java
+    override fun getViewModelClass() = FoundFeedListViewModel::class.java
 
-    override fun setViewModel(binding: ActivityFoundFeedListBinding, viewModel: com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel) {
+    override fun setViewModel(binding: ActivityFoundFeedListBinding, viewModel: FoundFeedListViewModel) {
         binding.viewModel = viewModel
     }
 
@@ -43,7 +45,7 @@ class FoundFeedListActivity
             setHomeAsUpIndicator(R.drawable.ic_close_white_24dp)
         }
 
-        adapter = com.lelloman.simplerss.ui.discover.view.FoundFeedsAdapter(
+        adapter = FoundFeedsAdapter(
             resourceProvider = resourceProvider,
             onFoundFeedClickListener = viewModel::onFoundFeedClicked
         )
@@ -74,7 +76,7 @@ class FoundFeedListActivity
         else -> super.onOptionsItemSelected(item)
     }
 
-    override fun onAddAllFoundFeedsConfirmationClicked(foundFeeds: List<com.lelloman.simplerss.feed.finder.FoundFeed>) {
+    override fun onAddAllFoundFeedsConfirmationClicked(foundFeeds: List<FoundFeed>) {
         viewModel.onAddAllFoundFeedsConfirmationClicked(foundFeeds)
     }
 
@@ -82,7 +84,7 @@ class FoundFeedListActivity
 
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, com.lelloman.simplerss.ui.discover.view.FoundFeedListActivity::class.java)
+                val intent = Intent(context, FoundFeedListActivity::class.java)
                     .putExtra(ARG_URL, deepLink.getString(ARG_URL))
                 if (context !is Activity) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)

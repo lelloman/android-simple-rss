@@ -13,7 +13,7 @@ import com.lelloman.simplerss.persistence.db.AppDatabase.Companion.ARTICLE_TABLE
 @Entity(
     tableName = ARTICLE_TABLE_NAME,
     foreignKeys = [ForeignKey(
-        entity = com.lelloman.simplerss.persistence.db.model.Source::class,
+        entity = Source::class,
         parentColumns = ["id"],
         childColumns = ["sourceId"],
         onDelete = CASCADE
@@ -58,9 +58,9 @@ data class Article(
     companion object {
         @Suppress("unused")
         @JvmField
-        val CREATOR: Parcelable.Creator<com.lelloman.simplerss.persistence.db.model.Article> = object : Parcelable.Creator<com.lelloman.simplerss.persistence.db.model.Article> {
-            override fun createFromParcel(source: Parcel): com.lelloman.simplerss.persistence.db.model.Article = com.lelloman.simplerss.persistence.db.model.Article(source)
-            override fun newArray(size: Int): Array<com.lelloman.simplerss.persistence.db.model.Article?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<Article> = object : Parcelable.Creator<Article> {
+            override fun createFromParcel(source: Parcel): Article = Article(source)
+            override fun newArray(size: Int): Array<Article?> = arrayOfNulls(size)
         }
     }
 }

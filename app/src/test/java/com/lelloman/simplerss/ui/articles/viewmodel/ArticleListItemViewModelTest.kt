@@ -3,6 +3,8 @@ package com.lelloman.simplerss.ui.articles.viewmodel
 import android.arch.lifecycle.Lifecycle
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.view.SemanticTimeProvider
+import com.lelloman.simplerss.mock.MockAppSettings
+import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
@@ -14,13 +16,13 @@ class ArticleListItemViewModelTest {
 
     private val imagesEnabledSubject = BehaviorSubject.create<Boolean>()
 
-    private val appSettings = com.lelloman.simplerss.mock.MockAppSettings(
+    private val appSettings = MockAppSettings(
         providedArticleListImagesEnabled = imagesEnabledSubject
     )
     private val lifecycle: Lifecycle = mock()
     private val semanticTimeProvider: SemanticTimeProvider = mock()
 
-    private val tested = com.lelloman.simplerss.ui.articles.viewmodel.ArticleListItemViewModel(
+    private val tested = ArticleListItemViewModel(
         lifecycle = lifecycle,
         uiScheduler = trampoline(),
         appSettings = appSettings,
@@ -100,7 +102,7 @@ class ArticleListItemViewModelTest {
     }
 
     private companion object {
-        val ARTICLE = com.lelloman.simplerss.persistence.db.model.SourceArticle(
+        val ARTICLE = SourceArticle(
             id = 123,
             title = "the article",
             subtitle = "the subtitle",

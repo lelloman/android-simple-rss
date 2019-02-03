@@ -1,11 +1,13 @@
 package com.lelloman.simplerss.html.element
 
+import com.lelloman.simplerss.html.DocElementType
+
 class LinkDocElement(
-    parent: com.lelloman.simplerss.html.element.DocElement,
+    parent: DocElement,
     val linkType: String,
     href: String
-) : com.lelloman.simplerss.html.element.HrefDocElement(
-    type = com.lelloman.simplerss.html.DocElementType.LINK,
+) : HrefDocElement(
+    type = DocElementType.LINK,
     parent = parent,
     href = href,
     tag = "link"

@@ -1,6 +1,8 @@
 package com.lelloman.simplerss.feed.finder
 
 import com.lelloman.common.logger.LoggerFactory
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.feed.fetcher.Success
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.subjects.BehaviorSubject
@@ -9,16 +11,16 @@ import io.reactivex.subjects.Subject
 
 interface FeedFinder {
     val loading: Observable<Boolean>
-    fun findValidFeedUrls(url: String): Observable<com.lelloman.simplerss.feed.finder.FoundFeed>
+    fun findValidFeedUrls(url: String): Observable<FoundFeed>
 }
 
 internal class FeedFinderImpl(
-    private val httpClient: com.lelloman.simplerss.feed.finder.FeedFinderHttpClient,
-    private val parser: com.lelloman.simplerss.feed.finder.FeedFinderParser,
-    private val feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher,
+    private val httpClient: FeedFinderHttpClient,
+    private val parser: FeedFinderParser,
+    private val feedFetcher: FeedFetcher,
     private val newThreadScheduler: Scheduler,
     loggerFactory: LoggerFactory
-) : com.lelloman.simplerss.feed.finder.FeedFinder {
+) : FeedFinder {
 
     private val logger = loggerFactory.getLogger(javaClass)
 
@@ -32,7 +34,7 @@ internal class FeedFinderImpl(
         loadingSubject.onNext(false)
     }
 
-    override fun findValidFeedUrls(url: String): Observable<com.lelloman.simplerss.feed.finder.FoundFeed> = mutableSetOf<String>().let { foundUrls ->
+    override fun findValidFeedUrls(url: String): Observable<FoundFeed> = mutableSetOf<String>().let { foundUrls ->
         httpClient
             .requestStringBodyAndBaseUrl(url)
             .subscribeOn(newThreadScheduler)
@@ -78,11 +80,11 @@ internal class FeedFinderImpl(
         .subscribeOn(newThreadScheduler)
         .filter { testResult ->
             logger.d("tested url $urlToTest -> $testResult")
-            testResult is com.lelloman.simplerss.feed.fetcher.Success
+            testResult is Success
         }
-        .map { it as com.lelloman.simplerss.feed.fetcher.Success }
+        .map { it as Success }
         .map {
-            com.lelloman.simplerss.feed.finder.FoundFeed(
+            FoundFeed(
                 id = nextId++,
                 url = urlToTest,
                 nArticles = it.nArticles,

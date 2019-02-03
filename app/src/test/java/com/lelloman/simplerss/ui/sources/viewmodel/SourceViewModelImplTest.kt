@@ -4,7 +4,9 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.testutils.AndroidArchTest
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
@@ -20,15 +22,15 @@ class SourceViewModelImplTest : AndroidArchTest() {
         on { getTimeDiffString(any()) }.thenReturn(LAST_FETCHED_STRING)
     }
     private val resourceProvider: ResourceProvider = mock()
-    private val sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository = mock {
+    private val sourcesRepository: SourcesRepository = mock {
         on { getSource(SOURCE_1.id) }.thenReturn(Flowable.just(SOURCE_1))
         on { getSource(SOURCE_2.id) }.thenReturn(Flowable.just(SOURCE_2))
     }
 
-    private lateinit var tested: com.lelloman.simplerss.ui.sources.viewmodel.SourceViewModelImpl
+    private lateinit var tested: SourceViewModelImpl
 
     override fun setUp() {
-        tested = com.lelloman.simplerss.ui.sources.viewmodel.SourceViewModelImpl(
+        tested = SourceViewModelImpl(
             sourcesRepository = sourcesRepository,
             dependencies = BaseViewModel.Dependencies(
                 resourceProvider = resourceProvider,
@@ -77,7 +79,7 @@ class SourceViewModelImplTest : AndroidArchTest() {
     }
 
     private companion object {
-        val SOURCE_1 = com.lelloman.simplerss.persistence.db.model.Source(
+        val SOURCE_1 = Source(
             id = 1L,
             name = "source 1",
             url = "url 1",
@@ -85,7 +87,7 @@ class SourceViewModelImplTest : AndroidArchTest() {
             isActive = true
         )
 
-        val SOURCE_2 = com.lelloman.simplerss.persistence.db.model.Source(
+        val SOURCE_2 = Source(
             id = 2L,
             name = "source 2",
             url = "url 2",

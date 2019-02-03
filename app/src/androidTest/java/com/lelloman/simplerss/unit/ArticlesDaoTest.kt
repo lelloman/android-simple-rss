@@ -3,6 +3,12 @@ package com.lelloman.simplerss.unit
 import android.arch.persistence.room.Room
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import com.lelloman.simplerss.SimpleRssApplication
+import com.lelloman.simplerss.persistence.db.AppDatabase
+import com.lelloman.simplerss.persistence.db.ArticlesDao
+import com.lelloman.simplerss.persistence.db.model.Article
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -12,13 +18,13 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class ArticlesDaoTest {
 
-    private lateinit var db: com.lelloman.simplerss.persistence.db.AppDatabase
-    private lateinit var tested: com.lelloman.simplerss.persistence.db.ArticlesDao
+    private lateinit var db: AppDatabase
+    private lateinit var tested: ArticlesDao
 
     @Before
     fun setUp() {
-        val app = InstrumentationRegistry.getTargetContext().applicationContext as com.lelloman.simplerss.SimpleRssApplication
-        db = Room.inMemoryDatabaseBuilder(app, com.lelloman.simplerss.persistence.db.AppDatabase::class.java).build()
+        val app = InstrumentationRegistry.getTargetContext().applicationContext as SimpleRssApplication
+        db = Room.inMemoryDatabaseBuilder(app, AppDatabase::class.java).build()
         tested = db.articlesDao()
     }
 
@@ -48,7 +54,7 @@ class ArticlesDaoTest {
     }
 
     private companion object {
-        val SOURCE_1 = com.lelloman.simplerss.persistence.db.model.Source(
+        val SOURCE_1 = Source(
             id = 1,
             name = "source 1",
             url = "www.1",
@@ -56,7 +62,7 @@ class ArticlesDaoTest {
             isActive = true
         )
 
-        val SOURCE_2 = com.lelloman.simplerss.persistence.db.model.Source(
+        val SOURCE_2 = Source(
             id = 2,
             name = "source 2",
             url = "www.2",
@@ -71,7 +77,7 @@ class ArticlesDaoTest {
     }
 }
 
-fun dummyArticle2(index: Int = 1) = com.lelloman.simplerss.persistence.db.model.Article(
+fun dummyArticle2(index: Int = 1) = Article(
     id = index.toLong(),
     title = "article $index",
     subtitle = "subtitle $index",
@@ -82,7 +88,7 @@ fun dummyArticle2(index: Int = 1) = com.lelloman.simplerss.persistence.db.model.
     sourceId = index.toLong()
 )
 
-fun sourceArticle(article: com.lelloman.simplerss.persistence.db.model.Article, source: com.lelloman.simplerss.persistence.db.model.Source) = com.lelloman.simplerss.persistence.db.model.SourceArticle(
+fun sourceArticle(article: Article, source: Source) = SourceArticle(
     id = article.id,
     title = article.title,
     subtitle = article.subtitle,

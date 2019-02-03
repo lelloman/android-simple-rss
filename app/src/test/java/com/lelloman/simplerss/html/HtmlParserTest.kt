@@ -1,12 +1,16 @@
 package com.lelloman.simplerss.html
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.simplerss.html.element.ADocElement
+import com.lelloman.simplerss.html.element.DocElement
+import com.lelloman.simplerss.html.element.IrrelevantDocElement
+import com.lelloman.simplerss.html.element.LinkDocElement
 import org.junit.Test
 import kotlin.reflect.KClass
 
 class HtmlParserTest {
 
-    private val tested = com.lelloman.simplerss.html.HtmlParser()
+    private val tested = HtmlParser()
 
     @Test
     fun `strips link tags`() {
@@ -51,9 +55,9 @@ class HtmlParserTest {
     @Test
     fun `parses simple html 1`() {
         val doc = tested.parseDoc(
-            url = com.lelloman.simplerss.html.HtmlParserTest.Companion.URL_1,
-            baseUrl = com.lelloman.simplerss.html.HtmlParserTest.Companion.URL_1,
-            html = com.lelloman.simplerss.html.HtmlParserTest.Companion.SIMPLE_HTML_1
+            url = URL_1,
+            baseUrl = URL_1,
+            html = SIMPLE_HTML_1
         )
 
         assertThat(doc.children).hasSize(1)
@@ -61,7 +65,7 @@ class HtmlParserTest {
             assertThat(html.children).hasSize(2)
             html.children[0].let { head ->
                 assertThat(head.children).hasSize(1)
-                val link = head.children[0] as com.lelloman.simplerss.html.element.LinkDocElement
+                val link = head.children[0] as LinkDocElement
                 assertThat(link.children).isEmpty()
                 assertThat(link.linkType).isEqualTo("staceppa")
                 assertThat(link.href).isEqualTo("www.staceppa.com")
@@ -71,15 +75,15 @@ class HtmlParserTest {
                 body.children[0].let { div ->
                     assertThat(div.children).hasSize(2)
                     div.children[0].let { it ->
-                        assertThat(it).isInstanceOf(com.lelloman.simplerss.html.element.LinkDocElement::class.java)
-                        (it as com.lelloman.simplerss.html.element.LinkDocElement).let { link ->
+                        assertThat(it).isInstanceOf(LinkDocElement::class.java)
+                        (it as LinkDocElement).let { link ->
                             assertThat(link.linkType).isEqualTo("woof")
                             assertThat(link.href).isEqualTo("www.woof.com")
                         }
                     }
                     div.children[1].let {
-                        assertThat(it).isInstanceOf(com.lelloman.simplerss.html.element.ADocElement::class.java)
-                        (it as com.lelloman.simplerss.html.element.ADocElement).let { a ->
+                        assertThat(it).isInstanceOf(ADocElement::class.java)
+                        (it as ADocElement).let { a ->
                             assertThat(a.children).hasSize(1)
                             assertThat(a.href).isEqualTo("www.woof.com")
                         }
@@ -92,11 +96,11 @@ class HtmlParserTest {
     @Test
     fun `iterates over all elements in simple html 1`() {
         val doc = tested.parseDoc(
-            url = com.lelloman.simplerss.html.HtmlParserTest.Companion.URL_1,
-            baseUrl = com.lelloman.simplerss.html.HtmlParserTest.Companion.URL_1,
-            html = com.lelloman.simplerss.html.HtmlParserTest.Companion.SIMPLE_HTML_1
+            url = URL_1,
+            baseUrl = URL_1,
+            html = SIMPLE_HTML_1
         )
-        val register = mutableMapOf<KClass<out com.lelloman.simplerss.html.element.DocElement>, Int>()
+        val register = mutableMapOf<KClass<out DocElement>, Int>()
 
         doc.iterate {
             val clazz = it::class
@@ -104,9 +108,9 @@ class HtmlParserTest {
             register[clazz] = count + 1
         }
 
-        assertThat(register).containsEntry(com.lelloman.simplerss.html.element.IrrelevantDocElement::class, 5)
-        assertThat(register).containsEntry(com.lelloman.simplerss.html.element.LinkDocElement::class, 2)
-        assertThat(register).containsEntry(com.lelloman.simplerss.html.element.ADocElement::class, 1)
+        assertThat(register).containsEntry(IrrelevantDocElement::class, 5)
+        assertThat(register).containsEntry(LinkDocElement::class, 2)
+        assertThat(register).containsEntry(ADocElement::class, 1)
     }
 
     private companion object {

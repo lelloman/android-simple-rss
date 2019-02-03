@@ -27,7 +27,7 @@ class HttpClientImplTest {
     private val loggerFactory = MockLoggerFactory()
     private val timeProvider = MockTimeProvider()
 
-    private val tested = com.lelloman.simplerss.http.HttpClientImpl(
+    private val tested = HttpClientImpl(
         okHttpClient = okHttpClient,
         loggerFactory = loggerFactory,
         timeProvider = timeProvider
@@ -35,11 +35,11 @@ class HttpClientImplTest {
 
     @Test
     fun `executes ok http GET call`() {
-        val tester = tested.request(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST).test()
+        val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
         verify(okHttpClient).newCall(argThat {
-            this.method() == "GET" && this.url() == HttpUrl.parse(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST.url)
+            this.method() == "GET" && this.url() == HttpUrl.parse(HTTP_REQUEST.url)
         })
     }
 
@@ -48,7 +48,7 @@ class HttpClientImplTest {
         val responseCode = 0xb00b5
         whenever(okHttpResponse.code()).thenReturn(responseCode)
 
-        val tester = tested.request(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST).test()
+        val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
         tester.assertValue { it.code == responseCode }
@@ -58,7 +58,7 @@ class HttpClientImplTest {
     fun `returns successful property in response`() {
         whenever(okHttpResponse.isSuccessful).thenReturn(true)
 
-        val tester = tested.request(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST).test()
+        val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
         tester.assertValue { it.isSuccessful }
@@ -68,7 +68,7 @@ class HttpClientImplTest {
     fun `returns unsuccessful property in response`() {
         whenever(okHttpResponse.isSuccessful).thenReturn(false)
 
-        val tester = tested.request(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST).test()
+        val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
         tester.assertValue { !it.isSuccessful }
@@ -78,7 +78,7 @@ class HttpClientImplTest {
     fun `returns empty string body if ok http response body is null`() {
         whenever(okHttpResponse.body()).thenReturn(null)
 
-        val tester = tested.request(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST).test()
+        val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
         tester.assertValue { it.stringBody == "" }
@@ -89,7 +89,7 @@ class HttpClientImplTest {
         val responseBody = ResponseBody.create(null, ByteArray(0))
         whenever(okHttpResponse.body()).thenReturn(responseBody)
 
-        val tester = tested.request(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST).test()
+        val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
         tester.assertValue { it.stringBody == "" }
@@ -101,7 +101,7 @@ class HttpClientImplTest {
         val responseBody = ResponseBody.create(null, body.toByteArray())
         whenever(okHttpResponse.body()).thenReturn(responseBody)
 
-        val tester = tested.request(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST).test()
+        val tester = tested.request(HTTP_REQUEST).test()
 
         tester.assertNoErrors()
         tester.assertValue { it.stringBody == body }
@@ -112,9 +112,9 @@ class HttpClientImplTest {
         val exception = IllegalAccessException("smurfs")
         whenever(okHttpClient.newCall(any())).thenAnswer { throw exception }
 
-        val tester = tested.request(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST).test()
+        val tester = tested.request(HTTP_REQUEST).test()
 
-        tester.assertError { it is com.lelloman.simplerss.http.HttpClientException && it.cause == exception }
+        tester.assertError { it is HttpClientException && it.cause == exception }
     }
 
     @Test
@@ -122,12 +122,12 @@ class HttpClientImplTest {
         val exception = IllegalAccessException("smurfs")
         whenever(okHttpCall.execute()).thenAnswer { throw exception }
 
-        val tester = tested.request(com.lelloman.simplerss.http.HttpClientImplTest.Companion.HTTP_REQUEST).test()
+        val tester = tested.request(HTTP_REQUEST).test()
 
-        tester.assertError { it is com.lelloman.simplerss.http.HttpClientException && it.cause == exception }
+        tester.assertError { it is HttpClientException && it.cause == exception }
     }
 
     private companion object {
-        val HTTP_REQUEST = com.lelloman.simplerss.http.HttpRequest("http://www.staceppa.com")
+        val HTTP_REQUEST = HttpRequest("http://www.staceppa.com")
     }
 }

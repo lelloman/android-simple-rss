@@ -13,14 +13,15 @@ import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityAddSourceBinding
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_SOURCE_NAME
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_SOURCE_URL
+import com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel
 
-class AddSourceActivity : BaseActivity<com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel, ActivityAddSourceBinding>() {
+class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBinding>() {
 
     override val layoutResId = R.layout.activity_add_source
 
-    override fun getViewModelClass() = com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel::class.java
+    override fun getViewModelClass() = AddSourceViewModel::class.java
 
-    override fun setViewModel(binding: ActivityAddSourceBinding, viewModel: com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel) {
+    override fun setViewModel(binding: ActivityAddSourceBinding, viewModel: AddSourceViewModel) {
         binding.viewModel = viewModel
     }
 
@@ -62,7 +63,7 @@ class AddSourceActivity : BaseActivity<com.lelloman.simplerss.ui.sources.viewmod
 
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, com.lelloman.simplerss.ui.sources.view.AddSourceActivity::class.java)
+                val intent = Intent(context, AddSourceActivity::class.java)
                 if (context !is Activity) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }

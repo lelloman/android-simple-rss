@@ -1,6 +1,20 @@
 package com.lelloman.simplerss.feed
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.simplerss.feed.exception.InvalidFeedTagException
+import com.lelloman.simplerss.feed.exception.MalformedXmlException
+import com.lelloman.simplerss.feed.fetcher.EmptySource
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.feed.fetcher.HttpError
+import com.lelloman.simplerss.feed.fetcher.Success
+import com.lelloman.simplerss.feed.fetcher.UnknownError
+import com.lelloman.simplerss.feed.fetcher.XmlError
+import com.lelloman.simplerss.html.HtmlParser
+import com.lelloman.simplerss.http.HttpClient
+import com.lelloman.simplerss.http.HttpClientException
+import com.lelloman.simplerss.http.HttpResponse
+import com.lelloman.simplerss.mock.MockAppSettings
+import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.testutils.MockLoggerFactory
 import com.lelloman.simplerss.testutils.MockMeteredConnectionChecker
 import com.lelloman.simplerss.testutils.dummySource
@@ -15,14 +29,14 @@ import io.reactivex.Single
 import org.junit.Test
 
 class FeedFetcherTest {
-    private val httpClient: com.lelloman.simplerss.http.HttpClient = mock()
-    private val feedParser: com.lelloman.simplerss.feed.FeedParser = mock()
-    private val htmlParser: com.lelloman.simplerss.html.HtmlParser = mock()
+    private val httpClient: HttpClient = mock()
+    private val feedParser: FeedParser = mock()
+    private val htmlParser: HtmlParser = mock()
     private val meteredConnectionChecker = MockMeteredConnectionChecker()
-    private val appSettings = com.lelloman.simplerss.mock.MockAppSettings()
+    private val appSettings = MockAppSettings()
     private val loggerFactory = MockLoggerFactory()
 
-    private val tested = com.lelloman.simplerss.feed.fetcher.FeedFetcher(
+    private val tested = FeedFetcher(
         httpClient = httpClient,
         feedParser = feedParser,
         htmlParser = htmlParser,
@@ -36,9 +50,9 @@ class FeedFetcherTest {
         givenCanUseMeteredNetwork()
         givenHttpSuccessfulResponse()
 
-        tested.fetchFeed(com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SOURCE).test()
+        tested.fetchFeed(SOURCE).test()
 
-        verify(httpClient).request(argThat { url == com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SOURCE.url })
+        verify(httpClient).request(argThat { url == url })
     }
 
     @Test
@@ -46,9 +60,9 @@ class FeedFetcherTest {
         givenCanUseMeteredNetwork()
         givenHttpSuccessfulResponse()
 
-        tested.fetchFeed(com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SOURCE).test()
+        tested.fetchFeed(SOURCE).test()
 
-        verify(feedParser).parseFeeds(com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SUCCESSFUL_RESPONSE.stringBody)
+        verify(feedParser).parseFeeds(SUCCESSFUL_RESPONSE.stringBody)
     }
 
     @Test
@@ -56,7 +70,7 @@ class FeedFetcherTest {
         givenCanUseMeteredNetwork()
         givenHttpUnsuccessfulResponse()
 
-        val tester = tested.fetchFeed(com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SOURCE).test()
+        val tester = tested.fetchFeed(SOURCE).test()
 
         verifyZeroInteractions(feedParser)
         tester.assertValueCount(0)
@@ -70,14 +84,14 @@ class FeedFetcherTest {
         givenParsesFeed()
         givenParsesHtml()
 
-        val tester = tested.fetchFeed(com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SOURCE).test()
+        val tester = tested.fetchFeed(SOURCE).test()
 
         tester.assertNoErrors()
         val (source, articles) = tester.values()[0]
-        assertThat(source).isEqualTo(com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SOURCE)
-        assertThat(articles).hasSize(com.lelloman.simplerss.feed.FeedFetcherTest.Companion.PARSED_FEED.size)
+        assertThat(source).isEqualTo(SOURCE)
+        assertThat(articles).hasSize(PARSED_FEED.size)
         articles.forEachIndexed { index, article ->
-            com.lelloman.simplerss.feed.FeedFetcherTest.Companion.PARSED_FEED[index].let { feed ->
+            PARSED_FEED[index].let { feed ->
                 assertThat(article.title).isEqualTo(feed.title)
                 assertThat(article.subtitle).isEqualTo((feed.subtitle))
                 assertThat(article.time).isEqualTo(feed.timestamp)
@@ -105,12 +119,12 @@ class FeedFetcherTest {
         givenParsesHtml()
         givenParsesFeed()
 
-        val tester = tested.fetchFeed(com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SOURCE).test()
+        val tester = tested.fetchFeed(SOURCE).test()
 
         tester.assertComplete()
         tester.assertValueCount(1)
         tester.assertValueAt(0) {
-            it.first == com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SOURCE && it.second.size == 2
+            it.first == SOURCE && it.second.size == 2
         }
     }
 
@@ -124,51 +138,51 @@ class FeedFetcherTest {
 
         tester.assertComplete()
         tester.assertValueCount(1)
-        tester.assertValueAt(0) { it is com.lelloman.simplerss.feed.fetcher.Success && it.nArticles == com.lelloman.simplerss.feed.FeedFetcherTest.Companion.PARSED_FEED.size }
+        tester.assertValueAt(0) { it is Success && it.nArticles == PARSED_FEED.size }
     }
 
     @Test
     fun `returns empty source url test result`() {
         givenHttpSuccessfulResponse()
-        givenParsesFeed(com.lelloman.simplerss.feed.ParsedFeeds())
+        givenParsesFeed(ParsedFeeds())
 
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(com.lelloman.simplerss.feed.fetcher.EmptySource)
+        tester.assertValues(EmptySource)
     }
 
     @Test
     fun `returns xml error test result for invalid feed tag exception`() {
         givenHttpSuccessfulResponse()
-        whenever(feedParser.parseFeeds(any())).thenReturn(Single.error(com.lelloman.simplerss.feed.exception.InvalidFeedTagException("")))
+        whenever(feedParser.parseFeeds(any())).thenReturn(Single.error(InvalidFeedTagException("")))
 
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(com.lelloman.simplerss.feed.fetcher.XmlError)
+        tester.assertValues(XmlError)
     }
 
 
     @Test
     fun `returns xml error test result for malformed xml exception`() {
         givenHttpSuccessfulResponse()
-        whenever(feedParser.parseFeeds(any())).thenReturn(Single.error(com.lelloman.simplerss.feed.exception.MalformedXmlException(Exception())))
+        whenever(feedParser.parseFeeds(any())).thenReturn(Single.error(MalformedXmlException(Exception())))
 
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(com.lelloman.simplerss.feed.fetcher.XmlError)
+        tester.assertValues(XmlError)
     }
 
     @Test
     fun `returns http error test result for http exception`() {
-        whenever(httpClient.request(any())).thenReturn(Single.error(com.lelloman.simplerss.http.HttpClientException(Exception())))
+        whenever(httpClient.request(any())).thenReturn(Single.error(HttpClientException(Exception())))
 
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(com.lelloman.simplerss.feed.fetcher.HttpError)
+        tester.assertValues(HttpError)
     }
 
     @Test
@@ -179,7 +193,7 @@ class FeedFetcherTest {
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(com.lelloman.simplerss.feed.fetcher.UnknownError)
+        tester.assertValues(UnknownError)
     }
 
     @Test
@@ -190,7 +204,7 @@ class FeedFetcherTest {
         val tester = tested.testUrl("asd").test()
 
         tester.assertComplete()
-        tester.assertValues(com.lelloman.simplerss.feed.fetcher.UnknownError)
+        tester.assertValues(UnknownError)
     }
 
     private fun givenUnMeteredNetwork() {
@@ -210,21 +224,21 @@ class FeedFetcherTest {
     }
 
     private fun givenHttpSuccessfulResponse() {
-        whenever(httpClient.request(any())).thenReturn(Single.just(com.lelloman.simplerss.feed.FeedFetcherTest.Companion.SUCCESSFUL_RESPONSE))
+        whenever(httpClient.request(any())).thenReturn(Single.just(SUCCESSFUL_RESPONSE))
     }
 
     private fun givenHttpUnsuccessfulResponse() {
         whenever(httpClient.request(any()))
-            .thenReturn(Single.just(com.lelloman.simplerss.http.HttpResponse(500, false, ByteArray(0))))
+            .thenReturn(Single.just(HttpResponse(500, false, ByteArray(0))))
     }
 
-    private fun givenParsesFeed(feeds: com.lelloman.simplerss.feed.ParsedFeeds = com.lelloman.simplerss.feed.FeedFetcherTest.Companion.PARSED_FEED) {
+    private fun givenParsesFeed(feeds: ParsedFeeds = PARSED_FEED) {
         whenever(feedParser.parseFeeds(any())).thenReturn(Single.just(feeds))
     }
 
     private fun givenParsesHtml() {
         whenever(htmlParser.parseTextAndImagesUrls(any())).thenAnswer {
-            com.lelloman.simplerss.html.HtmlParser.TextAndImagesUrls(
+            HtmlParser.TextAndImagesUrls(
                 it.arguments[0] as String,
                 emptyList()
             )
@@ -232,7 +246,7 @@ class FeedFetcherTest {
     }
 
     private companion object {
-        val SOURCE = com.lelloman.simplerss.persistence.db.model.Source(
+        val SOURCE = Source(
             id = 1L,
             name = "the source",
             url = "http://www.staceppa.com",
@@ -240,16 +254,16 @@ class FeedFetcherTest {
             isActive = true
         )
 
-        val SUCCESSFUL_RESPONSE = com.lelloman.simplerss.http.HttpResponse(200, true, "the body".toByteArray())
+        val SUCCESSFUL_RESPONSE = HttpResponse(200, true, "the body".toByteArray())
 
-        val PARSED_FEED = com.lelloman.simplerss.feed.ParsedFeeds(mutableListOf(
-            com.lelloman.simplerss.feed.ParsedFeed(
+        val PARSED_FEED = ParsedFeeds(mutableListOf(
+            ParsedFeed(
                 title = "title 1",
                 subtitle = "subtitle 1",
                 link = "link 1",
                 timestamp = 1L
             ),
-            com.lelloman.simplerss.feed.ParsedFeed(
+            ParsedFeed(
                 title = "title 2",
                 subtitle = "subtitle 2",
                 link = "link 2",

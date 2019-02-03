@@ -2,6 +2,10 @@ package com.lelloman.simplerss.ui.common.repository
 
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.logger.LoggerFactory
+import com.lelloman.simplerss.feed.finder.FeedFinder
+import com.lelloman.simplerss.feed.finder.FoundFeed
+import com.lelloman.simplerss.persistence.db.SourcesDao
+import com.lelloman.simplerss.persistence.db.model.Source
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -13,8 +17,8 @@ import javax.inject.Singleton
 @Singleton
 class DiscoverRepository @Inject constructor(
     @IoScheduler private val ioScheduler: Scheduler,
-    private val sourcesDao: com.lelloman.simplerss.persistence.db.SourcesDao,
-    private val feedFinder: com.lelloman.simplerss.feed.finder.FeedFinder,
+    private val sourcesDao: SourcesDao,
+    private val feedFinder: FeedFinder,
     loggerFactory: LoggerFactory
 ) {
 
@@ -31,9 +35,9 @@ class DiscoverRepository @Inject constructor(
     private var lastFindFeedUrl: String? = null
     private var findFeedSubscriptions = CompositeDisposable()
 
-    private val foundFeedsList = mutableListOf<com.lelloman.simplerss.feed.finder.FoundFeed>()
-    private val foundFeedsSubject = BehaviorSubject.create<List<com.lelloman.simplerss.feed.finder.FoundFeed>>()
-    val foundFeeds: Observable<List<com.lelloman.simplerss.feed.finder.FoundFeed>> = foundFeedsSubject.hide()
+    private val foundFeedsList = mutableListOf<FoundFeed>()
+    private val foundFeedsSubject = BehaviorSubject.create<List<FoundFeed>>()
+    val foundFeeds: Observable<List<FoundFeed>> = foundFeedsSubject.hide()
 
     fun reset() {
         lastFindFeedUrl = null
@@ -72,9 +76,9 @@ class DiscoverRepository @Inject constructor(
         )
     }
 
-    fun addFoundFeeds(foundFeeds: List<com.lelloman.simplerss.feed.finder.FoundFeed>): Completable = Completable.fromAction {
+    fun addFoundFeeds(foundFeeds: List<FoundFeed>): Completable = Completable.fromAction {
         foundFeeds.forEach {
-            sourcesDao.insert(com.lelloman.simplerss.persistence.db.model.Source(
+            sourcesDao.insert(Source(
                 name = it.name ?: it.url,
                 url = it.url,
                 isActive = true

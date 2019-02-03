@@ -7,6 +7,7 @@ import android.view.View
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.instrumentedtestutils.rotateNatural
+import com.lelloman.simplerss.http.HttpModule
 import com.lelloman.simplerss.widget.ToggleSettingItemView
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
@@ -30,7 +31,7 @@ fun setUpTestAppWithMockedHttpStack(
 ) {
     rotateNatural()
     TestApp.dependenciesUpdate {
-        it.httpModule = object : com.lelloman.simplerss.http.HttpModule() {
+        it.httpModule = object : HttpModule() {
             override fun provideOkHttpClient() = MockHttpClient()
         }
         it.baseApplicationModule = object : BaseApplicationModule(it) {

@@ -1,5 +1,7 @@
 package com.lelloman.simplerss.feed.finder
 
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.html.Doc
 import com.lelloman.simplerss.testutils.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -13,12 +15,12 @@ import org.junit.Test
 
 class FeedFinderTest {
 
-    private val httpClient: com.lelloman.simplerss.feed.finder.FeedFinderHttpClient = mock()
-    private val feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher = mock()
-    private val parser: com.lelloman.simplerss.feed.finder.FeedFinderParser = mock()
+    private val httpClient: FeedFinderHttpClient = mock()
+    private val feedFetcher: FeedFetcher = mock()
+    private val parser: FeedFinderParser = mock()
     private val loggerFactory = MockLoggerFactory()
 
-    private val tested = com.lelloman.simplerss.feed.finder.FeedFinderImpl(
+    private val tested = FeedFinderImpl(
         httpClient = httpClient,
         feedFetcher = feedFetcher,
         parser = parser,
@@ -29,7 +31,7 @@ class FeedFinderTest {
     @Test
     fun `finds candidates urls in first order url`() {
         val baseUrl = "http://www.staceppa.com"
-        val doc = com.lelloman.simplerss.html.Doc()
+        val doc = Doc()
         givenStringBodyAndBaseUrl(
             baseUrl = baseUrl,
             stringBody = ""
@@ -45,7 +47,7 @@ class FeedFinderTest {
     @Test
     fun `finds candidates urls in second order urls`() {
         val baseUrl = "http://www.staceppa.com"
-        val doc = com.lelloman.simplerss.html.Doc()
+        val doc = Doc()
         givenStringBodyAndBaseUrl(
             baseUrl = baseUrl,
             stringBody = ""
@@ -73,7 +75,7 @@ class FeedFinderTest {
     @Test
     fun `fires loading events`() {
         givenStringBodyAndBaseUrl("", "")
-        whenever(parser.parseDoc("", "")).thenReturn(Maybe.just(com.lelloman.simplerss.html.Doc()))
+        whenever(parser.parseDoc("", "")).thenReturn(Maybe.just(Doc()))
         val candidatesSubject = PublishSubject.create<String>()
         whenever(parser.findCandidateUrls(any())).thenReturn(candidatesSubject.hide())
 
@@ -90,7 +92,7 @@ class FeedFinderTest {
     private fun givenStringBodyAndBaseUrl(baseUrl: String, stringBody: String) {
         whenever(httpClient.requestStringBodyAndBaseUrl(any())).thenReturn(
             Maybe.just(
-                com.lelloman.simplerss.feed.finder.StringBodyAndUrl(
+                StringBodyAndUrl(
                     url = baseUrl,
                     stringBody = stringBody
                 )
