@@ -5,12 +5,18 @@ DONE:<s>
 - [FEATURE] add intro setup
 - [FEATURE] add select settings (metered network, refresh interval)
 page in walkthrough
+- [FEATURE] make "last refresh" time in source list refresh every 1 sec
+- [FEATURE] add theme selection (as setting and in walkthrough)
+- [FEATURE] add a device-info list screen
+- [FEATURE] add networks and audio manager device info
 - [BUG] add-source screen, try to save a source with invalid name and/or url, error, then try to save a valid one
 - [BUG] first add many sources, in source list scroll to bottom, the last source is covered by "add" button
 - [BUG] swipe delete a source from list, the snackbar doesnt push the "+" button
 - [BUG] sources in source list have identicons even if favicon is available
-- [FEATURE] make "last refresh" time in source list refresh every 1 sec
-- [FEATURE] add theme selection (as setting and in walkthrough)
+- [BUG] it seems that splitting base settings broke them, app theme changes are not being notified
+- [BUG] !! sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present, actually duplicates appear also in walkthrough
+- [BUG] there is no way to stop a discover url, not even a timeout
+- [BUG] !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
 - [DEBT] find way to mock both view model and http layers in ui tests
 - [DEBT] add ui smoke tests
 - [DEBT] create instrumentation tests for AppSettingsImpl
@@ -22,10 +28,7 @@ page in walkthrough
 - [DEBT] remove robolectric now seriously
 - [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
 - [DEBT] use only deep links for navigation
-- [BUG] it seems that splitting base settings broke them, app theme changes are not being notified
-- [FEATURE] add a device-info list screen
 - [DEBT] move logic from BaseActivity to a BaseActivityViewModel
-- [FEATURE] add networks and audio manager device info
 </s>
 
 DEBT:
@@ -43,12 +46,9 @@ FEATURE:
 - [FEATURE] add intro page in walkthrough (why type in url in discovery)
 
 BUGS:
-- [BUG] !! sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present, actually duplicates appear also in walkthrough
-- [BUG] !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
 - [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
 - [BUG] in sources list screen, if there is no source the screen is empty
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
-- [BUG] there is no way to stop a discover url, not even a timeout
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:

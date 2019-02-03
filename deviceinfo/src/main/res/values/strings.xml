@@ -1,9 +1,0 @@
-<resources>
-    <string name="app_name">DeviceInfo</string>
-    <string name="screen_resolution_px" formatted="false"><![CDATA[Resolution Px: <b>%1$s x %2$s</b>]]></string>
-    <string name="screen_resolution_dp" formatted="false"><![CDATA[Resolution Dp: <b>%1$s x %2$s</b>]]></string>
-    <string name="screen_density_dpi" formatted="false"><![CDATA[Density Dpi: <b>%1$s</b>]]></string>
-    <string name="mac_address">MAC:</string>
-    <string name="net_address">NET:</string>
-    <string name="audio_mode">Audio mode: %1$s</string>
-</resources>
