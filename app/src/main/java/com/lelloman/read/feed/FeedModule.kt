@@ -14,6 +14,7 @@ import com.lelloman.read.feed.finder.FeedFinderImpl
 import com.lelloman.read.feed.finder.FeedFinderParser
 import com.lelloman.read.html.HtmlParser
 import com.lelloman.read.http.HttpClient
+import com.lelloman.read.http.HttpPoolScheduler
 import com.lelloman.read.persistence.db.ArticlesDao
 import com.lelloman.read.persistence.db.SourcesDao
 import com.lelloman.read.persistence.settings.AppSettings
@@ -38,6 +39,7 @@ open class FeedModule {
     fun provideFeedRefresher(
         @IoScheduler ioScheduler: Scheduler,
         @NewThreadScheduler newThreadScheduler: Scheduler,
+        @HttpPoolScheduler httpPoolScheduler: Scheduler,
         sourcesDao: SourcesDao,
         articlesDao: ArticlesDao,
         timeProvider: TimeProvider,
@@ -48,6 +50,7 @@ open class FeedModule {
     ): FeedRefresher = FeedRefresherImpl(
         ioScheduler = ioScheduler,
         newThreadScheduler = newThreadScheduler,
+        httpPoolScheduler = httpPoolScheduler,
         sourcesDao = sourcesDao,
         articlesDao = articlesDao,
         timeProvider = timeProvider,

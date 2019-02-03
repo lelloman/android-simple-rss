@@ -47,6 +47,7 @@ class FeedRefresherImplTest {
     private val tested = FeedRefresherImpl(
         ioScheduler = trampoline(),
         newThreadScheduler = trampoline(),
+        httpPoolScheduler = trampoline(),
         sourcesDao = sourcesDao,
         articlesDao = articlesDao,
         timeProvider = timeProvider,
@@ -165,7 +166,7 @@ class FeedRefresherImplTest {
     }
 
     @Test
-    fun `logs error when fetching active sources`() {
+    fun `logs warning when fetching active sources`() {
         givenAllSourcesIsEmpty()
         givenHasDefaultMinRefreshInterval()
         val error = Exception("crasc")
@@ -173,7 +174,7 @@ class FeedRefresherImplTest {
 
         tested.refresh()
 
-        logger.assertLoggedError(GENERIC_ERR_MSG, error)
+        logger.assertLoggedWarning(GENERIC_ERR_MSG, error)
     }
 
     @Test

@@ -30,6 +30,7 @@ page in walkthrough
 - [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
 - [DEBT] use only deep links for navigation
 - [DEBT] move logic from BaseActivity to a BaseActivityViewModel
+- [DEBT] check if subscribing on new thread when doing http, should use a thread pool
 </s>
 
 DEBT:
@@ -49,4 +50,3 @@ BUGS:
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:
-- [DEBT] check if subscribing on new thread when doing http, should use a thread pool
