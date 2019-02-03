@@ -42,7 +42,6 @@ FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
 - [FEATURE] add refresher background job
 - [FEATURE] add single-source-screen
-- [FEATURE] add intro page in walkthrough (why type in url in discovery)
 
 BUGS:
 - [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
@@ -50,3 +49,4 @@ BUGS:
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:
+- [FEATURE] add intro page in walkthrough (why type in url in discovery)
