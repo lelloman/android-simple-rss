@@ -17,6 +17,7 @@ page in walkthrough
 - [BUG] !! sometimes in discover url (from articles screen) some leftover from walkthrough discovery are present, actually duplicates appear also in walkthrough
 - [BUG] there is no way to stop a discover url, not even a timeout
 - [BUG] !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
+- [BUG] in sources list screen, if there is no source the screen is empty
 - [DEBT] find way to mock both view model and http layers in ui tests
 - [DEBT] add ui smoke tests
 - [DEBT] create instrumentation tests for AppSettingsImpl
@@ -35,9 +36,6 @@ DEBT:
 - [DEBT] ui-unit tests for all activities
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
 - [DEBT] FeedFinderIntegrationTest.findsLinksInHtml2 is blocking >_<
-- [DEBT] check if subscribing on new thread when doing http, should use a thread pool
-- [DEBT] handle deep links from outside (intent filter in manifest)
-- [DEBT] DeepLinkStartable is almost an abomination, the implementations are not even checking the screen parameter
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
@@ -47,8 +45,8 @@ FEATURE:
 
 BUGS:
 - [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
-- [BUG] in sources list screen, if there is no source the screen is empty
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] smoke tests are flaky
 
 IN PROGRESS:
+- [DEBT] check if subscribing on new thread when doing http, should use a thread pool

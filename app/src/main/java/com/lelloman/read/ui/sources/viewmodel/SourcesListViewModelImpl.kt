@@ -1,5 +1,6 @@
 package com.lelloman.read.ui.sources.viewmodel
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import com.lelloman.common.utils.LazyLiveData
@@ -17,11 +18,18 @@ class SourcesListViewModelImpl(
     dependencies: Dependencies
 ) : SourcesListViewModel(dependencies) {
 
+    private val mutableEmptyViewVisible: MutableLiveData<Boolean> by LazyLiveData {
+        mutableEmptyViewVisible.postValue(false)
+    }
+
+    override val emptyViewVisible: LiveData<Boolean> = mutableEmptyViewVisible
+
     override val sources: MutableLiveData<List<Source>> by LazyLiveData {
         subscription {
             sourcesRepository.fetchSources()
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
+                .doOnNext { mutableEmptyViewVisible.postValue(it.isEmpty()) }
                 .subscribe { sources.value = it }
         }
     }
