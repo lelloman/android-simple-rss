@@ -33,13 +33,13 @@ page in walkthrough
 - [DEBT] go through unit-test and replace non-needed mock instances to speed up the execution
 - [DEBT] use only deep links for navigation
 - [DEBT] move logic from BaseActivity to a BaseActivityViewModel
-- [DEBT] check if subscribing on new thread when doing http, should use a thread pool
+- [DEBT] check if subscribing on new thread when doing http, should use a thread pool 
+- [DEBT] FeedFinderIntegrationTest.findsLinksInHtml2 is blocking >_<
 </s>
 
 DEBT:
 - [DEBT] ui-unit tests for all activities
-- [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly 
-- [DEBT] FeedFinderIntegrationTest.findsLinksInHtml2 is blocking >_<
+- [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
@@ -50,6 +50,6 @@ BUGS:
 - [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] in the walkthrough the highlight color for text is wrong, the text is white but if highlighted it turns black :/ 
-- [BUG] smoke tests are flaky
+- [BUG] smoke test 2 sometimes fails with articles list empty view not showing "you haven't add any source"
 
 IN PROGRESS:
