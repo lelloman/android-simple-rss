@@ -53,4 +53,7 @@
     <string name="never">never</string>
     <string name="close">Close</string>
     <string name="no_feed_found">"Didn't find any feed…"</string>
+
+    <string name="sources_list_empty_list_message">@string/empty_articles_no_source</string>
+
 </resources>

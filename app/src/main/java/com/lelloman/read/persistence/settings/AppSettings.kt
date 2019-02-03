@@ -25,7 +25,7 @@ interface AppSettings : BaseApplicationSettings {
         const val SHARED_PREFS_NAME = "AppSettings"
 
         const val KEY_MIN_SOURCE_REFRESH_INTERVAL = "MinSourceRefreshInterval"
-        val DEFAULT_MIN_SOURCE_REFRESH_INTERVAL = SourceRefreshInterval.NEUROTIC
+        val DEFAULT_MIN_SOURCE_REFRESH_INTERVAL = SourceRefreshInterval.VERY_FREQUENT
 
         const val KEY_ARTICLE_LIST_IMAGES = "ArticleListImages"
         const val DEFAULT_ARTICLES_LIST_IMAGES = true
