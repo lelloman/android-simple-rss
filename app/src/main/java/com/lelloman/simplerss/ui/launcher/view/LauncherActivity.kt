@@ -1,17 +1,14 @@
 package com.lelloman.simplerss.ui.launcher.view
 
+import com.lelloman.common.utils.StubViewDataBinding
 import com.lelloman.common.view.BaseActivity
-import com.lelloman.simplerss.R
-import com.lelloman.simplerss.databinding.ActivityLauncherBinding
 import com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel
 
-class LauncherActivity : BaseActivity<LauncherViewModel, ActivityLauncherBinding>() {
+class LauncherActivity : BaseActivity<LauncherViewModel, StubViewDataBinding>() {
 
-    override val layoutResId = R.layout.activity_launcher
+    override val layoutResId = NO_LAYOUT_RES_ID
 
     override fun getViewModelClass() = LauncherViewModel::class.java
 
-    override fun setViewModel(binding: ActivityLauncherBinding, viewModel: LauncherViewModel) {
-        binding.viewModel = viewModel
-    }
+    override fun setViewModel(binding: StubViewDataBinding, viewModel: LauncherViewModel) = Unit
 }

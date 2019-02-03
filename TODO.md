@@ -9,6 +9,8 @@ page in walkthrough
 - [FEATURE] add theme selection (as setting and in walkthrough)
 - [FEATURE] add a device-info list screen
 - [FEATURE] add networks and audio manager device info
+- [FEATURE] add intro page in walkthrough (why type in url in discovery)
+- [FEATURE] make theme selection in walkthrough nicer
 - [BUG] add-source screen, try to save a source with invalid name and/or url, error, then try to save a valid one
 - [BUG] first add many sources, in source list scroll to bottom, the last source is covered by "add" button
 - [BUG] swipe delete a source from list, the snackbar doesnt push the "+" button
@@ -18,6 +20,7 @@ page in walkthrough
 - [BUG] there is no way to stop a discover url, not even a timeout
 - [BUG] !! post 2 view action events from a view model one after the other, only the second one is received (SingleLiveData)
 - [BUG] in sources list screen, if there is no source the screen is empty
+- [BUG] the launcher activity is visible 
 - [DEBT] find way to mock both view model and http layers in ui tests
 - [DEBT] add ui smoke tests
 - [DEBT] create instrumentation tests for AppSettingsImpl
@@ -46,9 +49,7 @@ FEATURE:
 BUGS:
 - [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
-- [BUG] smoke tests are flaky
-- [BUG] the launcher activity is visible 
 - [BUG] in the walkthrough the highlight color for text is wrong, the text is white but if highlighted it turns black :/ 
+- [BUG] smoke tests are flaky
 
 IN PROGRESS:
-- [FEATURE] add intro page in walkthrough (why type in url in discovery)

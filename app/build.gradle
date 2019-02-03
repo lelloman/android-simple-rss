@@ -42,8 +42,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
-
+//    implementation(name:"common", ext:"aar")
     implementation "com.github.lelloman:android-common:$lelloman_common_version"
 
     // room
