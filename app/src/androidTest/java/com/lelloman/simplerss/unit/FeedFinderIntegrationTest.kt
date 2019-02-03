@@ -20,7 +20,6 @@ import com.lelloman.simplerss.persistence.settings.AppSettings
 import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
-import org.junit.Ignore
 import org.junit.Test
 import org.mockito.Mockito.mock
 
@@ -111,7 +110,6 @@ class FeedFinderIntegrationTest {
         foundFeeds.assertContains(url = "$URL_1/somefeed", nArticles = 1, name = "RSS di   - ANSA.it")
     }
 
-    @Ignore
     @Test
     fun findsLinksInHtml2() {
         httpClient.map(URL_1, HTML_1)
@@ -120,7 +118,11 @@ class FeedFinderIntegrationTest {
         httpClient.map("http://www.rsssomething.com", VALID_FEED_XML)
         httpClient.map("http://www.staceppa2.com", VALID_FEED_XML)
 
-        val foundFeeds = tested.findValidFeedUrls(URL_1).toList().blockingGet()
+        val foundFeeds = tested
+            .findValidFeedUrls(URL_1)
+            .take(3)
+            .toList()
+            .blockingGet()
 
         assertThat(foundFeeds).hasSize(3)
         foundFeeds.assertContains(url = "$URL_1/feed", nArticles = 1, name = "RSS di   - ANSA.it")
