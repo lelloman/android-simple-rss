@@ -12,7 +12,7 @@ class MockLogger : Logger {
 
     override fun i(msg: String) = Unit
 
-    override fun d(msg: String) = Unit
+    override fun d(msg: String, throwable: Throwable?) = Unit
 
     override fun w(msg: String, throwable: Throwable?) {
         loggedWarning = true
