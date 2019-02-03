@@ -57,5 +57,6 @@
 
     <string name="sources_list_empty_list_message">@string/empty_articles_no_source</string>
     <string name="next">Next</string>
+    <string name="pick_a_theme">Pick a theme</string>
 
 </resources>

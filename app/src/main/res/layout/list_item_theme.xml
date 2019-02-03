@@ -12,39 +12,21 @@
     <com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp"
         android:foreground="?android:attr/selectableItemBackground">
 
-        <android.support.constraint.ConstraintLayout
+        <com.lelloman.simplerss.widget.AppThemeView
+            android:id="@+id/app_theme_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:appTheme="@{viewModel.appTheme}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_view" />
 
-            <TextView
-                android:id="@+id/text_view"
-                android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:gravity="center"
-                android:padding="16dp"
-                android:text="@{viewModel.name}"
-                app:layout_constraintBottom_toTopOf="@+id/radio_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <RadioButton
-                android:id="@+id/radio_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:checked="@{viewModel.isSelected}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_view" />
-
-        </android.support.constraint.ConstraintLayout>
     </com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollCardView>
 </layout>
