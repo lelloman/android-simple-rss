@@ -10,4 +10,7 @@ class HtmlModule {
     @Provides
     @Singleton
     fun provideHtmlParser() = HtmlParser()
+
+    @Provides
+    fun provideHtmlSpanner() = HtmlSpanner()
 }

@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.support.v4.view.PagerAdapter
 import android.support.v7.widget.GridLayoutManager
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.PagerItemDiscoverUrlBinding
 import com.lelloman.simplerss.databinding.PagerItemSelectThemeBinding
 import com.lelloman.simplerss.databinding.PagerItemWalkthrough1Binding
+import com.lelloman.simplerss.databinding.PagerItemWalkthrough2Binding
 import com.lelloman.simplerss.databinding.PagerItemWalkthroughMeteredNetworkBinding
 import com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel
 
@@ -42,6 +44,10 @@ class WalkthroughPagerAdapter(
             }
             R.layout.pager_item_walkthrough_1 -> bind<PagerItemWalkthrough1Binding>(view).apply {
                 viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
+                textViewFirstPage.movementMethod = LinkMovementMethod.getInstance()
+            }
+            R.layout.pager_item_walkthrough_2 -> bind<PagerItemWalkthrough2Binding>(view).apply {
+                viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
             }
             R.layout.pager_item_select_theme -> bind<PagerItemSelectThemeBinding>(view).apply {
                 themesRecyclerView.adapter = themesAdapter
@@ -68,6 +74,7 @@ class WalkthroughPagerAdapter(
     private companion object {
         val LAYOUT_IDS = arrayOf(
             R.layout.pager_item_walkthrough_1,
+            R.layout.pager_item_walkthrough_2,
             R.layout.pager_item_discover_url,
             R.layout.pager_item_select_theme,
             R.layout.pager_item_walkthrough_metered_network

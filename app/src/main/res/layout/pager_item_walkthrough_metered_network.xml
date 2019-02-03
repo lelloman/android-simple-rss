@@ -31,7 +31,7 @@
         <Button
             android:id="@+id/button_yes"
             style="@style/WalkthroughButton"
-            android:onClick="@{viewModel::onMeteredConnectionYesClicked}"
+            android:onClickListener="@{(_) -> viewModel.onMeteredConnectionYesClicked()}"
             android:text="@string/YES"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/button_no"
@@ -42,7 +42,7 @@
         <Button
             android:id="@+id/button_no"
             style="@style/WalkthroughButton"
-            android:onClick="@{viewModel::onMeteredConnectionNoClicked}"
+            android:onClickListener="@{(_) -> viewModel.onMeteredConnectionNoClicked()}"
             android:text="@string/NO"
             app:layout_constraintBottom_toBottomOf="@+id/button_yes"
             app:layout_constraintEnd_toEndOf="parent"

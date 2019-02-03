@@ -64,7 +64,7 @@
                 style="@style/WalkthroughButton"
                 android:layout_gravity="center"
                 android:layout_marginTop="8dp"
-                android:onClick="@{viewModel::onDiscoverClicked}"
+                android:onClickListener="@{(_) -> viewModel.onDiscoverClicked()}"
                 android:text="@string/discover"
                 app:viewVisible="@{!safeUnbox(viewModel.isFeedDiscoverLoading())}" />
 
