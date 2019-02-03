@@ -14,5 +14,5 @@ open class SettingsModule {
     open fun provideAppSettings(
         context: Context,
         baseApplicationSettings: BaseApplicationSettings)
-        : com.lelloman.simplerss.persistence.settings.AppSettings = com.lelloman.simplerss.persistence.settings.AppSettingsImpl(context, baseApplicationSettings)
+        : AppSettings = AppSettingsImpl(context, baseApplicationSettings)
 }

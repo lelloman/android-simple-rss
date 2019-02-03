@@ -6,15 +6,16 @@ import android.databinding.ObservableField
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.SemanticTimeProvider
+import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
 
 class SettingsViewModelImpl(
-    private val appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
+    private val appSettings: AppSettings,
     semanticTimeProvider: SemanticTimeProvider,
     dependencies: Dependencies
-) : com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel(dependencies) {
+) : SettingsViewModel(dependencies) {
 
-    private val sortedRefreshIntervals = com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
+    private val sortedRefreshIntervals = SourceRefreshInterval
         .values()
         .sortedBy { it.ms }
 
@@ -89,7 +90,7 @@ class SettingsViewModelImpl(
         }
     }
 
-    override fun onSourceRefreshMinIntervalSelected(interval: com.lelloman.simplerss.persistence.settings.SourceRefreshInterval) {
+    override fun onSourceRefreshMinIntervalSelected(interval: SourceRefreshInterval) {
         subscription {
             appSettings
                 .sourceRefreshMinInterval

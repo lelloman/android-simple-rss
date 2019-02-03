@@ -1,6 +1,8 @@
 package com.lelloman.simplerss.feed
 
 import com.lelloman.common.utils.TimeProvider
+import com.lelloman.simplerss.feed.exception.InvalidFeedTagException
+import com.lelloman.simplerss.feed.exception.MalformedXmlException
 import io.reactivex.Single
 import org.xmlpull.v1.XmlPullParser
 import org.xmlpull.v1.XmlPullParserException
@@ -16,12 +18,12 @@ class FeedParser @Inject constructor(
 ) {
     private val pubDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
 
-    @Throws(com.lelloman.simplerss.feed.exception.InvalidFeedTagException::class)
-    fun parseFeeds(xml: String): Single<com.lelloman.simplerss.feed.ParsedFeeds> = Single
+    @Throws(InvalidFeedTagException::class)
+    fun parseFeeds(xml: String): Single<ParsedFeeds> = Single
         .fromCallable {
             val parser = XmlPullParserFactory.newInstance().newPullParser()
 
-            val output = com.lelloman.simplerss.feed.ParsedFeeds()
+            val output = ParsedFeeds()
             val inputStream = StringReader(xml)
             parser.setInput(inputStream)
 
@@ -42,10 +44,10 @@ class FeedParser @Inject constructor(
                         parser.next()
                     }
                 }
-            } catch (exception: com.lelloman.simplerss.feed.exception.InvalidFeedTagException) {
+            } catch (exception: InvalidFeedTagException) {
                 throw exception
             } catch (exception: Exception) {
-                throw com.lelloman.simplerss.feed.exception.MalformedXmlException(exception)
+                throw MalformedXmlException(exception)
             }
             output
         }
@@ -87,7 +89,7 @@ class FeedParser @Inject constructor(
         return output
     }
 
-    private fun parserItemTag(parser: XmlPullParser): com.lelloman.simplerss.feed.ParsedFeed? {
+    private fun parserItemTag(parser: XmlPullParser): ParsedFeed? {
         var title: String? = null
         var link: String? = null
         var description: String? = null
@@ -117,7 +119,7 @@ class FeedParser @Inject constructor(
         }
 
         return if (title != null && link != null) {
-            com.lelloman.simplerss.feed.ParsedFeed(
+            ParsedFeed(
                 title = title,
                 subtitle = description ?: "",
                 link = link,
@@ -148,7 +150,7 @@ class FeedParser @Inject constructor(
         }
     }
 
-    @Throws(com.lelloman.simplerss.feed.exception.InvalidFeedTagException::class)
+    @Throws(InvalidFeedTagException::class)
     private fun checkRootTag(parser: XmlPullParser) {
         var startTag: String? = null
         while (parser.next() != XmlPullParser.END_TAG && startTag == null) {
@@ -157,9 +159,9 @@ class FeedParser @Inject constructor(
             }
         }
 
-        if (!com.lelloman.simplerss.feed.FeedParser.Companion.VALID_ROOT_TAGS.contains(startTag)) {
-            throw com.lelloman.simplerss.feed.exception.InvalidFeedTagException("Given xml has root tag <$startTag>, only " +
-                "${com.lelloman.simplerss.feed.FeedParser.Companion.VALID_ROOT_TAGS.joinToString(", ") { "<$it>" }} are valid")
+        if (!VALID_ROOT_TAGS.contains(startTag)) {
+            throw InvalidFeedTagException("Given xml has root tag <$startTag>, only " +
+                "${VALID_ROOT_TAGS.joinToString(", ") { "<$it>" }} are valid")
         }
     }
 

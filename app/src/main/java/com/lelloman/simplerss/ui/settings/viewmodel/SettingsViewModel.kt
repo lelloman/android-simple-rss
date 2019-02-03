@@ -3,6 +3,7 @@ package com.lelloman.simplerss.ui.settings.viewmodel
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
 
 abstract class SettingsViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {
 
@@ -18,7 +19,7 @@ abstract class SettingsViewModel(dependencies: Dependencies) : BaseViewModel(dep
 
     abstract val openArticlesInAppSelected: MutableLiveData<Boolean>
 
-    abstract fun onSourceRefreshMinIntervalSelected(interval: com.lelloman.simplerss.persistence.settings.SourceRefreshInterval)
+    abstract fun onSourceRefreshMinIntervalSelected(interval: SourceRefreshInterval)
 
     abstract fun onArticleListImagesChanged(isActive: Boolean)
 

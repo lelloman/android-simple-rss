@@ -2,10 +2,11 @@ package com.lelloman.simplerss.feed.fetcher
 
 import android.support.annotation.VisibleForTesting
 import com.lelloman.common.utils.UrlValidator
+import com.lelloman.simplerss.http.HttpClient
 import io.reactivex.Maybe
 
 class FaviconFetcher(
-    private val httpClient: com.lelloman.simplerss.http.HttpClient,
+    private val httpClient: HttpClient,
     private val urlValidator: UrlValidator
 ) {
 

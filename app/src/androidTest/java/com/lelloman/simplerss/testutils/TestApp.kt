@@ -3,15 +3,20 @@ package com.lelloman.simplerss.testutils
 import android.widget.ImageView
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.view.PicassoWrap
+import com.lelloman.simplerss.SimpleRssApplication
 import com.lelloman.simplerss.di.DaggerAppComponent
+import com.lelloman.simplerss.di.ViewModelModule
+import com.lelloman.simplerss.http.HttpModule
+import com.lelloman.simplerss.persistence.db.DbModule
+import com.lelloman.simplerss.persistence.settings.SettingsModule
 
-class TestApp : com.lelloman.simplerss.SimpleRssApplication() {
+class TestApp : SimpleRssApplication() {
 
     var baseApplicationModule = BaseApplicationModule(this)
-    var viewModelModule = com.lelloman.simplerss.di.ViewModelModule()
-    private var dbModule = com.lelloman.simplerss.persistence.db.DbModule()
-    private var settingsModule = com.lelloman.simplerss.persistence.settings.SettingsModule()
-    var httpModule = com.lelloman.simplerss.http.HttpModule()
+    var viewModelModule = ViewModelModule()
+    private var dbModule = DbModule()
+    private var settingsModule = SettingsModule()
+    var httpModule = HttpModule()
 
     override var picassoWrap: PicassoWrap = object : PicassoWrap {
         override fun enableImageSourceIndicator() = Unit

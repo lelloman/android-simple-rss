@@ -1,6 +1,10 @@
 package com.lelloman.simplerss.ui.common.repository
 
 import com.lelloman.common.di.qualifiers.IoScheduler
+import com.lelloman.simplerss.feed.FeedRefresher
+import com.lelloman.simplerss.persistence.db.ArticlesDao
+import com.lelloman.simplerss.persistence.db.SourcesDao
+import com.lelloman.simplerss.persistence.db.model.Source
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
@@ -12,28 +16,28 @@ import javax.inject.Singleton
 @Singleton
 class SourcesRepository @Inject constructor(
     @IoScheduler private val ioScheduler: Scheduler,
-    private val sourcesDao: com.lelloman.simplerss.persistence.db.SourcesDao,
-    private val feedRefresher: com.lelloman.simplerss.feed.FeedRefresher,
-    private val articlesDao: com.lelloman.simplerss.persistence.db.ArticlesDao
+    private val sourcesDao: SourcesDao,
+    private val feedRefresher: FeedRefresher,
+    private val articlesDao: ArticlesDao
 ) {
 
-    private val sourcesSubject = PublishSubject.create<List<com.lelloman.simplerss.persistence.db.model.Source>>()
+    private val sourcesSubject = PublishSubject.create<List<Source>>()
     private var isLoading = false
 
-    fun fetchSources(): Observable<List<com.lelloman.simplerss.persistence.db.model.Source>> = sourcesSubject
+    fun fetchSources(): Observable<List<Source>> = sourcesSubject
         .hide()
         .doOnSubscribe { loadSource() }
 
-    fun insertSource(source: com.lelloman.simplerss.persistence.db.model.Source): Single<Long> = Single.fromCallable {
+    fun insertSource(source: Source): Single<Long> = Single.fromCallable {
         val id = sourcesDao.insert(source)
         feedRefresher.refresh()
         id
     }
 
-    fun deleteSource(source: com.lelloman.simplerss.persistence.db.model.Source): Single<com.lelloman.simplerss.ui.common.repository.DeletedSource> = articlesDao
+    fun deleteSource(source: Source): Single<DeletedSource> = articlesDao
         .getAllFromSource(source.id)
         .firstOrError()
-        .map { com.lelloman.simplerss.ui.common.repository.DeletedSource(source, it) }
+        .map { DeletedSource(source, it) }
         .flatMap {
             Single.fromCallable {
                 sourcesDao.delete(source.id)

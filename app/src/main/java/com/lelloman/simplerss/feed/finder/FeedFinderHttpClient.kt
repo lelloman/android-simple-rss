@@ -1,26 +1,28 @@
 package com.lelloman.simplerss.feed.finder
 
 import com.lelloman.common.utils.UrlValidator
+import com.lelloman.simplerss.http.HttpClient
+import com.lelloman.simplerss.http.HttpRequest
 import io.reactivex.Maybe
 import io.reactivex.Single
 
 class FeedFinderHttpClient(
-    private val httpClient: com.lelloman.simplerss.http.HttpClient,
+    private val httpClient: HttpClient,
     private val urlValidator: UrlValidator
 ) {
 
-    fun requestStringBodyAndBaseUrl(url: String): Maybe<com.lelloman.simplerss.feed.finder.StringBodyAndUrl> = urlValidator
+    fun requestStringBodyAndBaseUrl(url: String): Maybe<StringBodyAndUrl> = urlValidator
         .findBaseUrlWithProtocol(url)
         .flatMapSingle { baseUrl ->
             httpClient
-                .request(com.lelloman.simplerss.http.HttpRequest(baseUrl))
+                .request(HttpRequest(baseUrl))
                 .map { it to baseUrl }
         }
         .filter { (httpResponse, _) ->
             httpResponse.isSuccessful && httpResponse.body.isNotEmpty()
         }
         .map { (httpResponse, baseUrl) ->
-            com.lelloman.simplerss.feed.finder.StringBodyAndUrl(
+            StringBodyAndUrl(
                 url = baseUrl,
                 stringBody = httpResponse.stringBody
             )
@@ -30,7 +32,7 @@ class FeedFinderHttpClient(
     fun requestStringBody(url: String): Maybe<String> = Single
         .just(urlValidator.maybePrependProtocol(url))
         .flatMapMaybe { urlWithProtocol ->
-            httpClient.request(com.lelloman.simplerss.http.HttpRequest(urlWithProtocol))
+            httpClient.request(HttpRequest(urlWithProtocol))
                 .filter { it.isSuccessful && it.stringBody.isNotEmpty() }
                 .map { it.stringBody }
         }

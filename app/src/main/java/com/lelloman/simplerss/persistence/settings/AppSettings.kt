@@ -5,7 +5,7 @@ import io.reactivex.Observable
 
 interface AppSettings : BaseApplicationSettings {
 
-    val sourceRefreshMinInterval: Observable<com.lelloman.simplerss.persistence.settings.SourceRefreshInterval>
+    val sourceRefreshMinInterval: Observable<SourceRefreshInterval>
 
     val articleListImagesEnabled: Observable<Boolean>
 
@@ -13,7 +13,7 @@ interface AppSettings : BaseApplicationSettings {
 
     val shouldShowWalkthrough: Observable<Boolean>
 
-    fun setSourceRefreshMinInterval(interval: com.lelloman.simplerss.persistence.settings.SourceRefreshInterval)
+    fun setSourceRefreshMinInterval(interval: SourceRefreshInterval)
 
     fun setArticlesListImagesEnabled(enabled: Boolean)
 
@@ -25,7 +25,7 @@ interface AppSettings : BaseApplicationSettings {
         const val SHARED_PREFS_NAME = "AppSettings"
 
         const val KEY_MIN_SOURCE_REFRESH_INTERVAL = "MinSourceRefreshInterval"
-        val DEFAULT_MIN_SOURCE_REFRESH_INTERVAL = com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.VERY_FREQUENT
+        val DEFAULT_MIN_SOURCE_REFRESH_INTERVAL = SourceRefreshInterval.VERY_FREQUENT
 
         const val KEY_ARTICLE_LIST_IMAGES = "ArticleListImages"
         const val DEFAULT_ARTICLES_LIST_IMAGES = true

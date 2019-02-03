@@ -4,19 +4,21 @@ import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ListItemDiscoverFoundFeedBinding
+import com.lelloman.simplerss.feed.finder.FoundFeed
+import com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListItemViewModel
 
 class FoundFeedsAdapter(
     private val resourceProvider: ResourceProvider,
-    onFoundFeedClickListener: (com.lelloman.simplerss.feed.finder.FoundFeed) -> Unit
-) : BaseRecyclerViewAdapter<Long, com.lelloman.simplerss.feed.finder.FoundFeed, com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListItemViewModel, ListItemDiscoverFoundFeedBinding>(
+    onFoundFeedClickListener: (FoundFeed) -> Unit
+) : BaseRecyclerViewAdapter<Long, FoundFeed, FoundFeedListItemViewModel, ListItemDiscoverFoundFeedBinding>(
     onItemClickListener = onFoundFeedClickListener
 ) {
     override val listItemLayoutResId = R.layout.list_item_discover_found_feed
 
-    override fun bindViewModel(binding: ListItemDiscoverFoundFeedBinding, viewModel: com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListItemViewModel) {
+    override fun bindViewModel(binding: ListItemDiscoverFoundFeedBinding, viewModel: FoundFeedListItemViewModel) {
         binding.viewModel = viewModel
     }
 
-    override fun createViewModel(viewHolder: BaseViewHolder<Long, com.lelloman.simplerss.feed.finder.FoundFeed, com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListItemViewModel, ListItemDiscoverFoundFeedBinding>) =
-        com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListItemViewModel(resourceProvider)
+    override fun createViewModel(viewHolder: BaseViewHolder<Long, FoundFeed, FoundFeedListItemViewModel, ListItemDiscoverFoundFeedBinding>) =
+        FoundFeedListItemViewModel(resourceProvider)
 }

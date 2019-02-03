@@ -1,6 +1,10 @@
 package com.lelloman.simplerss.feed
 
 import com.lelloman.common.utils.UrlValidatorImpl
+import com.lelloman.simplerss.feed.fetcher.FaviconFetcher
+import com.lelloman.simplerss.http.HttpClient
+import com.lelloman.simplerss.http.HttpRequest
+import com.lelloman.simplerss.http.HttpResponse
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -10,10 +14,10 @@ import org.junit.Test
 
 class FaviconFetcherTest {
 
-    private val httpClient: com.lelloman.simplerss.http.HttpClient = mock()
+    private val httpClient: HttpClient = mock()
     private val urlValidator = UrlValidatorImpl()
 
-    private val tested = com.lelloman.simplerss.feed.fetcher.FaviconFetcher(
+    private val tested = FaviconFetcher(
         httpClient = httpClient,
         urlValidator = urlValidator
     )
@@ -24,7 +28,7 @@ class FaviconFetcherTest {
 
         tested.getPngFavicon(url).test()
 
-        verify(httpClient).request(com.lelloman.simplerss.http.HttpRequest(tested.getGoogleS2FaviconUrl("www.staceppa.com")))
+        verify(httpClient).request(HttpRequest(tested.getGoogleS2FaviconUrl("www.staceppa.com")))
     }
 
     @Test
@@ -39,7 +43,7 @@ class FaviconFetcherTest {
 
     @Test
     fun `completes with no event if http response is unsuccessul`() {
-        val httpResponse = com.lelloman.simplerss.http.HttpResponse(
+        val httpResponse = HttpResponse(
             code = 500,
             isSuccessful = false,
             body = ByteArray(0)
@@ -55,7 +59,7 @@ class FaviconFetcherTest {
     @Test
     fun `returns byte content of http response`() {
         val body = byteArrayOf(1, 2, 3, 4)
-        val httpResponse = com.lelloman.simplerss.http.HttpResponse(
+        val httpResponse = HttpResponse(
             code = 200,
             isSuccessful = true,
             body = body

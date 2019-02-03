@@ -14,21 +14,22 @@ import com.lelloman.simplerss.databinding.PagerItemDiscoverUrlBinding
 import com.lelloman.simplerss.databinding.PagerItemSelectThemeBinding
 import com.lelloman.simplerss.databinding.PagerItemWalkthrough1Binding
 import com.lelloman.simplerss.databinding.PagerItemWalkthroughMeteredNetworkBinding
+import com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel
 
 class WalkthroughPagerAdapter(
     private val lifecycleOwner: LifecycleOwner,
     private val context: Context,
-    private val walkthroughViewModel: com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel
+    private val walkthroughViewModel: WalkthroughViewModel
 ) : PagerAdapter() {
 
-    private val themesAdapter = com.lelloman.simplerss.ui.walkthrough.view.ThemesAdapter { walkthroughViewModel.onThemeClicked(it.theme) }
+    private val themesAdapter = ThemesAdapter { walkthroughViewModel.onThemeClicked(it.theme) }
 
     override fun isViewFromObject(view: View, obj: Any) = view == obj
 
-    override fun getCount() = com.lelloman.simplerss.ui.walkthrough.view.WalkthroughPagerAdapter.Companion.LAYOUT_IDS.size
+    override fun getCount() = LAYOUT_IDS.size
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val layoutId = com.lelloman.simplerss.ui.walkthrough.view.WalkthroughPagerAdapter.Companion.LAYOUT_IDS[position]
+        val layoutId = LAYOUT_IDS[position]
 
         val view = LayoutInflater.from(container.context).inflate(layoutId, container, false)
 

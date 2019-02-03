@@ -6,6 +6,18 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.simplerss.feed.fetcher.FaviconFetcher
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.feed.finder.FeedFinder
+import com.lelloman.simplerss.feed.finder.FeedFinderHttpClient
+import com.lelloman.simplerss.feed.finder.FeedFinderImpl
+import com.lelloman.simplerss.feed.finder.FeedFinderParser
+import com.lelloman.simplerss.html.HtmlParser
+import com.lelloman.simplerss.http.HttpClient
+import com.lelloman.simplerss.http.HttpPoolScheduler
+import com.lelloman.simplerss.persistence.db.ArticlesDao
+import com.lelloman.simplerss.persistence.db.SourcesDao
+import com.lelloman.simplerss.persistence.settings.AppSettings
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -18,7 +30,7 @@ open class FeedModule {
     @Provides
     fun provideFaviconBitmapProvider(
         loggerFactory: LoggerFactory
-    ) = com.lelloman.simplerss.feed.FaviconBitmapProvider(
+    ) = FaviconBitmapProvider(
         loggerFactory = loggerFactory
     )
 
@@ -27,15 +39,15 @@ open class FeedModule {
     fun provideFeedRefresher(
         @IoScheduler ioScheduler: Scheduler,
         @NewThreadScheduler newThreadScheduler: Scheduler,
-        @com.lelloman.simplerss.http.HttpPoolScheduler httpPoolScheduler: Scheduler,
-        sourcesDao: com.lelloman.simplerss.persistence.db.SourcesDao,
-        articlesDao: com.lelloman.simplerss.persistence.db.ArticlesDao,
+        @HttpPoolScheduler httpPoolScheduler: Scheduler,
+        sourcesDao: SourcesDao,
+        articlesDao: ArticlesDao,
         timeProvider: TimeProvider,
-        appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
+        appSettings: AppSettings,
         loggerFactory: LoggerFactory,
-        feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher,
-        faviconFetcher: com.lelloman.simplerss.feed.fetcher.FaviconFetcher
-    ): com.lelloman.simplerss.feed.FeedRefresher = com.lelloman.simplerss.feed.FeedRefresherImpl(
+        feedFetcher: FeedFetcher,
+        faviconFetcher: FaviconFetcher
+    ): FeedRefresher = FeedRefresherImpl(
         ioScheduler = ioScheduler,
         newThreadScheduler = newThreadScheduler,
         httpPoolScheduler = httpPoolScheduler,
@@ -50,13 +62,13 @@ open class FeedModule {
 
     @Provides
     fun provideFeedFetcher(
-        httpClient: com.lelloman.simplerss.http.HttpClient,
-        feedParser: com.lelloman.simplerss.feed.FeedParser,
-        htmlParser: com.lelloman.simplerss.html.HtmlParser,
-        appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
+        httpClient: HttpClient,
+        feedParser: FeedParser,
+        htmlParser: HtmlParser,
+        appSettings: AppSettings,
         meteredConnectionChecker: MeteredConnectionChecker,
         loggerFactory: LoggerFactory
-    ) = com.lelloman.simplerss.feed.fetcher.FeedFetcher(
+    ) = FeedFetcher(
         httpClient = httpClient,
         feedParser = feedParser,
         htmlParser = htmlParser,
@@ -68,18 +80,18 @@ open class FeedModule {
     @Singleton
     @Provides
     fun provideFaviconFetcher(
-        httpClient: com.lelloman.simplerss.http.HttpClient,
+        httpClient: HttpClient,
         urlValidator: UrlValidator
-    ) = com.lelloman.simplerss.feed.fetcher.FaviconFetcher(
+    ) = FaviconFetcher(
         httpClient = httpClient,
         urlValidator = urlValidator
     )
 
     @Provides
     fun provideFeedFinderHttpClient(
-        httpClient: com.lelloman.simplerss.http.HttpClient,
+        httpClient: HttpClient,
         urlValidator: UrlValidator
-    ) = com.lelloman.simplerss.feed.finder.FeedFinderHttpClient(
+    ) = FeedFinderHttpClient(
         httpClient = httpClient,
         urlValidator = urlValidator
     )
@@ -87,9 +99,9 @@ open class FeedModule {
     @Provides
     fun provideFeedFinderParser(
         urlValidator: UrlValidator,
-        htmlParser: com.lelloman.simplerss.html.HtmlParser,
+        htmlParser: HtmlParser,
         loggerFactory: LoggerFactory
-    ) = com.lelloman.simplerss.feed.finder.FeedFinderParser(
+    ) = FeedFinderParser(
         urlValidator = urlValidator,
         htmlParser = htmlParser,
         loggerFactory = loggerFactory
@@ -97,12 +109,12 @@ open class FeedModule {
 
     @Provides
     open fun provideFeedFinder(
-        httpClient: com.lelloman.simplerss.feed.finder.FeedFinderHttpClient,
-        parser: com.lelloman.simplerss.feed.finder.FeedFinderParser,
-        feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher,
+        httpClient: FeedFinderHttpClient,
+        parser: FeedFinderParser,
+        feedFetcher: FeedFetcher,
         loggerFactory: LoggerFactory,
         @NewThreadScheduler newThreadScheduler: Scheduler
-    ): com.lelloman.simplerss.feed.finder.FeedFinder = com.lelloman.simplerss.feed.finder.FeedFinderImpl(
+    ): FeedFinder = FeedFinderImpl(
         httpClient = httpClient,
         parser = parser,
         feedFetcher = feedFetcher,

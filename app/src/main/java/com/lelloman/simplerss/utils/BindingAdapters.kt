@@ -11,6 +11,8 @@ import android.widget.TextView
 import com.lelloman.common.utils.model.ByteArrayWithId
 import com.lelloman.identicon.ClassicIdenticonView
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.SimpleRssApplication
+import com.lelloman.simplerss.SimpleRssApplication.Companion.getPicassoWrap
 import com.lelloman.simplerss.widget.SourceImageView
 
 interface OnKeyboardActionDoneListener {
@@ -43,7 +45,7 @@ object BindingAdapters {
     @BindingAdapter("imageUrl")
     fun bindImageUrl(view: ImageView, url: String?) {
         url?.let {
-            com.lelloman.simplerss.SimpleRssApplication.getPicassoWrap()
+            getPicassoWrap()
                 .loadUrlIntoImageView(
                     uri = url,
                     view = view,
@@ -66,7 +68,7 @@ object BindingAdapters {
 
     private fun ByteArrayWithId.bind(action: (Bitmap) -> Unit) {
         byteArray?.let {
-            com.lelloman.simplerss.SimpleRssApplication
+            SimpleRssApplication
                 .getFaviconBitmapProvider()
                 .getFaviconBitmap(byteArray!!, id)
                 ?.let(action)
@@ -81,7 +83,7 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("onKeyboardActionDoneListener")
-    fun setOnKeyboardActionDoneListener(view: TextView, listener: com.lelloman.simplerss.utils.OnKeyboardActionDoneListener?) {
+    fun setOnKeyboardActionDoneListener(view: TextView, listener: OnKeyboardActionDoneListener?) {
         if (listener == null) {
             view.setOnEditorActionListener(null)
         } else {

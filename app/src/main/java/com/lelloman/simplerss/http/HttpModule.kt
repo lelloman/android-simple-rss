@@ -26,7 +26,7 @@ open class HttpModule {
         okHttpClient: OkHttpClient,
         loggerFactory: LoggerFactory,
         timeProvider: TimeProvider
-    ): com.lelloman.simplerss.http.HttpClient = com.lelloman.simplerss.http.HttpClientImpl(
+    ): HttpClient = HttpClientImpl(
         okHttpClient = okHttpClient,
         loggerFactory = loggerFactory,
         timeProvider = timeProvider
@@ -34,7 +34,7 @@ open class HttpModule {
 
     @Singleton
     @Provides
-    @com.lelloman.simplerss.http.HttpPoolScheduler
+    @HttpPoolScheduler
     open fun provideHttpPoolScheduler(): Scheduler = Executors
         .newFixedThreadPool(5)
         .let(Schedulers::from)

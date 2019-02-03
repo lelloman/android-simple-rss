@@ -6,28 +6,30 @@ import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ListItemSourceBinding
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.ui.sources.viewmodel.SourceListItemViewModel
 
 class SourcesAdapter(
     private val resourceProvider: ResourceProvider,
     private val semanticTimeProvider: SemanticTimeProvider,
-    onSourceClickedListener: (source: com.lelloman.simplerss.persistence.db.model.Source) -> Unit,
+    onSourceClickedListener: (source: Source) -> Unit,
     private val onSourceIsActiveChangedListener: (sourceId: Long, isActive: Boolean) -> Unit
-) : BaseRecyclerViewAdapter<Long, com.lelloman.simplerss.persistence.db.model.Source, com.lelloman.simplerss.ui.sources.viewmodel.SourceListItemViewModel, ListItemSourceBinding>(
+) : BaseRecyclerViewAdapter<Long, Source, SourceListItemViewModel, ListItemSourceBinding>(
     onItemClickListener = onSourceClickedListener
 ) {
 
-    private val viewHolders = mutableListOf<BaseViewHolder<Long, com.lelloman.simplerss.persistence.db.model.Source, com.lelloman.simplerss.ui.sources.viewmodel.SourceListItemViewModel, *>>()
+    private val viewHolders = mutableListOf<BaseViewHolder<Long, Source, SourceListItemViewModel, *>>()
 
     override val listItemLayoutResId = R.layout.list_item_source
 
-    override fun bindViewModel(binding: ListItemSourceBinding, viewModel: com.lelloman.simplerss.ui.sources.viewmodel.SourceListItemViewModel) {
+    override fun bindViewModel(binding: ListItemSourceBinding, viewModel: SourceListItemViewModel) {
         binding.viewModel = viewModel
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
         super.onCreateViewHolder(parent, viewType).also { viewHolders.add(it) }
 
-    override fun createViewModel(viewHolder: BaseViewHolder<Long, com.lelloman.simplerss.persistence.db.model.Source, com.lelloman.simplerss.ui.sources.viewmodel.SourceListItemViewModel, ListItemSourceBinding>) = com.lelloman.simplerss.ui.sources.viewmodel.SourceListItemViewModel(
+    override fun createViewModel(viewHolder: BaseViewHolder<Long, Source, SourceListItemViewModel, ListItemSourceBinding>) = SourceListItemViewModel(
         resourceProvider = resourceProvider,
         semanticTimeProvider = semanticTimeProvider,
         onIsActiveChanged = { onSourceIsActiveChangedListener.invoke(viewHolder.item.id, it) }

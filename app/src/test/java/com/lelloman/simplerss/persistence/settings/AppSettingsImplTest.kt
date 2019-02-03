@@ -25,7 +25,7 @@ import org.junit.Test
 
 class AppSettingsImplTest {
 
-    private var prefInterval = com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.NEUROTIC
+    private var prefInterval = SourceRefreshInterval.NEUROTIC
     private var prefArticlesImages = false
     private var prefUseMeteredNetwork = false
     private var prefOpenArticlesInApp = false
@@ -68,8 +68,8 @@ class AppSettingsImplTest {
 
     @Test
     fun `gets and sets min refresh interval`() {
-        val firstInterval = com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.RELAXED
-        val secondInterval = com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.STONER
+        val firstInterval = SourceRefreshInterval.RELAXED
+        val secondInterval = SourceRefreshInterval.STONER
         prefInterval = firstInterval
         val tested = createAppSettingsImpl()
         val tester = tested.sourceRefreshMinInterval.test()
@@ -158,5 +158,5 @@ class AppSettingsImplTest {
         tester.assertValues(AppTheme.DARCULA, AppTheme.LIGHT)
     }
 
-    private fun createAppSettingsImpl() = com.lelloman.simplerss.persistence.settings.AppSettingsImpl(context, BaseSettingsModule().provideBaseApplicationSettings(context))
+    private fun createAppSettingsImpl() = AppSettingsImpl(context, BaseSettingsModule().provideBaseApplicationSettings(context))
 }

@@ -1,5 +1,11 @@
 package com.lelloman.simplerss.ui.common
 
+import com.lelloman.simplerss.feed.FeedRefresher
+import com.lelloman.simplerss.persistence.db.ArticlesDao
+import com.lelloman.simplerss.persistence.db.SourcesDao
+import com.lelloman.simplerss.persistence.db.model.Article
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.times
@@ -15,11 +21,11 @@ import org.junit.Test
 
 class SourcesRepositoryTest {
 
-    private val sourcesDao: com.lelloman.simplerss.persistence.db.SourcesDao = mock()
-    private val articlesDao: com.lelloman.simplerss.persistence.db.ArticlesDao = mock()
-    private val feedRefresher: com.lelloman.simplerss.feed.FeedRefresher = mock()
+    private val sourcesDao: SourcesDao = mock()
+    private val articlesDao: ArticlesDao = mock()
+    private val feedRefresher: FeedRefresher = mock()
 
-    private val tested = com.lelloman.simplerss.ui.common.repository.SourcesRepository(
+    private val tested = SourcesRepository(
         ioScheduler = trampoline(),
         sourcesDao = sourcesDao,
         feedRefresher = feedRefresher,
@@ -116,22 +122,22 @@ class SourcesRepositoryTest {
         verify(sourcesDao).setSourceIsActive(1L, true)
     }
 
-    private fun givenAllSourcesSubject(): Subject<List<com.lelloman.simplerss.persistence.db.model.Source>> {
-        val sourcesSubject = PublishSubject.create<List<com.lelloman.simplerss.persistence.db.model.Source>>()
+    private fun givenAllSourcesSubject(): Subject<List<Source>> {
+        val sourcesSubject = PublishSubject.create<List<Source>>()
         whenever(sourcesDao.getAll()).thenReturn(sourcesSubject.hide().toFlowable(BackpressureStrategy.MISSING))
         return sourcesSubject
     }
 
     private companion object {
         val SOURCES = listOf(
-            com.lelloman.simplerss.persistence.db.model.Source(
+            Source(
                 id = 1L,
                 name = "source 1",
                 url = "http://www.staceppa1.com",
                 lastFetched = 1L,
                 isActive = true
             ),
-            com.lelloman.simplerss.persistence.db.model.Source(
+            Source(
                 id = 2L,
                 name = "source 2",
                 url = "http://www.staceppa2.com",
@@ -140,6 +146,6 @@ class SourcesRepositoryTest {
             )
         )
 
-        val ARTICLES = listOf<com.lelloman.simplerss.persistence.db.model.Article>(mock(), mock(), mock())
+        val ARTICLES = listOf<Article>(mock(), mock(), mock())
     }
 }

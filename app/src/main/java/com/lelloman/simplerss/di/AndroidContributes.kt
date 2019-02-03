@@ -1,6 +1,17 @@
 package com.lelloman.simplerss.di
 
 import com.lelloman.common.view.InjectableActivity
+import com.lelloman.simplerss.feed.FeedRefreshBroadcastReceiver
+import com.lelloman.simplerss.ui.articles.view.ArticleActivity
+import com.lelloman.simplerss.ui.articles.view.ArticlesListActivity
+import com.lelloman.simplerss.ui.discover.view.DiscoverUrlActivity
+import com.lelloman.simplerss.ui.discover.view.FoundFeedListActivity
+import com.lelloman.simplerss.ui.launcher.view.LauncherActivity
+import com.lelloman.simplerss.ui.settings.view.SettingsActivity
+import com.lelloman.simplerss.ui.sources.view.AddSourceActivity
+import com.lelloman.simplerss.ui.sources.view.SourceActivity
+import com.lelloman.simplerss.ui.sources.view.SourcesListActivity
+import com.lelloman.simplerss.ui.walkthrough.view.WalkthroughActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -12,35 +23,35 @@ interface AndroidContributes {
     fun contributeBaseActivity(): InjectableActivity
 
     @ContributesAndroidInjector
-    fun contributeArticlesListActivity(): com.lelloman.simplerss.ui.articles.view.ArticlesListActivity
+    fun contributeArticlesListActivity(): ArticlesListActivity
 
     @ContributesAndroidInjector
-    fun contributeSourcesListActivity(): com.lelloman.simplerss.ui.sources.view.SourcesListActivity
+    fun contributeSourcesListActivity(): SourcesListActivity
 
     @ContributesAndroidInjector
-    fun contributeAddSourceActivity(): com.lelloman.simplerss.ui.sources.view.AddSourceActivity
+    fun contributeAddSourceActivity(): AddSourceActivity
 
     @ContributesAndroidInjector
-    fun contributeSourceActivity(): com.lelloman.simplerss.ui.sources.view.SourceActivity
+    fun contributeSourceActivity(): SourceActivity
 
     @ContributesAndroidInjector
-    fun contributeArticleActivity(): com.lelloman.simplerss.ui.articles.view.ArticleActivity
+    fun contributeArticleActivity(): ArticleActivity
 
     @ContributesAndroidInjector
-    fun contributeFeedRefreshReceiver(): com.lelloman.simplerss.feed.FeedRefreshBroadcastReceiver
+    fun contributeFeedRefreshReceiver(): FeedRefreshBroadcastReceiver
 
     @ContributesAndroidInjector
-    fun contributeSettingsActivity(): com.lelloman.simplerss.ui.settings.view.SettingsActivity
+    fun contributeSettingsActivity(): SettingsActivity
 
     @ContributesAndroidInjector
-    fun contributeWalkthroughActivity(): com.lelloman.simplerss.ui.walkthrough.view.WalkthroughActivity
+    fun contributeWalkthroughActivity(): WalkthroughActivity
 
     @ContributesAndroidInjector
-    fun contributeLauncherActivity(): com.lelloman.simplerss.ui.launcher.view.LauncherActivity
+    fun contributeLauncherActivity(): LauncherActivity
 
     @ContributesAndroidInjector
-    fun contributeFoundFeedListActivity(): com.lelloman.simplerss.ui.discover.view.FoundFeedListActivity
+    fun contributeFoundFeedListActivity(): FoundFeedListActivity
 
     @ContributesAndroidInjector
-    fun contributeDiscoverUrlActivity(): com.lelloman.simplerss.ui.discover.view.DiscoverUrlActivity
+    fun contributeDiscoverUrlActivity(): DiscoverUrlActivity
 }

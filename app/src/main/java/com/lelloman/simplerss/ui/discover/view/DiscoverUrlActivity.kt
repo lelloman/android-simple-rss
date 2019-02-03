@@ -8,16 +8,17 @@ import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityDiscoverUrlBinding
+import com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel
 
-class DiscoverUrlActivity : BaseActivity<com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel, ActivityDiscoverUrlBinding>() {
+class DiscoverUrlActivity : BaseActivity<DiscoverUrlViewModel, ActivityDiscoverUrlBinding>() {
 
     override val layoutResId = R.layout.activity_discover_url
 
-    override fun getViewModelClass() = com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel::class.java
+    override fun getViewModelClass() = DiscoverUrlViewModel::class.java
 
     override val hasActionBarBackButton = true
 
-    override fun setViewModel(binding: ActivityDiscoverUrlBinding, viewModel: com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel) {
+    override fun setViewModel(binding: ActivityDiscoverUrlBinding, viewModel: DiscoverUrlViewModel) {
         binding.viewModel = viewModel
     }
 
@@ -25,7 +26,7 @@ class DiscoverUrlActivity : BaseActivity<com.lelloman.simplerss.ui.discover.view
 
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, com.lelloman.simplerss.ui.discover.view.DiscoverUrlActivity::class.java)
+                val intent = Intent(context, DiscoverUrlActivity::class.java)
                 if (context !is Activity) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }

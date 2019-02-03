@@ -4,11 +4,18 @@ import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.mock.MockAppSettings
+import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import com.lelloman.simplerss.testutils.AndroidArchTest
 import com.lelloman.simplerss.testutils.MockResourceProvider
 import com.lelloman.simplerss.testutils.dummySourceArticle
 import com.lelloman.simplerss.testutils.test
+import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
+import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.never
 import com.nhaarman.mockito_kotlin.verify
@@ -20,16 +27,16 @@ import org.junit.Test
 
 class ArticlesListViewModelImplTest : AndroidArchTest() {
 
-    private val articlesRepository: com.lelloman.simplerss.ui.common.repository.ArticlesRepository = mock()
-    private val sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository = mock()
-    private val discoveryRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository = mock()
+    private val articlesRepository: ArticlesRepository = mock()
+    private val sourcesRepository: SourcesRepository = mock()
+    private val discoveryRepository: DiscoverRepository = mock()
     private val resourceProvider = MockResourceProvider()
-    private val appSettings = com.lelloman.simplerss.mock.MockAppSettings()
+    private val appSettings = MockAppSettings()
 
-    private lateinit var tested: com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModelImpl
+    private lateinit var tested: ArticlesListViewModelImpl
 
     override fun setUp() {
-        tested = com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModelImpl(
+        tested = ArticlesListViewModelImpl(
             articlesRepository = articlesRepository,
             sourcesRepository = sourcesRepository,
             discoverRepository = discoveryRepository,
@@ -61,7 +68,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         tester.assertValueAt(0) {
             it is DeepLinkNavigationEvent
                 && it.deepLink.parametersCount == 0
-                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.SOURCES_LIST
+                && it.deepLink.screen == SimpleRssNavigationScreen.SOURCES_LIST
         }
     }
 
@@ -79,7 +86,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
             it is DeepLinkNavigationEvent
                 && it.deepLink.parametersCount == 1
                 && it.deepLink.getString(ARG_URL) == link
-                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ARTICLE
+                && it.deepLink.screen == SimpleRssNavigationScreen.ARTICLE
         }
     }
 
@@ -105,7 +112,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         tester.assertValueAt(0) {
             it is DeepLinkNavigationEvent
                 && it.deepLink.parametersCount == 0
-                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.SETTINGS
+                && it.deepLink.screen == SimpleRssNavigationScreen.SETTINGS
         }
     }
 
@@ -159,7 +166,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         viewActionsTester.assertValueAt(0) {
             it is DeepLinkNavigationEvent
                 && it.deepLink.parametersCount == 0
-                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ADD_SOURCE
+                && it.deepLink.screen == SimpleRssNavigationScreen.ADD_SOURCE
         }
     }
 
@@ -183,7 +190,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         viewActionsTester.assertValueAt(0) {
             it is DeepLinkNavigationEvent
                 && it.deepLink.parametersCount == 0
-                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.SOURCES_LIST
+                && it.deepLink.screen == SimpleRssNavigationScreen.SOURCES_LIST
         }
     }
 
@@ -209,7 +216,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
     }
 
     private fun givenActiveSources() {
-        val source = com.lelloman.simplerss.persistence.db.model.Source(
+        val source = Source(
             id = 1L,
             name = "asd",
             url = "asd",
@@ -227,7 +234,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
     }
 
     private fun givenNoActiveSources() {
-        val source = com.lelloman.simplerss.persistence.db.model.Source(
+        val source = Source(
             id = 1L,
             name = "asd",
             url = "asd",
@@ -242,7 +249,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
     private fun givenNoArticles() = givenHasArticles(emptyList())
 
-    private fun givenHasArticles(articles: List<com.lelloman.simplerss.persistence.db.model.SourceArticle> = ARTICLES) {
+    private fun givenHasArticles(articles: List<SourceArticle> = ARTICLES) {
         whenever(articlesRepository.fetchArticles()).thenReturn(Observable.just(articles))
     }
 

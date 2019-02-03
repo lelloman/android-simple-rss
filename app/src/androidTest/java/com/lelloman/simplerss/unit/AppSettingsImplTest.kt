@@ -1,5 +1,4 @@
 package com.lelloman.simplerss.unit
-
 import android.support.test.InstrumentationRegistry
 import android.support.test.InstrumentationRegistry.getContext
 import android.support.test.runner.AndroidJUnit4
@@ -9,10 +8,13 @@ import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_AP
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_USE_METERED_NETWORK
 import com.lelloman.common.settings.BaseSettingsModule
 import com.lelloman.common.view.AppTheme
+import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_OPEN_ARTICLES_IN_APP
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_SHOULD_SHOW_WALKTHROUGH
+import com.lelloman.simplerss.persistence.settings.AppSettingsImpl
+import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -22,9 +24,9 @@ class AppSettingsImplTest {
 
     private val baseApplicationSettings: BaseApplicationSettings = BaseSettingsModule().provideBaseApplicationSettings(getContext())
 
-    private fun tested(action: com.lelloman.simplerss.persistence.settings.AppSettingsImpl.() -> Unit) = com.lelloman.simplerss.persistence.settings.AppSettingsImpl(getContext(), baseApplicationSettings).run(action)
+    private fun tested(action: AppSettingsImpl.() -> Unit) = AppSettingsImpl(getContext(), baseApplicationSettings).run(action)
 
-    private val nonDefaultRefreshInterval = com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.values().first { it != com.lelloman.simplerss.persistence.settings.AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL }
+    private val nonDefaultRefreshInterval = SourceRefreshInterval.values().first { it != AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL }
     private val nonDefaultArticlesListImages = DEFAULT_ARTICLES_LIST_IMAGES.not()
     private val nonDefaultUseMeteredNetwork = DEFAULT_USE_METERED_NETWORK.not()
     private val nonDefaultOpenArticlesInApp = DEFAULT_OPEN_ARTICLES_IN_APP.not()
@@ -35,7 +37,7 @@ class AppSettingsImplTest {
     fun setUp() {
         InstrumentationRegistry
             .getContext()
-            .getSharedPreferences(com.lelloman.simplerss.persistence.settings.AppSettings.SHARED_PREFS_NAME, 0)
+            .getSharedPreferences(AppSettings.SHARED_PREFS_NAME, 0)
             .edit()
             .clear()
             .commit()

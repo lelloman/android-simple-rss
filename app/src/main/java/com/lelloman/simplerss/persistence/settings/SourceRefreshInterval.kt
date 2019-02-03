@@ -1,6 +1,7 @@
 package com.lelloman.simplerss.persistence.settings
 
 import com.lelloman.common.utils.model.Named
+import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 
 enum class SourceRefreshInterval(val ms: Long) : Named {
     NEUROTIC(60_000L),
@@ -12,14 +13,14 @@ enum class SourceRefreshInterval(val ms: Long) : Named {
 
     companion object {
 
-        private val namesMap = com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
+        private val namesMap = SourceRefreshInterval
             .values()
-            .associateBy(com.lelloman.simplerss.persistence.settings.SourceRefreshInterval::name)
+            .associateBy(SourceRefreshInterval::name)
 
-        fun fromName(name: String): com.lelloman.simplerss.persistence.settings.SourceRefreshInterval = if (com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.Companion.namesMap.containsKey(name)) {
-            com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.Companion.namesMap[name]!!
+        fun fromName(name: String): SourceRefreshInterval = if (namesMap.containsKey(name)) {
+            namesMap[name]!!
         } else {
-            com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+            DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
         }
     }
 }

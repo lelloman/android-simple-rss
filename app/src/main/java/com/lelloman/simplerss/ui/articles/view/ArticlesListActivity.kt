@@ -12,22 +12,24 @@ import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityArticlesListBinding
+import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel
 import dagger.android.AndroidInjection
 import javax.inject.Inject
 
 class ArticlesListActivity :
-    BaseActivity<com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel, ActivityArticlesListBinding>() {
+    BaseActivity<ArticlesListViewModel, ActivityArticlesListBinding>() {
 
-    private lateinit var adapter: com.lelloman.simplerss.ui.articles.view.ArticlesAdapter
+    private lateinit var adapter: ArticlesAdapter
 
     @Inject
-    lateinit var appSettings: com.lelloman.simplerss.persistence.settings.AppSettings
+    lateinit var appSettings: AppSettings
 
     override val layoutResId = R.layout.activity_articles_list
 
-    override fun getViewModelClass() = com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel::class.java
+    override fun getViewModelClass() = ArticlesListViewModel::class.java
 
-    override fun setViewModel(binding: ActivityArticlesListBinding, viewModel: com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel) {
+    override fun setViewModel(binding: ActivityArticlesListBinding, viewModel: ArticlesListViewModel) {
         binding.viewModel = viewModel
     }
 
@@ -35,7 +37,7 @@ class ArticlesListActivity :
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        adapter = com.lelloman.simplerss.ui.articles.view.ArticlesAdapter(
+        adapter = ArticlesAdapter(
             appSettings = appSettings,
             onArticleClickedListener = viewModel::onArticleClicked,
             uiScheduler = uiScheduler,
@@ -81,7 +83,7 @@ class ArticlesListActivity :
 
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, com.lelloman.simplerss.ui.articles.view.ArticlesListActivity::class.java)
+                val intent = Intent(context, ArticlesListActivity::class.java)
                 if (context !is Activity) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }

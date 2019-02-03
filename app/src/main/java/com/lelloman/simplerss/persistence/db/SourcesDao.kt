@@ -5,6 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
 import com.lelloman.simplerss.persistence.db.AppDatabase.Companion.SOURCE_TABLE_NAME
+import com.lelloman.simplerss.persistence.db.model.Source
 import io.reactivex.Flowable
 
 @Suppress("AndroidUnresolvedRoomSqlReference")
@@ -12,19 +13,19 @@ import io.reactivex.Flowable
 interface SourcesDao {
 
     @Query("SELECT * from $SOURCE_TABLE_NAME ORDER BY name ASC")
-    fun getAll(): Flowable<List<com.lelloman.simplerss.persistence.db.model.Source>>
+    fun getAll(): Flowable<List<Source>>
 
     @Query("SELECT * from $SOURCE_TABLE_NAME WHERE isActive = 1 ORDER BY name ASC")
-    fun getActiveSources(): Flowable<List<com.lelloman.simplerss.persistence.db.model.Source>>
+    fun getActiveSources(): Flowable<List<Source>>
 
     @Insert
-    fun insert(source: com.lelloman.simplerss.persistence.db.model.Source): Long
+    fun insert(source: Source): Long
 
     @Query("UPDATE $SOURCE_TABLE_NAME SET lastFetched = :lastFetched WHERE id = :sourceId")
     fun updateSourceLastFetched(sourceId: Long, lastFetched: Long)
 
     @Query("SELECT * from $SOURCE_TABLE_NAME WHERE id = :sourceId LIMIT 1")
-    fun getSource(sourceId: Long): Flowable<com.lelloman.simplerss.persistence.db.model.Source>
+    fun getSource(sourceId: Long): Flowable<Source>
 
     @Query("UPDATE $SOURCE_TABLE_NAME SET isActive = :isActive WHERE id = :sourceId")
     fun setSourceIsActive(sourceId: Long, isActive: Boolean)
@@ -33,5 +34,5 @@ interface SourcesDao {
     fun delete(sourceId: Long)
 
     @Update
-    fun updateSource(source: com.lelloman.simplerss.persistence.db.model.Source)
+    fun updateSource(source: Source)
 }

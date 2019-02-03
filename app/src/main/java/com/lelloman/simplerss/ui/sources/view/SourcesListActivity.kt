@@ -11,6 +11,7 @@ import com.lelloman.common.utils.ItemSwipeListener
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivitySourcesListBinding
+import com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
@@ -18,19 +19,19 @@ import java.util.concurrent.TimeUnit
 
 
 class SourcesListActivity
-    : BaseActivity<com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel, ActivitySourcesListBinding>() {
+    : BaseActivity<SourcesListViewModel, ActivitySourcesListBinding>() {
 
-    private lateinit var adapter: com.lelloman.simplerss.ui.sources.view.SourcesAdapter
+    private lateinit var adapter: SourcesAdapter
 
-    private val logger by lazy { loggerFactory.getLogger(com.lelloman.simplerss.ui.sources.view.SourcesListActivity::class.java) }
+    private val logger by lazy { loggerFactory.getLogger(SourcesListActivity::class.java) }
 
     private var timerSubscription: Disposable? = null
 
     override val layoutResId = R.layout.activity_sources_list
 
-    override fun getViewModelClass() = com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel::class.java
+    override fun getViewModelClass() = SourcesListViewModel::class.java
 
-    override fun setViewModel(binding: ActivitySourcesListBinding, viewModel: com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel) {
+    override fun setViewModel(binding: ActivitySourcesListBinding, viewModel: SourcesListViewModel) {
         binding.viewModel = viewModel
     }
 
@@ -38,7 +39,7 @@ class SourcesListActivity
         super.onCreate(savedInstanceState)
         AndroidInjection.inject(this)
 
-        adapter = com.lelloman.simplerss.ui.sources.view.SourcesAdapter(
+        adapter = SourcesAdapter(
             resourceProvider = resourceProvider,
             semanticTimeProvider = semanticTimeProvider,
             onSourceClickedListener = viewModel::onSourceClicked,
@@ -71,7 +72,7 @@ class SourcesListActivity
     companion object {
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, com.lelloman.simplerss.ui.sources.view.SourcesListActivity::class.java)
+                val intent = Intent(context, SourcesListActivity::class.java)
                 if (context !is Activity) {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 }

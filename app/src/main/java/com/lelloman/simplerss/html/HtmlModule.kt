@@ -9,5 +9,5 @@ class HtmlModule {
 
     @Provides
     @Singleton
-    fun provideHtmlParser() = com.lelloman.simplerss.html.HtmlParser()
+    fun provideHtmlParser() = HtmlParser()
 }

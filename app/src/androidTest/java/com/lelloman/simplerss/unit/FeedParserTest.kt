@@ -5,6 +5,9 @@ import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.model.DayTime
 import com.lelloman.common.utils.model.Time
 import com.lelloman.common.utils.model.WeekTime
+import com.lelloman.simplerss.feed.FeedParser
+import com.lelloman.simplerss.feed.exception.InvalidFeedTagException
+import com.lelloman.simplerss.feed.exception.MalformedXmlException
 import com.lelloman.simplerss.testutils.Xmls
 import io.reactivex.Observable
 import org.junit.Test
@@ -19,7 +22,7 @@ class FeedParserTest {
         override fun getTime(utcMs: Long) = Time(WeekTime(0, 0), DayTime(0, 0))
     }
 
-    private val tested = com.lelloman.simplerss.feed.FeedParser(timeProvider)
+    private val tested = FeedParser(timeProvider)
 
     @Test
     fun throwsMalformedXmlException() {
@@ -27,7 +30,7 @@ class FeedParserTest {
             .flatMap(tested::parseFeeds)
             .test()
 
-        tester.assertError { it is com.lelloman.simplerss.feed.exception.MalformedXmlException }
+        tester.assertError { it is MalformedXmlException }
     }
 
     @Test
@@ -36,7 +39,7 @@ class FeedParserTest {
             .flatMap(tested::parseFeeds)
             .test()
 
-        tester.assertError { it is com.lelloman.simplerss.feed.exception.InvalidFeedTagException }
+        tester.assertError { it is InvalidFeedTagException }
     }
 
     @Test

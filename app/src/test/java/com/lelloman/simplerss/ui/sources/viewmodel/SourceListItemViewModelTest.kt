@@ -3,6 +3,7 @@ package com.lelloman.simplerss.ui.sources.viewmodel
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.testutils.MockResourceProvider
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
@@ -16,7 +17,7 @@ class SourceListItemViewModelTest {
     private val semanticTimeProvider: SemanticTimeProvider = mock()
     private val onIsActiveChanged: (Boolean) -> Unit = mock()
 
-    private val tested = com.lelloman.simplerss.ui.sources.viewmodel.SourceListItemViewModel(
+    private val tested = SourceListItemViewModel(
         resourceProvider = resourceProvider,
         semanticTimeProvider = semanticTimeProvider,
         onIsActiveChanged = onIsActiveChanged
@@ -33,7 +34,7 @@ class SourceListItemViewModelTest {
 
     @Test
     fun `binds data from source`() {
-        val source = com.lelloman.simplerss.persistence.db.model.Source(
+        val source = Source(
             name = "the name",
             url = "www.mipuzzanoipiedi.it",
             isActive = true,

@@ -1,10 +1,12 @@
 package com.lelloman.simplerss.html.element
 
+import com.lelloman.simplerss.html.DocElementType
+
 class ADocElement(
-    parent: com.lelloman.simplerss.html.element.DocElement,
+    parent: DocElement,
     href: String
-) : com.lelloman.simplerss.html.element.HrefDocElement(
-    type = com.lelloman.simplerss.html.DocElementType.A,
+) : HrefDocElement(
+    type = DocElementType.A,
     parent = parent,
     href = href,
     tag = "a"

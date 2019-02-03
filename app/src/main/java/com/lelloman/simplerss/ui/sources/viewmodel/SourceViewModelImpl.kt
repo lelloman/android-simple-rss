@@ -1,11 +1,12 @@
 package com.lelloman.simplerss.ui.sources.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 
 class SourceViewModelImpl(
-    private val sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
+    private val sourcesRepository: SourcesRepository,
     dependencies: Dependencies
-) : com.lelloman.simplerss.ui.sources.viewmodel.SourceViewModel(dependencies) {
+) : SourceViewModel(dependencies) {
 
     override val sourceName = MutableLiveData<String>()
     override val sourceLastFetched = MutableLiveData<String>()

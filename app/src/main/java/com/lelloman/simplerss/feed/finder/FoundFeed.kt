@@ -31,9 +31,9 @@ data class FoundFeed(
     companion object {
         @Suppress("unused")
         @JvmField
-        val CREATOR: Parcelable.Creator<com.lelloman.simplerss.feed.finder.FoundFeed> = object : Parcelable.Creator<com.lelloman.simplerss.feed.finder.FoundFeed> {
-            override fun createFromParcel(source: Parcel): com.lelloman.simplerss.feed.finder.FoundFeed = com.lelloman.simplerss.feed.finder.FoundFeed(source)
-            override fun newArray(size: Int): Array<com.lelloman.simplerss.feed.finder.FoundFeed?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<FoundFeed> = object : Parcelable.Creator<FoundFeed> {
+            override fun createFromParcel(source: Parcel): FoundFeed = FoundFeed(source)
+            override fun newArray(size: Int): Array<FoundFeed?> = arrayOfNulls(size)
         }
     }
 }

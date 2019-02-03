@@ -1,6 +1,7 @@
 package com.lelloman.simplerss.testutils
 
 import android.support.test.InstrumentationRegistry
+import com.lelloman.simplerss.feed.ParsedFeed
 import io.reactivex.Single
 
 
@@ -18,7 +19,7 @@ object Xmls {
     const val INVALID_ROOT_TAG_XML = "invalid_root_tag.xml"
 
     val SAMPLE_FEEDS = listOf(
-        com.lelloman.simplerss.feed.ParsedFeed(
+        ParsedFeed(
             title = "Star City",
             subtitle = "How do Americans get ready to work with Russians aboard the International\n" +
                 "                Space Station? They take a crash course in culture, language and protocol at\n" +
@@ -26,7 +27,7 @@ object Xmls {
             link = "http://liftoff.msfc.nasa.gov/news/2003/news-starcity.asp",
             timestamp = 1054633161000
         ),
-        com.lelloman.simplerss.feed.ParsedFeed(
+        ParsedFeed(
             title = "The Engine That Does More",
             subtitle = "Before man travels to Mars, NASA hopes to design new engines that will let\n" +
                 "                us fly through the Solar System more quickly. The proposed VASIMR engine would do\n" +
@@ -35,7 +36,7 @@ object Xmls {
             link = "http://liftoff.msfc.nasa.gov/news/2003/news-VASIMR.asp",
             timestamp = 1054024652000
         ),
-        com.lelloman.simplerss.feed.ParsedFeed(
+        ParsedFeed(
             title = "Astronauts' Dirty Laundry",
             subtitle = "Compared to earlier spacecraft, the International Space Station has many\n" +
                 "                luxuries, but laundry facilities are not one of them. Instead, astronauts have other\n" +
@@ -46,7 +47,7 @@ object Xmls {
         )
     )
 
-    val VICE_FEED_0 = com.lelloman.simplerss.feed.ParsedFeed(
+    val VICE_FEED_0 = ParsedFeed(
         title = "La verità sul video 'La verità su Aquarius e Saviano'",
         subtitle = "\n" +
             "                Abbiamo analizzato punto per punto il video 'La verità su Aquarius e Saviano' di Luca Donadel.",
@@ -56,7 +57,7 @@ object Xmls {
         timestamp = 1529149073000
     )
 
-    val VICE_FEED_1 = com.lelloman.simplerss.feed.ParsedFeed(
+    val VICE_FEED_1 = ParsedFeed(
         title = "\n" +
             "                Come Salvini è diventato il premier fantasma di questo governo",
         subtitle = "\n" +

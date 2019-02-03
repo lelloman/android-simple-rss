@@ -1,5 +1,6 @@
 package com.lelloman.simplerss.ondemand
 
+import com.lelloman.simplerss.feed.finder.FeedFinder
 import com.lelloman.simplerss.testutils.BagOfDependencies
 import org.junit.Before
 import org.junit.Ignore
@@ -8,7 +9,7 @@ import org.junit.Test
 @Ignore
 class FeedFinderTest {
 
-    private lateinit var tested: com.lelloman.simplerss.feed.finder.FeedFinder
+    private lateinit var tested: FeedFinder
 
     @Before
     fun setUp() {

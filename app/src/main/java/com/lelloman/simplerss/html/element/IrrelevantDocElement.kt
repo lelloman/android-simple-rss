@@ -1,10 +1,12 @@
 package com.lelloman.simplerss.html.element
 
+import com.lelloman.simplerss.html.DocElementType
+
 class IrrelevantDocElement(
-    parent: com.lelloman.simplerss.html.element.DocElement,
+    parent: DocElement,
     tag: String
-) : com.lelloman.simplerss.html.element.DocElement(
-    type = com.lelloman.simplerss.html.DocElementType.IRRELEVANT,
+) : DocElement(
+    type = DocElementType.IRRELEVANT,
     parent = parent,
     tag = tag
 )

@@ -1,6 +1,14 @@
 package com.lelloman.simplerss.feed
 
+import com.lelloman.simplerss.feed.fetcher.FaviconFetcher
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.mock.MockAppSettings
+import com.lelloman.simplerss.persistence.db.ArticlesDao
+import com.lelloman.simplerss.persistence.db.SourcesDao
+import com.lelloman.simplerss.persistence.db.model.Article
+import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
 import com.lelloman.simplerss.testutils.MockLogger
 import com.lelloman.simplerss.testutils.MockLoggerFactory
 import com.lelloman.simplerss.testutils.MockTimeProvider
@@ -25,18 +33,18 @@ import org.junit.Test
 
 class FeedRefresherImplTest {
 
-    private val sourcesDao: com.lelloman.simplerss.persistence.db.SourcesDao = mock()
-    private val articlesDao: com.lelloman.simplerss.persistence.db.ArticlesDao = mock()
+    private val sourcesDao: SourcesDao = mock()
+    private val articlesDao: ArticlesDao = mock()
     private val timeProvider = MockTimeProvider()
-    private val appSettings = com.lelloman.simplerss.mock.MockAppSettings()
+    private val appSettings = MockAppSettings()
     private val logger = MockLogger()
     private val loggerFactory = MockLoggerFactory(logger)
-    private val feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher = mock()
-    private val faviconFetcher: com.lelloman.simplerss.feed.fetcher.FaviconFetcher = mock()
+    private val feedFetcher: FeedFetcher = mock()
+    private val faviconFetcher: FaviconFetcher = mock()
 
     private val dependencies = arrayOf(feedFetcher, sourcesDao, articlesDao)
 
-    private val tested = com.lelloman.simplerss.feed.FeedRefresherImpl(
+    private val tested = FeedRefresherImpl(
         ioScheduler = trampoline(),
         newThreadScheduler = trampoline(),
         httpPoolScheduler = trampoline(),
@@ -116,19 +124,19 @@ class FeedRefresherImplTest {
     fun `refreshes stale sources only`() {
         givenAllSourcesIsEmpty()
         val now = 12345L
-        val minRefreshInterval = com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.NEUROTIC
+        val minRefreshInterval = SourceRefreshInterval.NEUROTIC
         givenHasMinRefreshInterval(minRefreshInterval)
         whenever(feedFetcher.fetchFeed(any())).thenAnswer {
-            Maybe.just(it.arguments[0] as com.lelloman.simplerss.persistence.db.model.Source to emptyList<com.lelloman.simplerss.persistence.db.model.Article>())
+            Maybe.just(it.arguments[0] as Source to emptyList<Article>())
         }
         givenHasTime(now)
-        val staleSource = com.lelloman.simplerss.persistence.db.model.Source(id = 1L,
+        val staleSource = Source(id = 1L,
             name = "stale source",
             url = "url 1",
             lastFetched = now - (minRefreshInterval.ms * 2),
             isActive = true
         )
-        val updatedSource = com.lelloman.simplerss.persistence.db.model.Source(id = 2L,
+        val updatedSource = Source(id = 2L,
             name = "updated source",
             url = "url 2",
             lastFetched = now - (minRefreshInterval.ms / 2),
@@ -149,8 +157,8 @@ class FeedRefresherImplTest {
         givenAllSourcesIsEmpty()
         whenever(feedFetcher.fetchFeed(any())).thenReturn(Maybe.error(Exception()))
         givenHasTime(Long.MAX_VALUE)
-        givenHasMinRefreshInterval(com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.NEUROTIC)
-        givenHasActiveSources(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_1)
+        givenHasMinRefreshInterval(SourceRefreshInterval.NEUROTIC)
+        givenHasActiveSources(SOURCE_1)
 
         tested.refresh()
 
@@ -166,34 +174,34 @@ class FeedRefresherImplTest {
 
         tested.refresh()
 
-        logger.assertLoggedWarning(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.GENERIC_ERR_MSG, error)
+        logger.assertLoggedWarning(GENERIC_ERR_MSG, error)
     }
 
     @Test
     fun `updates db when fetched feed successfully`() {
         givenAllSourcesIsEmpty()
-        givenHasActiveSources(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_1, com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_2)
+        givenHasActiveSources(SOURCE_1, SOURCE_2)
         givenHasTime(Long.MAX_VALUE)
-        givenHasMinRefreshInterval(com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.NEUROTIC)
+        givenHasMinRefreshInterval(SourceRefreshInterval.NEUROTIC)
         val articles1 = listOf(dummyArticle())
         val articles2 = listOf(dummyArticle(), dummyArticle())
-        whenever(feedFetcher.fetchFeed(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_1)).thenReturn(Maybe.just(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_1 to articles1))
-        whenever(feedFetcher.fetchFeed(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_2)).thenReturn(Maybe.just(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_2 to articles2))
+        whenever(feedFetcher.fetchFeed(SOURCE_1)).thenReturn(Maybe.just(SOURCE_1 to articles1))
+        whenever(feedFetcher.fetchFeed(SOURCE_2)).thenReturn(Maybe.just(SOURCE_2 to articles2))
 
         tested.refresh()
 
-        verify(articlesDao).deleteArticlesFromSource(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_1.id)
-        verify(articlesDao).deleteArticlesFromSource(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_2.id)
+        verify(articlesDao).deleteArticlesFromSource(SOURCE_1.id)
+        verify(articlesDao).deleteArticlesFromSource(SOURCE_2.id)
         verify(articlesDao).insertAll(eq(articles1[0]))
         verify(articlesDao).insertAll(eq(articles2[0]), eq(articles2[1]))
-        verify(sourcesDao).updateSourceLastFetched(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_1.id, timeProvider.nowUtcMs())
-        verify(sourcesDao).updateSourceLastFetched(com.lelloman.simplerss.feed.FeedRefresherImplTest.Companion.SOURCE_2.id, timeProvider.nowUtcMs())
+        verify(sourcesDao).updateSourceLastFetched(SOURCE_1.id, timeProvider.nowUtcMs())
+        verify(sourcesDao).updateSourceLastFetched(SOURCE_2.id, timeProvider.nowUtcMs())
     }
 
     @Test
     fun `downloads favicons on refresh`() {
         givenHasActiveSources()
-        givenHasMinRefreshInterval(com.lelloman.simplerss.persistence.settings.SourceRefreshInterval.NEUROTIC)
+        givenHasMinRefreshInterval(SourceRefreshInterval.NEUROTIC)
         val allSources = listOf(
             dummySource(index = 1).copy(favicon = ByteArray(0)),
             dummySource(index = 2).copy(favicon = null)
@@ -211,11 +219,11 @@ class FeedRefresherImplTest {
         appSettings.providedSourceRefreshMinInterval = Observable.just(DEFAULT_MIN_SOURCE_REFRESH_INTERVAL)
     }
 
-    private fun givenHasMinRefreshInterval(sourceRefreshInterval: com.lelloman.simplerss.persistence.settings.SourceRefreshInterval) {
+    private fun givenHasMinRefreshInterval(sourceRefreshInterval: SourceRefreshInterval) {
         appSettings.providedSourceRefreshMinInterval = Observable.just(sourceRefreshInterval)
     }
 
-    private fun givenHasActiveSources(vararg source: com.lelloman.simplerss.persistence.db.model.Source) {
+    private fun givenHasActiveSources(vararg source: Source) {
         whenever(sourcesDao.getActiveSources()).thenReturn(Flowable.just(source.toList()))
     }
 
@@ -223,8 +231,8 @@ class FeedRefresherImplTest {
         timeProvider.now = time
     }
 
-    private fun givenActiveSourcesSubject(): Subject<List<com.lelloman.simplerss.persistence.db.model.Source>> {
-        val sourcesSubject = PublishSubject.create<List<com.lelloman.simplerss.persistence.db.model.Source>>()
+    private fun givenActiveSourcesSubject(): Subject<List<Source>> {
+        val sourcesSubject = PublishSubject.create<List<Source>>()
         whenever(sourcesDao.getActiveSources()).thenReturn(sourcesSubject.toFlowable(BackpressureStrategy.DROP))
         return sourcesSubject
     }
@@ -237,14 +245,14 @@ class FeedRefresherImplTest {
 
         const val GENERIC_ERR_MSG = "Something went wrong in refresh subscription"
 
-        val SOURCE_1 = com.lelloman.simplerss.persistence.db.model.Source(
+        val SOURCE_1 = Source(
             id = 1,
             name = "source 1",
             url = "url 1",
             isActive = true
         )
 
-        val SOURCE_2 = com.lelloman.simplerss.persistence.db.model.Source(
+        val SOURCE_2 = Source(
             id = 2,
             name = "source 2",
             url = "url 2",

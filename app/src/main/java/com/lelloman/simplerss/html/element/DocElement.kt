@@ -1,14 +1,16 @@
 package com.lelloman.simplerss.html.element
 
+import com.lelloman.simplerss.html.DocElementType
+
 abstract class DocElement(
-    val type: com.lelloman.simplerss.html.DocElementType,
+    val type: DocElementType,
     val tag: String,
-    val parent: com.lelloman.simplerss.html.element.DocElement? = null
+    val parent: DocElement? = null
 ) {
-    var children: List<com.lelloman.simplerss.html.element.DocElement> = emptyList()
+    var children: List<DocElement> = emptyList()
         internal set
 
-    fun iterate(block: (com.lelloman.simplerss.html.element.DocElement) -> Unit) {
+    fun iterate(block: (DocElement) -> Unit) {
         block.invoke(this)
         children.forEach { it.iterate(block) }
     }

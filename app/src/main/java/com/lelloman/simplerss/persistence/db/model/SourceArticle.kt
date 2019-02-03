@@ -49,9 +49,9 @@ data class SourceArticle(
     companion object {
         @Suppress("unused")
         @JvmField
-        val CREATOR: Parcelable.Creator<com.lelloman.simplerss.persistence.db.model.SourceArticle> = object : Parcelable.Creator<com.lelloman.simplerss.persistence.db.model.SourceArticle> {
-            override fun createFromParcel(source: Parcel): com.lelloman.simplerss.persistence.db.model.SourceArticle = com.lelloman.simplerss.persistence.db.model.SourceArticle(source)
-            override fun newArray(size: Int): Array<com.lelloman.simplerss.persistence.db.model.SourceArticle?> = arrayOfNulls(size)
+        val CREATOR: Parcelable.Creator<SourceArticle> = object : Parcelable.Creator<SourceArticle> {
+            override fun createFromParcel(source: Parcel): SourceArticle = SourceArticle(source)
+            override fun newArray(size: Int): Array<SourceArticle?> = arrayOfNulls(size)
         }
     }
 }

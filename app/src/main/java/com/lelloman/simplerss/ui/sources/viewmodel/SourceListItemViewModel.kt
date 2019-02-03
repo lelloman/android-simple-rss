@@ -6,14 +6,15 @@ import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.persistence.db.model.Source
 
 class SourceListItemViewModel(
     private val resourceProvider: ResourceProvider,
     private val semanticTimeProvider: SemanticTimeProvider,
     private val onIsActiveChanged: (Boolean) -> Unit
-) : BaseListItemViewModel<Long, com.lelloman.simplerss.persistence.db.model.Source> {
+) : BaseListItemViewModel<Long, Source> {
 
-    private lateinit var source: com.lelloman.simplerss.persistence.db.model.Source
+    private lateinit var source: Source
 
     var name = ""
         private set
@@ -32,7 +33,7 @@ class SourceListItemViewModel(
     var favicon: ByteArrayWithId = ByteArrayWithId(null, -1)
         private set
 
-    override fun bind(item: com.lelloman.simplerss.persistence.db.model.Source) {
+    override fun bind(item: Source) {
         this.source = item
         name = item.name
         url = item.url

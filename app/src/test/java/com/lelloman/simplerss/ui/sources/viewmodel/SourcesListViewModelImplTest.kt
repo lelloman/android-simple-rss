@@ -8,10 +8,16 @@ import com.lelloman.common.view.actionevent.SnackEvent
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
+import com.lelloman.simplerss.persistence.db.model.Article
+import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.persistence.settings.clear
 import com.lelloman.simplerss.testutils.AndroidArchTest
 import com.lelloman.simplerss.testutils.MockResourceProvider
 import com.lelloman.simplerss.testutils.dummySource
+import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
+import com.lelloman.simplerss.ui.common.repository.DeletedSource
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
@@ -28,15 +34,15 @@ import org.junit.Test
 
 class SourcesListViewModelImplTest : AndroidArchTest() {
 
-    private val sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository = mock()
-    private val articlesRepository: com.lelloman.simplerss.ui.common.repository.ArticlesRepository = mock()
+    private val sourcesRepository: SourcesRepository = mock()
+    private val articlesRepository: ArticlesRepository = mock()
     private val resourceProvider = MockResourceProvider()
     private val actionTokenProvider: ActionTokenProvider = mock()
 
-    private lateinit var tested: com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModelImpl
+    private lateinit var tested: SourcesListViewModelImpl
 
     override fun setUp() {
-        tested = com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModelImpl(
+        tested = SourcesListViewModelImpl(
             sourcesRepository = sourcesRepository,
             articlesRepository = articlesRepository,
             dependencies = BaseViewModel.Dependencies(
@@ -78,7 +84,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
 
         tester.assertValueCount(1)
         tester.assertValueAt(0) {
-            it is DeepLinkNavigationEvent && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ADD_SOURCE
+            it is DeepLinkNavigationEvent && it.deepLink.screen == SimpleRssNavigationScreen.ADD_SOURCE
         }
     }
 
@@ -133,10 +139,10 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
     @Test
     fun `re-insert source and articles on token action`() {
         val recreatedSourceId = 2394870623
-        val deletedSource = com.lelloman.simplerss.ui.common.repository.DeletedSource(
+        val deletedSource = DeletedSource(
             source = SOURCES[0],
             articles = listOf(
-                com.lelloman.simplerss.persistence.db.model.Article(
+                Article(
                     id = 1L,
                     title = "article 1",
                     subtitle = "subtitle 1",
@@ -146,7 +152,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
                     time = 1L,
                     sourceId = 0
                 ),
-                com.lelloman.simplerss.persistence.db.model.Article(
+                Article(
                     id = 2L,
                     title = "article 2",
                     subtitle = "subtitle 2",
@@ -186,7 +192,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         val tester = tested.viewActionEvents.test()
         val token = "asdomar"
         val source = SOURCES[0]
-        givenCanDeleteSource(com.lelloman.simplerss.ui.common.repository.DeletedSource(source = source, articles = emptyList()))
+        givenCanDeleteSource(DeletedSource(source = source, articles = emptyList()))
         givenNextActionToken(token)
         givenCanInsertArticles()
         whenever(sourcesRepository.insertSource(any())).thenReturn(Single.error(Exception()))
@@ -204,7 +210,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         val tester = tested.viewActionEvents.test()
         val token = "asdomar"
         val source = SOURCES[0]
-        givenCanDeleteSource(com.lelloman.simplerss.ui.common.repository.DeletedSource(source = source, articles = emptyList()))
+        givenCanDeleteSource(DeletedSource(source = source, articles = emptyList()))
         givenNextActionToken(token)
         givenCanInsertSource(123)
         whenever(articlesRepository.insertArticles(any())).thenReturn(Single.error(Exception()))
@@ -219,12 +225,12 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
     private fun givenCanInsertArticles() {
         whenever(articlesRepository.insertArticles(any())).thenAnswer {
             @Suppress("UNCHECKED_CAST")
-            val nArticles = (it.arguments[0] as List<com.lelloman.simplerss.persistence.db.model.Article>).size
+            val nArticles = (it.arguments[0] as List<Article>).size
             Single.just(Array(nArticles) { id -> id.toLong() })
         }
     }
 
-    private fun givenCanDeleteSource(deletedSource: com.lelloman.simplerss.ui.common.repository.DeletedSource = mock()) {
+    private fun givenCanDeleteSource(deletedSource: DeletedSource = mock()) {
         whenever(sourcesRepository.deleteSource(any())).thenReturn(Single.just(deletedSource))
     }
 
@@ -236,15 +242,15 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         whenever(actionTokenProvider.makeActionToken()).thenReturn(actionToken)
     }
 
-    private fun givenSourcesSubject(): Subject<List<com.lelloman.simplerss.persistence.db.model.Source>> {
-        val subject = PublishSubject.create<List<com.lelloman.simplerss.persistence.db.model.Source>>()
+    private fun givenSourcesSubject(): Subject<List<Source>> {
+        val subject = PublishSubject.create<List<Source>>()
         whenever(sourcesRepository.fetchSources()).thenReturn(subject)
         return subject
     }
 
     private companion object {
 
-        val ACTIVE_SOURCE = com.lelloman.simplerss.persistence.db.model.Source(
+        val ACTIVE_SOURCE = Source(
             id = 1L,
             name = "Active source",
             url = "url",
@@ -252,7 +258,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
             isActive = true
         )
 
-        val INACTIVE_SOURCE = com.lelloman.simplerss.persistence.db.model.Source(
+        val INACTIVE_SOURCE = Source(
             id = 1L,
             name = "Inactive source",
             url = "url",
@@ -261,14 +267,14 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         )
 
         val SOURCES = listOf(
-            com.lelloman.simplerss.persistence.db.model.Source(
+            Source(
                 id = 1L,
                 name = "Source 1",
                 url = "url 1",
                 lastFetched = 1L,
                 isActive = true
             ),
-            com.lelloman.simplerss.persistence.db.model.Source(
+            Source(
                 id = 2L,
                 name = "Source 2",
                 url = "url 2",

@@ -1,6 +1,11 @@
 package com.lelloman.simplerss.testutils
 
-fun dummyArticle(index: Int = 1) = com.lelloman.simplerss.persistence.db.model.Article(
+import com.lelloman.simplerss.feed.finder.FoundFeed
+import com.lelloman.simplerss.persistence.db.model.Article
+import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.persistence.db.model.SourceArticle
+
+fun dummyArticle(index: Int = 1) = Article(
     id = index.toLong(),
     title = "article $index",
     subtitle = "subtitle $index",
@@ -11,7 +16,7 @@ fun dummyArticle(index: Int = 1) = com.lelloman.simplerss.persistence.db.model.A
     sourceId = index.toLong()
 )
 
-fun dummySourceArticle(index: Int = 1) = com.lelloman.simplerss.persistence.db.model.SourceArticle(
+fun dummySourceArticle(index: Int = 1) = SourceArticle(
     id = index.toLong(),
     title = "article $index",
     subtitle = "subtitle $index",
@@ -24,7 +29,7 @@ fun dummySourceArticle(index: Int = 1) = com.lelloman.simplerss.persistence.db.m
     favicon = null
 )
 
-fun dummySource(index: Int = 1) = com.lelloman.simplerss.persistence.db.model.Source(
+fun dummySource(index: Int = 1) = Source(
     id = index.toLong(),
     name = "source $index",
     url = "url $index",
@@ -32,7 +37,7 @@ fun dummySource(index: Int = 1) = com.lelloman.simplerss.persistence.db.model.So
     isActive = true
 )
 
-fun dummyFoundFeed(index: Int = 1) = com.lelloman.simplerss.feed.finder.FoundFeed(
+fun dummyFoundFeed(index: Int = 1) = FoundFeed(
     id = index.toLong(),
     url = "url $index",
     nArticles = index,

@@ -4,11 +4,13 @@ import android.arch.lifecycle.MutableLiveData
 import android.view.View
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.simplerss.ui.common.viewmodel.IDiscoverUrlViewModel
+import com.lelloman.simplerss.ui.walkthrough.ThemeListItem
 
 abstract class WalkthroughViewModel(dependencies: Dependencies)
-    : com.lelloman.simplerss.ui.common.viewmodel.IDiscoverUrlViewModel, BaseViewModel(dependencies) {
+    : IDiscoverUrlViewModel, BaseViewModel(dependencies) {
 
-    abstract val themes: MutableLiveData<List<com.lelloman.simplerss.ui.walkthrough.ThemeListItem>>
+    abstract val themes: MutableLiveData<List<ThemeListItem>>
 
     abstract fun onCloseClicked(view: View)
 

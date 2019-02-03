@@ -3,36 +3,44 @@ package com.lelloman.simplerss.di
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel
+import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
+import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
+import com.lelloman.simplerss.ui.common.repository.SourcesRepository
+import com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel
+import com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel
 import dagger.Provides
 import org.mockito.Mockito.mock
 
-class MockViewModelModule : com.lelloman.simplerss.di.ViewModelModule() {
+class MockViewModelModule : ViewModelModule() {
 
-    val articlesListViewModel: com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel = mock(com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel::class.java)
-    val sourcesListViewModel: com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel = mock(com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel::class.java)
-    private val addSourceViewModel: com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel = mock(com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel::class.java)
+    val articlesListViewModel: ArticlesListViewModel = mock(ArticlesListViewModel::class.java)
+    val sourcesListViewModel: SourcesListViewModel = mock(SourcesListViewModel::class.java)
+    private val addSourceViewModel: AddSourceViewModel = mock(AddSourceViewModel::class.java)
 
     override fun provideArticlesListViewModel(
-        articlesRepository: com.lelloman.simplerss.ui.common.repository.ArticlesRepository,
-        sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
-        discoverRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository,
+        articlesRepository: ArticlesRepository,
+        sourcesRepository: SourcesRepository,
+        discoverRepository: DiscoverRepository,
         dependencies: BaseViewModel.Dependencies,
-        appSettings: com.lelloman.simplerss.persistence.settings.AppSettings
-    ): com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel = articlesListViewModel
+        appSettings: AppSettings
+    ): ArticlesListViewModel = articlesListViewModel
 
     @Provides
     override fun provideSourcesListViewModel(
-        sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
-        articlesRepository: com.lelloman.simplerss.ui.common.repository.ArticlesRepository,
+        sourcesRepository: SourcesRepository,
+        articlesRepository: ArticlesRepository,
         dependencies: BaseViewModel.Dependencies
-    ): com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel = sourcesListViewModel
+    ): SourcesListViewModel = sourcesListViewModel
 
     @Provides
     override fun provideAddSourceViewModel(
-        sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository,
+        sourcesRepository: SourcesRepository,
         dependencies: BaseViewModel.Dependencies,
-        feedFetcher: com.lelloman.simplerss.feed.fetcher.FeedFetcher,
+        feedFetcher: FeedFetcher,
         loggerFactory: LoggerFactory,
         urlValidator: UrlValidator
-    ): com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel = addSourceViewModel
+    ): AddSourceViewModel = addSourceViewModel
 }

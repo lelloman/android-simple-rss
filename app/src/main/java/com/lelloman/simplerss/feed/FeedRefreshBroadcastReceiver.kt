@@ -12,17 +12,17 @@ import javax.inject.Inject
 class FeedRefreshBroadcastReceiver : BroadcastReceiver() {
 
     @Inject
-    lateinit var feedRefresher: com.lelloman.simplerss.feed.FeedRefresher
+    lateinit var feedRefresher: FeedRefresher
 
     override fun onReceive(context: Context?, intent: Intent?) {
         AndroidInjection.inject(this, context)
 
-        if (intent?.action == com.lelloman.simplerss.feed.FeedRefreshBroadcastReceiver.Companion.ACTION_TRIGGER_REFRESH) {
+        if (intent?.action == ACTION_TRIGGER_REFRESH) {
             feedRefresher.refresh()
         }
     }
 
     private companion object {
-        const val ACTION_TRIGGER_REFRESH = "com.lelloman.simplerss.feed.ACTION_TRIGGER_REFRESH"
+        const val ACTION_TRIGGER_REFRESH = "ACTION_TRIGGER_REFRESH"
     }
 }

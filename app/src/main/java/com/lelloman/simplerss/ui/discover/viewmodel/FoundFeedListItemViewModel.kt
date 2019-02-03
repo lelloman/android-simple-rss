@@ -3,10 +3,11 @@ package com.lelloman.simplerss.ui.discover.viewmodel
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.feed.finder.FoundFeed
 
 class FoundFeedListItemViewModel(
     private val resourceProvider: ResourceProvider
-) : BaseListItemViewModel<Long, com.lelloman.simplerss.feed.finder.FoundFeed> {
+) : BaseListItemViewModel<Long, FoundFeed> {
 
     var feedName = ""
         private set
@@ -20,7 +21,7 @@ class FoundFeedListItemViewModel(
     var nArticles = ""
         private set
 
-    override fun bind(item: com.lelloman.simplerss.feed.finder.FoundFeed) {
+    override fun bind(item: FoundFeed) {
         feedUrlVisible = item.name != null
         feedName = item.name ?: item.url
         feedUrl = item.url

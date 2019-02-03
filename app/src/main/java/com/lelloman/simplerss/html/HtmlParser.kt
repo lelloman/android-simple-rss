@@ -1,5 +1,9 @@
 package com.lelloman.simplerss.html
 
+import com.lelloman.simplerss.html.element.ADocElement
+import com.lelloman.simplerss.html.element.DocElement
+import com.lelloman.simplerss.html.element.IrrelevantDocElement
+import com.lelloman.simplerss.html.element.LinkDocElement
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
@@ -8,55 +12,55 @@ class HtmlParser {
 
     fun parseDoc(url: String,
                  baseUrl: String,
-                 html: String): com.lelloman.simplerss.html.Doc {
+                 html: String): Doc {
         val jsoupDoc = Jsoup.parse(html)
 
-        return com.lelloman.simplerss.html.Doc(url).apply {
+        return Doc(url).apply {
             children = parseChildren(this, jsoupDoc.children())
         }
     }
 
-    private fun parseChildren(parent: com.lelloman.simplerss.html.element.DocElement, elements: Elements): List<com.lelloman.simplerss.html.element.DocElement> =
-        mutableListOf<com.lelloman.simplerss.html.element.DocElement>()
+    private fun parseChildren(parent: DocElement, elements: Elements): List<DocElement> =
+        mutableListOf<DocElement>()
             .apply {
                 addAll(elements.map { parseElement(parent, it) })
             }
 
-    private fun parseElement(parent: com.lelloman.simplerss.html.element.DocElement, element: Element) =
+    private fun parseElement(parent: DocElement, element: Element) =
         element
             .toDocElement(parent)
             .apply {
                 children = parseChildren(this, element.children())
             }
 
-    private fun Element.toDocElement(parent: com.lelloman.simplerss.html.element.DocElement) = tagName()
+    private fun Element.toDocElement(parent: DocElement) = tagName()
         .toLowerCase()
         .let { tag ->
             when (tag) {
-                "a" -> com.lelloman.simplerss.html.element.ADocElement(
+                "a" -> ADocElement(
                     parent = parent,
                     href = attr("href")
                 )
-                "link" -> com.lelloman.simplerss.html.element.LinkDocElement(
+                "link" -> LinkDocElement(
                     parent = parent,
                     href = attr("href"),
                     linkType = attr("type")
                 )
-                else -> com.lelloman.simplerss.html.element.IrrelevantDocElement(
+                else -> IrrelevantDocElement(
                     parent = parent,
                     tag = tag
                 )
             }
         }
 
-    fun parseTextAndImagesUrls(text: String): com.lelloman.simplerss.html.HtmlParser.TextAndImagesUrls {
+    fun parseTextAndImagesUrls(text: String): TextAndImagesUrls {
         val doc = Jsoup.parse(text)
         val plainText = doc.text()
         val imagesUrls = mutableListOf<String>()
 
         doc.body().children().forEach { appendImgUrls(it, imagesUrls) }
 
-        return com.lelloman.simplerss.html.HtmlParser.TextAndImagesUrls(
+        return TextAndImagesUrls(
             text = plainText,
             imagesUrls = imagesUrls
         )

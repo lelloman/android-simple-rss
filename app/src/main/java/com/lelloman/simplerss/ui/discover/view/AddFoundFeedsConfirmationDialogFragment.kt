@@ -9,15 +9,16 @@ import android.support.v4.app.FragmentActivity
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.simplerss.R
+import com.lelloman.simplerss.feed.finder.FoundFeed
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_FOUND_FEEDS
 
 class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
 
-    private var listener: com.lelloman.simplerss.ui.discover.view.AddFoundFeedsConfirmationDialogFragment.Listener? = null
+    private var listener: Listener? = null
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
-        listener = context as com.lelloman.simplerss.ui.discover.view.AddFoundFeedsConfirmationDialogFragment.Listener
+        listener = context as Listener
     }
 
     override fun onDetach() {
@@ -26,7 +27,7 @@ class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val foundFeeds: ArrayList<com.lelloman.simplerss.feed.finder.FoundFeed> = arguments?.getParcelableArrayList(ARG_FOUND_FEEDS)
+        val foundFeeds: ArrayList<FoundFeed> = arguments?.getParcelableArrayList(ARG_FOUND_FEEDS)
             ?: ArrayList()
         val message = if (foundFeeds.isNotEmpty()) {
             getString(
@@ -54,12 +55,12 @@ class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
                 if (context is FragmentActivity) {
-                    val fragment = com.lelloman.simplerss.ui.discover.view.AddFoundFeedsConfirmationDialogFragment()
+                    val fragment = AddFoundFeedsConfirmationDialogFragment()
                     fragment.arguments = Bundle().apply {
-                        val foundFeeds: ArrayList<com.lelloman.simplerss.feed.finder.FoundFeed> = deepLink.getSerializableArrayList(ARG_FOUND_FEEDS)!!
+                        val foundFeeds: ArrayList<FoundFeed> = deepLink.getSerializableArrayList(ARG_FOUND_FEEDS)!!
                         putParcelableArrayList(ARG_FOUND_FEEDS, foundFeeds)
                     }
-                    fragment.show(context.supportFragmentManager, com.lelloman.simplerss.ui.discover.view.AddFoundFeedsConfirmationDialogFragment::class.java.simpleName)
+                    fragment.show(context.supportFragmentManager, AddFoundFeedsConfirmationDialogFragment::class.java.simpleName)
                 } else {
                     throw IllegalArgumentException("Context argument must be an Activity")
                 }
@@ -68,6 +69,6 @@ class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
     }
 
     interface Listener {
-        fun onAddAllFoundFeedsConfirmationClicked(foundFeeds: List<com.lelloman.simplerss.feed.finder.FoundFeed>)
+        fun onAddAllFoundFeedsConfirmationClicked(foundFeeds: List<FoundFeed>)
     }
 }

@@ -9,6 +9,8 @@ import com.lelloman.common.utils.model.ByteArrayWithId
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel
 import com.lelloman.simplerss.BR
+import com.lelloman.simplerss.persistence.db.model.SourceArticle
+import com.lelloman.simplerss.persistence.settings.AppSettings
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 
@@ -16,9 +18,9 @@ import io.reactivex.disposables.CompositeDisposable
 class ArticleListItemViewModel(
     lifecycle: Lifecycle,
     uiScheduler: Scheduler,
-    appSettings: com.lelloman.simplerss.persistence.settings.AppSettings,
+    appSettings: AppSettings,
     private val semanticTimeProvider: SemanticTimeProvider
-) : LifecycleObserver, BaseListItemViewModel<Long, com.lelloman.simplerss.persistence.db.model.SourceArticle>, BaseObservable() {
+) : LifecycleObserver, BaseListItemViewModel<Long, SourceArticle>, BaseObservable() {
 
     private val subscription = CompositeDisposable()
 
@@ -75,7 +77,7 @@ class ArticleListItemViewModel(
     var favicon: ByteArrayWithId = ByteArrayWithId(null, -1)
         private set
 
-    override fun bind(item: com.lelloman.simplerss.persistence.db.model.SourceArticle) {
+    override fun bind(item: SourceArticle) {
         title = item.title
         details = "${semanticTimeProvider.getDateTimeString(item.time)} - ${item.sourceName}"
         hash = item.hashCode()
