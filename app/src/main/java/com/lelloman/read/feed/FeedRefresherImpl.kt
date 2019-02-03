@@ -1,7 +1,5 @@
 package com.lelloman.read.feed
 
-import com.lelloman.common.di.qualifiers.IoScheduler
-import com.lelloman.common.di.qualifiers.NewThreadScheduler
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.read.feed.fetcher.FaviconFetcher
@@ -20,8 +18,9 @@ import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.BehaviorSubject
 
 class FeedRefresherImpl(
-    @IoScheduler private val ioScheduler: Scheduler,
-    @NewThreadScheduler private val newThreadScheduler: Scheduler,
+    private val ioScheduler: Scheduler,
+    private val newThreadScheduler: Scheduler,
+    private val httpPoolScheduler: Scheduler,
     private val sourcesDao: SourcesDao,
     private val articlesDao: ArticlesDao,
     private val timeProvider: TimeProvider,
@@ -71,7 +70,7 @@ class FeedRefresherImpl(
             .map { (source, _) -> source }
             .flatMapMaybe { source ->
                 feedFetcher.fetchFeed(source)
-                    .subscribeOn(newThreadScheduler)
+                    .subscribeOn(httpPoolScheduler)
                     .onErrorComplete()
             }
             .doAfterTerminate { isLoadingSubject.onNext(false) }
@@ -81,7 +80,7 @@ class FeedRefresherImpl(
                 articlesDao.insertAll(*articles.toTypedArray())
                 sourcesDao.updateSourceLastFetched(source.id, timeProvider.nowUtcMs())
             }, {
-                logger.e("Something went wrong in refresh subscription", it)
+                logger.w("Something went wrong in refresh subscription", it)
             })
 
         sourcesDao
@@ -92,7 +91,7 @@ class FeedRefresherImpl(
                 faviconFetcher
                     .getPngFavicon(source.url)
                     .map { source to it }
-                    .subscribeOn(newThreadScheduler)
+                    .subscribeOn(httpPoolScheduler)
                     .onErrorComplete()
             }
             .flatMapCompletable { (source, pngBytes) ->

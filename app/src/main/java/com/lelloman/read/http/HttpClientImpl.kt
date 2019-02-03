@@ -20,6 +20,7 @@ class HttpClientImpl(
                 .url(request.url)
                 .build()
 
+            logger.d("Thread ${Thread.currentThread().name}")
             logger.d("--> ${okRequest.method()} ${okRequest.url()} ${okRequest.headers()}")
 
             val t1 = timeProvider.nowUtcMs()
