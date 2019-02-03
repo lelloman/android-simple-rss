@@ -47,6 +47,8 @@ BUGS:
 - [BUG] found feeds list includes http - https cloned urls, should probably remove http ones
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] smoke tests are flaky
+- [BUG] the launcher activity is visible 
+- [BUG] in the walkthrough the highlight color for text is wrong, the text is white but if highlighted it turns black :/ 
 
 IN PROGRESS:
 - [FEATURE] add intro page in walkthrough (why type in url in discovery)

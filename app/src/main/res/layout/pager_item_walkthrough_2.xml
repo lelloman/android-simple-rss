@@ -11,12 +11,13 @@
     </data>
 
     <TextView
-        android:id="@+id/text_view_first_page"
+        android:id="@+id/text_view_second_page"
         style="@style/WalkthroughInfoTextView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:padding="16dp"
-        android:text="@{viewModel.firstPageText}"
+        android:text="@string/walkthrough_second_page"
         tools:text="asd asd asd asd asd asd asd ads asd asd asd asd asd asd asd" />
+
 </layout>

@@ -2,7 +2,6 @@ package com.lelloman.simplerss.ui.discover.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.databinding.ObservableField
-import android.view.View
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
@@ -27,7 +26,7 @@ class DiscoverUrlViewModelImpl(
         }
     }
 
-    override fun onDiscoverClicked(view: View?) {
+    override fun onDiscoverClicked() {
         urlValidator.maybePrependProtocol(discoverUrl.get())?.let { urlWithProtocol ->
             discoverUrl.set(urlWithProtocol)
             discoverRepository.findFeeds(urlWithProtocol)
@@ -44,6 +43,6 @@ class DiscoverUrlViewModelImpl(
     }
 
     override fun onKeyboardActionDone() {
-        onDiscoverClicked(null)
+        onDiscoverClicked()
     }
 }

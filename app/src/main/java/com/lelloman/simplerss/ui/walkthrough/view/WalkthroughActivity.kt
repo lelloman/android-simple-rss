@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.view.ViewPager
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
@@ -38,6 +39,16 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
             lifecycleOwner = this,
             walkthroughViewModel = viewModel
         )
+        binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrollStateChanged(p0: Int) {
+            }
+
+            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
+            }
+
+            override fun onPageSelected(pageIndex: Int) = viewModel.onPageSelected(pageIndex)
+        })
+
         binding.viewPager.offscreenPageLimit = 20
         binding.viewPager.adapter = viewPagerAdapter
         binding.pagerIndicator.viewPager = binding.viewPager

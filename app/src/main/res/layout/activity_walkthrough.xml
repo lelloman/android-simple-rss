@@ -21,11 +21,26 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:foreground="?android:attr/selectableItemBackground"
-            android:onClick="@{viewModel::onCloseClicked}"
+            android:onClickListener="@{(_) -> viewModel.onCloseClicked()}"
             android:src="@drawable/ic_close_white_24dp"
             app:layout_constraintStart_toStartOf="parent"
             android:contentDescription="@string/close"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:onClickListener="@{(_) -> viewModel.onNextButtonClicked()}"
+            android:padding="16dp"
+            android:text="@string/next"
+            android:textColor="@android:color/primary_text_dark"
+            android:textSize="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/skip"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/skip"
+            app:viewVisible="@{viewModel.nextButtonVisible}" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/view_pager"

@@ -8,11 +8,11 @@ import android.view.View
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.widget.PagerIndicator
 import com.lelloman.instrumentedtestutils.Screen
-import com.lelloman.instrumentedtestutils.checkRecyclerViewCount
-import com.lelloman.instrumentedtestutils.clickView
-import com.lelloman.instrumentedtestutils.clickViewWithText
-import com.lelloman.instrumentedtestutils.viewIsDisplayed
-import com.lelloman.instrumentedtestutils.viewWithTextIsDisplayed
+import com.lelloman.instrumentedtestutils.ViewActions.clickView
+import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkRecyclerViewCount
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewIsDisplayed
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewWithTextIsDisplayed
 import com.lelloman.simplerss.R
 import org.hamcrest.Description
 
@@ -20,16 +20,18 @@ import org.hamcrest.Description
 class WalkthroughScreen : Screen() {
 
     init {
-        viewIsDisplayed(R.id.walkthrough_root)
+        checkViewIsDisplayed(R.id.walkthrough_root)
     }
 
-    fun firstPageIsDisplayed() = apply { viewWithTextIsDisplayed(string(R.string.walkthrough_first_page)) }
+    fun firstPageIsDisplayed() = apply { checkViewIsDisplayed(R.id.text_view_first_page) }
 
-    fun clickOk() = apply { clickView(R.id.button_ok) }
+    fun secondPageIsDisplayed() = apply { checkViewWithTextIsDisplayed(string(R.string.walkthrough_second_page)) }
+
+    fun clickNext() = apply { clickView(R.id.next) }
 
     fun themesAreDisplayed() = apply {
-        viewWithTextIsDisplayed(AppTheme.LIGHT.name)
-        viewWithTextIsDisplayed(AppTheme.DARCULA.name)
+        checkViewWithTextIsDisplayed(AppTheme.LIGHT.name)
+        checkViewWithTextIsDisplayed(AppTheme.DARCULA.name)
         checkRecyclerViewCount(AppTheme.values().size, R.id.themes_recycler_view)
     }
 
@@ -38,10 +40,10 @@ class WalkthroughScreen : Screen() {
         clickViewWithText(AppTheme.LIGHT.name)
     }
 
-    fun swipeLeft() = apply { com.lelloman.instrumentedtestutils.swipeLeft(R.id.view_pager) }
-    fun swipeRight() = apply { com.lelloman.instrumentedtestutils.swipeRight(R.id.view_pager) }
+    fun swipeLeft() = apply { com.lelloman.instrumentedtestutils.ViewActions.swipeLeft(R.id.view_pager) }
+    fun swipeRight() = apply { com.lelloman.instrumentedtestutils.ViewActions.swipeRight(R.id.view_pager) }
 
-    fun typeInUrlIsDisplayed() = apply { viewWithTextIsDisplayed(string(R.string.type_in_url)) }
+    fun typeInUrlIsDisplayed() = apply { checkViewWithTextIsDisplayed(string(R.string.type_in_url)) }
 
     fun clickNo() = clickViewWithText(string(R.string.NO)).also {
         ArticlesListScreen()

@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <string name="app_name">Simple RSS</string>
     <string name="title_activity_sources_list">Sources</string>
     <string name="title_activity_add_source">Add source</string>
@@ -12,7 +12,7 @@
     <string name="something_went_wrong">Something went wrong…</string>
     <string name="enable_sources">Enable sources</string>
     <string name="add_source">Add source</string>
-    <string name="empty_articles_no_source">"You haven't added any source yet"</string>
+    <string name="empty_articles_no_source">"You haven't added any source"</string>
     <string name="empty_articles_sources_disabled">All the sources are disabled</string>
     <string name="empty_articles_must_refresh">No article available at the moment</string>
 
@@ -44,7 +44,8 @@
     <string name="NO">NO</string>
     <string name="YES">YES</string>
     <string name="walkthrough_metered_network_question">Do you want the app to use metered networks (mobile) to download feeds and images?</string>
-    <string name="walkthrough_first_page" tools:ignore="Typos">bla bla</string>
+    <string name="walkthrough_first_page"><![CDATA[Thanks for downloading %1$s!<br><br>This app doesn\'t track any personal data and the source is freely available on <a href="https://www.github.com/lelloman/android-simple-rss">github</a>.]]></string>
+    <string name="walkthrough_second_page">The app is compatible with RSS and Atom feeds, you can manually add a source or discover sources from a website.\n\nIn the next step you can try to discover feed sources, you will need to type in a website (e.g. newyorktimes.com).</string>
     <string name="OK">OK</string>
     <string name="settings_theme_descr">Theme</string>
     <string name="settings_theme_title">Change the colors of the app.</string>
@@ -55,5 +56,6 @@
     <string name="no_feed_found">"Didn't find any feed…"</string>
 
     <string name="sources_list_empty_list_message">@string/empty_articles_no_source</string>
+    <string name="next">Next</string>
 
 </resources>

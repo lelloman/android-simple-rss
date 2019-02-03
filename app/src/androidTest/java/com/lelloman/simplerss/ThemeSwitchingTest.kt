@@ -30,6 +30,7 @@ class ThemeSwitchingTest {
         WalkthroughScreen()
             .swipeRight()
             .swipeRight()
+            .swipeRight()
             .assertPagerIndicatorColor(LIGHT_ACCENT_COLOR)
             .clickOnTheme(AppTheme.DARCULA)
             .assertPagerIndicatorColor(DARCULA_ACCENT_COLOR)

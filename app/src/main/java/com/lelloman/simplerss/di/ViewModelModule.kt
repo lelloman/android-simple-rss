@@ -6,6 +6,7 @@ import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.feed.fetcher.FeedFetcher
+import com.lelloman.simplerss.html.HtmlSpanner
 import com.lelloman.simplerss.persistence.db.SourcesDao
 import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.ui.articles.viewmodel.ArticleViewModel
@@ -116,8 +117,10 @@ open class ViewModelModule {
         discoverRepository: DiscoverRepository,
         dependencies: BaseViewModel.Dependencies,
         appSettings: AppSettings,
-        urlValidator: UrlValidator
+        urlValidator: UrlValidator,
+        htmlSpanner: HtmlSpanner
     ): WalkthroughViewModel = WalkthroughViewModelImpl(
+        htmlSpanner = htmlSpanner,
         dependencies = dependencies,
         appSettings = appSettings,
         discoveryRepository = discoverRepository,

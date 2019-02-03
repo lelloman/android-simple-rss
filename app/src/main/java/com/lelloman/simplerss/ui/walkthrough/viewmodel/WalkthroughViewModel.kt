@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.ui.walkthrough.viewmodel
 
+import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
-import android.view.View
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.ui.common.viewmodel.IDiscoverUrlViewModel
@@ -12,13 +12,18 @@ abstract class WalkthroughViewModel(dependencies: Dependencies)
 
     abstract val themes: MutableLiveData<List<ThemeListItem>>
 
-    abstract fun onCloseClicked(view: View)
+    abstract val firstPageText: LiveData<CharSequence>
+    abstract val nextButtonVisible: LiveData<Boolean>
 
-    abstract fun onFirstPageOkClicked(view: View)
+    abstract override fun onCloseClicked()
 
-    abstract fun onMeteredConnectionYesClicked(view: View)
-    abstract fun onMeteredConnectionNoClicked(view: View)
+    abstract fun onNextButtonClicked()
+
+    abstract fun onMeteredConnectionYesClicked()
+    abstract fun onMeteredConnectionNoClicked()
 
     abstract fun onThemeClicked(theme: AppTheme)
+
+    abstract fun onPageSelected(pageIndex: Int)
 
 }
