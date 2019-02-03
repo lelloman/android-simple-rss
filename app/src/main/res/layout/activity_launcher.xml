@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.launcher.viewmodel.LauncherViewModel" />
+            type="com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel" />
     </data>
 
     <FrameLayout

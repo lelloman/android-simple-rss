@@ -6,12 +6,12 @@ apply plugin: 'kotlin-kapt'
 android {
     compileSdkVersion rootProject.ext.compileSdkVersionV
     defaultConfig {
-        applicationId "com.lelloman.read"
+        applicationId "com.lelloman.simplerss"
         minSdkVersion rootProject.ext.minSdkVersionV
         targetSdkVersion rootProject.ext.targetSdkVersionV
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        testInstrumentationRunner "com.lelloman.read.testutils.MockTestRunner"
+        testInstrumentationRunner "com.lelloman.simplerss.testutils.MockTestRunner"
 
         kapt {
             arguments {

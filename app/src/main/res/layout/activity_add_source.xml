@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.sources.viewmodel.AddSourceViewModel" />
+            type="com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/add_source_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.sources.view.AddSourceActivity">
+        tools:context="com.lelloman.simplerss.ui.sources.view.AddSourceActivity">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/text_input_layout_source_name"

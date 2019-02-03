@@ -5,7 +5,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.articles.viewmodel.ArticlesListViewModel" />
+            type="com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        tools:context=".ui.articles.view.ArticlesListActivity">
+        tools:context="com.lelloman.simplerss.ui.articles.view.ArticlesListActivity">
 
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"

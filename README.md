@@ -1,3 +1,3 @@
-# android-read
+# android-simple-rss
 # ¯\\\_(ツ)_/¯
 buh

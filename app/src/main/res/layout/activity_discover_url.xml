@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.discover.viewmodel.DiscoverUrlViewModel" />
+            type="com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.walkthrough.view.WalkthroughActivity">
+        tools:context="com.lelloman.simplerss.ui.walkthrough.view.WalkthroughActivity">
 
         <TextView
             android:id="@+id/text_view_type_url"

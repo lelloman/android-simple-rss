@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.walkthrough.viewmodel.ThemeListItemViewModel" />
+            type="com.lelloman.simplerss.ui.walkthrough.viewmodel.ThemeListItemViewModel" />
     </data>
 
     <com.lelloman.common.widget.outsidescrollnotifier.OutsideScrollCardView

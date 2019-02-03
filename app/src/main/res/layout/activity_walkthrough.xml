@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.walkthrough.viewmodel.WalkthroughViewModel" />
+            type="com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout

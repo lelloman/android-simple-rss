@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.lelloman.read">
+    package="com.lelloman.simplerss">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".ReadApplication"
+        android:name="com.lelloman.simplerss.SimpleRssApplication"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,40 +18,40 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning"
         tools:targetApi="n">
-        <activity android:name=".ui.articles.view.ArticlesListActivity" />
+        <activity android:name="com.lelloman.simplerss.ui.articles.view.ArticlesListActivity" />
         <activity
-            android:name=".ui.sources.view.SourcesListActivity"
+            android:name="com.lelloman.simplerss.ui.sources.view.SourcesListActivity"
             android:label="@string/title_activity_sources_list" />
         <activity
-            android:name=".ui.sources.view.AddSourceActivity"
+            android:name="com.lelloman.simplerss.ui.sources.view.AddSourceActivity"
             android:label="@string/title_activity_add_source" />
-        <activity android:name=".ui.sources.view.SourceActivity" />
-        <activity android:name=".ui.articles.view.ArticleActivity" />
+        <activity android:name="com.lelloman.simplerss.ui.sources.view.SourceActivity" />
+        <activity android:name="com.lelloman.simplerss.ui.articles.view.ArticleActivity" />
         <activity
-            android:name=".ui.settings.view.SettingsActivity"
+            android:name="com.lelloman.simplerss.ui.settings.view.SettingsActivity"
             android:label="@string/settings" />
         <activity
-            android:name=".ui.walkthrough.view.WalkthroughActivity"
+            android:name="com.lelloman.simplerss.ui.walkthrough.view.WalkthroughActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.launcher.view.LauncherActivity">
+        <activity android:name="com.lelloman.simplerss.ui.launcher.view.LauncherActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.discover.view.FoundFeedListActivity" />
+        <activity android:name="com.lelloman.simplerss.ui.discover.view.FoundFeedListActivity" />
         <activity
-            android:name=".ui.discover.view.DiscoverUrlActivity"
+            android:name="com.lelloman.simplerss.ui.discover.view.DiscoverUrlActivity"
             android:label="@string/discover_sources" />
 
         <receiver
-            android:name=".feed.FeedRefreshBroadcastReceiver"
+            android:name="com.lelloman.simplerss.feed.FeedRefreshBroadcastReceiver"
             android:enabled="true"
             android:exported="true"
             tools:ignore="ExportedReceiver">
             <intent-filter>
-                <action android:name="com.lelloman.read.feed.ACTION_TRIGGER_REFRESH" />
+                <action android:name="com.lelloman.simplerss.feed.ACTION_TRIGGER_REFRESH" />
             </intent-filter>
         </receiver>
 

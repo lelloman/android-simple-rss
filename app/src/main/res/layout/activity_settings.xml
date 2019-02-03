@@ -6,7 +6,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.settings.viewmodel.SettingsViewModel" />
+            type="com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel" />
     </data>
 
     <ScrollView
@@ -21,7 +21,7 @@
             android:orientation="vertical"
             android:showDividers="middle">
 
-            <com.lelloman.read.widget.SettingsItemView
+            <com.lelloman.simplerss.widget.SettingsItemView
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_refresh_interval_descr"
                 app:title="@string/settings_refresh_interval_title">
@@ -33,9 +33,9 @@
                     android:entries="@{viewModel.minRefreshIntervals}"
                     android:selectedItemPosition="@={viewModel.selectedMinRefreshInterval}" />
 
-            </com.lelloman.read.widget.SettingsItemView>
+            </com.lelloman.simplerss.widget.SettingsItemView>
 
-            <com.lelloman.read.widget.ToggleSettingItemView
+            <com.lelloman.simplerss.widget.ToggleSettingItemView
                 android:id="@+id/toggle_setting_artcles_images"
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_articles_images_descr"
@@ -43,7 +43,7 @@
                 app:checked="@{safeUnbox(viewModel.articlesListImagesSelected)}"
                 app:title="@string/settings_articles_images_title" />
 
-            <com.lelloman.read.widget.ToggleSettingItemView
+            <com.lelloman.simplerss.widget.ToggleSettingItemView
                 android:id="@+id/toggle_setting_use_metered_network"
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_use_metered_networks_descr"
@@ -51,7 +51,7 @@
                 android:onCheckedChanged="@{(_, isActive) -> viewModel.onUseMeteredNetworkChanged(isActive) }"
                 app:title="@string/settings_use_metered_networks_title" />
 
-            <com.lelloman.read.widget.ToggleSettingItemView
+            <com.lelloman.simplerss.widget.ToggleSettingItemView
                 android:id="@+id/toggle_setting_open_articles_in_app"
                 style="@style/SettingsItemContainer"
                 android:checked="@{safeUnbox(viewModel.openArticlesInAppSelected)}"
@@ -59,7 +59,7 @@
                 app:description="@string/settings_opens_articles_in_app_descr"
                 app:title="@string/settings_opens_articles_in_app_title" />
 
-            <com.lelloman.read.widget.SettingsItemView
+            <com.lelloman.simplerss.widget.SettingsItemView
                 style="@style/SettingsItemContainer"
                 app:description="@string/settings_theme_descr"
                 app:title="@string/settings_theme_title">
@@ -70,7 +70,7 @@
                     android:layout_margin="8dp"
                     android:entries="@{viewModel.themes}"
                     android:selectedItemPosition="@={viewModel.selectedTheme}" />
-            </com.lelloman.read.widget.SettingsItemView>
+            </com.lelloman.simplerss.widget.SettingsItemView>
 
         </LinearLayout>
     </ScrollView>

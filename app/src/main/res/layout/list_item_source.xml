@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.sources.viewmodel.SourceListItemViewModel" />
+            type="com.lelloman.simplerss.ui.sources.viewmodel.SourceListItemViewModel" />
     </data>
 
     <android.support.v7.widget.CardView
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:padding="8dp">
 
-            <com.lelloman.read.widget.SourceImageView
+            <com.lelloman.simplerss.widget.SourceImageView
                 android:id="@+id/image"
                 android:layout_width="24dp"
                 android:layout_height="24dp"

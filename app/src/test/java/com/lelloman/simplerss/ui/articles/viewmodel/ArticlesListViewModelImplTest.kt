@@ -1,0 +1,252 @@
+package com.lelloman.simplerss.ui.articles.viewmodel
+
+import com.lelloman.common.navigation.DeepLinkNavigationEvent
+import com.lelloman.common.navigation.ViewIntentNavigationEvent
+import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.simplerss.R
+import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
+import com.lelloman.simplerss.testutils.AndroidArchTest
+import com.lelloman.simplerss.testutils.MockResourceProvider
+import com.lelloman.simplerss.testutils.dummySourceArticle
+import com.lelloman.simplerss.testutils.test
+import com.nhaarman.mockito_kotlin.mock
+import com.nhaarman.mockito_kotlin.never
+import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.whenever
+import io.reactivex.Observable
+import io.reactivex.schedulers.Schedulers.trampoline
+import io.reactivex.subjects.BehaviorSubject
+import org.junit.Test
+
+class ArticlesListViewModelImplTest : AndroidArchTest() {
+
+    private val articlesRepository: com.lelloman.simplerss.ui.common.repository.ArticlesRepository = mock()
+    private val sourcesRepository: com.lelloman.simplerss.ui.common.repository.SourcesRepository = mock()
+    private val discoveryRepository: com.lelloman.simplerss.ui.common.repository.DiscoverRepository = mock()
+    private val resourceProvider = MockResourceProvider()
+    private val appSettings = com.lelloman.simplerss.mock.MockAppSettings()
+
+    private lateinit var tested: com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModelImpl
+
+    override fun setUp() {
+        tested = com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModelImpl(
+            articlesRepository = articlesRepository,
+            sourcesRepository = sourcesRepository,
+            discoverRepository = discoveryRepository,
+            appSettings = appSettings,
+            dependencies = BaseViewModel.Dependencies(
+                settings = appSettings,
+                resourceProvider = resourceProvider,
+                actionTokenProvider = mock(),
+                ioScheduler = trampoline(),
+                uiScheduler = trampoline()
+            )
+        )
+    }
+
+    @Test
+    fun `triggers articles refresh`() {
+        tested.refresh()
+
+        verify(articlesRepository).refresh()
+    }
+
+    @Test
+    fun `navigates to sources list when click on sources button`() {
+        val tester = tested.viewActionEvents.test()
+
+        tested.onSourcesClicked()
+
+        tester.assertValueCount(1)
+        tester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 0
+                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.SOURCES_LIST
+        }
+    }
+
+    @Test
+    fun `navigates to article screen when article is clicked and open in app setting is true`() {
+        givenOpenArticleInAppSettingEnabled()
+        val tester = tested.viewActionEvents.test()
+        val link = "www.meow.com"
+        val article = dummySourceArticle().copy(link = link)
+
+        tested.onArticleClicked(article)
+
+        tester.assertValueCount(1)
+        tester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 1
+                && it.deepLink.getString(ARG_URL) == link
+                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ARTICLE
+        }
+    }
+
+    @Test
+    fun `navigates to view intent when article is clicked and open in app setting is false`() {
+        val link = "asdasd"
+        givenOpenArticleInAppSettingDisabled()
+        val viewActions = tested.viewActionEvents.test()
+        val article = dummySourceArticle().copy(link = link)
+
+        tested.onArticleClicked(article)
+
+        viewActions.assertValues(ViewIntentNavigationEvent(link))
+    }
+
+    @Test
+    fun `navigates to settings screen when settings button is clicked`() {
+        val tester = tested.viewActionEvents.test()
+
+        tested.onSettingsClicked()
+
+        tester.assertValueCount(1)
+        tester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 0
+                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.SETTINGS
+        }
+    }
+
+    @Test
+    fun `emits articles repository loading state`() {
+        val loadingSubject = BehaviorSubject.create<Boolean>()
+        whenever(articlesRepository.loading).thenReturn(loadingSubject)
+        loadingSubject.onNext(false)
+        val tester = tested.isLoading.test()
+
+        tester.assertValues(false)
+
+        loadingSubject.onNext(true)
+        tester.assertValues(false, true)
+
+        loadingSubject.onNext(true)
+        tester.assertValues(false, true)
+
+        loadingSubject.onNext(false)
+        tester.assertValues(false, true, false)
+    }
+
+    @Test
+    fun `hides empty view and shows articles if articles list is not empty`() {
+        givenHasArticles()
+
+        val articlesTester = tested.articles.test()
+        val emptyViewTester = tested.emptyViewVisible.test()
+
+        emptyViewTester.assertValues(false)
+        articlesTester.assertValues(ARTICLES)
+    }
+
+    @Test
+    fun `shows empty view with action if it has no articles and no sources`() {
+        givenNoArticles()
+        givenNoSources()
+        val emptyViewTester = tested.emptyViewVisible.test()
+        val emptyTextTester = tested.emptyViewDescriptionText.test()
+        val emptyButtonTester = tested.emptyViewButtonText.test()
+        val viewActionsTester = tested.viewActionEvents.test()
+
+        val articlesTester = tested.articles.test()
+        tested.onEmptyViewButtonClicked()
+
+        emptyViewTester.assertValues(false, true)
+        articlesTester.assertValues(emptyList())
+        emptyTextTester.assertValues("${R.string.empty_articles_no_source}")
+        emptyButtonTester.assertValues("${R.string.add_source}")
+        viewActionsTester.assertValueCount(1)
+        viewActionsTester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 0
+                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.ADD_SOURCE
+        }
+    }
+
+    @Test
+    fun `shows empty view with action if it has no articles and no active source`() {
+        givenNoArticles()
+        givenNoActiveSources()
+        val emptyViewTester = tested.emptyViewVisible.test()
+        val emptyTextTester = tested.emptyViewDescriptionText.test()
+        val emptyButtonTester = tested.emptyViewButtonText.test()
+        val viewActionsTester = tested.viewActionEvents.test()
+
+        val articlesTester = tested.articles.test()
+        tested.onEmptyViewButtonClicked()
+
+        emptyViewTester.assertValues(false, true)
+        articlesTester.assertValues(emptyList())
+        emptyTextTester.assertValues("${R.string.empty_articles_sources_disabled}")
+        emptyButtonTester.assertValues("${R.string.enable_sources}")
+        viewActionsTester.assertValueCount(1)
+        viewActionsTester.assertValueAt(0) {
+            it is DeepLinkNavigationEvent
+                && it.deepLink.parametersCount == 0
+                && it.deepLink.screen == com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.SOURCES_LIST
+        }
+    }
+
+    @Test
+    fun `shows empty view with action if it has no articles but has active source`() {
+        givenNoArticles()
+        givenActiveSources()
+        val emptyViewTester = tested.emptyViewVisible.test()
+        val emptyTextTester = tested.emptyViewDescriptionText.test()
+        val emptyButtonTester = tested.emptyViewButtonText.test()
+        val viewActionsTester = tested.viewActionEvents.test()
+
+        val articlesTester = tested.articles.test()
+        verify(articlesRepository, never()).refresh()
+        tested.onEmptyViewButtonClicked()
+
+        emptyViewTester.assertValues(false, true)
+        articlesTester.assertValues(emptyList())
+        emptyTextTester.assertValues("${R.string.empty_articles_must_refresh}")
+        emptyButtonTester.assertValues("${R.string.refresh}")
+        viewActionsTester.assertValueCount(0)
+        verify(articlesRepository).refresh()
+    }
+
+    private fun givenActiveSources() {
+        val source = com.lelloman.simplerss.persistence.db.model.Source(
+            id = 1L,
+            name = "asd",
+            url = "asd",
+            isActive = true
+        )
+        whenever(sourcesRepository.fetchSources()).thenReturn(Observable.just(listOf(source)))
+    }
+
+    private fun givenOpenArticleInAppSettingDisabled() {
+        appSettings.providedOpenArticlesInApp = Observable.just(false)
+    }
+
+    private fun givenOpenArticleInAppSettingEnabled() {
+        appSettings.providedOpenArticlesInApp = Observable.just(true)
+    }
+
+    private fun givenNoActiveSources() {
+        val source = com.lelloman.simplerss.persistence.db.model.Source(
+            id = 1L,
+            name = "asd",
+            url = "asd",
+            isActive = false
+        )
+        whenever(sourcesRepository.fetchSources()).thenReturn(Observable.just(listOf(source)))
+    }
+
+    private fun givenNoSources() {
+        whenever(sourcesRepository.fetchSources()).thenReturn(Observable.just(emptyList()))
+    }
+
+    private fun givenNoArticles() = givenHasArticles(emptyList())
+
+    private fun givenHasArticles(articles: List<com.lelloman.simplerss.persistence.db.model.SourceArticle> = ARTICLES) {
+        whenever(articlesRepository.fetchArticles()).thenReturn(Observable.just(articles))
+    }
+
+    private companion object {
+        val ARTICLES = Array(3) { dummySourceArticle(it) }.toList()
+    }
+}

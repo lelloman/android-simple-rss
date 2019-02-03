@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.lelloman.read.ui.sources.viewmodel.SourceViewModel" />
+            type="com.lelloman.simplerss.ui.sources.viewmodel.SourceViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
