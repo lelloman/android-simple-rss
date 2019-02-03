@@ -76,7 +76,8 @@ open class ReadApplication : Application(), HasActivityInjector, HasBroadcastRec
         RxJavaPlugins.setErrorHandler {
             when {
                 it.isInterruptedIoException() && it.isHttpClientException() -> {
-                    logger.w("HttpClient/InterruptedIOException occurred")
+                    // TODO use d(String, Throwable) when available from common
+                    logger.w("HttpClient/InterruptedIOException occurred", it)
                 }
                 else -> logger.e("RxJavaPlugin error handler", it)
             }

@@ -69,8 +69,3 @@ dependencies {
 
     androidTestImplementation 'com.github.lelloman:android-instrumented-tests-utils:-SNAPSHOT'
 }
-
-task copyTestClasses(type: Copy) {
-    from "build/tmp/kotlin-classes/debug"
-    into "build/intermediates/classes/debug"
-}
