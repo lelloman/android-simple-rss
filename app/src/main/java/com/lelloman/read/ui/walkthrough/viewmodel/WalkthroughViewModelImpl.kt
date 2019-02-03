@@ -91,11 +91,13 @@ class WalkthroughViewModelImpl(
     override fun onMeteredConnectionNoClicked(view: View) {
         navigateAndClose(ReadNavigationScreen.ARTICLES_LIST)
         appSettings.setUseMeteredNetwork(false)
+        appSettings.setShouldShowWalkthtough(false)
     }
 
     override fun onMeteredConnectionYesClicked(view: View) {
         navigateAndClose(ReadNavigationScreen.ARTICLES_LIST)
         appSettings.setUseMeteredNetwork(true)
+        appSettings.setShouldShowWalkthtough(false)
     }
 
     override fun onFirstPageOkClicked(view: View) {
