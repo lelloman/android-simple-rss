@@ -52,13 +52,13 @@ class WalkthroughPagerAdapter(
             R.layout.pager_item_select_theme -> bind<PagerItemSelectThemeBinding>(view).apply {
                 themesRecyclerView.adapter = themesAdapter
                 themesRecyclerView.layoutManager = GridLayoutManager(context, 2)
-                walkthroughViewModel.themes.observe(lifecycleOwner, themesAdapter)
+                walkthroughViewModel.themes.observe(this@WalkthroughPagerAdapter.lifecycleOwner, themesAdapter)
                 viewModel = this@WalkthroughPagerAdapter.walkthroughViewModel
             }
             else -> null
         }
 
-        binding?.setLifecycleOwner(lifecycleOwner)
+        binding?.lifecycleOwner = lifecycleOwner
 
         container.addView(view)
 

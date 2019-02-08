@@ -115,6 +115,6 @@ class FeedFinderHttpClientTest {
 
     private companion object {
         const val BASE_URL = "http://www.staceppa.com"
-        const val URL_WITH_PATH = "${BASE_URL}/asdasd"
+        const val URL_WITH_PATH = "$BASE_URL/asdasd"
     }
 }

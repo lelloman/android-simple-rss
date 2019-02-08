@@ -68,7 +68,7 @@ class FeedFinderParserTest {
     fun `returns url slash feed when finding candidate urls and doc has an url`() {
         val tester = tested.findCandidateUrls(DOC_WITH_URL).test()
 
-        tester.assertValues("${URL_WITH_PATH}/feed")
+        tester.assertValues("$URL_WITH_PATH/feed")
     }
 
     @Test

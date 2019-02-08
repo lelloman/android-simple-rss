@@ -26,7 +26,7 @@ class NavigationRouterTest {
         val deepLink = DeepLink(SimpleRssNavigationScreen.SOURCES_LIST)
         SimpleRssNavigationScreen.SOURCES_LIST.deepLinkStartable = starter
 
-        tested.handleDeepLink(NavigationRouterTest.Companion.ACTIVITY, DeepLinkNavigationEvent(deepLink))
+        tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
         verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
     }

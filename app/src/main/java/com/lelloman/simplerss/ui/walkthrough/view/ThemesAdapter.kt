@@ -7,7 +7,7 @@ import com.lelloman.simplerss.ui.walkthrough.ThemeListItem
 import com.lelloman.simplerss.ui.walkthrough.viewmodel.ThemeListItemViewModel
 
 class ThemesAdapter(
-    private val onThemeClickedListener: (ThemeListItem) -> Unit
+    onThemeClickedListener: (ThemeListItem) -> Unit
 ) : BaseRecyclerViewAdapter<Long, ThemeListItem, ThemeListItemViewModel, ListItemThemeBinding>(
     onItemClickListener = onThemeClickedListener
 ) {
@@ -18,5 +18,5 @@ class ThemesAdapter(
     }
 
     override fun createViewModel(viewHolder: BaseViewHolder<Long, ThemeListItem, ThemeListItemViewModel, ListItemThemeBinding>) =
-        ThemeListItemViewModel(onThemeClickedListener)
+        ThemeListItemViewModel()
 }

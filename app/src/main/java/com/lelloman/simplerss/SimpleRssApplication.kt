@@ -66,7 +66,7 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
 
     override fun onCreate() {
         super.onCreate()
-        SimpleRssApplication.Companion.instance = this
+        SimpleRssApplication.instance = this
 
         logger = loggerFactory.getLogger(javaClass)
 
@@ -76,8 +76,7 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
         RxJavaPlugins.setErrorHandler {
             when {
                 it.isInterruptedIoException() && it.isHttpClientException() -> {
-                    // TODO use d(String, Throwable) when available from common
-                    logger.w("HttpClient/InterruptedIOException occurred", it)
+                    logger.d("HttpClient/InterruptedIOException occurred", it)
                 }
                 else -> logger.e("RxJavaPlugin error handler", it)
             }
@@ -94,8 +93,8 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
 
         private lateinit var instance: SimpleRssApplication
 
-        fun getPicassoWrap() = SimpleRssApplication.Companion.instance.picassoWrap
+        fun getPicassoWrap() = SimpleRssApplication.instance.picassoWrap
 
-        fun getFaviconBitmapProvider() = SimpleRssApplication.Companion.instance.faviconBitmapProvider
+        fun getFaviconBitmapProvider() = SimpleRssApplication.instance.faviconBitmapProvider
     }
 }
