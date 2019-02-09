@@ -6,8 +6,10 @@ import com.lelloman.simplerss.http.HttpClient
 import com.lelloman.simplerss.http.HttpRequest
 import com.lelloman.simplerss.http.HttpResponse
 import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockito_kotlin.verifyZeroInteractions
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single
 import org.junit.Test
@@ -23,12 +25,35 @@ class FaviconFetcherTest {
     )
 
     @Test
-    fun `makes http to google s2 with base url`() {
+    fun `makes http request to duck duck go favicon service with base url`() {
         val url = "http://www.staceppa.com/asdasd"
+        val faviconBytes = byteArrayOf(1, 2, 3)
+        val httpResponse = HttpResponse(200, true, faviconBytes)
+        whenever(httpClient.request(argThat { this.url.contains("duckduckgo") }))
+            .thenReturn(Single.just(httpResponse))
 
-        tested.getPngFavicon(url).test()
+        val tester = tested.getPngFavicon(url).test()
 
+        verify(httpClient).request(HttpRequest(tested.getDuckDuckGoFaviconUrl("www.staceppa.com")))
+        verifyZeroInteractions(httpClient)
+        tester.assertValue(faviconBytes)
+    }
+
+    @Test
+    fun `makes http request to google s2 if request to duckduckgo fails`() {
+        val url = "http://www.staceppa.com/asdasd"
+        val faviconBytes = byteArrayOf(1, 2, 3)
+        val httpResponse = HttpResponse(200, true, faviconBytes)
+        whenever(httpClient.request(argThat { this.url.contains("duckduckgo") }))
+            .thenReturn(Single.just(HttpResponse(500, false)))
+        whenever(httpClient.request(argThat { this.url.contains("google") }))
+            .thenReturn(Single.just(httpResponse))
+
+        val tester = tested.getPngFavicon(url).test()
+
+        verify(httpClient).request(HttpRequest(tested.getDuckDuckGoFaviconUrl("www.staceppa.com")))
         verify(httpClient).request(HttpRequest(tested.getGoogleS2FaviconUrl("www.staceppa.com")))
+        tester.assertValue(faviconBytes)
     }
 
     @Test
