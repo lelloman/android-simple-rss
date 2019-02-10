@@ -33,7 +33,8 @@
         <activity
             android:name="com.lelloman.simplerss.ui.walkthrough.view.WalkthroughActivity"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name="com.lelloman.simplerss.ui.launcher.view.LauncherActivity">
+        <activity android:name="com.lelloman.simplerss.ui.launcher.view.LauncherActivity"
+            android:theme="@style/AppTheme.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

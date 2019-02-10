@@ -1,5 +1,6 @@
 package com.lelloman.simplerss.ui.launcher.view
 
+import android.os.Bundle
 import com.lelloman.common.utils.StubViewDataBinding
 import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel
@@ -11,4 +12,9 @@ class LauncherActivity : BaseActivity<LauncherViewModel, StubViewDataBinding>() 
     override fun getViewModelClass() = LauncherViewModel::class.java
 
     override fun setViewModel(binding: StubViewDataBinding, viewModel: LauncherViewModel) = Unit
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.onViewLoaded()
+    }
 }
