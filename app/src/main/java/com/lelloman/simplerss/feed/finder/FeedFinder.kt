@@ -24,8 +24,8 @@ internal class FeedFinderImpl(
 
     private val logger = loggerFactory.getLogger(javaClass)
 
+    // TODO is it needed? findValidFeedUrls returns an Observable, is loading until completion...?
     private val loadingSubject: Subject<Boolean> = BehaviorSubject.create()
-
     override val loading: Observable<Boolean> = loadingSubject.hide()
 
     private var nextId = 1L

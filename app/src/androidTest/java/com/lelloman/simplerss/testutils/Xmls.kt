@@ -11,6 +11,7 @@ object Xmls {
     private const val REPUBBLICA_ACTUAL = "rss_repubblica_actual.xml"
     const val SAMPLE = "rss_sample2.0.xml"
     const val VICE = "rss_vice.xml"
+    const val VOX = "rss_vox.xml"
     private const val WIRED = "rss_wired.xml"
 
     val ALL_RSS = listOf(FANPAGE, REPUBBLICA, REPUBBLICA_ACTUAL, SAMPLE, VICE, WIRED)

@@ -59,10 +59,10 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
     }
 
     private fun Throwable?.isHttpClientException(): Boolean =
-        this is HttpClientException || this?.cause.isHttpClientException()
+        this is HttpClientException || this?.cause is HttpClientException
 
     private fun Throwable?.isInterruptedIoException(): Boolean =
-        this is InterruptedIOException || this?.cause.isInterruptedIoException()
+        this is InterruptedIOException || this?.cause is InterruptedIOException
 
     override fun onCreate() {
         super.onCreate()

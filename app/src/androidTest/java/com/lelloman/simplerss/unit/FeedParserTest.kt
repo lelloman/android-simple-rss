@@ -44,18 +44,18 @@ class FeedParserTest {
 
     @Test
     fun parsesCorrectNumberOfFeedsFromXmls() {
-        val test = Observable.fromIterable(Xmls.ALL_RSS)
+        val tester = Observable.fromIterable(Xmls.ALL_RSS)
             .flatMapSingle(Xmls::readFile)
             .flatMapSingle(tested::parseFeeds)
             .test()
 
-        test.assertValueCount(6)
-        test.assertValueAt(0) { it.size == 23 }
-        test.assertValueAt(1) { it.size == 118 }
-        test.assertValueAt(2) { it.size == 118 }
-        test.assertValueAt(3) { it.size == 3 }
-        test.assertValueAt(4) { it.size == 10 }
-        test.assertValueAt(5) { it.size == 30 }
+        tester.assertValueCount(6)
+        tester.assertValueAt(0) { it.size == 23 }
+        tester.assertValueAt(1) { it.size == 118 }
+        tester.assertValueAt(2) { it.size == 118 }
+        tester.assertValueAt(3) { it.size == 3 }
+        tester.assertValueAt(4) { it.size == 10 }
+        tester.assertValueAt(5) { it.size == 30 }
     }
 
     @Test
@@ -74,14 +74,25 @@ class FeedParserTest {
 
     @Test
     fun parsesFeedsFromViceXml() {
-        val test = Xmls.readFile(Xmls.VICE)
+        val tester = Xmls.readFile(Xmls.VICE)
             .flatMap(tested::parseFeeds)
             .test()
 
-        test.assertNoErrors()
-        test.assertValueCount(1)
-        val feeds = test.values()[0]
+        tester.assertNoErrors()
+        tester.assertValueCount(1)
+        val feeds = tester.values()[0]
         Truth.assertThat(feeds[0]).isEqualTo(Xmls.VICE_FEED_0)
         Truth.assertThat(feeds[1]).isEqualTo(Xmls.VICE_FEED_1)
+    }
+
+    @Test
+    fun parsesFeedsFromVox() {
+        val tester = Xmls.readFile(Xmls.VOX)
+            .flatMap(tested::parseFeeds)
+            .test()
+
+        tester.assertNoErrors()
+        tester.assertValueCount(1)
+        tester.assertValueAt(0) { it.size == 10 }
     }
 }
