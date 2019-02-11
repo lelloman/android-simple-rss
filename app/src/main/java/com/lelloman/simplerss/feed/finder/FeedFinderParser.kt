@@ -30,10 +30,11 @@ class FeedFinderParser(
         }
         .onErrorComplete()
 
+    // TODO move url guesses out of here, this is a _parser_ :\
     fun findCandidateUrls(doc: Doc): Observable<String> = Single
         .fromCallable {
             val output = if (doc.url != null) {
-                mutableListOf("${doc.url}/feed")
+                mutableListOf("${doc.url}/feed", "${doc.url}/feed.xml", "${doc.url}/rss", "${doc.url}/rss.xml")
             } else {
                 mutableListOf()
             }

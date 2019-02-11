@@ -1,5 +1,6 @@
 package com.lelloman.simplerss.feed.finder
 
+import com.google.common.truth.Truth.assertThat
 import com.lelloman.simplerss.html.Doc
 import com.lelloman.simplerss.html.HtmlParser
 import com.lelloman.simplerss.html.element.ADocElement
@@ -65,14 +66,19 @@ class FeedFinderParserTest {
     }
 
     @Test
-    fun `returns url slash feed when finding candidate urls and doc has an url`() {
+    fun `returns url guesses when finding candidate urls and doc has a url`() {
         val tester = tested.findCandidateUrls(DOC_WITH_URL).test()
 
-        tester.assertValues("$URL_WITH_PATH/feed")
+        tester.assertValueSet(setOf(
+            "$URL_WITH_PATH/feed",
+            "$URL_WITH_PATH/feed.xml",
+            "$URL_WITH_PATH/rss",
+            "$URL_WITH_PATH/rss.xml"
+        ))
     }
 
     @Test
-    fun `does not return url slash feed when finding candidate urls and doc does not have an url`() {
+    fun `does not return url slash feed when finding candidate urls and doc does not have a url`() {
         val tester = tested.findCandidateUrls(DOC_WITHOUT_URL).test()
 
         tester.assertValueCount(0)
@@ -140,8 +146,9 @@ class FeedFinderParserTest {
 
         val tester = tested.findCandidateUrls(doc).test()
 
-        tester.assertValueCount(3)
-        tester.assertValueSet(mutableListOf("${URL_WITH_PATH}/feed", pathWithBaseUrl, noPath))
+        assertThat(tester.values()).contains(noPath)
+        assertThat(tester.values()).contains(pathWithBaseUrl)
+        tester.assertValueCount(6) // +4 for url guesses
         tester.assertComplete()
     }
 
@@ -168,7 +175,7 @@ class FeedFinderParserTest {
 
     private companion object {
         const val BASE_URL = "http://www.staceppa.it"
-        const val URL_WITH_PATH = "${BASE_URL}/asd/asd"
+        const val URL_WITH_PATH = "$BASE_URL/asd/asd"
         val DOC_WITH_URL = Doc(
             baseUrl = BASE_URL,
             url = URL_WITH_PATH
