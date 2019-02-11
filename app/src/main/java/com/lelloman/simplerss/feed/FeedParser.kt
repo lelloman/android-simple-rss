@@ -33,7 +33,7 @@ class FeedParser @Inject constructor(
                 while (parser.eventType != XmlPullParser.END_DOCUMENT) {
                     if (parser.eventType == XmlPullParser.START_TAG) {
                         when {
-                            parser.name == "item" -> {
+                            parser.name == "item" || parser.name == "entry" -> {
                                 val item = parserItemTag(parser)
                                 item?.let { output.add(it) }
                             }
@@ -96,7 +96,7 @@ class FeedParser @Inject constructor(
         var pubDate: Date? = null
 
         while (parser.eventType != XmlPullParser.END_DOCUMENT) {
-            if (parser.eventType == XmlPullParser.END_TAG && parser.name == "item") {
+            if (parser.eventType == XmlPullParser.END_TAG && (parser.name == "item" || parser.name == "entry")) {
                 break
             }
 
@@ -110,7 +110,7 @@ class FeedParser @Inject constructor(
                             null
                         }
                     }
-                    "link" -> link = readText(parser)
+                    "link" -> link = readLink(parser)
                     "description" -> description = readText(parser)
                 }
             }
@@ -130,6 +130,9 @@ class FeedParser @Inject constructor(
         }
     }
 
+    private fun readLink(parser: XmlPullParser) =
+        parser.getAttributeValue(null, "href") ?: readText(parser)
+
     @Throws(IOException::class, XmlPullParserException::class)
     private fun readText(parser: XmlPullParser): String {
         var result = ""
@@ -142,9 +145,13 @@ class FeedParser @Inject constructor(
 
     private fun findChannelTag(parser: XmlPullParser) {
         while (parser.eventType != XmlPullParser.END_DOCUMENT) {
-            if (parser.eventType == XmlPullParser.START_TAG && parser.name == "channel") {
-                parser.next()
-                break
+            if (parser.eventType == XmlPullParser.START_TAG) {
+                if (parser.name == "channel") {
+                    parser.next()
+                    break
+                } else if (parser.name == "entry") {
+                    break
+                }
             }
             parser.next()
         }
