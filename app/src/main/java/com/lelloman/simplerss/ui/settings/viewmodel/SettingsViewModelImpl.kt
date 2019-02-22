@@ -1,8 +1,8 @@
 package com.lelloman.simplerss.ui.settings.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.databinding.Observable
-import android.databinding.ObservableField
+import androidx.databinding.Observable
+import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.SemanticTimeProvider

@@ -1,8 +1,7 @@
 package com.lelloman.simplerss.unit
 
-import android.arch.persistence.room.Room
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.room.Room
+import androidx.test.core.app.ApplicationProvider
 import com.lelloman.simplerss.SimpleRssApplication
 import com.lelloman.simplerss.persistence.db.AppDatabase
 import com.lelloman.simplerss.persistence.db.ArticlesDao
@@ -12,10 +11,8 @@ import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
 
-@RunWith(AndroidJUnit4::class)
 class ArticlesDaoTest {
 
     private lateinit var db: AppDatabase
@@ -23,7 +20,7 @@ class ArticlesDaoTest {
 
     @Before
     fun setUp() {
-        val app = InstrumentationRegistry.getTargetContext().applicationContext as SimpleRssApplication
+        val app: SimpleRssApplication = ApplicationProvider.getApplicationContext()
         db = Room.inMemoryDatabaseBuilder(app, AppDatabase::class.java).build()
         tested = db.articlesDao()
     }

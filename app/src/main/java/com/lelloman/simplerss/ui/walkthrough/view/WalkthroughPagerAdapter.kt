@@ -1,15 +1,15 @@
 package com.lelloman.simplerss.ui.walkthrough.view
 
-import android.arch.lifecycle.LifecycleOwner
 import android.content.Context
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
-import android.support.v4.view.PagerAdapter
-import android.support.v7.widget.GridLayoutManager
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewpager.widget.PagerAdapter
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.PagerItemDiscoverUrlBinding
 import com.lelloman.simplerss.databinding.PagerItemSelectThemeBinding

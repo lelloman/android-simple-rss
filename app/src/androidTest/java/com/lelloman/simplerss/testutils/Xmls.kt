@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.testutils
 
-import android.support.test.InstrumentationRegistry
+import androidx.test.platform.app.InstrumentationRegistry
 import com.lelloman.simplerss.feed.ParsedFeed
 import io.reactivex.Single
 
@@ -69,7 +69,8 @@ object Xmls {
 
     fun readFile(fileName: String): Single<String> = Single.fromCallable {
         InstrumentationRegistry
-            .getContext()
+            .getInstrumentation()
+            .context
             .assets
             .open(fileName)
             .bufferedReader()

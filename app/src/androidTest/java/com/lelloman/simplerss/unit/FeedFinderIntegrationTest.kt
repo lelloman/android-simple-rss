@@ -22,6 +22,7 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import org.junit.Test
 import org.mockito.Mockito.mock
+import java.util.concurrent.TimeUnit
 
 class FeedFinderIntegrationTest {
 
@@ -102,10 +103,17 @@ class FeedFinderIntegrationTest {
         httpClient.map("$URL_1/somefeed", VALID_FEED_XML)
         httpClient.map("http://www.staceppa.com", VALID_FEED_XML)
 
-        val foundFeeds = tested.findValidFeedUrls(URL_1).toList().blockingGet()
+        val foundFeeds = tested
+            .findValidFeedUrls(URL_1)
+            .toList()
+            .timeout(2L, TimeUnit.SECONDS)
+            .blockingGet()
 
-        assertThat(foundFeeds).hasSize(3)
+        assertThat(foundFeeds).hasSize(6)
         foundFeeds.assertContains(url = "$URL_1/feed", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "$URL_1/feed.xml", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "$URL_1/rss", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "$URL_1/rss.xml", nArticles = 1, name = "RSS di   - ANSA.it")
         foundFeeds.assertContains(url = "http://www.staceppa.com", nArticles = 1, name = "RSS di   - ANSA.it")
         foundFeeds.assertContains(url = "$URL_1/somefeed", nArticles = 1, name = "RSS di   - ANSA.it")
     }
@@ -120,12 +128,16 @@ class FeedFinderIntegrationTest {
 
         val foundFeeds = tested
             .findValidFeedUrls(URL_1)
-            .take(3)
+            .take(6)
             .toList()
+            .timeout(2L, TimeUnit.SECONDS)
             .blockingGet()
 
-        assertThat(foundFeeds).hasSize(3)
+        assertThat(foundFeeds).hasSize(6)
         foundFeeds.assertContains(url = "$URL_1/feed", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "$URL_1/feed.xml", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "$URL_1/rss", nArticles = 1, name = "RSS di   - ANSA.it")
+        foundFeeds.assertContains(url = "$URL_1/rss.xml", nArticles = 1, name = "RSS di   - ANSA.it")
         foundFeeds.assertContains(url = "http://www.staceppa2.com", nArticles = 1, name = "RSS di   - ANSA.it")
         foundFeeds.assertContains(url = "http://www.rsssomething.com", nArticles = 1, name = "RSS di   - ANSA.it")
     }

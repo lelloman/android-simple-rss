@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.testutils.screen
 
-import android.support.test.espresso.Espresso.pressBack
+import androidx.test.espresso.Espresso.pressBack
 import com.lelloman.instrumentedtestutils.Screen
 import com.lelloman.instrumentedtestutils.viewIsDisplayed
 import com.lelloman.simplerss.R

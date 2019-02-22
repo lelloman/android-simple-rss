@@ -9,7 +9,7 @@
             type="com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/walkthrough_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -42,7 +42,7 @@
             app:layout_constraintTop_toTopOf="@+id/skip"
             app:viewVisible="@{viewModel.nextButtonVisible}" />
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/view_pager"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -66,6 +66,6 @@
             app:layout_constraintTop_toBottomOf="@+id/view_pager" />
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

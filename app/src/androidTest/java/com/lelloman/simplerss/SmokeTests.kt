@@ -1,6 +1,6 @@
 package com.lelloman.simplerss
 
-import android.support.test.rule.ActivityTestRule
+import androidx.test.rule.ActivityTestRule
 import com.lelloman.simplerss.testutils.MockHttpClient
 import com.lelloman.simplerss.testutils.MockHttpClient.Companion.FANPAGE_ARTICLES_COUNT
 import com.lelloman.simplerss.testutils.MockHttpClient.Companion.REPUBBLICA_ARTICLES_COUNT
@@ -8,6 +8,7 @@ import com.lelloman.simplerss.testutils.MockHttpClient.Companion.URL_ASD
 import com.lelloman.simplerss.testutils.screen.ArticlesListScreen
 import com.lelloman.simplerss.testutils.screen.WalkthroughScreen
 import com.lelloman.simplerss.testutils.setUpTestAppWithMockedHttpStack
+import com.lelloman.simplerss.ui.launcher.view.LauncherActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -15,7 +16,7 @@ import org.junit.Test
 class SmokeTests {
 
     @get:Rule
-    val activityTestRule = ActivityTestRule(com.lelloman.simplerss.ui.launcher.view.LauncherActivity::class.java, true, false)
+    val activityTestRule = ActivityTestRule(LauncherActivity::class.java, true, false)
 
     private var isNetworkMetered = false
 

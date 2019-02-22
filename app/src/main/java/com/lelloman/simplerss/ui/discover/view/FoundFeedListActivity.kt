@@ -1,13 +1,13 @@
 package com.lelloman.simplerss.ui.discover.view
 
 import android.app.Activity
-import android.arch.lifecycle.Observer
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity

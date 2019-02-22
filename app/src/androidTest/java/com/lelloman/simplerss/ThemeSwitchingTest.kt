@@ -1,23 +1,22 @@
 package com.lelloman.simplerss
 
-import android.support.test.InstrumentationRegistry.getInstrumentation
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+import android.app.Application
 import android.util.TypedValue
+import androidx.test.core.app.ApplicationProvider
+import androidx.test.rule.ActivityTestRule
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.view.AppTheme
 import com.lelloman.simplerss.testutils.screen.WalkthroughScreen
 import com.lelloman.simplerss.testutils.setUpTestAppWithMockedHttpStack
+import com.lelloman.simplerss.ui.launcher.view.LauncherActivity
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class ThemeSwitchingTest {
 
     @get:Rule
-    val activityTestRule = ActivityTestRule(com.lelloman.simplerss.ui.launcher.view.LauncherActivity::class.java, true, false)
+    val activityTestRule = ActivityTestRule(LauncherActivity::class.java, true, false)
 
     @Before
     fun setUp() {
@@ -53,8 +52,8 @@ class ThemeSwitchingTest {
     private companion object {
 
         fun getThemeAttr(appTheme: AppTheme, attr: Int): Int {
-            val theme = getInstrumentation()
-                .targetContext
+            val theme = ApplicationProvider
+                .getApplicationContext<Application>()
                 .resources
                 .newTheme()
             theme.applyStyle(appTheme.resId, true)

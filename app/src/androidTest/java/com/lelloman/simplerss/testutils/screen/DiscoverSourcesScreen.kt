@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.testutils.screen
 
-import android.support.test.espresso.Espresso.closeSoftKeyboard
-import android.support.test.espresso.Espresso.pressBack
+import androidx.test.espresso.Espresso.closeSoftKeyboard
+import androidx.test.espresso.Espresso.pressBack
 import com.lelloman.instrumentedtestutils.Screen
 import com.lelloman.instrumentedtestutils.clickView
 import com.lelloman.instrumentedtestutils.typeInEditText

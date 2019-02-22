@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.ui.articles.view
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.simplerss.R

@@ -1,9 +1,9 @@
 package com.lelloman.simplerss.persistence.db
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.Query
-import android.arch.persistence.room.Update
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Update
 import com.lelloman.simplerss.persistence.db.AppDatabase.Companion.SOURCE_TABLE_NAME
 import com.lelloman.simplerss.persistence.db.model.Source
 import io.reactivex.Flowable

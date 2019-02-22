@@ -1,8 +1,8 @@
 package com.lelloman.simplerss.testutils.screen
 
-import android.support.test.espresso.action.ViewActions
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.withText
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.lelloman.instrumentedtestutils.Screen
 import com.lelloman.instrumentedtestutils.checkIsSwipeRefreshing
 import com.lelloman.instrumentedtestutils.checkRecyclerViewCount

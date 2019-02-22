@@ -1,10 +1,10 @@
 package com.lelloman.simplerss.ui.articles.viewmodel
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
-import android.databinding.BaseObservable
-import android.databinding.Bindable
+import androidx.databinding.BaseObservable
+import androidx.databinding.Bindable
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.lelloman.common.utils.model.ByteArrayWithId
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseListItemViewModel

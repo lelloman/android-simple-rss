@@ -1,10 +1,10 @@
 package com.lelloman.simplerss.widget
 
 import android.content.Context
-import android.support.v7.view.ContextThemeWrapper
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.view.ContextThemeWrapper
 import com.lelloman.common.utils.layoutInflater
 import com.lelloman.common.view.AppTheme
 import com.lelloman.simplerss.R

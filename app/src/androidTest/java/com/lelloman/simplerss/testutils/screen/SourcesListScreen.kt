@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.testutils.screen
 
-import android.support.test.espresso.Espresso.pressBack
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import com.lelloman.instrumentedtestutils.Screen
 import com.lelloman.instrumentedtestutils.ViewActions.clickView
 import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
