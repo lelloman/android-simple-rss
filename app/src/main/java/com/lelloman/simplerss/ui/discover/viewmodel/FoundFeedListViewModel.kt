@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.ui.discover.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
+import androidx.lifecycle.MutableLiveData
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.feed.finder.FoundFeed
 

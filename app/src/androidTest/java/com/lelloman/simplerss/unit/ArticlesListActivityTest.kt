@@ -1,8 +1,8 @@
 package com.lelloman.simplerss.unit
 
-import android.arch.lifecycle.MutableLiveData
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
+import androidx.lifecycle.MutableLiveData
+import androidx.test.rule.ActivityTestRule
+import androidx.test.runner.AndroidJUnit4
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.actionevent.ViewActionEvent
 import com.lelloman.instrumentedtestutils.onUiThread

@@ -49,9 +49,9 @@ dependencies {
     implementation "com.github.lelloman:android-common:$lelloman_common_version"
 
     // room
-    implementation "android.arch.persistence.room:runtime:$room_version"
-    kapt "android.arch.persistence.room:compiler:$room_version"
-    implementation "android.arch.persistence.room:rxjava2:$room_version"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-rxjava2:$room_version"
 
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"
@@ -64,10 +64,11 @@ dependencies {
     implementation "org.jsoup:jsoup:$jsoup_version"
 
     testImplementation 'junit:junit:4.12'
-    testImplementation "android.arch.persistence.room:testing:$room_version"
+    testImplementation "androidx.room:room-testing:$room_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
     testImplementation "com.google.truth:truth:$truth_version"
     testImplementation "android.arch.core:core-testing:$lifecycle_version"
 
-    androidTestImplementation 'com.github.lelloman:android-instrumented-tests-utils:-SNAPSHOT'
+    androidTestImplementation "com.github.lelloman:android-instrumented-tests-utils:$instrumented_test_utils_version"
+    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
 }

@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.di
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.SemanticTimeProvider

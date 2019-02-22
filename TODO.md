@@ -51,5 +51,7 @@ BUGS:
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] in the walkthrough the highlight color for text is wrong, the text is white but if highlighted it turns black :/ 
 - [BUG] smoke test 2 sometimes fails with articles list empty view not showing "you haven't add any source"
+- [BUG] favicon fetching is messed up, it seems that it doesn't fetch favicons at all
+- [BUG] if a source has no favicon identicon is displayed in sources list but not in the articles
 
 IN PROGRESS:

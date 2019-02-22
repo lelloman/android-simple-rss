@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.ui.sources.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.lelloman.common.viewmodel.BaseViewModel
 
 abstract class AddSourceViewModel(dependencies: Dependencies) : BaseViewModel(dependencies) {

@@ -1,12 +1,12 @@
 package com.lelloman.simplerss.persistence.db.model
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.ForeignKey
-import android.arch.persistence.room.ForeignKey.CASCADE
-import android.arch.persistence.room.Index
-import android.arch.persistence.room.PrimaryKey
 import android.os.Parcel
 import android.os.Parcelable
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
+import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.lelloman.common.utils.model.ModelWithId
 import com.lelloman.simplerss.persistence.db.AppDatabase.Companion.ARTICLE_TABLE_NAME
 

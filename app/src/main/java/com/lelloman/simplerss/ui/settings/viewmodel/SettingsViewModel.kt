@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.ui.settings.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
 

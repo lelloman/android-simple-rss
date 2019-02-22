@@ -1,9 +1,9 @@
 package com.lelloman.simplerss.ui.walkthrough.viewmodel
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.databinding.ObservableField
 import android.os.Bundle
+import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator

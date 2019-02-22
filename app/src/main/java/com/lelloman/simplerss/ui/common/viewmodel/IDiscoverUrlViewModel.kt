@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.ui.common.viewmodel
 
-import android.arch.lifecycle.MutableLiveData
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
+import androidx.lifecycle.MutableLiveData
 import com.lelloman.simplerss.utils.OnKeyboardActionDoneListener
 
 interface IDiscoverUrlViewModel : OnKeyboardActionDoneListener {

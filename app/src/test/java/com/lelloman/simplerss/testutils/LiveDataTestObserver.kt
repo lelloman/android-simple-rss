@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.testutils
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.Observer
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.google.common.truth.Truth.assertThat
 
 fun <T> LiveData<T>.test() = LiveDataTestObserver<T>().apply {

@@ -1,14 +1,14 @@
 package com.lelloman.simplerss.testutils.screen
 
 import android.graphics.drawable.ColorDrawable
-import android.support.test.espresso.Espresso.*
-import android.support.test.espresso.action.ViewActions
-import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.BoundedMatcher
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.v7.widget.Toolbar
 import android.view.View
+import androidx.appcompat.widget.Toolbar
+import androidx.test.espresso.Espresso.*
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.BoundedMatcher
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.lelloman.common.view.AppTheme
 import com.lelloman.instrumentedtestutils.Screen
 import com.lelloman.instrumentedtestutils.viewIsDisplayed

@@ -1,13 +1,13 @@
 package com.lelloman.simplerss.utils
 
-import android.databinding.BindingAdapter
 import android.graphics.Bitmap
-import android.support.design.widget.TextInputLayout
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.databinding.BindingAdapter
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.textfield.TextInputLayout
 import com.lelloman.common.utils.model.ByteArrayWithId
 import com.lelloman.identicon.ClassicIdenticonView
 import com.lelloman.simplerss.R

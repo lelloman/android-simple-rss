@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.ui.sources.viewmodel
 
-import android.databinding.ObservableField
+import androidx.databinding.ObservableField
 import com.lelloman.common.utils.model.ByteArrayWithId
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider

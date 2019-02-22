@@ -1,9 +1,9 @@
 package com.lelloman.simplerss.testutils
 
 import android.content.Context
-import android.support.test.espresso.UiController
-import android.support.test.espresso.ViewAction
 import android.view.View
+import androidx.test.espresso.UiController
+import androidx.test.espresso.ViewAction
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.instrumentedtestutils.rotateNatural

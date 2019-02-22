@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.testutils
 
-import android.support.test.InstrumentationRegistry
+import androidx.test.platform.app.InstrumentationRegistry
 import com.lelloman.instrumentedtestutils.whenever
 import okhttp3.Call
 import okhttp3.MediaType
@@ -45,7 +45,8 @@ class MockHttpClient : OkHttpClient() {
         val responseBuilder = when {
             fileResponses.containsKey(url) -> {
                 val body = InstrumentationRegistry
-                    .getContext()
+                    .getInstrumentation()
+                    .context
                     .assets
                     .open(fileResponses[url]!!)
                     .bufferedReader()

@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.testutils
 
 import android.app.Application
-import android.support.test.InstrumentationRegistry
+import androidx.test.core.app.ApplicationProvider
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.settings.BaseSettingsModule
@@ -9,6 +9,7 @@ import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.TimeProviderImpl
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.simplerss.SimpleRssApplication
 import com.lelloman.simplerss.feed.FeedParser
 import com.lelloman.simplerss.feed.fetcher.FeedFetcher
 import com.lelloman.simplerss.feed.finder.FeedFinder
@@ -34,7 +35,7 @@ class BagOfDependencies {
 
     init {
         val okHttpClient = OkHttpClient.Builder().build()
-        val targetContext = InstrumentationRegistry.getTargetContext()
+        val targetContext: SimpleRssApplication = ApplicationProvider.getApplicationContext()
         val baseAppModule = BaseApplicationModule(targetContext as Application)
         val loggerFactory = baseAppModule.provideLoggerFactory()
         timeProvider = TimeProviderImpl()

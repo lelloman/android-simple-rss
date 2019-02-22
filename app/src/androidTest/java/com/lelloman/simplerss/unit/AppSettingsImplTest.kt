@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.unit
-import android.support.test.InstrumentationRegistry
-import android.support.test.InstrumentationRegistry.getContext
-import android.support.test.runner.AndroidJUnit4
+
+import androidx.test.InstrumentationRegistry.getContext
+import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_APP_THEME
@@ -17,9 +17,7 @@ import com.lelloman.simplerss.persistence.settings.AppSettingsImpl
 import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
 class AppSettingsImplTest {
 
     private val baseApplicationSettings: BaseApplicationSettings = BaseSettingsModule().provideBaseApplicationSettings(getContext())
@@ -36,7 +34,8 @@ class AppSettingsImplTest {
     @Before
     fun setUp() {
         InstrumentationRegistry
-            .getContext()
+            .getInstrumentation()
+            .context
             .getSharedPreferences(AppSettings.SHARED_PREFS_NAME, 0)
             .edit()
             .clear()

@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.ui.articles.viewmodel
 
-import android.arch.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.simplerss.mock.MockAppSettings

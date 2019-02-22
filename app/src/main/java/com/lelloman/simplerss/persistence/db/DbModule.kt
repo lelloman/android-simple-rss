@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.persistence.db
 
-import android.arch.persistence.room.Room
 import android.content.Context
+import androidx.room.Room
 import com.lelloman.simplerss.persistence.db.AppDatabase.Companion.NAME
 import dagger.Module
 import dagger.Provides

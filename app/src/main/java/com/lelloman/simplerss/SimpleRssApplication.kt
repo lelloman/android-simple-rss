@@ -71,7 +71,7 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
         logger = loggerFactory.getLogger(javaClass)
 
         if (BuildConfig.DEBUG) {
-            picassoWrap.enableImageSourceIndicator()
+//            picassoWrap.enableImageSourceIndicator()
         }
         RxJavaPlugins.setErrorHandler {
             when {

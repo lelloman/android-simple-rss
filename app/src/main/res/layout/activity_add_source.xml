@@ -10,13 +10,13 @@
             type="com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel" />
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/add_source_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.lelloman.simplerss.ui.sources.view.AddSourceActivity">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout_source_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -40,9 +40,9 @@
 
                 <requestFocus />
             </EditText>
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/text_input_layout_source_url"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
                 android:singleLine="true"
                 android:text="@={viewModel.sourceUrl}"
                 app:editTextDrawable="@{safeUnbox(viewModel.sourceUrlDrawable)}" />
-        </android.support.design.widget.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/button_test_source"
@@ -78,5 +78,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_input_layout_source_url" />
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
