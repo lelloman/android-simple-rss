@@ -1,5 +1,8 @@
 package com.lelloman.simplerss.feed.fetcher
 
+import com.lelloman.common.http.HttpClient
+import com.lelloman.common.http.HttpClientException
+import com.lelloman.common.http.HttpRequest
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.simplerss.feed.FeedParser
@@ -7,9 +10,6 @@ import com.lelloman.simplerss.feed.ParsedFeed
 import com.lelloman.simplerss.feed.exception.InvalidFeedTagException
 import com.lelloman.simplerss.feed.exception.MalformedXmlException
 import com.lelloman.simplerss.html.HtmlParser
-import com.lelloman.simplerss.http.HttpClient
-import com.lelloman.simplerss.http.HttpClientException
-import com.lelloman.simplerss.http.HttpRequest
 import com.lelloman.simplerss.persistence.db.model.Article
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.persistence.settings.AppSettings

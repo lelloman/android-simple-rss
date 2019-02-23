@@ -2,11 +2,11 @@ package com.lelloman.simplerss.testutils
 
 import android.widget.ImageView
 import com.lelloman.common.di.BaseApplicationModule
+import com.lelloman.common.http.HttpModule
 import com.lelloman.common.view.PicassoWrap
 import com.lelloman.simplerss.SimpleRssApplication
 import com.lelloman.simplerss.di.DaggerAppComponent
 import com.lelloman.simplerss.di.ViewModelModule
-import com.lelloman.simplerss.http.HttpModule
 import com.lelloman.simplerss.persistence.db.DbModule
 import com.lelloman.simplerss.persistence.settings.SettingsModule
 

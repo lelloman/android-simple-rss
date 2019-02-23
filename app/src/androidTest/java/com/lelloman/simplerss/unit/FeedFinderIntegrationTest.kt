@@ -1,6 +1,9 @@
 package com.lelloman.simplerss.unit
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.http.HttpClient
+import com.lelloman.common.http.HttpRequest
+import com.lelloman.common.http.HttpResponse
 import com.lelloman.common.logger.Logger
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProviderImpl
@@ -13,9 +16,6 @@ import com.lelloman.simplerss.feed.finder.FeedFinderImpl
 import com.lelloman.simplerss.feed.finder.FeedFinderParser
 import com.lelloman.simplerss.feed.finder.FoundFeed
 import com.lelloman.simplerss.html.HtmlParser
-import com.lelloman.simplerss.http.HttpClient
-import com.lelloman.simplerss.http.HttpRequest
-import com.lelloman.simplerss.http.HttpResponse
 import com.lelloman.simplerss.persistence.settings.AppSettings
 import io.reactivex.Maybe
 import io.reactivex.Single

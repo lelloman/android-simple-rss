@@ -43,7 +43,9 @@ class FeedRefresherImpl(
 
     @Synchronized
     override fun refresh() {
+        logger.d("refresh()")
         if (isLoadingSubject.value == true) {
+            logger.d("refresh() isLoadingSubject = true, early return")
             return
         }
         isLoadingSubject.onNext(true)
@@ -88,6 +90,7 @@ class FeedRefresherImpl(
             .flatMap { Flowable.fromIterable(it) }
             .filter { it.favicon == null }
             .flatMapMaybe { source ->
+                logger.d("trying to fetch favicon for source $source")
                 faviconFetcher
                     .getPngFavicon(source.url)
                     .map { source to it }
@@ -96,6 +99,7 @@ class FeedRefresherImpl(
             }
             .flatMapCompletable { (source, pngBytes) ->
                 Completable.fromAction {
+                    logger.d("storing favicon for source $source into db, ${pngBytes.size} png bytes")
                     source.favicon = pngBytes
                     sourcesDao.updateSource(source)
                 }

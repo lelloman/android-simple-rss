@@ -5,12 +5,12 @@ import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import com.lelloman.common.di.BaseApplicationModule
+import com.lelloman.common.http.HttpClientException
 import com.lelloman.common.logger.Logger
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.PicassoWrap
 import com.lelloman.simplerss.di.DaggerAppComponent
 import com.lelloman.simplerss.feed.FaviconBitmapProvider
-import com.lelloman.simplerss.http.HttpClientException
 import com.lelloman.simplerss.persistence.db.AppDatabase
 import com.lelloman.simplerss.persistence.db.SourcesDao
 import com.lelloman.simplerss.persistence.settings.AppSettings
@@ -91,7 +91,7 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
 
     companion object {
 
-        private lateinit var instance: SimpleRssApplication
+        lateinit var instance: SimpleRssApplication
 
         fun getPicassoWrap() = SimpleRssApplication.instance.picassoWrap
 

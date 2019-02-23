@@ -1,6 +1,9 @@
 package com.lelloman.simplerss.feed
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.http.HttpClient
+import com.lelloman.common.http.HttpClientException
+import com.lelloman.common.http.HttpResponse
 import com.lelloman.simplerss.feed.exception.InvalidFeedTagException
 import com.lelloman.simplerss.feed.exception.MalformedXmlException
 import com.lelloman.simplerss.feed.fetcher.EmptySource
@@ -10,9 +13,6 @@ import com.lelloman.simplerss.feed.fetcher.Success
 import com.lelloman.simplerss.feed.fetcher.UnknownError
 import com.lelloman.simplerss.feed.fetcher.XmlError
 import com.lelloman.simplerss.html.HtmlParser
-import com.lelloman.simplerss.http.HttpClient
-import com.lelloman.simplerss.http.HttpClientException
-import com.lelloman.simplerss.http.HttpResponse
 import com.lelloman.simplerss.mock.MockAppSettings
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.testutils.MockLoggerFactory
