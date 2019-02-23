@@ -4,6 +4,8 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.http.HttpClientException
 import com.lelloman.common.http.HttpResponse
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
+import com.lelloman.common.jvmtestutils.MockMeteredConnectionChecker
 import com.lelloman.simplerss.feed.exception.InvalidFeedTagException
 import com.lelloman.simplerss.feed.exception.MalformedXmlException
 import com.lelloman.simplerss.feed.fetcher.EmptySource
@@ -15,8 +17,6 @@ import com.lelloman.simplerss.feed.fetcher.XmlError
 import com.lelloman.simplerss.html.HtmlParser
 import com.lelloman.simplerss.mock.MockAppSettings
 import com.lelloman.simplerss.persistence.db.model.Source
-import com.lelloman.simplerss.testutils.MockLoggerFactory
-import com.lelloman.simplerss.testutils.MockMeteredConnectionChecker
 import com.lelloman.simplerss.testutils.dummySource
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat

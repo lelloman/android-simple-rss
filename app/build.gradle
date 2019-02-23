@@ -65,12 +65,7 @@ dependencies {
     implementation 'com.github.lelloman:android-identicons:v9'
     implementation "org.jsoup:jsoup:$jsoup_version"
 
-    testImplementation 'junit:junit:4.12'
-    testImplementation "androidx.room:room-testing:$room_version"
-    testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
-    testImplementation "com.google.truth:truth:$truth_version"
-    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
+    testImplementation "com.github.lelloman.android-common:jvmtestutils:$lelloman_common_version"
 
-    androidTestImplementation "com.github.lelloman:android-instrumented-tests-utils:$instrumented_test_utils_version"
-    androidTestImplementation 'org.mockito:mockito-android:2.24.5'
+    androidTestImplementation "com.github.lelloman.android-common:androidtestutils:$lelloman_common_version"
 }

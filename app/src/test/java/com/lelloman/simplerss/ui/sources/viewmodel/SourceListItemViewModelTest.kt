@@ -1,10 +1,10 @@
 package com.lelloman.simplerss.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.jvmtestutils.MockResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.persistence.db.model.Source
-import com.lelloman.simplerss.testutils.MockResourceProvider
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

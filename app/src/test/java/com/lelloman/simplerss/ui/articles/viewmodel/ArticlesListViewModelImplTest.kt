@@ -1,5 +1,8 @@
 package com.lelloman.simplerss.ui.articles.viewmodel
 
+import com.lelloman.common.jvmtestutils.AndroidArchTest
+import com.lelloman.common.jvmtestutils.MockResourceProvider
+import com.lelloman.common.jvmtestutils.test
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.common.viewmodel.BaseViewModel
@@ -9,10 +12,7 @@ import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.persistence.db.model.SourceArticle
-import com.lelloman.simplerss.testutils.AndroidArchTest
-import com.lelloman.simplerss.testutils.MockResourceProvider
 import com.lelloman.simplerss.testutils.dummySourceArticle
-import com.lelloman.simplerss.testutils.test
 import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
 import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository

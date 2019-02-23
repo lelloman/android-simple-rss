@@ -1,6 +1,9 @@
 package com.lelloman.simplerss.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.jvmtestutils.AndroidArchTest
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
+import com.lelloman.common.jvmtestutils.MockResourceProvider
 import com.lelloman.common.navigation.CloseScreenNavigationEvent
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.actionevent.ToastEvent
@@ -14,9 +17,6 @@ import com.lelloman.simplerss.feed.fetcher.TestResult
 import com.lelloman.simplerss.feed.fetcher.UnknownError
 import com.lelloman.simplerss.feed.fetcher.XmlError
 import com.lelloman.simplerss.persistence.db.model.Source
-import com.lelloman.simplerss.testutils.AndroidArchTest
-import com.lelloman.simplerss.testutils.MockLoggerFactory
-import com.lelloman.simplerss.testutils.MockResourceProvider
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.anyOrNull

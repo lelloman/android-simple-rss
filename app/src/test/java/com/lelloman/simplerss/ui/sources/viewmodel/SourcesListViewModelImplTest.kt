@@ -2,6 +2,8 @@ package com.lelloman.simplerss.ui.sources.viewmodel
 
 import android.view.View
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.jvmtestutils.AndroidArchTest
+import com.lelloman.common.jvmtestutils.MockResourceProvider
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.utils.ActionTokenProvider
 import com.lelloman.common.view.actionevent.SnackEvent
@@ -12,8 +14,6 @@ import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
 import com.lelloman.simplerss.persistence.db.model.Article
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.persistence.settings.clear
-import com.lelloman.simplerss.testutils.AndroidArchTest
-import com.lelloman.simplerss.testutils.MockResourceProvider
 import com.lelloman.simplerss.testutils.dummySource
 import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
 import com.lelloman.simplerss.ui.common.repository.DeletedSource

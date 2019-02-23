@@ -1,10 +1,6 @@
 package com.lelloman.simplerss
 
 import androidx.test.rule.ActivityTestRule
-import com.lelloman.simplerss.testutils.MockHttpClient
-import com.lelloman.simplerss.testutils.MockHttpClient.Companion.FANPAGE_ARTICLES_COUNT
-import com.lelloman.simplerss.testutils.MockHttpClient.Companion.REPUBBLICA_ARTICLES_COUNT
-import com.lelloman.simplerss.testutils.MockHttpClient.Companion.URL_ASD
 import com.lelloman.simplerss.testutils.screen.ArticlesListScreen
 import com.lelloman.simplerss.testutils.screen.WalkthroughScreen
 import com.lelloman.simplerss.testutils.setUpTestAppWithMockedHttpStack
