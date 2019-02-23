@@ -3,9 +3,9 @@ package com.lelloman.simplerss.feed
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.http.HttpRequest
 import com.lelloman.common.http.HttpResponse
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.simplerss.feed.fetcher.FaviconFetcher
-import com.lelloman.simplerss.testutils.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock

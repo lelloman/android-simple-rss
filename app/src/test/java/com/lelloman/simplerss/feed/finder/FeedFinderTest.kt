@@ -1,8 +1,8 @@
 package com.lelloman.simplerss.feed.finder
 
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.simplerss.feed.fetcher.FeedFetcher
 import com.lelloman.simplerss.html.Doc
-import com.lelloman.simplerss.testutils.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify

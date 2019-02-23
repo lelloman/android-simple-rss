@@ -1,11 +1,11 @@
 package com.lelloman.simplerss.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.jvmtestutils.AndroidArchTest
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.persistence.db.model.Source
-import com.lelloman.simplerss.testutils.AndroidArchTest
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock

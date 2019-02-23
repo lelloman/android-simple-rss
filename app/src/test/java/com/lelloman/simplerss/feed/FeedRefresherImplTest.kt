@@ -1,5 +1,8 @@
 package com.lelloman.simplerss.feed
 
+import com.lelloman.common.jvmtestutils.MockLogger
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
+import com.lelloman.common.jvmtestutils.MockTimeProvider
 import com.lelloman.simplerss.feed.fetcher.FaviconFetcher
 import com.lelloman.simplerss.feed.fetcher.FeedFetcher
 import com.lelloman.simplerss.mock.MockAppSettings
@@ -9,9 +12,6 @@ import com.lelloman.simplerss.persistence.db.model.Article
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
-import com.lelloman.simplerss.testutils.MockLogger
-import com.lelloman.simplerss.testutils.MockLoggerFactory
-import com.lelloman.simplerss.testutils.MockTimeProvider
 import com.lelloman.simplerss.testutils.dummyArticle
 import com.lelloman.simplerss.testutils.dummySource
 import com.nhaarman.mockito_kotlin.any

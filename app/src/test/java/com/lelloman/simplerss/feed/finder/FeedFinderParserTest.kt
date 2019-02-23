@@ -1,12 +1,12 @@
 package com.lelloman.simplerss.feed.finder
 
 import com.google.common.truth.Truth.assertThat
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
+import com.lelloman.common.jvmtestutils.MockUrlValidator
 import com.lelloman.simplerss.html.Doc
 import com.lelloman.simplerss.html.HtmlParser
 import com.lelloman.simplerss.html.element.ADocElement
 import com.lelloman.simplerss.html.element.LinkDocElement
-import com.lelloman.simplerss.testutils.MockLoggerFactory
-import com.lelloman.simplerss.testutils.MockUrlValidator
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.verify
