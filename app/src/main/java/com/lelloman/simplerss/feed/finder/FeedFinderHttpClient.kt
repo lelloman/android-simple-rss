@@ -1,8 +1,8 @@
 package com.lelloman.simplerss.feed.finder
 
+import com.lelloman.common.http.HttpClient
+import com.lelloman.common.http.HttpRequest
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.simplerss.http.HttpClient
-import com.lelloman.simplerss.http.HttpRequest
 import io.reactivex.Maybe
 import io.reactivex.Single
 

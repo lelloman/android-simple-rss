@@ -2,6 +2,8 @@ package com.lelloman.simplerss.feed
 
 import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.common.di.qualifiers.NewThreadScheduler
+import com.lelloman.common.http.HttpClient
+import com.lelloman.common.http.HttpPoolScheduler
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.UrlValidator
@@ -13,8 +15,6 @@ import com.lelloman.simplerss.feed.finder.FeedFinderHttpClient
 import com.lelloman.simplerss.feed.finder.FeedFinderImpl
 import com.lelloman.simplerss.feed.finder.FeedFinderParser
 import com.lelloman.simplerss.html.HtmlParser
-import com.lelloman.simplerss.http.HttpClient
-import com.lelloman.simplerss.http.HttpPoolScheduler
 import com.lelloman.simplerss.persistence.db.ArticlesDao
 import com.lelloman.simplerss.persistence.db.SourcesDao
 import com.lelloman.simplerss.persistence.settings.AppSettings
@@ -81,10 +81,12 @@ open class FeedModule {
     @Provides
     fun provideFaviconFetcher(
         httpClient: HttpClient,
-        urlValidator: UrlValidator
+        urlValidator: UrlValidator,
+        loggerFactory: LoggerFactory
     ) = FaviconFetcher(
         httpClient = httpClient,
-        urlValidator = urlValidator
+        urlValidator = urlValidator,
+        loggerFactory = loggerFactory
     )
 
     @Provides

@@ -45,8 +45,11 @@ android {
 }
 
 dependencies {
-//    implementation(name:"common", ext:"aar")
-    implementation "com.github.lelloman:android-common:$lelloman_common_version"
+    // ./gradlew core:assDeb http:assDeb && cp core/build/outputs/aar/core-debug.aar ../android-simple-rss/app/libs/core.aar && cp http/build/outputs/aar/http-debug.aar ../android-simple-rss/app/libs/http.aar
+//    implementation(name:"core", ext:"aar")
+//    implementation(name:"http", ext:"aar")
+    implementation "com.github.lelloman.android-common:core:$lelloman_common_version"
+    implementation "com.github.lelloman.android-common:http:$lelloman_common_version"
 
     // room
     implementation "androidx.room:room-runtime:$room_version"
@@ -60,14 +63,13 @@ dependencies {
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     implementation 'com.github.lelloman:android-identicons:v9'
-    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
     implementation "org.jsoup:jsoup:$jsoup_version"
 
     testImplementation 'junit:junit:4.12'
     testImplementation "androidx.room:room-testing:$room_version"
     testImplementation "com.nhaarman:mockito-kotlin:$mockito_version"
     testImplementation "com.google.truth:truth:$truth_version"
-    testImplementation "android.arch.core:core-testing:$lifecycle_version"
+    testImplementation "androidx.arch.core:core-testing:$lifecycle_version"
 
     androidTestImplementation "com.github.lelloman:android-instrumented-tests-utils:$instrumented_test_utils_version"
     androidTestImplementation 'org.mockito:mockito-android:2.24.5'

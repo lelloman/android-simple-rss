@@ -1,10 +1,11 @@
 package com.lelloman.simplerss.feed
 
+import com.lelloman.common.http.HttpClient
+import com.lelloman.common.http.HttpRequest
+import com.lelloman.common.http.HttpResponse
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.simplerss.feed.fetcher.FaviconFetcher
-import com.lelloman.simplerss.http.HttpClient
-import com.lelloman.simplerss.http.HttpRequest
-import com.lelloman.simplerss.http.HttpResponse
+import com.lelloman.simplerss.testutils.MockLoggerFactory
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock
@@ -21,7 +22,8 @@ class FaviconFetcherTest {
 
     private val tested = FaviconFetcher(
         httpClient = httpClient,
-        urlValidator = urlValidator
+        urlValidator = urlValidator,
+        loggerFactory = MockLoggerFactory()
     )
 
     @Test

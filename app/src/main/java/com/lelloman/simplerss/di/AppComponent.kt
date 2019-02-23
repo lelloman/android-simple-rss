@@ -1,11 +1,11 @@
 package com.lelloman.simplerss.di
 
 import com.lelloman.common.di.BaseApplicationModule
+import com.lelloman.common.http.HttpModule
 import com.lelloman.common.settings.BaseSettingsModule
 import com.lelloman.simplerss.SimpleRssApplication
 import com.lelloman.simplerss.feed.FeedModule
 import com.lelloman.simplerss.html.HtmlModule
-import com.lelloman.simplerss.http.HttpModule
 import com.lelloman.simplerss.persistence.db.DbModule
 import com.lelloman.simplerss.persistence.settings.SettingsModule
 import dagger.Component

@@ -3,6 +3,7 @@ package com.lelloman.simplerss.testutils
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
 import com.lelloman.common.di.BaseApplicationModule
+import com.lelloman.common.http.HttpClientImpl
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.settings.BaseSettingsModule
 import com.lelloman.common.utils.TimeProvider
@@ -17,7 +18,6 @@ import com.lelloman.simplerss.feed.finder.FeedFinderHttpClient
 import com.lelloman.simplerss.feed.finder.FeedFinderImpl
 import com.lelloman.simplerss.feed.finder.FeedFinderParser
 import com.lelloman.simplerss.html.HtmlParser
-import com.lelloman.simplerss.http.HttpClientImpl
 import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.persistence.settings.AppSettingsImpl
 import io.reactivex.schedulers.Schedulers

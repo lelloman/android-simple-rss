@@ -1,16 +1,21 @@
 package com.lelloman.simplerss.feed.fetcher
 
+import android.graphics.BitmapFactory
 import android.support.annotation.VisibleForTesting
+import com.lelloman.common.http.HttpClient
+import com.lelloman.common.http.HttpRequest
+import com.lelloman.common.http.HttpResponse
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.simplerss.http.HttpClient
-import com.lelloman.simplerss.http.HttpRequest
-import com.lelloman.simplerss.http.HttpResponse
 import io.reactivex.Maybe
 
 class FaviconFetcher(
     private val httpClient: HttpClient,
-    private val urlValidator: UrlValidator
+    private val urlValidator: UrlValidator,
+    loggerFactory: LoggerFactory
 ) {
+
+    private val logger = loggerFactory.getLogger(javaClass)
 
     fun getPngFavicon(url: String): Maybe<ByteArray> = getPngFaviconInternal(url, ::getDuckDuckGoFaviconUrl)
         .switchIfEmpty(getPngFaviconInternal(url, ::getGoogleS2FaviconUrl))
@@ -22,12 +27,15 @@ class FaviconFetcher(
     ): Maybe<ByteArray> = urlValidator
         .findBaseUrlWithoutProtocol(url)
         .flatMapSingle { baseUrl ->
+            logger.d("getPngFaviconInternal($url) base url $baseUrl")
             httpClient.request(HttpRequest(faviconUrlProvider(baseUrl)))
         }
         .filter { response ->
+            logger.d("getPngFaviconInternal($url) http response successful ${response.isSuccessful} body length ${response.body.size}")
             response.isSuccessful && response.body.isNotEmpty()
         }
         .map(HttpResponse::body)
+        .filter { BitmapFactory.decodeByteArray(it, 0, it.size) != null }
         .onErrorComplete()
 
     @VisibleForTesting

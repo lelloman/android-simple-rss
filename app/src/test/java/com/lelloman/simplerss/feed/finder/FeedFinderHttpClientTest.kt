@@ -1,9 +1,9 @@
 package com.lelloman.simplerss.feed.finder
 
+import com.lelloman.common.http.HttpClient
+import com.lelloman.common.http.HttpClientException
+import com.lelloman.common.http.HttpResponse
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.simplerss.http.HttpClient
-import com.lelloman.simplerss.http.HttpClientException
-import com.lelloman.simplerss.http.HttpResponse
 import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.argThat
 import com.nhaarman.mockito_kotlin.mock
