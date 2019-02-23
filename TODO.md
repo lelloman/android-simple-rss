@@ -53,5 +53,6 @@ BUGS:
 - [BUG] smoke test 2 sometimes fails with articles list empty view not showing "you haven't add any source"
 - [BUG] favicon fetching is messed up, it seems that it doesn't fetch favicons at all
 - [BUG] if a source has no favicon identicon is displayed in sources list but not in the articles
+- [BUG] atom feed seems broken (fanpage.it/feed/atom)
 
 IN PROGRESS:
