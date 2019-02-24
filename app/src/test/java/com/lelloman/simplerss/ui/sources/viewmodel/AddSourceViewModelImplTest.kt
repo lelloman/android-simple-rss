@@ -50,7 +50,6 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
             ),
             sourcesRepository = sourcesRepository,
             feedFetcher = feedFetcher,
-            loggerFactory = MockLoggerFactory(),
             urlValidator = urlValidator
         )
     }

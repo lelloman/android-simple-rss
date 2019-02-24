@@ -24,7 +24,6 @@ class TestApp : SimpleRssApplication() {
         override fun loadUrlIntoImageView(uri: String, view: ImageView, placeHolderId: Int?) =
             view.setImageResource(placeHolderId ?: 0)
     }
-        set(value) {}
 
     override fun onCreate() {
         super.onCreate()

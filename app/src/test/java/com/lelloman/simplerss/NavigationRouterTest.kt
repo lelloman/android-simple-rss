@@ -28,7 +28,7 @@ class NavigationRouterTest {
 
         tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
-        verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
+        verify(starter).start(NavigationRouterTest.ACTIVITY, deepLink)
     }
 
     @Test
@@ -36,9 +36,9 @@ class NavigationRouterTest {
         val deepLink = DeepLink(SimpleRssNavigationScreen.ADD_SOURCE)
         SimpleRssNavigationScreen.ADD_SOURCE.deepLinkStartable = starter
 
-        tested.handleDeepLink(NavigationRouterTest.Companion.ACTIVITY, DeepLinkNavigationEvent(deepLink))
+        tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
-        verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
+        verify(starter).start(NavigationRouterTest.ACTIVITY, deepLink)
     }
 
     @Test
@@ -47,9 +47,9 @@ class NavigationRouterTest {
         val deepLink = DeepLink(SimpleRssNavigationScreen.ARTICLE).putString(ARG_URL, url)
         SimpleRssNavigationScreen.ARTICLE.deepLinkStartable = starter
 
-        tested.handleDeepLink(NavigationRouterTest.Companion.ACTIVITY, DeepLinkNavigationEvent(deepLink))
+        tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
-        verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
+        verify(starter).start(NavigationRouterTest.ACTIVITY, deepLink)
     }
 
     @Test
@@ -57,9 +57,9 @@ class NavigationRouterTest {
         val deepLink = DeepLink(SimpleRssNavigationScreen.SETTINGS)
         SimpleRssNavigationScreen.SETTINGS.deepLinkStartable = starter
 
-        tested.handleDeepLink(NavigationRouterTest.Companion.ACTIVITY, DeepLinkNavigationEvent(deepLink))
+        tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
-        verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
+        verify(starter).start(NavigationRouterTest.ACTIVITY, deepLink)
     }
 
     @Test
@@ -67,9 +67,9 @@ class NavigationRouterTest {
         val deepLink = DeepLink(SimpleRssNavigationScreen.WALKTHROUGH)
         SimpleRssNavigationScreen.WALKTHROUGH.deepLinkStartable = starter
 
-        tested.handleDeepLink(NavigationRouterTest.Companion.ACTIVITY, DeepLinkNavigationEvent(deepLink))
+        tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
-        verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
+        verify(starter).start(NavigationRouterTest.ACTIVITY, deepLink)
     }
 
     @Test
@@ -77,9 +77,9 @@ class NavigationRouterTest {
         val deepLink = DeepLink(SimpleRssNavigationScreen.ARTICLES_LIST)
         SimpleRssNavigationScreen.ARTICLES_LIST.deepLinkStartable = starter
 
-        tested.handleDeepLink(NavigationRouterTest.Companion.ACTIVITY, DeepLinkNavigationEvent(deepLink))
+        tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
-        verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
+        verify(starter).start(NavigationRouterTest.ACTIVITY, deepLink)
     }
 
     @Test
@@ -87,9 +87,9 @@ class NavigationRouterTest {
         val deepLink = DeepLink(SimpleRssNavigationScreen.DISCOVER_URL)
         SimpleRssNavigationScreen.DISCOVER_URL.deepLinkStartable = starter
 
-        tested.handleDeepLink(NavigationRouterTest.Companion.ACTIVITY, DeepLinkNavigationEvent(deepLink))
+        tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
-        verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
+        verify(starter).start(NavigationRouterTest.ACTIVITY, deepLink)
     }
 
     @Test
@@ -98,9 +98,9 @@ class NavigationRouterTest {
         val deepLink = DeepLink(SimpleRssNavigationScreen.FOUND_FEED_LIST).putString(ARG_URL, url)
         SimpleRssNavigationScreen.FOUND_FEED_LIST.deepLinkStartable = starter
 
-        tested.handleDeepLink(NavigationRouterTest.Companion.ACTIVITY, DeepLinkNavigationEvent(deepLink))
+        tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
 
-        verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
+        verify(starter).start(NavigationRouterTest.ACTIVITY, deepLink)
     }
 
     @Test

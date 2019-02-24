@@ -3,7 +3,7 @@ package com.lelloman.simplerss.testutils.screen
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withText
-import com.lelloman.instrumentedtestutils.Screen
+import com.lelloman.common.androidtestutils.Screen
 import com.lelloman.instrumentedtestutils.ViewActions.clickOnRecyclerViewItem
 import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
 import com.lelloman.instrumentedtestutils.ViewActions.openOverflowMenu
@@ -59,10 +59,6 @@ class ArticlesListScreen : Screen() {
 
     fun showsArticleWithTitle(position: Int, title: String) = apply { checkViewAtPositionHasText(position, title, recyclerViewId) }
 
-    fun rotateLeft() = apply { com.lelloman.instrumentedtestutils.rotateLeft() }
-    fun rotateRight() = apply { com.lelloman.instrumentedtestutils.rotateRight() }
-    fun rotateNatural() = apply { com.lelloman.instrumentedtestutils.rotateNatural() }
-
     fun clickOnArticle(position: Int) = clickOnRecyclerViewItem(position, recyclerViewId).run {
         InAppArticleScreen()
     }
@@ -74,6 +70,4 @@ class ArticlesListScreen : Screen() {
     fun articleWithoutImageAt(position: Int) = apply {
         checkViewAtPositionHasImageGone(position, recyclerViewId, R.id.image)
     }
-
-    fun wait(seconds: Double) = apply { com.lelloman.instrumentedtestutils.wait(seconds) }
 }

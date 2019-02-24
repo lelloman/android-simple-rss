@@ -1,13 +1,13 @@
 package com.lelloman.simplerss.testutils.screen
 
 import androidx.test.espresso.Espresso.pressBack
-import com.lelloman.instrumentedtestutils.Screen
-import com.lelloman.instrumentedtestutils.viewIsDisplayed
+import com.lelloman.common.androidtestutils.Screen
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewIsDisplayed
 import com.lelloman.simplerss.R
 
 class InAppArticleScreen : Screen() {
     init {
-        viewIsDisplayed(R.id.web_view)
+        checkViewIsDisplayed(R.id.web_view)
     }
 
     fun backToArticlesList() = pressBack().run { ArticlesListScreen() }

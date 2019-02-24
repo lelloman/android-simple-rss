@@ -1,8 +1,10 @@
 package com.lelloman.simplerss
 
 import androidx.test.rule.ActivityTestRule
+import com.lelloman.common.androidtestutils.closeKeyboard
+import com.lelloman.common.androidtestutils.hasText
+import com.lelloman.common.androidtestutils.wait
 import com.lelloman.simplerss.testutils.MockHttpClient
-import com.lelloman.simplerss.testutils.clickOnOk
 import com.lelloman.simplerss.testutils.screen.ArticlesListScreen
 import com.lelloman.simplerss.testutils.screen.WalkthroughScreen
 import com.lelloman.simplerss.testutils.setUpTestAppWithMockedHttpStack
@@ -56,7 +58,7 @@ class SmokeTests {
             .typeUrl(MockHttpClient.URL_ASD)
             .closeKeyboard()
             .clickOnDiscover()
-            .wait(2)
+            .wait(2.0)
             .displaysFoundFeeds(3)
             .hasText(MockHttpClient.URL_ASD)
             .backToDiscoverUrlScreen()

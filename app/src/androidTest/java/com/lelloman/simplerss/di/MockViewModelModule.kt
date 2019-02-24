@@ -1,6 +1,5 @@
 package com.lelloman.simplerss.di
 
-import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.feed.fetcher.FeedFetcher
@@ -40,7 +39,6 @@ class MockViewModelModule : ViewModelModule() {
         sourcesRepository: SourcesRepository,
         dependencies: BaseViewModel.Dependencies,
         feedFetcher: FeedFetcher,
-        loggerFactory: LoggerFactory,
         urlValidator: UrlValidator
     ): AddSourceViewModel = addSourceViewModel
 }

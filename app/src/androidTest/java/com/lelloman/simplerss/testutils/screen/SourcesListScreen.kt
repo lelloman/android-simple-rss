@@ -2,7 +2,7 @@ package com.lelloman.simplerss.testutils.screen
 
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import com.lelloman.instrumentedtestutils.Screen
+import com.lelloman.common.androidtestutils.Screen
 import com.lelloman.instrumentedtestutils.ViewActions.clickView
 import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
 import com.lelloman.instrumentedtestutils.ViewAssertions.checkRecyclerViewCount
