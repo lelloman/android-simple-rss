@@ -2,7 +2,9 @@ package com.lelloman.simplerss.unit
 
 import androidx.lifecycle.MutableLiveData
 import androidx.test.rule.ActivityTestRule
-import androidx.test.runner.AndroidJUnit4
+import com.lelloman.common.androidtestutils.rotateLeft
+import com.lelloman.common.androidtestutils.rotateNatural
+import com.lelloman.common.androidtestutils.rotateRight
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.actionevent.ViewActionEvent
 import com.lelloman.instrumentedtestutils.onUiThread
@@ -21,12 +23,10 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mockito.never
 import org.mockito.Mockito.verify
 import java.util.*
 
-@RunWith(AndroidJUnit4::class)
 class ArticlesListActivityTest {
 
     @get:Rule

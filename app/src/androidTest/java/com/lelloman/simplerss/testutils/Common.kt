@@ -7,8 +7,6 @@ import androidx.test.espresso.ViewAction
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.http.HttpModule
 import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.instrumentedtestutils.Screen
-import com.lelloman.instrumentedtestutils.ViewActions
 import com.lelloman.instrumentedtestutils.rotateNatural
 import com.lelloman.simplerss.widget.ToggleSettingItemView
 import org.hamcrest.BaseMatcher
@@ -45,9 +43,4 @@ fun setUpTestAppWithMockedHttpStack(
         }
     }
     TestApp.resetPersistence()
-}
-
-@Deprecated("move this to common")
-fun <T : Screen> T.clickOnOk(): T = apply {
-    ViewActions.clickViewWithText("OK")
 }

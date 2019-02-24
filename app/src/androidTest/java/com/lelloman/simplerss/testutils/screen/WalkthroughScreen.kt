@@ -5,9 +5,9 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import com.lelloman.common.androidtestutils.Screen
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.widget.PagerIndicator
-import com.lelloman.instrumentedtestutils.Screen
 import com.lelloman.instrumentedtestutils.ViewActions.clickView
 import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
 import com.lelloman.instrumentedtestutils.ViewAssertions.checkRecyclerViewCount

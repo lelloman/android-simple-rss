@@ -1,7 +1,6 @@
 package com.lelloman.simplerss.di
 
 import androidx.lifecycle.ViewModel
-import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.FileProvider
 import com.lelloman.common.view.SemanticTimeProvider
@@ -77,13 +76,11 @@ open class ViewModelModule {
         sourcesRepository: SourcesRepository,
         dependencies: BaseViewModel.Dependencies,
         feedFetcher: FeedFetcher,
-        loggerFactory: LoggerFactory, // TODO use dependencies
         urlValidator: UrlValidator
     ): AddSourceViewModel = AddSourceViewModelImpl(
         dependencies = dependencies,
         sourcesRepository = sourcesRepository,
         feedFetcher = feedFetcher,
-        loggerFactory = loggerFactory,
         urlValidator = urlValidator
     )
 

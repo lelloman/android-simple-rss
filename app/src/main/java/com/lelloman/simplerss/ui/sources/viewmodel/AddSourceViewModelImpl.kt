@@ -2,7 +2,6 @@ package com.lelloman.simplerss.ui.sources.viewmodel
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.simplerss.R
@@ -17,7 +16,6 @@ import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 class AddSourceViewModelImpl(
     private val sourcesRepository: SourcesRepository,
     private val feedFetcher: FeedFetcher,
-    loggerFactory: LoggerFactory,
     private val urlValidator: UrlValidator,
     dependencies: Dependencies
 ) : AddSourceViewModel(dependencies) {
@@ -31,7 +29,7 @@ class AddSourceViewModelImpl(
 
     private var saving = false
 
-    private val logger = loggerFactory.getLogger(javaClass)
+    private val logger = dependencies.loggerFactory.getLogger(javaClass)
 
     override val testingUrl: MutableLiveData<Boolean> by LazyLiveData {
         testingUrl.postValue(false)

@@ -10,17 +10,19 @@ import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import com.lelloman.common.androidtestutils.Screen
 import com.lelloman.common.view.AppTheme
-import com.lelloman.instrumentedtestutils.Screen
 import com.lelloman.instrumentedtestutils.ViewActions.clickView
 import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewIsDisplayed
 import com.lelloman.instrumentedtestutils.viewWithId
+import com.lelloman.instrumentedtestutils.viewWithText
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.testutils.setToggleSettingChecked
 import org.hamcrest.CoreMatchers.*
 import org.hamcrest.Description
 
 class SettingsScreen : Screen() {
+
     init {
         checkViewIsDisplayed(R.id.settings_root)
     }
@@ -61,4 +63,6 @@ class SettingsScreen : Screen() {
         viewWithId(R.id.clear_data).perform(scrollTo())
         clickView(R.id.clear_data)
     }
+
+    fun clickOnOk() = apply { viewWithText("OK").perform(click()) }
 }
