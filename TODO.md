@@ -35,11 +35,14 @@ page in walkthrough
 - [DEBT] move logic from BaseActivity to a BaseActivityViewModel
 - [DEBT] check if subscribing on new thread when doing http, should use a thread pool 
 - [DEBT] FeedFinderIntegrationTest.findsLinksInHtml2 is blocking >_<
+- [BUG] if a source has no favicon identicon is displayed in sources list but not in the articles
+- [BUG] favicon fetching is messed up, it seems that it doesn't fetch favicons at all
 </s>
 
 DEBT:
 - [DEBT] ui-unit tests for all activities
 - [DEBT] make in-app article web view use OkHttp and adapt smoke test accordingly
+- [DEBT] filter favicon responses by mime type image and check if image/x-icon can be converted to bitmap somehow
 
 FEATURE:
 - [FEATURE] add option to choose which external app is used to open articles
@@ -51,8 +54,7 @@ BUGS:
 - [BUG] pop up theme for overflow menu in articles list is always light even on darcula theme
 - [BUG] in the walkthrough the highlight color for text is wrong, the text is white but if highlighted it turns black :/ 
 - [BUG] smoke test 2 sometimes fails with articles list empty view not showing "you haven't add any source"
-- [BUG] favicon fetching is messed up, it seems that it doesn't fetch favicons at all
-- [BUG] if a source has no favicon identicon is displayed in sources list but not in the articles
 - [BUG] atom feed seems broken (fanpage.it/feed/atom)
+- [BUG] when opening add source screen the edittext has focus but they keyboard doesnt pop up
 
 IN PROGRESS:

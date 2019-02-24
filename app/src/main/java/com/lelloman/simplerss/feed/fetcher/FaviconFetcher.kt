@@ -32,7 +32,7 @@ class FaviconFetcher(
         }
         .filter { response ->
             logger.d("getPngFaviconInternal($url) http response successful ${response.isSuccessful} body length ${response.body.size}")
-            response.isSuccessful && response.body.isNotEmpty()
+            response.isValidFaviconResponse()
         }
         .map(HttpResponse::body)
         .filter { BitmapFactory.decodeByteArray(it, 0, it.size) != null }
@@ -43,4 +43,7 @@ class FaviconFetcher(
 
     @VisibleForTesting
     fun getDuckDuckGoFaviconUrl(baseUrl: String) = "https://icons.duckduckgo.com/ip3/$baseUrl.ico"
+
+    private fun HttpResponse.isValidFaviconResponse() =
+        isSuccessful && body.isNotEmpty() // TODO add content type check when available in common
 }

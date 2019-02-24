@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
+import com.lelloman.simplerss.BuildConfig
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityArticlesListBinding
 import com.lelloman.simplerss.persistence.settings.AppSettings
@@ -56,6 +57,9 @@ class ArticlesListActivity :
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.activity_articles_list, menu)
+        if (BuildConfig.DEBUG) {
+            menuInflater.inflate(R.menu.activity_articles_list_debug_ext, menu)
+        }
         return true
     }
 
@@ -74,6 +78,12 @@ class ArticlesListActivity :
         }
         R.id.action_discover_sources -> {
             viewModel.onDiscoverSourceClicked()
+            true
+        }
+        R.id.action_debug -> {
+            if (BuildConfig.DEBUG) {
+                viewModel.onDebugClicked()
+            }
             true
         }
         else -> super.onOptionsItemSelected(item)

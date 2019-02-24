@@ -95,6 +95,8 @@ class ArticlesListViewModelImpl(
 
     override fun onDiscoverSourceClicked() = navigate(SimpleRssNavigationScreen.DISCOVER_URL)
 
+    override fun onDebugClicked() = shortToast("DEBUG")
+
     private fun setNoArticleAvailableAtm() {
         emptyViewDescriptionText.value = getString(R.string.empty_articles_must_refresh)
         emptyViewButtonText.value = getString(R.string.refresh)
