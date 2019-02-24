@@ -25,4 +25,6 @@ abstract class ArticlesListViewModel(dependencies: Dependencies) : BaseViewModel
     abstract fun onSettingsClicked()
 
     abstract fun onDiscoverSourceClicked()
+
+    abstract fun onDebugClicked()
 }
