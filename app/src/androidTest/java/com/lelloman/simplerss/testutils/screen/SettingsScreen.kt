@@ -6,12 +6,14 @@ import androidx.appcompat.widget.Toolbar
 import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.scrollTo
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.lelloman.common.view.AppTheme
 import com.lelloman.instrumentedtestutils.Screen
-import com.lelloman.instrumentedtestutils.viewIsDisplayed
+import com.lelloman.instrumentedtestutils.ViewActions.clickView
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewIsDisplayed
 import com.lelloman.instrumentedtestutils.viewWithId
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.testutils.setToggleSettingChecked
@@ -20,7 +22,7 @@ import org.hamcrest.Description
 
 class SettingsScreen : Screen() {
     init {
-        viewIsDisplayed(R.id.settings_root)
+        checkViewIsDisplayed(R.id.settings_root)
     }
 
     fun backToArticlesList() = pressBack().run { ArticlesListScreen() }
@@ -53,6 +55,10 @@ class SettingsScreen : Screen() {
     fun setTheme(theme: AppTheme) = apply {
         onView(withId(R.id.spinner_themes)).perform(ViewActions.click())
         onData(allOf(`is`(instanceOf(String::class.java)), `is`(theme.name))).perform(click())
+    }
 
+    fun clickOnClearData() = apply {
+        viewWithId(R.id.clear_data).perform(scrollTo())
+        clickView(R.id.clear_data)
     }
 }

@@ -45,7 +45,8 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
                 actionTokenProvider = mock(),
                 settings = mock(),
                 uiScheduler = trampoline(),
-                ioScheduler = trampoline()
+                ioScheduler = trampoline(),
+                loggerFactory = MockLoggerFactory()
             ),
             sourcesRepository = sourcesRepository,
             feedFetcher = feedFetcher,

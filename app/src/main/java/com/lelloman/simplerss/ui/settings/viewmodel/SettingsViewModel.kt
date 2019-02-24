@@ -26,4 +26,8 @@ abstract class SettingsViewModel(dependencies: Dependencies) : BaseViewModel(dep
     abstract fun onUseMeteredNetworkChanged(isActive: Boolean)
 
     abstract fun onOpenArticlesInAppChanged(isActive: Boolean)
+
+    abstract fun onClearDataClicked()
+
+    abstract fun onClearDataConfirmed()
 }

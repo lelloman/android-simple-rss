@@ -3,6 +3,7 @@ package com.lelloman.simplerss.ui.sources.viewmodel
 import android.view.View
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.jvmtestutils.AndroidArchTest
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.jvmtestutils.MockResourceProvider
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.utils.ActionTokenProvider
@@ -50,7 +51,8 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
                 resourceProvider = resourceProvider,
                 actionTokenProvider = actionTokenProvider,
                 ioScheduler = trampoline(),
-                uiScheduler = trampoline()
+                uiScheduler = trampoline(),
+                loggerFactory = MockLoggerFactory()
             )
         )
     }

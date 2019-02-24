@@ -3,10 +3,12 @@ package com.lelloman.simplerss.di
 import androidx.lifecycle.ViewModel
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
+import com.lelloman.common.view.FileProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.feed.fetcher.FeedFetcher
 import com.lelloman.simplerss.html.HtmlSpanner
+import com.lelloman.simplerss.persistence.db.AppDatabase
 import com.lelloman.simplerss.persistence.db.SourcesDao
 import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.ui.articles.viewmodel.ArticleViewModel
@@ -75,7 +77,7 @@ open class ViewModelModule {
         sourcesRepository: SourcesRepository,
         dependencies: BaseViewModel.Dependencies,
         feedFetcher: FeedFetcher,
-        loggerFactory: LoggerFactory,
+        loggerFactory: LoggerFactory, // TODO use dependencies
         urlValidator: UrlValidator
     ): AddSourceViewModel = AddSourceViewModelImpl(
         dependencies = dependencies,
@@ -105,11 +107,15 @@ open class ViewModelModule {
     open fun provideSettingsViewModel(
         dependencies: BaseViewModel.Dependencies,
         appSettings: AppSettings,
-        semanticTimeProvider: SemanticTimeProvider
+        semanticTimeProvider: SemanticTimeProvider,
+        appDatabase: AppDatabase,
+        fileProvider: FileProvider
     ): SettingsViewModel = SettingsViewModelImpl(
         appSettings = appSettings,
         dependencies = dependencies,
-        semanticTimeProvider = semanticTimeProvider
+        semanticTimeProvider = semanticTimeProvider,
+        appDatabase = appDatabase,
+        fileProvider = fileProvider
     )
 
     @Provides
