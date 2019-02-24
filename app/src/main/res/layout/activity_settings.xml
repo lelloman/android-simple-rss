@@ -73,6 +73,16 @@
                     android:selectedItemPosition="@={viewModel.selectedTheme}" />
             </com.lelloman.simplerss.widget.SettingsItemView>
 
+            <com.lelloman.simplerss.widget.SettingsItemView
+                android:id="@+id/clear_data"
+                style="@style/SettingsItemContainer"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:onClick="@{(_) -> viewModel.onClearDataClicked()}"
+                app:description="@string/settings_clear_data_descr"
+                app:title="@string/settings_clear_data_title">
+
+            </com.lelloman.simplerss.widget.SettingsItemView>
+
         </LinearLayout>
     </ScrollView>
 </layout>

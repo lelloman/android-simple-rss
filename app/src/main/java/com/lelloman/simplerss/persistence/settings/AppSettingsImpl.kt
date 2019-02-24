@@ -53,7 +53,7 @@ class AppSettingsImpl(
 
     override fun reset() {
         baseApplicationSettings.reset()
-        prefs.edit().clear().apply()
+        prefs.edit().clear().commit()
         readAllSettings()
     }
 

@@ -62,7 +62,7 @@ class AddFoundFeedsConfirmationDialogFragment : DialogFragment() {
                     }
                     fragment.show(context.supportFragmentManager, AddFoundFeedsConfirmationDialogFragment::class.java.simpleName)
                 } else {
-                    throw IllegalArgumentException("Context argument must be an Activity")
+                    throw IllegalArgumentException("Context argument must be a FragmentActivity")
                 }
             }
         }

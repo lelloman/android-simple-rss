@@ -3,6 +3,16 @@ package com.lelloman.simplerss.navigation
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.navigation.NavigationScreen
+import com.lelloman.simplerss.ui.articles.view.ArticleActivity
+import com.lelloman.simplerss.ui.articles.view.ArticlesListActivity
+import com.lelloman.simplerss.ui.discover.view.AddFoundFeedsConfirmationDialogFragment
+import com.lelloman.simplerss.ui.discover.view.DiscoverUrlActivity
+import com.lelloman.simplerss.ui.discover.view.FoundFeedListActivity
+import com.lelloman.simplerss.ui.settings.view.ClearDataConfirmationDialogFragment
+import com.lelloman.simplerss.ui.settings.view.SettingsActivity
+import com.lelloman.simplerss.ui.sources.view.AddSourceActivity
+import com.lelloman.simplerss.ui.sources.view.SourcesListActivity
+import com.lelloman.simplerss.ui.walkthrough.view.WalkthroughActivity
 
 /**
  * Cannot change the names, [DeepLink] uses the names and if the values are changed in this enum
@@ -11,15 +21,16 @@ import com.lelloman.common.navigation.NavigationScreen
 enum class SimpleRssNavigationScreen(
     override var deepLinkStartable: DeepLinkStartable
 ) : NavigationScreen {
-    ADD_FOUND_FEEDS_CONFIRMATION(com.lelloman.simplerss.ui.discover.view.AddFoundFeedsConfirmationDialogFragment.deepLinkStartable),
-    ADD_SOURCE(com.lelloman.simplerss.ui.sources.view.AddSourceActivity.deepLinkStartable),
-    ARTICLE(com.lelloman.simplerss.ui.articles.view.ArticleActivity.deepLinkStartable),
-    ARTICLES_LIST(com.lelloman.simplerss.ui.articles.view.ArticlesListActivity.deepLinkStartable),
-    DISCOVER_URL(com.lelloman.simplerss.ui.discover.view.DiscoverUrlActivity.deepLinkStartable),
-    FOUND_FEED_LIST(com.lelloman.simplerss.ui.discover.view.FoundFeedListActivity.deepLinkStartable),
-    SETTINGS(com.lelloman.simplerss.ui.settings.view.SettingsActivity.deepLinkStartable),
-    SOURCES_LIST(com.lelloman.simplerss.ui.sources.view.SourcesListActivity.deepLinkStartable),
-    WALKTHROUGH(com.lelloman.simplerss.ui.walkthrough.view.WalkthroughActivity.deepLinkStartable);
+    ADD_FOUND_FEEDS_CONFIRMATION(AddFoundFeedsConfirmationDialogFragment.deepLinkStartable),
+    ADD_SOURCE(AddSourceActivity.deepLinkStartable),
+    ARTICLE(ArticleActivity.deepLinkStartable),
+    ARTICLES_LIST(ArticlesListActivity.deepLinkStartable),
+    CLEAR_DATA_CONFIRMATION(ClearDataConfirmationDialogFragment.deepLinkStartable),
+    DISCOVER_URL(DiscoverUrlActivity.deepLinkStartable),
+    FOUND_FEED_LIST(FoundFeedListActivity.deepLinkStartable),
+    SETTINGS(SettingsActivity.deepLinkStartable),
+    SOURCES_LIST(SourcesListActivity.deepLinkStartable),
+    WALKTHROUGH(WalkthroughActivity.deepLinkStartable);
 
     companion object {
 

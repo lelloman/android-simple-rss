@@ -2,6 +2,7 @@ package com.lelloman.simplerss.ui.sources.viewmodel
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.jvmtestutils.AndroidArchTest
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.view.ResourceProvider
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
@@ -37,7 +38,8 @@ class SourceViewModelImplTest : AndroidArchTest() {
                 actionTokenProvider = mock(),
                 settings = mock(),
                 ioScheduler = trampoline(),
-                uiScheduler = trampoline()
+                uiScheduler = trampoline(),
+                loggerFactory = MockLoggerFactory()
             )
         )
     }

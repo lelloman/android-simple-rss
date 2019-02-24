@@ -4,14 +4,14 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.lelloman.instrumentedtestutils.Screen
-import com.lelloman.instrumentedtestutils.checkIsSwipeRefreshing
-import com.lelloman.instrumentedtestutils.checkRecyclerViewCount
-import com.lelloman.instrumentedtestutils.checkViewAtPositionHasImageGone
-import com.lelloman.instrumentedtestutils.checkViewAtPositionHasImageVisible
-import com.lelloman.instrumentedtestutils.checkViewAtPositionHasText
-import com.lelloman.instrumentedtestutils.clickOnRecyclerViewItem
-import com.lelloman.instrumentedtestutils.clickViewWithText
-import com.lelloman.instrumentedtestutils.openOverflowMenu
+import com.lelloman.instrumentedtestutils.ViewActions.clickOnRecyclerViewItem
+import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
+import com.lelloman.instrumentedtestutils.ViewActions.openOverflowMenu
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkIsSwipeRefreshing
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkRecyclerViewCount
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewAtPositionHasImageGone
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewAtPositionHasImageVisible
+import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewAtPositionHasText
 import com.lelloman.instrumentedtestutils.viewWithId
 import com.lelloman.simplerss.R
 

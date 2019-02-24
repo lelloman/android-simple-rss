@@ -103,6 +103,16 @@ class NavigationRouterTest {
         verify(starter).start(NavigationRouterTest.Companion.ACTIVITY, deepLink)
     }
 
+    @Test
+    fun `finds starter method for CLEAR_DATA_CONFIRMATION`() {
+        val deepLink = DeepLink(SimpleRssNavigationScreen.CLEAR_DATA_CONFIRMATION)
+        SimpleRssNavigationScreen.CLEAR_DATA_CONFIRMATION.deepLinkStartable = starter
+
+        tested.handleDeepLink(NavigationRouterTest.ACTIVITY, DeepLinkNavigationEvent(deepLink))
+
+        verify(starter).start(NavigationRouterTest.ACTIVITY, deepLink)
+    }
+
     private companion object {
         val ACTIVITY: Activity = object : Activity() {}
     }

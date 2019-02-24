@@ -5,15 +5,23 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.AppTheme
+import com.lelloman.common.view.FileProvider
 import com.lelloman.common.view.SemanticTimeProvider
+import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
+import com.lelloman.simplerss.persistence.db.AppDatabase
 import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
+import io.reactivex.Completable
 
 class SettingsViewModelImpl(
     private val appSettings: AppSettings,
     semanticTimeProvider: SemanticTimeProvider,
+    private val appDatabase: AppDatabase,
+    private val fileProvider: FileProvider,
     dependencies: Dependencies
 ) : SettingsViewModel(dependencies) {
+
+    private val logger = dependencies.loggerFactory.getLogger(javaClass)
 
     private val sortedRefreshIntervals = SourceRefreshInterval
         .values()
@@ -108,4 +116,23 @@ class SettingsViewModelImpl(
 
     override fun onOpenArticlesInAppChanged(isActive: Boolean) =
         appSettings.setOpenArticlesInApp(isActive)
+
+    override fun onClearDataClicked() = navigate(SimpleRssNavigationScreen.CLEAR_DATA_CONFIRMATION)
+
+    override fun onClearDataConfirmed() {
+        Completable
+            .fromAction { appDatabase.clearAllTables() }
+            .onErrorComplete {
+                logger.e("Something went wrong when trying to clear db", it)
+                true
+            }
+            .andThen(fileProvider.deleteAllCacheFiles())
+            .doOnError { logger.e("Something went wrong when trying to delete cache files", it) }
+            .onErrorComplete()
+            .andThen(fileProvider.deleteAllInternalFiles())
+            .doOnError { logger.e("Something went wrong when trying to delete internal files", it) }
+            .onErrorComplete()
+            .subscribeOn(ioScheduler)
+            .subscribe()
+    }
 }

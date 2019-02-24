@@ -1,6 +1,7 @@
 package com.lelloman.simplerss.ui.articles.viewmodel
 
 import com.lelloman.common.jvmtestutils.AndroidArchTest
+import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.jvmtestutils.MockResourceProvider
 import com.lelloman.common.jvmtestutils.test
 import com.lelloman.common.navigation.DeepLinkNavigationEvent
@@ -46,7 +47,8 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
                 resourceProvider = resourceProvider,
                 actionTokenProvider = mock(),
                 ioScheduler = trampoline(),
-                uiScheduler = trampoline()
+                uiScheduler = trampoline(),
+                loggerFactory = MockLoggerFactory()
             )
         )
     }

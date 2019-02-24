@@ -1,6 +1,8 @@
 package com.lelloman.simplerss
 
 import androidx.test.rule.ActivityTestRule
+import com.lelloman.simplerss.testutils.MockHttpClient
+import com.lelloman.simplerss.testutils.clickOnOk
 import com.lelloman.simplerss.testutils.screen.ArticlesListScreen
 import com.lelloman.simplerss.testutils.screen.WalkthroughScreen
 import com.lelloman.simplerss.testutils.setUpTestAppWithMockedHttpStack
@@ -51,14 +53,14 @@ class SmokeTests {
             .clickOnSettingsInOverflow()
             .backToArticlesList()
             .clickOnDiscoverSourcesInOverflow()
-            .typeUrl(URL_ASD)
+            .typeUrl(MockHttpClient.URL_ASD)
             .closeKeyboard()
             .clickOnDiscover()
             .wait(2)
             .displaysFoundFeeds(3)
-            .hasText(URL_ASD)
+            .hasText(MockHttpClient.URL_ASD)
             .backToDiscoverUrlScreen()
-            .hasText(URL_ASD)
+            .hasText(MockHttpClient.URL_ASD)
             .backToArticlesList()
 
         // add 2 sources
@@ -81,7 +83,7 @@ class SmokeTests {
             .clickSave()
             .showsSources(2)
             .backToArticlesList()
-            .showsArticles(FANPAGE_ARTICLES_COUNT + REPUBBLICA_ARTICLES_COUNT)
+            .showsArticles(MockHttpClient.FANPAGE_ARTICLES_COUNT + MockHttpClient.REPUBBLICA_ARTICLES_COUNT)
 
         // verify articles images visibility
         ArticlesListScreen()
@@ -132,7 +134,7 @@ class SmokeTests {
             .apply { isNetworkMetered = false }
             .swipeToRefresh()
             .wait(2.0)
-            .showsArticles(REPUBBLICA_ARTICLES_COUNT)
+            .showsArticles(MockHttpClient.REPUBBLICA_ARTICLES_COUNT)
 
         // add another source and verify sources enable/disable
         ArticlesListScreen()
@@ -142,15 +144,23 @@ class SmokeTests {
             .typeSourceUrl(MockHttpClient.URL_FANPAGE_FEED)
             .clickSave()
             .backToArticlesList()
-            .showsArticles(REPUBBLICA_ARTICLES_COUNT + FANPAGE_ARTICLES_COUNT)
+            .showsArticles(MockHttpClient.REPUBBLICA_ARTICLES_COUNT + MockHttpClient.FANPAGE_ARTICLES_COUNT)
             .clickOnSourcesInOverflow()
             .clickOnSource("repubblica")
             .backToArticlesList()
-            .showsArticles(FANPAGE_ARTICLES_COUNT)
+            .showsArticles(MockHttpClient.FANPAGE_ARTICLES_COUNT)
             .clickOnSourcesInOverflow()
             .clickOnSource("repubblica")
             .clickOnSource("fanpage")
             .backToArticlesList()
-            .showsArticles(REPUBBLICA_ARTICLES_COUNT)
+            .showsArticles(MockHttpClient.REPUBBLICA_ARTICLES_COUNT)
+
+        // clear data
+        ArticlesListScreen()
+            .clickOnSettingsInOverflow()
+            .clickOnClearData()
+            .clickOnOk()
+            .backToArticlesList()
+            .showsEmptyViewWithNoSourcesText()
     }
 }
