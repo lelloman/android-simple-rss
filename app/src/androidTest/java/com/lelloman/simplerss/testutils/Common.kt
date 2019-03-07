@@ -4,10 +4,10 @@ import android.content.Context
 import android.view.View
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
+import com.lelloman.common.androidtestutils.rotateNatural
 import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.http.HttpModule
 import com.lelloman.common.view.MeteredConnectionChecker
-import com.lelloman.instrumentedtestutils.rotateNatural
 import com.lelloman.simplerss.widget.ToggleSettingItemView
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description

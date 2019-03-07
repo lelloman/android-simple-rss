@@ -2,7 +2,7 @@ package com.lelloman.simplerss.testutils.screen
 
 import androidx.test.espresso.Espresso.pressBack
 import com.lelloman.common.androidtestutils.Screen
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkRecyclerViewCount
+import com.lelloman.common.androidtestutils.ViewAssertions.checkRecyclerViewCount
 import com.lelloman.simplerss.R
 
 class FoundFeedsScreen : Screen() {

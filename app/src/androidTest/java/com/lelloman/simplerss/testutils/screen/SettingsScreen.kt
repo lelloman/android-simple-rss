@@ -11,11 +11,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.lelloman.common.androidtestutils.Screen
+import com.lelloman.common.androidtestutils.ViewActions.clickView
+import com.lelloman.common.androidtestutils.ViewAssertions.checkViewIsDisplayed
+import com.lelloman.common.androidtestutils.viewWithId
+import com.lelloman.common.androidtestutils.viewWithText
 import com.lelloman.common.view.AppTheme
-import com.lelloman.instrumentedtestutils.ViewActions.clickView
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewIsDisplayed
-import com.lelloman.instrumentedtestutils.viewWithId
-import com.lelloman.instrumentedtestutils.viewWithText
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.testutils.setToggleSettingChecked
 import org.hamcrest.CoreMatchers.*

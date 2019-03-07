@@ -2,10 +2,10 @@ package com.lelloman.simplerss.unit
 
 import androidx.lifecycle.MutableLiveData
 import androidx.test.rule.ActivityTestRule
+import com.lelloman.common.androidtestutils.rotateNatural
+import com.lelloman.common.androidtestutils.whenever
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.actionevent.ViewActionEvent
-import com.lelloman.instrumentedtestutils.rotateNatural
-import com.lelloman.instrumentedtestutils.whenever
 import com.lelloman.simplerss.di.MockViewModelModule
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.testutils.TestApp

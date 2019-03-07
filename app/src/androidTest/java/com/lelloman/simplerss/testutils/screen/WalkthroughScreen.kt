@@ -6,13 +6,13 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.BoundedMatcher
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import com.lelloman.common.androidtestutils.Screen
+import com.lelloman.common.androidtestutils.ViewActions.clickView
+import com.lelloman.common.androidtestutils.ViewActions.clickViewWithText
+import com.lelloman.common.androidtestutils.ViewAssertions.checkRecyclerViewCount
+import com.lelloman.common.androidtestutils.ViewAssertions.checkViewIsDisplayed
+import com.lelloman.common.androidtestutils.ViewAssertions.checkViewWithTextIsDisplayed
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.widget.PagerIndicator
-import com.lelloman.instrumentedtestutils.ViewActions.clickView
-import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkRecyclerViewCount
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewIsDisplayed
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewWithTextIsDisplayed
 import com.lelloman.simplerss.R
 import org.hamcrest.Description
 
@@ -40,8 +40,8 @@ class WalkthroughScreen : Screen() {
         clickViewWithText(AppTheme.LIGHT.name)
     }
 
-    fun swipeLeft() = apply { com.lelloman.instrumentedtestutils.ViewActions.swipeLeft(R.id.view_pager) }
-    fun swipeRight() = apply { com.lelloman.instrumentedtestutils.ViewActions.swipeRight(R.id.view_pager) }
+    fun swipeLeft() = apply { com.lelloman.common.androidtestutils.ViewActions.swipeLeft(R.id.view_pager) }
+    fun swipeRight() = apply { com.lelloman.common.androidtestutils.ViewActions.swipeRight(R.id.view_pager) }
 
     fun typeInUrlIsDisplayed() = apply { checkViewWithTextIsDisplayed(string(R.string.type_in_url)) }
 

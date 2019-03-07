@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.testutils
 
-import com.lelloman.instrumentedtestutils.TestApplicationRunner
+import com.lelloman.common.androidtestutils.TestApplicationRunner
 
 @Suppress("unused")
 class MockTestRunner : TestApplicationRunner() {

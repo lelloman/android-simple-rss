@@ -2,8 +2,8 @@ package com.lelloman.simplerss.unit
 
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.http.HttpClient
-import com.lelloman.common.http.HttpRequest
 import com.lelloman.common.http.HttpResponse
+import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.logger.Logger
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProviderImpl
