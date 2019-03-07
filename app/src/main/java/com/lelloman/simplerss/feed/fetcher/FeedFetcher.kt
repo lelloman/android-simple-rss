@@ -2,7 +2,7 @@ package com.lelloman.simplerss.feed.fetcher
 
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.http.HttpClientException
-import com.lelloman.common.http.HttpRequest
+import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.simplerss.feed.FeedParser

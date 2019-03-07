@@ -3,13 +3,13 @@ package com.lelloman.simplerss.testutils.screen
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import com.lelloman.common.androidtestutils.Screen
-import com.lelloman.instrumentedtestutils.ViewActions.clickView
-import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkRecyclerViewCount
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewIsDisplayed
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewWithTextIsDisplayed
-import com.lelloman.instrumentedtestutils.checkMatches
-import com.lelloman.instrumentedtestutils.viewWithText
+import com.lelloman.common.androidtestutils.ViewActions.clickView
+import com.lelloman.common.androidtestutils.ViewActions.clickViewWithText
+import com.lelloman.common.androidtestutils.ViewAssertions.checkRecyclerViewCount
+import com.lelloman.common.androidtestutils.ViewAssertions.checkViewIsDisplayed
+import com.lelloman.common.androidtestutils.ViewAssertions.checkViewWithTextIsDisplayed
+import com.lelloman.common.androidtestutils.checkMatches
+import com.lelloman.common.androidtestutils.viewWithText
 import com.lelloman.simplerss.R
 import org.hamcrest.CoreMatchers.not
 

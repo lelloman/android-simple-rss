@@ -4,15 +4,15 @@ import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import com.lelloman.common.androidtestutils.Screen
-import com.lelloman.instrumentedtestutils.ViewActions.clickOnRecyclerViewItem
-import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
-import com.lelloman.instrumentedtestutils.ViewActions.openOverflowMenu
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkIsSwipeRefreshing
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkRecyclerViewCount
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewAtPositionHasImageGone
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewAtPositionHasImageVisible
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewAtPositionHasText
-import com.lelloman.instrumentedtestutils.viewWithId
+import com.lelloman.common.androidtestutils.ViewActions.clickOnRecyclerViewItem
+import com.lelloman.common.androidtestutils.ViewActions.clickViewWithText
+import com.lelloman.common.androidtestutils.ViewActions.openOverflowMenu
+import com.lelloman.common.androidtestutils.ViewAssertions.checkIsSwipeRefreshing
+import com.lelloman.common.androidtestutils.ViewAssertions.checkRecyclerViewCount
+import com.lelloman.common.androidtestutils.ViewAssertions.checkViewAtPositionHasImageGone
+import com.lelloman.common.androidtestutils.ViewAssertions.checkViewAtPositionHasImageVisible
+import com.lelloman.common.androidtestutils.ViewAssertions.checkViewAtPositionHasText
+import com.lelloman.common.androidtestutils.viewWithId
 import com.lelloman.simplerss.R
 
 class ArticlesListScreen : Screen() {

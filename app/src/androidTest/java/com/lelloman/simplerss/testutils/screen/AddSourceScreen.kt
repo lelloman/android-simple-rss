@@ -5,11 +5,11 @@ import android.widget.EditText
 import androidx.test.espresso.Espresso.pressBack
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.androidtestutils.Screen
-import com.lelloman.instrumentedtestutils.ViewActions.clickView
-import com.lelloman.instrumentedtestutils.ViewActions.clickViewWithText
-import com.lelloman.instrumentedtestutils.ViewActions.typeInEditText
-import com.lelloman.instrumentedtestutils.ViewAssertions.checkViewIsDisplayed
-import com.lelloman.instrumentedtestutils.viewWithId
+import com.lelloman.common.androidtestutils.ViewActions.clickView
+import com.lelloman.common.androidtestutils.ViewActions.clickViewWithText
+import com.lelloman.common.androidtestutils.ViewActions.typeInEditText
+import com.lelloman.common.androidtestutils.ViewAssertions.checkViewIsDisplayed
+import com.lelloman.common.androidtestutils.viewWithId
 import com.lelloman.simplerss.R
 
 class AddSourceScreen : Screen() {

@@ -3,8 +3,8 @@ package com.lelloman.simplerss.feed.fetcher
 import android.graphics.BitmapFactory
 import android.support.annotation.VisibleForTesting
 import com.lelloman.common.http.HttpClient
-import com.lelloman.common.http.HttpRequest
 import com.lelloman.common.http.HttpResponse
+import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.UrlValidator
 import io.reactivex.Maybe
