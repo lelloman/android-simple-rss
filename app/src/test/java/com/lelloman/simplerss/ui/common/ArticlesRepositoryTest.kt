@@ -3,10 +3,10 @@ package com.lelloman.simplerss.ui.common
 import com.lelloman.simplerss.feed.FeedRefresher
 import com.lelloman.simplerss.persistence.db.ArticlesDao
 import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
-import com.nhaarman.mockito_kotlin.anyVararg
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.anyVararg
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Flowable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject

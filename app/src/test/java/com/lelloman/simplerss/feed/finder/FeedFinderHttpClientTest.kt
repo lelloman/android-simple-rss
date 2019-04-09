@@ -4,11 +4,11 @@ import com.lelloman.common.http.HttpClient
 import com.lelloman.common.http.HttpClientException
 import com.lelloman.common.http.HttpResponse
 import com.lelloman.common.utils.UrlValidator
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.argThat
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.argThat
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Maybe
 import io.reactivex.Single
 import org.junit.Test

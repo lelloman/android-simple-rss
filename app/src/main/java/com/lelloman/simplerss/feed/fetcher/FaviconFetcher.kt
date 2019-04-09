@@ -35,7 +35,9 @@ class FaviconFetcher(
             response.isValidFaviconResponse()
         }
         .map(HttpResponse::body)
-        .filter { BitmapFactory.decodeByteArray(it, 0, it.size) != null }
+        .filter {
+            BitmapFactory.decodeByteArray(it, 0, it.size) != null
+        }
         .onErrorComplete()
 
     @VisibleForTesting

@@ -8,10 +8,10 @@ import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.viewmodel.BaseViewModel
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
 import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers.trampoline
 import org.junit.Test

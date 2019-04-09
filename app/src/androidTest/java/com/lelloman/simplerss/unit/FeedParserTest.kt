@@ -2,9 +2,11 @@ package com.lelloman.simplerss.unit
 
 import com.google.common.truth.Truth
 import com.lelloman.common.utils.TimeProvider
-import com.lelloman.common.utils.model.DayTime
-import com.lelloman.common.utils.model.Time
-import com.lelloman.common.utils.model.WeekTime
+import com.lelloman.common.utils.model.Date
+import com.lelloman.common.utils.model.DateImpl
+import com.lelloman.common.utils.model.DateTime
+import com.lelloman.common.utils.model.DayOfTheWeek
+import com.lelloman.common.utils.model.TimeImpl
 import com.lelloman.simplerss.feed.FeedParser
 import com.lelloman.simplerss.feed.exception.InvalidFeedTagException
 import com.lelloman.simplerss.feed.exception.MalformedXmlException
@@ -19,7 +21,12 @@ class FeedParserTest {
     private val timeProvider = object : TimeProvider {
         override fun now() = getTime(0)
         override fun nowUtcMs() = time
-        override fun getTime(utcMs: Long) = Time(WeekTime(0, 0), DayTime(0, 0))
+        override fun getDate(utcMs: Long): Date = now()
+        override fun getDateTime(utcMs: Long): DateTime = now()
+        override fun getTime(utcMs: Long) = DateTime(
+            time = TimeImpl(0, 0, 0),
+            date = DateImpl(0, 0, 0, DayOfTheWeek.SUNDAY)
+        )
     }
 
     private val tested = FeedParser(timeProvider)

@@ -16,10 +16,10 @@ import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.KEY_ART
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.KEY_MIN_SOURCE_REFRESH_INTERVAL
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.KEY_OPEN_ARTICLES_IN_APP
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.KEY_SHOULD_SHOW_WALKTHROUGH
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Before
 import org.junit.Test
 

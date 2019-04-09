@@ -5,9 +5,9 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.simplerss.mock.MockAppSettings
 import com.lelloman.simplerss.persistence.db.model.SourceArticle
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.BehaviorSubject
 import org.junit.Test

@@ -7,8 +7,8 @@ import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.navigation.NavigationRouter
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import org.junit.Test
 
 class NavigationRouterTest {
