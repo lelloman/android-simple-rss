@@ -7,10 +7,10 @@ import com.lelloman.simplerss.html.Doc
 import com.lelloman.simplerss.html.HtmlParser
 import com.lelloman.simplerss.html.element.ADocElement
 import com.lelloman.simplerss.html.element.LinkDocElement
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import org.junit.Test
 
 class FeedFinderParserTest {

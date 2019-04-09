@@ -1,17 +1,17 @@
 package com.lelloman.simplerss.feed
 
 import com.lelloman.common.http.HttpClient
-import com.lelloman.common.http.HttpRequest
 import com.lelloman.common.http.HttpResponse
+import com.lelloman.common.http.request.HttpRequest
 import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.utils.UrlValidatorImpl
 import com.lelloman.simplerss.feed.fetcher.FaviconFetcher
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.argThat
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyZeroInteractions
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.argThat
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyZeroInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import org.junit.Test
 

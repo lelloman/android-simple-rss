@@ -17,10 +17,10 @@ import com.lelloman.simplerss.testutils.dummySourceArticle
 import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
 import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.never
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.never
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.BehaviorSubject

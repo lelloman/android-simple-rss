@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.jvmtestutils.AndroidArchTest
 import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.jvmtestutils.MockResourceProvider
-import com.lelloman.common.navigation.CloseScreenNavigationEvent
+import com.lelloman.common.navigation.CloseScreenViewActionEvent
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.viewmodel.BaseViewModel
@@ -18,13 +18,13 @@ import com.lelloman.simplerss.feed.fetcher.UnknownError
 import com.lelloman.simplerss.feed.fetcher.XmlError
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.anyOrNull
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.reset
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyZeroInteractions
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.anyOrNull
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.reset
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyZeroInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.SingleSubject
@@ -184,7 +184,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
         tested.onCloseClicked()
 
-        viewActionEventObserver.assertValues(CloseScreenNavigationEvent)
+        viewActionEventObserver.assertValues(CloseScreenViewActionEvent)
     }
 
     @Test
@@ -243,7 +243,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
             url = url,
             isActive = true
         ))
-        viewActionEventObserver.assertValues(CloseScreenNavigationEvent)
+        viewActionEventObserver.assertValues(CloseScreenViewActionEvent)
         tested.apply {
             assertThat(sourceNameError.value).isEmpty()
             assertThat(sourceUrlError.value).isEmpty()

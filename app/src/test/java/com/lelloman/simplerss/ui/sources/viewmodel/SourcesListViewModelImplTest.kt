@@ -19,11 +19,11 @@ import com.lelloman.simplerss.testutils.dummySource
 import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
 import com.lelloman.simplerss.ui.common.repository.DeletedSource
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
-import com.nhaarman.mockito_kotlin.any
-import com.nhaarman.mockito_kotlin.mock
-import com.nhaarman.mockito_kotlin.verify
-import com.nhaarman.mockito_kotlin.verifyZeroInteractions
-import com.nhaarman.mockito_kotlin.whenever
+import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyZeroInteractions
+import com.nhaarman.mockitokotlin2.whenever
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
