@@ -217,6 +217,17 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         verify(articlesRepository).refresh()
     }
 
+    @Test
+    fun `navigates to debug screen`() {
+        val tester = tested.viewActionEvents.test()
+
+        tested.onDebugClicked()
+
+        tester.assertValue {
+            it is DeepLinkNavigationEvent && it.deepLink.screen == SimpleRssNavigationScreen.DEBUG
+        }
+    }
+
     private fun givenActiveSources() {
         val source = Source(
             id = 1L,

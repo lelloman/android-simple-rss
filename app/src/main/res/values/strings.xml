@@ -62,5 +62,11 @@
     <string name="pick_a_theme">Pick a theme</string>
     <string name="clear_data_confirmation_title">Clear data</string>
     <string name="clear_data_confirmation_message">Do you want to delete everything from storage? All sources, articles, images and settings will be lost.</string>
+    <string name="reset_shared_prefs">Reset shared prefs</string>
+    <string name="reset_db">Reset db</string>
+    <string name="reset_db_confirmation_title">Reset db</string>
+    <string name="reset_db_confirmation_message">Do you really want to reset the db?</string>
+    <string name="reset_shared_prefs_confirmation_title">Reset shared prefs</string>
+    <string name="reset_shared_prefs_confirmation_message">Do you really want to reset the shared preferences?</string>
 
 </resources>

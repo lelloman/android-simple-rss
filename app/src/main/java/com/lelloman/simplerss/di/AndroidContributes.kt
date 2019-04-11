@@ -4,6 +4,7 @@ import com.lelloman.common.view.InjectableActivity
 import com.lelloman.simplerss.feed.FeedRefreshBroadcastReceiver
 import com.lelloman.simplerss.ui.articles.view.ArticleActivity
 import com.lelloman.simplerss.ui.articles.view.ArticlesListActivity
+import com.lelloman.simplerss.ui.debug.view.DebugActivity
 import com.lelloman.simplerss.ui.discover.view.DiscoverUrlActivity
 import com.lelloman.simplerss.ui.discover.view.FoundFeedListActivity
 import com.lelloman.simplerss.ui.launcher.view.LauncherActivity
@@ -54,4 +55,7 @@ interface AndroidContributes {
 
     @ContributesAndroidInjector
     fun contributeDiscoverUrlActivity(): DiscoverUrlActivity
+
+    @ContributesAndroidInjector
+    fun contributeDebugActivity(): DebugActivity
 }

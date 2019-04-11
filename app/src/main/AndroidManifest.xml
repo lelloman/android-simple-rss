@@ -46,6 +46,7 @@
         <activity
             android:name="com.lelloman.simplerss.ui.discover.view.DiscoverUrlActivity"
             android:label="@string/discover_sources" />
+        <activity android:name=".ui.debug.view.DebugActivity" />
 
         <receiver
             android:name="com.lelloman.simplerss.feed.FeedRefreshBroadcastReceiver"
