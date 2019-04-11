@@ -6,6 +6,7 @@ import com.lelloman.common.di.qualifiers.ViewModelKey
 import com.lelloman.common.viewmodel.ViewModelFactory
 import com.lelloman.simplerss.ui.articles.viewmodel.ArticleViewModel
 import com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel
+import com.lelloman.simplerss.ui.debug.viewmodel.DebugViewModel
 import com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel
 import com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel
 import com.lelloman.simplerss.ui.launcher.viewmodel.LauncherViewModel
@@ -74,4 +75,9 @@ abstract class ViewModelFactoryModule {
     @IntoMap
     @ViewModelKey(DiscoverUrlViewModel::class)
     abstract fun bindDiscoverUrlViewModel(discoverUrlViewModel: DiscoverUrlViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(DebugViewModel::class)
+    abstract fun bindDebugViewModel(debugViewModel: DebugViewModel): ViewModel
 }

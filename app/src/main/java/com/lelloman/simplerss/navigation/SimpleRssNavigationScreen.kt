@@ -5,6 +5,9 @@ import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.navigation.NavigationScreen
 import com.lelloman.simplerss.ui.articles.view.ArticleActivity
 import com.lelloman.simplerss.ui.articles.view.ArticlesListActivity
+import com.lelloman.simplerss.ui.debug.view.DebugActivity
+import com.lelloman.simplerss.ui.debug.view.ResetDbConfirmationDialogFragment
+import com.lelloman.simplerss.ui.debug.view.ResetSharedPrefsConfirmationDialogFragment
 import com.lelloman.simplerss.ui.discover.view.AddFoundFeedsConfirmationDialogFragment
 import com.lelloman.simplerss.ui.discover.view.DiscoverUrlActivity
 import com.lelloman.simplerss.ui.discover.view.FoundFeedListActivity
@@ -26,6 +29,9 @@ enum class SimpleRssNavigationScreen(
     ARTICLE(ArticleActivity.deepLinkStartable),
     ARTICLES_LIST(ArticlesListActivity.deepLinkStartable),
     CLEAR_DATA_CONFIRMATION(ClearDataConfirmationDialogFragment.deepLinkStartable),
+    RESET_DB_CONFIRMATION(ResetDbConfirmationDialogFragment.deepLinkStartable),
+    RESET_SHARED_PREFS_CONFIRMATION(ResetSharedPrefsConfirmationDialogFragment.deepLinkStartable),
+    DEBUG(DebugActivity.deepLinkStartable),
     DISCOVER_URL(DiscoverUrlActivity.deepLinkStartable),
     FOUND_FEED_LIST(FoundFeedListActivity.deepLinkStartable),
     SETTINGS(SettingsActivity.deepLinkStartable),

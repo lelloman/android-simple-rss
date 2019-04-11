@@ -1,4 +1,4 @@
-package com.lelloman.simplerss.ui.settings.view
+package com.lelloman.simplerss.ui.debug.view
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -11,7 +11,7 @@ import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.simplerss.R
 
 @Deprecated(message = "Move this to a generic confirmation dialog fragment in common")
-class ClearDataConfirmationDialogFragment : DialogFragment() {
+class ResetDbConfirmationDialogFragment : DialogFragment() {
 
     private var listener: Listener? = null
 
@@ -28,10 +28,10 @@ class ClearDataConfirmationDialogFragment : DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         return AlertDialog
             .Builder(activity)
-            .setTitle(R.string.clear_data_confirmation_title)
-            .setMessage(R.string.clear_data_confirmation_message)
+            .setTitle(R.string.reset_db_confirmation_title)
+            .setMessage(R.string.reset_db_confirmation_message)
             .setPositiveButton(android.R.string.ok) { _, _ ->
-                listener?.onClearDataConfirmed()
+                listener?.onResetDbConfirmed()
             }
             .create()
     }
@@ -40,8 +40,8 @@ class ClearDataConfirmationDialogFragment : DialogFragment() {
         var deepLinkStartable = object : DeepLinkStartable {
             override fun start(context: Context, deepLink: DeepLink) {
                 if (context is FragmentActivity) {
-                    val fragment = ClearDataConfirmationDialogFragment()
-                    fragment.show(context.supportFragmentManager, ClearDataConfirmationDialogFragment::class.java.simpleName)
+                    val fragment = ResetDbConfirmationDialogFragment()
+                    fragment.show(context.supportFragmentManager, ResetDbConfirmationDialogFragment::class.java.simpleName)
                 } else {
                     throw IllegalArgumentException("Context argument must be a FragmentActivity")
                 }
@@ -50,6 +50,6 @@ class ClearDataConfirmationDialogFragment : DialogFragment() {
     }
 
     interface Listener {
-        fun onClearDataConfirmed()
+        fun onResetDbConfirmed()
     }
 }

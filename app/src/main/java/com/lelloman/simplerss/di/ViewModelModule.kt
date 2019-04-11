@@ -17,6 +17,7 @@ import com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModelImpl
 import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
 import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
+import com.lelloman.simplerss.ui.debug.viewmodel.DebugViewModel
 import com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel
 import com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModelImpl
 import com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel
@@ -159,5 +160,16 @@ open class ViewModelModule {
         discoverRepository = discoverRepository,
         urlValidator = urlValidator,
         dependencies = dependencies
+    )
+
+    @Provides
+    open fun provideDebugViewModel(
+        appSettings: AppSettings,
+        appDatabase: AppDatabase,
+        dependencies: BaseViewModel.Dependencies
+    ) = DebugViewModel(
+        dependencies = dependencies,
+        appSettings = appSettings,
+        appDatabase = appDatabase
     )
 }
