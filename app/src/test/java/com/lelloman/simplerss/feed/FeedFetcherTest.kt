@@ -229,7 +229,7 @@ class FeedFetcherTest {
 
     private fun givenHttpUnsuccessfulResponse() {
         whenever(httpClient.request(any()))
-            .thenReturn(Single.just(HttpResponse(500, false, ByteArray(0))))
+            .thenReturn(Single.just(HttpResponse(500, false, body = ByteArray(0))))
     }
 
     private fun givenParsesFeed(feeds: ParsedFeeds = PARSED_FEED) {
@@ -254,7 +254,7 @@ class FeedFetcherTest {
             isActive = true
         )
 
-        val SUCCESSFUL_RESPONSE = HttpResponse(200, true, "the body".toByteArray())
+        val SUCCESSFUL_RESPONSE = HttpResponse(200, true, body = "the body".toByteArray())
 
         val PARSED_FEED = ParsedFeeds(mutableListOf(
             ParsedFeed(

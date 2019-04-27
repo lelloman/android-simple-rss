@@ -3,7 +3,8 @@ package com.lelloman.simplerss.testutils
 import android.app.Application
 import androidx.test.core.app.ApplicationProvider
 import com.lelloman.common.di.BaseApplicationModule
-import com.lelloman.common.http.HttpClientImpl
+import com.lelloman.common.http.HttpClient
+import com.lelloman.common.http.internal.HttpClientImpl
 import com.lelloman.common.settings.BaseApplicationSettings
 import com.lelloman.common.settings.BaseSettingsModule
 import com.lelloman.common.utils.TimeProvider
@@ -27,7 +28,7 @@ class BagOfDependencies {
     private val timeProvider: TimeProvider
     private val htmlParser: HtmlParser
     private val meteredConnectionChecker: MeteredConnectionChecker
-    private val httpClient: HttpClientImpl
+    private val httpClient: HttpClient
     val feedFinder: FeedFinder
     private val feedParser: FeedParser
     private val baseAppSettings: BaseApplicationSettings

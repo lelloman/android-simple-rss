@@ -32,7 +32,7 @@ class FeedFinderIntegrationTest {
 
         fun map(url: String, stringBody: String) = map(
             url = url,
-            httpResponse = HttpResponse(200, true, stringBody.toByteArray())
+            httpResponse = HttpResponse(200, true, body = stringBody.toByteArray())
         )
 
         fun map(url: String, httpResponse: HttpResponse) {

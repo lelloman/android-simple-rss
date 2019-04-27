@@ -28,7 +28,7 @@ class FeedFinderHttpClientTest {
 
     @Test
     fun `requests string body`() {
-        whenever(httpClient.request(any())).thenReturn(Single.just(HttpResponse(200, true, byteArrayOf())))
+        whenever(httpClient.request(any())).thenReturn(Single.just(HttpResponse(200, true, body = byteArrayOf())))
 
         tested.requestStringBody(BASE_URL).test()
 
@@ -49,7 +49,7 @@ class FeedFinderHttpClientTest {
     @Test
     fun `filters out unsuccessful http response when requesting string body`() {
         whenever(httpClient.request(any())).thenReturn(Single.just(
-            HttpResponse(401, false, byteArrayOf())
+            HttpResponse(401, false, body = byteArrayOf())
         ))
 
         val tester = tested.requestStringBody(BASE_URL).test()
@@ -61,7 +61,7 @@ class FeedFinderHttpClientTest {
     @Test
     fun `requests string body and base url`() {
         val stringBody = "asdasd@"
-        whenever(httpClient.request(any())).thenReturn(Single.just(HttpResponse(200, true, stringBody.toByteArray())))
+        whenever(httpClient.request(any())).thenReturn(Single.just(HttpResponse(200, true, body = stringBody.toByteArray())))
 
         val tester = tested.requestStringBodyAndBaseUrl(URL_WITH_PATH).test()
 

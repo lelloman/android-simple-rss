@@ -8,6 +8,7 @@ import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.MeteredConnectionChecker
+import com.lelloman.simplerss.feed.fetcher.BitmapDecoder
 import com.lelloman.simplerss.feed.fetcher.FaviconFetcher
 import com.lelloman.simplerss.feed.fetcher.FeedFetcher
 import com.lelloman.simplerss.feed.finder.FeedFinder
@@ -79,14 +80,20 @@ open class FeedModule {
 
     @Singleton
     @Provides
+    fun provideBitmapDecoder() = BitmapDecoder()
+
+    @Singleton
+    @Provides
     fun provideFaviconFetcher(
         httpClient: HttpClient,
         urlValidator: UrlValidator,
-        loggerFactory: LoggerFactory
+        loggerFactory: LoggerFactory,
+        bitmapDecoder: BitmapDecoder
     ) = FaviconFetcher(
         httpClient = httpClient,
         urlValidator = urlValidator,
-        loggerFactory = loggerFactory
+        loggerFactory = loggerFactory,
+        bitmapDecoder = bitmapDecoder
     )
 
     @Provides
