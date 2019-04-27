@@ -14,10 +14,11 @@
         android:layout_height="match_parent"
         android:animateLayoutChanges="true">
 
-        <WebView
+        <com.lelloman.common.webview.CookedWebView
             android:id="@+id/web_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            app:listener="@{viewModel}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -29,6 +30,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:indeterminateOnly="true"
+            app:viewVisible="@{viewModel.progressVisible}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

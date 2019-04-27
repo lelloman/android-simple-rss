@@ -1,6 +1,5 @@
 package com.lelloman.simplerss.feed.fetcher
 
-import android.graphics.BitmapFactory
 import android.support.annotation.VisibleForTesting
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.http.HttpResponse
@@ -12,6 +11,7 @@ import io.reactivex.Maybe
 class FaviconFetcher(
     private val httpClient: HttpClient,
     private val urlValidator: UrlValidator,
+    private val bitmapDecoder: BitmapDecoder,
     loggerFactory: LoggerFactory
 ) {
 
@@ -36,7 +36,7 @@ class FaviconFetcher(
         }
         .map(HttpResponse::body)
         .filter {
-            BitmapFactory.decodeByteArray(it, 0, it.size) != null
+            bitmapDecoder.decodeBitmap(it) != null
         }
         .onErrorComplete()
 

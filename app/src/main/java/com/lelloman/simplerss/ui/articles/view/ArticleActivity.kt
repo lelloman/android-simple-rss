@@ -1,15 +1,8 @@
 package com.lelloman.simplerss.ui.articles.view
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.os.Bundle
-import android.view.View
-import android.webkit.WebChromeClient
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import com.lelloman.common.logger.Logger
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
@@ -27,37 +20,16 @@ class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>()
 
     private lateinit var logger: Logger
 
-    override fun setViewModel(binding: ActivityArticleBinding, viewModel: ArticleViewModel) = Unit
-
-    @SuppressLint("SetJavaScriptEnabled")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+    override fun setViewModel(binding: ActivityArticleBinding, viewModel: ArticleViewModel) {
+        binding.viewModel = viewModel
         logger = loggerFactory.getLogger(ArticleActivity::class.java)
 
         val url = intent.getStringExtra(ARG_URL)
         if (url == null) {
-            logger.e("$ARG_URL was not set in the Intent.")
+            logger.e("'$ARG_URL' extra was not set in the Intent.")
             finish()
         } else {
-            binding.webView.let { webView ->
-                webView.webChromeClient = WebChromeClient()
-                webView.webViewClient = object : WebViewClient() {
-                    override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                        super.onPageStarted(view, url, favicon)
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
-
-                    override fun onPageFinished(view: WebView?, url: String?) {
-                        super.onPageFinished(view, url)
-                        binding.progressBar.visibility = View.GONE
-                    }
-                }
-                with(webView.settings) {
-                    javaScriptEnabled = true
-                }
-                webView.loadUrl(url)
-            }
+            binding.webView.loadUrl(url)
         }
     }
 

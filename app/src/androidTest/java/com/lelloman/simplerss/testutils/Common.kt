@@ -9,6 +9,7 @@ import com.lelloman.common.di.BaseApplicationModule
 import com.lelloman.common.http.HttpModule
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.simplerss.widget.ToggleSettingItemView
+import okhttp3.CookieJar
 import org.hamcrest.BaseMatcher
 import org.hamcrest.Description
 
@@ -32,8 +33,9 @@ fun setUpTestAppWithMockedHttpStack(
     rotateNatural()
     TestApp.dependenciesUpdate {
         it.httpModule = object : HttpModule() {
-            override fun provideOkHttpClient() = MockHttpClient()
+            override fun provideOkHttpClient(cookieJar: CookieJar) = MockHttpClient()
         }
+
         it.baseApplicationModule = object : BaseApplicationModule(it) {
             override fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker {
                 return object : MeteredConnectionChecker {

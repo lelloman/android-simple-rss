@@ -14,8 +14,8 @@ buildscript {
         dagger_version = "2.22.1"
         gson_version = "2.8.5"
         jsoup_version = "1.11.3"
-        kotlin_version = '1.3.21'
-        lelloman_common_version = '97af1a5afe'
+        kotlin_version = '1.3.30'
+        lelloman_common_version = 'f43752c83a'
         lifecycle_version = "2.0.0"
         mockito_version = "1.6.0"
         picasso_version = "2.71828"
@@ -31,7 +31,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.2'
+        classpath 'com.android.tools.build:gradle:3.4.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "com.github.ben-manes:gradle-versions-plugin:0.21.0"
     }

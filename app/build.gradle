@@ -50,6 +50,7 @@ dependencies {
 //    implementation(name:"http", ext:"aar")
     implementation "com.github.lelloman.android-common:core:$lelloman_common_version"
     implementation "com.github.lelloman.android-common:http:$lelloman_common_version"
+    implementation "com.github.lelloman.android-common:webview:$lelloman_common_version"
 
     // room
     implementation "androidx.room:room-runtime:$room_version"
