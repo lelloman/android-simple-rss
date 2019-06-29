@@ -22,6 +22,8 @@ import com.lelloman.simplerss.persistence.settings.AppSettings
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.Executors
 import javax.inject.Singleton
 
 @Module
@@ -122,12 +124,18 @@ open class FeedModule {
         parser: FeedFinderParser,
         feedFetcher: FeedFetcher,
         loggerFactory: LoggerFactory,
-        @NewThreadScheduler newThreadScheduler: Scheduler
+        @FeedFinderPoolScheduler scheduler: Scheduler
     ): FeedFinder = FeedFinderImpl(
         httpClient = httpClient,
         parser = parser,
         feedFetcher = feedFetcher,
         loggerFactory = loggerFactory,
-        newThreadScheduler = newThreadScheduler
+        scheduler = scheduler
     )
+
+    @Provides
+    @FeedFinderPoolScheduler
+    open fun provideFeedFinderPoolScheduler(): Scheduler = Executors
+        .newFixedThreadPool(8)
+        .let(Schedulers::from)
 }

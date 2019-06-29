@@ -18,7 +18,7 @@ internal class FeedFinderImpl(
     private val httpClient: FeedFinderHttpClient,
     private val parser: FeedFinderParser,
     private val feedFetcher: FeedFetcher,
-    private val newThreadScheduler: Scheduler,
+    private val scheduler: Scheduler,
     loggerFactory: LoggerFactory
 ) : FeedFinder {
 
@@ -37,7 +37,7 @@ internal class FeedFinderImpl(
     override fun findValidFeedUrls(url: String): Observable<FoundFeed> = mutableSetOf<String>().let { foundUrls ->
         httpClient
             .requestStringBodyAndBaseUrl(url)
-            .subscribeOn(newThreadScheduler)
+            .subscribeOn(scheduler)
             .flatMap { (stringBody, baseUrl) ->
                 logger.d("findValidFeedUrls() base url $baseUrl")
                 parser.parseDoc(
@@ -49,7 +49,7 @@ internal class FeedFinderImpl(
             .flatMap { candidateUrl ->
                 httpClient
                     .requestStringBody(candidateUrl)
-                    .subscribeOn(newThreadScheduler)
+                    .subscribeOn(scheduler)
                     .onErrorComplete()
                     .flatMap {
                         parser.parseDoc(
@@ -77,7 +77,7 @@ internal class FeedFinderImpl(
 
     private fun testUrl(urlToTest: String) = feedFetcher
         .testUrl(urlToTest)
-        .subscribeOn(newThreadScheduler)
+        .subscribeOn(scheduler)
         .filter { testResult ->
             logger.d("tested url $urlToTest -> $testResult")
             testResult is Success

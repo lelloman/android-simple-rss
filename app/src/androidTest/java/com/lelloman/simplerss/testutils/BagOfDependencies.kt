@@ -81,7 +81,7 @@ class BagOfDependencies {
             parser = feedFinderParser,
             feedFetcher = feedFetcher,
             loggerFactory = loggerFactory,
-            newThreadScheduler = Schedulers.newThread()
+            scheduler = Schedulers.newThread()
         )
     }
 }

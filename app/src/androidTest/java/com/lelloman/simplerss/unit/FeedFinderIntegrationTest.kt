@@ -89,7 +89,7 @@ class FeedFinderIntegrationTest {
         parser = feedFinderParser,
         feedFetcher = feedFetcher,
         loggerFactory = loggerFactory,
-        newThreadScheduler = Schedulers.newThread()
+        scheduler = Schedulers.newThread()
     )
 
     private fun List<FoundFeed>.assertContains(url: String, nArticles: Int, name: String) {
