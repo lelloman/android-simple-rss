@@ -25,7 +25,7 @@ class FeedFinderTest {
         feedFetcher = feedFetcher,
         parser = parser,
         loggerFactory = loggerFactory,
-        newThreadScheduler = trampoline()
+        scheduler = trampoline()
     )
 
     @Test
