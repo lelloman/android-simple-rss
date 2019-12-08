@@ -16,7 +16,7 @@ import com.lelloman.simplerss.databinding.ActivityFoundFeedListBinding
 import com.lelloman.simplerss.feed.finder.FoundFeed
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
 import com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel
-import dagger.android.AndroidInjection
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class FoundFeedListActivity
     : BaseActivity<FoundFeedListViewModel, ActivityFoundFeedListBinding>(),
@@ -28,15 +28,17 @@ class FoundFeedListActivity
 
     override val layoutResId = R.layout.activity_found_feed_list
 
-    override fun getViewModelClass() = FoundFeedListViewModel::class.java
+    override val viewModel by viewModel<FoundFeedListViewModel>()
 
-    override fun setViewModel(binding: ActivityFoundFeedListBinding, viewModel: FoundFeedListViewModel) {
+    override fun setViewModel(
+        binding: ActivityFoundFeedListBinding,
+        viewModel: FoundFeedListViewModel
+    ) {
         binding.viewModel = viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
 
         supportActionBar?.apply {
             setHomeButtonEnabled(true)
@@ -46,7 +48,6 @@ class FoundFeedListActivity
         }
 
         adapter = FoundFeedsAdapter(
-            resourceProvider = resourceProvider,
             onFoundFeedClickListener = viewModel::onFoundFeedClicked
         )
         binding.discoverRecyclerView.layoutManager = LinearLayoutManager(this)

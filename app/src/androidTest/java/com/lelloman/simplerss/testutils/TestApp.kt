@@ -1,22 +1,26 @@
 package com.lelloman.simplerss.testutils
 
 import android.widget.ImageView
-import com.lelloman.common.di.BaseApplicationModule
-import com.lelloman.common.http.HttpModule
+import com.lelloman.common.di.BaseApplicationModuleFactory
+import com.lelloman.common.http.HttpModuleFactory
 import com.lelloman.common.view.PicassoWrap
 import com.lelloman.simplerss.SimpleRssApplication
-import com.lelloman.simplerss.di.DaggerAppComponent
-import com.lelloman.simplerss.di.ViewModelModule
-import com.lelloman.simplerss.persistence.db.DbModule
-import com.lelloman.simplerss.persistence.settings.SettingsModule
+import com.lelloman.simplerss.di.DbModuleFactory
+import com.lelloman.simplerss.di.SettingsModuleFactory
+import com.lelloman.simplerss.di.ViewModelModuleFactory
+import com.lelloman.simplerss.persistence.db.AppDatabase
+import org.koin.android.ext.android.inject
+import org.koin.core.context.loadKoinModules
 
 class TestApp : SimpleRssApplication() {
 
-    var baseApplicationModule = BaseApplicationModule(this)
-    var viewModelModule = ViewModelModule()
-    private var dbModule = DbModule()
-    private var settingsModule = SettingsModule()
-    var httpModule = HttpModule()
+    var baseApplicationModuleFactory = BaseApplicationModuleFactory()
+    var viewModelModuleFactory = ViewModelModuleFactory()
+    private var dbModuleFactory = DbModuleFactory()
+    private var settingsModuleFactory = SettingsModuleFactory()
+    var httpModuleFactory = HttpModuleFactory()
+
+    private val db by inject<AppDatabase>()
 
     override var picassoWrap: PicassoWrap = object : PicassoWrap {
         override fun enableImageSourceIndicator() = Unit
@@ -30,15 +34,18 @@ class TestApp : SimpleRssApplication() {
         instance = this
     }
 
-    override fun inject() = DaggerAppComponent
-        .builder()
-        .baseApplicationModule(baseApplicationModule)
-        .viewModelModule(viewModelModule)
-        .dbModule(dbModule)
-        .settingsModule(settingsModule)
-        .httpModule(httpModule)
-        .build()
-        .inject(this)
+    override fun inject() {
+        super.inject()
+        loadKoinModules(
+            listOf(
+                baseApplicationModuleFactory.makeKoinModule(true),
+                viewModelModuleFactory.makeKoinModule(true),
+                dbModuleFactory.makeKoinModule(true),
+                settingsModuleFactory.makeKoinModule(true),
+                httpModuleFactory.makeKoinModule(true)
+            )
+        )
+    }
 
     companion object {
         private lateinit var instance: TestApp

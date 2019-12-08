@@ -1,6 +1,5 @@
 package com.lelloman.simplerss.ui.common.repository
 
-import com.lelloman.common.di.qualifiers.IoScheduler
 import com.lelloman.simplerss.feed.FeedRefresher
 import com.lelloman.simplerss.persistence.db.ArticlesDao
 import com.lelloman.simplerss.persistence.db.SourcesDao
@@ -10,12 +9,9 @@ import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class SourcesRepository @Inject constructor(
-    @IoScheduler private val ioScheduler: Scheduler,
+class SourcesRepository(
+    private val ioScheduler: Scheduler,
     private val sourcesDao: SourcesDao,
     private val feedRefresher: FeedRefresher,
     private val articlesDao: ArticlesDao
@@ -47,12 +43,13 @@ class SourcesRepository @Inject constructor(
 
     fun getSource(sourceId: Long) = sourcesDao.getSource(sourceId)
 
-    fun setSourceIsActive(sourceId: Long, isActive: Boolean): Completable = Completable.fromCallable {
-        sourcesDao.setSourceIsActive(sourceId, isActive)
-        if (isActive) {
-            feedRefresher.refresh()
+    fun setSourceIsActive(sourceId: Long, isActive: Boolean): Completable =
+        Completable.fromCallable {
+            sourcesDao.setSourceIsActive(sourceId, isActive)
+            if (isActive) {
+                feedRefresher.refresh()
+            }
         }
-    }
 
     private fun loadSource() {
         if (isLoading) return

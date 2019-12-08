@@ -10,6 +10,7 @@ import okhttp3.Request
 import okhttp3.Response
 import okhttp3.ResponseBody
 import org.mockito.Mockito
+import okhttp3.MediaType.Companion.toMediaType
 
 class MockHttpClient : OkHttpClient() {
 
@@ -34,13 +35,13 @@ class MockHttpClient : OkHttpClient() {
     private fun successfulResponse(body: ByteArray) = Response
         .Builder()
         .code(200)
-        .body(ResponseBody.create(MediaType.get("text/xml"), body))
+        .body(ResponseBody.create("text/xml".toMediaType(), body))
 
     override fun newCall(request: Request): Call {
         val url = request
-            .url()
-            .url()
-            .toExternalForm()
+            .url
+            .toUrl()
+            .toString()
             .removeSuffix("/")
         val responseBuilder = when {
             fileResponses.containsKey(url) -> {

@@ -10,10 +10,9 @@ import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
 import com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel
 import com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel
-import dagger.Provides
 import org.mockito.Mockito.mock
 
-class MockViewModelModule : ViewModelModule() {
+class MockViewModelModuleFactory : ViewModelModuleFactory() {
 
     val articlesListViewModel: ArticlesListViewModel = mock(ArticlesListViewModel::class.java)
     val sourcesListViewModel: SourcesListViewModel = mock(SourcesListViewModel::class.java)
@@ -27,14 +26,12 @@ class MockViewModelModule : ViewModelModule() {
         appSettings: AppSettings
     ): ArticlesListViewModel = articlesListViewModel
 
-    @Provides
     override fun provideSourcesListViewModel(
         sourcesRepository: SourcesRepository,
         articlesRepository: ArticlesRepository,
         dependencies: BaseViewModel.Dependencies
     ): SourcesListViewModel = sourcesListViewModel
 
-    @Provides
     override fun provideAddSourceViewModel(
         sourcesRepository: SourcesRepository,
         dependencies: BaseViewModel.Dependencies,

@@ -1,62 +1,29 @@
 package com.lelloman.simplerss
 
-import android.app.Activity
-import android.app.Application
-import android.content.BroadcastReceiver
-import android.content.Context
-import com.lelloman.common.di.BaseApplicationModule
+import com.lelloman.common.BaseApplication
 import com.lelloman.common.http.HttpClientException
+import com.lelloman.common.http.HttpModuleFactory
 import com.lelloman.common.logger.Logger
 import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.view.PicassoWrap
-import com.lelloman.simplerss.di.DaggerAppComponent
+import com.lelloman.simplerss.di.*
 import com.lelloman.simplerss.feed.FaviconBitmapProvider
-import com.lelloman.simplerss.persistence.db.AppDatabase
-import com.lelloman.simplerss.persistence.db.SourcesDao
 import com.lelloman.simplerss.persistence.settings.AppSettings
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.HasBroadcastReceiverInjector
 import io.reactivex.plugins.RxJavaPlugins
+import org.koin.android.ext.android.inject
 import java.io.InterruptedIOException
-import javax.inject.Inject
 
-open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector {
+open class SimpleRssApplication : BaseApplication() {
 
-    @Inject
-    lateinit var dispatchingActivityAndroidInjector: DispatchingAndroidInjector<Activity>
+    protected open val picassoWrap by inject<PicassoWrap>()
 
-    @Inject
-    lateinit var dispatchingReceiverAndroidInjector: DispatchingAndroidInjector<BroadcastReceiver>
+    protected val faviconBitmapProvider by inject<FaviconBitmapProvider>()
 
-    @Inject
-    lateinit var db: AppDatabase
+    protected val appSettings by inject<AppSettings>()
 
-    @Inject
-    lateinit var sourcesDao: SourcesDao
-
-    @Inject
-    open lateinit var picassoWrap: PicassoWrap
-
-    @Inject
-    lateinit var faviconBitmapProvider: FaviconBitmapProvider
-
-    @Inject
-    lateinit var appSettings: AppSettings
-
-    @Inject
-    lateinit var loggerFactory: LoggerFactory
+    protected val loggerFactory by inject<LoggerFactory>()
 
     private lateinit var logger: Logger
-
-    override fun activityInjector() = dispatchingActivityAndroidInjector
-
-    override fun broadcastReceiverInjector() = dispatchingReceiverAndroidInjector
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-        inject()
-    }
 
     private fun Throwable?.isHttpClientException(): Boolean =
         this is HttpClientException || this?.cause is HttpClientException
@@ -66,7 +33,7 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
 
     override fun onCreate() {
         super.onCreate()
-        SimpleRssApplication.instance = this
+        instance = this
 
         logger = loggerFactory.getLogger(javaClass)
 
@@ -83,18 +50,22 @@ open class SimpleRssApplication : Application(), HasActivityInjector, HasBroadca
         }
     }
 
-    open fun inject() = DaggerAppComponent
-        .builder()
-        .baseApplicationModule(BaseApplicationModule(this))
-        .build()
-        .inject(this)
+    override fun getKoinModuleFactories() = mutableListOf(
+        DbModuleFactory(),
+        FeedModuleFactory(),
+        HtmlModuleFactory(),
+        HttpModuleFactory(),
+        RepositoryModuleFactory(),
+        SettingsModuleFactory(),
+        ViewModelModuleFactory()
+    )
 
     companion object {
 
         lateinit var instance: SimpleRssApplication
 
-        fun getPicassoWrap() = SimpleRssApplication.instance.picassoWrap
+        fun getPicassoWrap() = instance.picassoWrap
 
-        fun getFaviconBitmapProvider() = SimpleRssApplication.instance.faviconBitmapProvider
+        fun getFaviconBitmapProvider() = instance.faviconBitmapProvider
     }
 }

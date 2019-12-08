@@ -14,12 +14,13 @@ import com.lelloman.simplerss.databinding.ActivityAddSourceBinding
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_SOURCE_NAME
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBinding>() {
 
     override val layoutResId = R.layout.activity_add_source
 
-    override fun getViewModelClass() = AddSourceViewModel::class.java
+    override val viewModel by viewModel<AddSourceViewModel>()
 
     override fun setViewModel(binding: ActivityAddSourceBinding, viewModel: AddSourceViewModel) {
         binding.viewModel = viewModel

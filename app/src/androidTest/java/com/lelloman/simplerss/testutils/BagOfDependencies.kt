@@ -1,15 +1,15 @@
 package com.lelloman.simplerss.testutils
 
-import android.app.Application
 import androidx.test.core.app.ApplicationProvider
-import com.lelloman.common.di.BaseApplicationModule
+import com.lelloman.common.di.BaseApplicationModuleFactory
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.http.internal.HttpClientImpl
 import com.lelloman.common.settings.BaseApplicationSettings
-import com.lelloman.common.settings.BaseSettingsModule
+import com.lelloman.common.settings.BaseSettingsModuleFactory
 import com.lelloman.common.utils.TimeProvider
 import com.lelloman.common.utils.TimeProviderImpl
 import com.lelloman.common.utils.UrlValidatorImpl
+import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.simplerss.SimpleRssApplication
 import com.lelloman.simplerss.feed.FeedParser
@@ -37,7 +37,7 @@ class BagOfDependencies {
     init {
         val okHttpClient = OkHttpClient.Builder().build()
         val targetContext: SimpleRssApplication = ApplicationProvider.getApplicationContext()
-        val baseAppModule = BaseApplicationModule(targetContext as Application)
+        val baseAppModule = BaseApplicationModuleFactory()
         val loggerFactory = baseAppModule.provideLoggerFactory()
         timeProvider = TimeProviderImpl()
         htmlParser = HtmlParser()
@@ -45,7 +45,10 @@ class BagOfDependencies {
 
         meteredConnectionChecker = baseAppModule.provideMeteredConnectionChecker(targetContext)
 
-        baseAppSettings = BaseSettingsModule().provideBaseApplicationSettings(targetContext)
+        baseAppSettings = BaseSettingsModuleFactory().provideBaseApplicationSettings(
+            targetContext,
+            AppTheme.DEFAULT
+        )
         appSettings = AppSettingsImpl(targetContext, baseAppSettings)
 
         feedParser = FeedParser(timeProvider)

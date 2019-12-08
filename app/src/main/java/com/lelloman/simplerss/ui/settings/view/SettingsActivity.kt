@@ -9,6 +9,7 @@ import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivitySettingsBinding
 import com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SettingsActivity :
     BaseActivity<SettingsViewModel, ActivitySettingsBinding>(),
@@ -18,7 +19,7 @@ class SettingsActivity :
 
     override val hasActionBarBackButton = true
 
-    override fun getViewModelClass() = SettingsViewModel::class.java
+    override val viewModel by viewModel<SettingsViewModel>()
 
     override fun setViewModel(binding: ActivitySettingsBinding, viewModel: SettingsViewModel) {
         binding.viewModel = viewModel
@@ -27,6 +28,7 @@ class SettingsActivity :
     override fun onClearDataConfirmed() {
         viewModel.onClearDataConfirmed()
     }
+
     companion object {
 
         var deepLinkStartable = object : DeepLinkStartable {
