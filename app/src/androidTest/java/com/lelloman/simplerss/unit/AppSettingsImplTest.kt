@@ -4,9 +4,8 @@ import androidx.test.InstrumentationRegistry.getContext
 import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.settings.BaseApplicationSettings
-import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_APP_THEME
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_USE_METERED_NETWORK
-import com.lelloman.common.settings.BaseSettingsModule
+import com.lelloman.common.settings.BaseSettingsModuleFactory
 import com.lelloman.common.view.AppTheme
 import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_ARTICLES_LIST_IMAGES
@@ -20,16 +19,19 @@ import org.junit.Test
 
 class AppSettingsImplTest {
 
-    private val baseApplicationSettings: BaseApplicationSettings = BaseSettingsModule().provideBaseApplicationSettings(getContext())
+    private val baseApplicationSettings: BaseApplicationSettings =
+        BaseSettingsModuleFactory().provideBaseApplicationSettings(getContext(), AppTheme.DEFAULT)
 
-    private fun tested(action: AppSettingsImpl.() -> Unit) = AppSettingsImpl(getContext(), baseApplicationSettings).run(action)
+    private fun tested(action: AppSettingsImpl.() -> Unit) =
+        AppSettingsImpl(getContext(), baseApplicationSettings).run(action)
 
-    private val nonDefaultRefreshInterval = SourceRefreshInterval.values().first { it != AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL }
+    private val nonDefaultRefreshInterval = SourceRefreshInterval.values()
+        .first { it != AppSettings.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL }
     private val nonDefaultArticlesListImages = DEFAULT_ARTICLES_LIST_IMAGES.not()
     private val nonDefaultUseMeteredNetwork = DEFAULT_USE_METERED_NETWORK.not()
     private val nonDefaultOpenArticlesInApp = DEFAULT_OPEN_ARTICLES_IN_APP.not()
     private val nonDefaultShouldShowWalkthrough = DEFAULT_SHOULD_SHOW_WALKTHROUGH.not()
-    private val nonDefaultAppTheme = AppTheme.values().first { it != DEFAULT_APP_THEME }
+    private val nonDefaultAppTheme = AppTheme.values().first { it != AppTheme.DEFAULT }
 
     @Before
     fun setUp() {
@@ -121,11 +123,11 @@ class AppSettingsImplTest {
     fun setsAndGetsAppTheme() {
         tested {
             val tester = appTheme.test()
-            tester.assertValues(DEFAULT_APP_THEME)
+            tester.assertValues(AppTheme.DEFAULT)
 
             setAppTheme(nonDefaultAppTheme)
 
-            tester.assertValues(DEFAULT_APP_THEME, nonDefaultAppTheme)
+            tester.assertValues(AppTheme.DEFAULT, nonDefaultAppTheme)
         }
 
         tested { appTheme.test().assertValues(nonDefaultAppTheme) }
@@ -148,11 +150,13 @@ class AppSettingsImplTest {
     }
 
     private fun assertDefaultValues() = tested {
-        assertThat(sourceRefreshMinInterval.blockingFirst()).isEqualTo(DEFAULT_MIN_SOURCE_REFRESH_INTERVAL)
+        assertThat(sourceRefreshMinInterval.blockingFirst()).isEqualTo(
+            DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
+        )
         assertThat(articleListImagesEnabled.blockingFirst()).isEqualTo(DEFAULT_ARTICLES_LIST_IMAGES)
         assertThat(useMeteredNetwork.blockingFirst()).isEqualTo(DEFAULT_USE_METERED_NETWORK)
         assertThat(openArticlesInApp.blockingFirst()).isEqualTo(DEFAULT_OPEN_ARTICLES_IN_APP)
         assertThat(shouldShowWalkthrough.blockingFirst()).isEqualTo(DEFAULT_SHOULD_SHOW_WALKTHROUGH)
-        assertThat(appTheme.blockingFirst()).isEqualTo(DEFAULT_APP_THEME)
+        assertThat(appTheme.blockingFirst()).isEqualTo(AppTheme.DEFAULT)
     }
 }

@@ -15,35 +15,34 @@ import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityArticlesListBinding
 import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel
-import dagger.android.AndroidInjection
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ArticlesListActivity :
     BaseActivity<ArticlesListViewModel, ActivityArticlesListBinding>() {
 
     private lateinit var adapter: ArticlesAdapter
 
-    @Inject
-    lateinit var appSettings: AppSettings
+    private val appSettings by inject<AppSettings>()
 
     override val layoutResId = R.layout.activity_articles_list
 
-    override fun getViewModelClass() = ArticlesListViewModel::class.java
+    override val viewModel by viewModel<ArticlesListViewModel>()
 
-    override fun setViewModel(binding: ActivityArticlesListBinding, viewModel: ArticlesListViewModel) {
+    override fun setViewModel(
+        binding: ActivityArticlesListBinding,
+        viewModel: ArticlesListViewModel
+    ) {
         binding.viewModel = viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
 
         adapter = ArticlesAdapter(
             appSettings = appSettings,
             onArticleClickedListener = viewModel::onArticleClicked,
-            uiScheduler = uiScheduler,
-            lifecycle = lifecycle,
-            semanticTimeProvider = semanticTimeProvider
+            lifecycle = lifecycle
         )
 
         binding.articlesRecyclerView.layoutManager = LinearLayoutManager(this)

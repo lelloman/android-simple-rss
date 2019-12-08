@@ -11,11 +11,9 @@ import java.io.IOException
 import java.io.StringReader
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.inject.Inject
 
-class FeedParser @Inject constructor(
-    private val timeProvider: TimeProvider
-) {
+class FeedParser(private val timeProvider: TimeProvider) {
+
     private val pubDateFormat = SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH)
 
     @Throws(InvalidFeedTagException::class)
@@ -167,8 +165,10 @@ class FeedParser @Inject constructor(
         }
 
         if (!VALID_ROOT_TAGS.contains(startTag)) {
-            throw InvalidFeedTagException("Given xml has root tag <$startTag>, only " +
-                "${VALID_ROOT_TAGS.joinToString(", ") { "<$it>" }} are valid")
+            throw InvalidFeedTagException(
+                "Given xml has root tag <$startTag>, only " +
+                        "${VALID_ROOT_TAGS.joinToString(", ") { "<$it>" }} are valid"
+            )
         }
     }
 

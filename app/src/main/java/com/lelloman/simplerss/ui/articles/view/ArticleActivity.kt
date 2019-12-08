@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import com.lelloman.common.logger.Logger
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.view.BaseActivity
@@ -11,18 +12,17 @@ import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityArticleBinding
 import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
 import com.lelloman.simplerss.ui.articles.viewmodel.ArticleViewModel
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class ArticleActivity : BaseActivity<ArticleViewModel, ActivityArticleBinding>() {
 
     override val layoutResId = R.layout.activity_article
 
-    override fun getViewModelClass() = ArticleViewModel::class.java
-
-    private lateinit var logger: Logger
+    override val viewModel by viewModel<ArticleViewModel>()
 
     override fun setViewModel(binding: ActivityArticleBinding, viewModel: ArticleViewModel) {
         binding.viewModel = viewModel
-        logger = loggerFactory.getLogger(ArticleActivity::class.java)
 
         val url = intent.getStringExtra(ARG_URL)
         if (url == null) {

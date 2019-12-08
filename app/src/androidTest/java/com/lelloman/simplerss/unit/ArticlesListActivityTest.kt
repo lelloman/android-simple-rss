@@ -10,7 +10,7 @@ import com.lelloman.common.androidtestutils.wait
 import com.lelloman.common.androidtestutils.whenever
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.actionevent.ViewActionEvent
-import com.lelloman.simplerss.di.MockViewModelModule
+import com.lelloman.simplerss.di.MockViewModelModuleFactory
 import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import com.lelloman.simplerss.testutils.TestApp
 import com.lelloman.simplerss.testutils.screen.ArticlesListScreen
@@ -31,7 +31,7 @@ class ArticlesListActivityTest {
     @get:Rule
     val activityTestRule = ActivityTestRule<ArticlesListActivity>(ArticlesListActivity::class.java, true, false)
 
-    private val viewModelModule = MockViewModelModule()
+    private val viewModelModule = MockViewModelModuleFactory()
     private lateinit var viewModel: ArticlesListViewModel
 
     private lateinit var articlesLiveData: MutableLiveData<List<SourceArticle>>
@@ -65,7 +65,7 @@ class ArticlesListActivityTest {
         themeChangedEvents = PublishSubject.create()
 
         TestApp.resetPersistence()
-        TestApp.dependenciesUpdate { it.viewModelModule = viewModelModule }
+        TestApp.dependenciesUpdate { it.viewModelModuleFactory = viewModelModule }
         viewModel = viewModelModule.articlesListViewModel
         whenever(viewModel.articles).thenReturn(articlesLiveData)
         whenever(viewModel.isLoading).thenReturn(isLoadingLiveData)

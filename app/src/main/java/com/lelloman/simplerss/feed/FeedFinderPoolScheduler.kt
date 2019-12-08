@@ -1,6 +1,5 @@
 package com.lelloman.simplerss.feed
 
-import javax.inject.Qualifier
+import org.koin.core.qualifier.Qualifier
 
-@Qualifier
-annotation class FeedFinderPoolScheduler
+object FeedFinderPoolScheduler : Qualifier

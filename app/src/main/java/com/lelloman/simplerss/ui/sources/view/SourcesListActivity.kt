@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.lelloman.common.di.qualifiers.UiScheduler
+import com.lelloman.common.logger.LoggerFactory
 import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.utils.ItemSwipeListener
@@ -12,9 +14,11 @@ import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivitySourcesListBinding
 import com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel
-import dagger.android.AndroidInjection
 import io.reactivex.Observable
+import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
+import org.koin.android.ext.android.inject
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 
@@ -23,32 +27,36 @@ class SourcesListActivity
 
     private lateinit var adapter: SourcesAdapter
 
-    private val logger by lazy { loggerFactory.getLogger(SourcesListActivity::class.java) }
-
     private var timerSubscription: Disposable? = null
 
     override val layoutResId = R.layout.activity_sources_list
 
-    override fun getViewModelClass() = SourcesListViewModel::class.java
+    override val viewModel by viewModel<SourcesListViewModel>()
 
-    override fun setViewModel(binding: ActivitySourcesListBinding, viewModel: SourcesListViewModel) {
+    override fun setViewModel(
+        binding: ActivitySourcesListBinding,
+        viewModel: SourcesListViewModel
+    ) {
         binding.viewModel = viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
 
         adapter = SourcesAdapter(
-            resourceProvider = resourceProvider,
-            semanticTimeProvider = semanticTimeProvider,
             onSourceClickedListener = viewModel::onSourceClicked,
             onSourceIsActiveChangedListener = viewModel::onSourceIsActiveChanged
         )
 
         binding.sourcesRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.sourcesRecyclerView.adapter = adapter
-        ItemSwipeListener.set(binding.sourcesRecyclerView) { viewModel.onSourceSwiped(adapter.getItem(it)) }
+        ItemSwipeListener.set(binding.sourcesRecyclerView) {
+            viewModel.onSourceSwiped(
+                adapter.getItem(
+                    it
+                )
+            )
+        }
         viewModel.sources.observe(this, adapter)
     }
 

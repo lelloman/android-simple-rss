@@ -9,6 +9,7 @@ import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityDebugBinding
 import com.lelloman.simplerss.ui.debug.viewmodel.DebugViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DebugActivity :
     BaseActivity<DebugViewModel, ActivityDebugBinding>(),
@@ -17,7 +18,7 @@ class DebugActivity :
 
     override val layoutResId = R.layout.activity_debug
 
-    override fun getViewModelClass() = DebugViewModel::class.java
+    override val viewModel by viewModel<DebugViewModel>()
 
     override fun setViewModel(binding: ActivityDebugBinding, viewModel: DebugViewModel) {
         binding.viewModel = viewModel

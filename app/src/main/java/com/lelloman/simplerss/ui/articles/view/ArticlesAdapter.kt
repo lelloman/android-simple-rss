@@ -1,6 +1,7 @@
 package com.lelloman.simplerss.ui.articles.view
 
 import androidx.lifecycle.Lifecycle
+import com.lelloman.common.di.qualifiers.UiScheduler
 import com.lelloman.common.view.SemanticTimeProvider
 import com.lelloman.common.view.adapter.BaseRecyclerViewAdapter
 import com.lelloman.simplerss.R
@@ -9,20 +10,26 @@ import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.ui.articles.viewmodel.ArticleListItemViewModel
 import io.reactivex.Scheduler
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class ArticlesAdapter(
     private val lifecycle: Lifecycle,
-    private val uiScheduler: Scheduler,
     onArticleClickedListener: (SourceArticle) -> Unit,
-    private val appSettings: AppSettings,
-    private val semanticTimeProvider: SemanticTimeProvider
+    private val appSettings: AppSettings
 ) : BaseRecyclerViewAdapter<Long, SourceArticle, ArticleListItemViewModel, ListItemArticleBinding>(
     onItemClickListener = onArticleClickedListener
-) {
+), KoinComponent {
+
+    private val uiScheduler: Scheduler by inject(UiScheduler)
+    private val semanticTimeProvider: SemanticTimeProvider by inject()
 
     override val listItemLayoutResId = R.layout.list_item_article
 
-    override fun bindViewModel(binding: ListItemArticleBinding, viewModel: ArticleListItemViewModel) {
+    override fun bindViewModel(
+        binding: ListItemArticleBinding,
+        viewModel: ArticleListItemViewModel
+    ) {
         binding.viewModel = viewModel
     }
 

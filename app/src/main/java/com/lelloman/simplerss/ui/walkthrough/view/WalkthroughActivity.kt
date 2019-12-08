@@ -12,7 +12,7 @@ import com.lelloman.common.view.actionevent.SwipePageActionEvent
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityWalkthroughBinding
 import com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel
-import dagger.android.AndroidInjection
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthroughBinding>() {
 
@@ -24,15 +24,17 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
 
     override val layoutResId = R.layout.activity_walkthrough
 
-    override fun getViewModelClass() = WalkthroughViewModel::class.java
+    override val viewModel by viewModel<WalkthroughViewModel>()
 
-    override fun setViewModel(binding: ActivityWalkthroughBinding, viewModel: WalkthroughViewModel) {
+    override fun setViewModel(
+        binding: ActivityWalkthroughBinding,
+        viewModel: WalkthroughViewModel
+    ) {
         binding.viewModel = viewModel
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AndroidInjection.inject(this)
 
         viewPagerAdapter = WalkthroughPagerAdapter(
             context = this,
@@ -56,8 +58,10 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
 
     override fun onSwipePageActionEvent(swipePageActionEvent: SwipePageActionEvent) {
         when (swipePageActionEvent.direction) {
-            SwipePageActionEvent.Direction.LEFT -> binding.viewPager.currentItem = binding.viewPager.currentItem - 1
-            SwipePageActionEvent.Direction.RIGHT -> binding.viewPager.currentItem = binding.viewPager.currentItem + 1
+            SwipePageActionEvent.Direction.LEFT -> binding.viewPager.currentItem =
+                binding.viewPager.currentItem - 1
+            SwipePageActionEvent.Direction.RIGHT -> binding.viewPager.currentItem =
+                binding.viewPager.currentItem + 1
         }
     }
 

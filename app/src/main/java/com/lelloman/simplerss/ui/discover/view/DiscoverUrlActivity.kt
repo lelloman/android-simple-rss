@@ -9,12 +9,13 @@ import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityDiscoverUrlBinding
 import com.lelloman.simplerss.ui.discover.viewmodel.DiscoverUrlViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class DiscoverUrlActivity : BaseActivity<DiscoverUrlViewModel, ActivityDiscoverUrlBinding>() {
 
     override val layoutResId = R.layout.activity_discover_url
 
-    override fun getViewModelClass() = DiscoverUrlViewModel::class.java
+    override val viewModel by viewModel<DiscoverUrlViewModel>()
 
     override val hasActionBarBackButton = true
 

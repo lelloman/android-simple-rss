@@ -1,6 +1,6 @@
 package com.lelloman.simplerss.feed.fetcher
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import com.lelloman.common.http.HttpClient
 import com.lelloman.common.http.HttpResponse
 import com.lelloman.common.http.request.HttpRequest
@@ -17,9 +17,10 @@ class FaviconFetcher(
 
     private val logger = loggerFactory.getLogger(javaClass)
 
-    fun getPngFavicon(url: String): Maybe<ByteArray> = getPngFaviconInternal(url, ::getDuckDuckGoFaviconUrl)
-        .switchIfEmpty(getPngFaviconInternal(url, ::getGoogleS2FaviconUrl))
-        .onErrorComplete()
+    fun getPngFavicon(url: String): Maybe<ByteArray> =
+        getPngFaviconInternal(url, ::getDuckDuckGoFaviconUrl)
+            .switchIfEmpty(getPngFaviconInternal(url, ::getGoogleS2FaviconUrl))
+            .onErrorComplete()
 
     private fun getPngFaviconInternal(
         url: String,

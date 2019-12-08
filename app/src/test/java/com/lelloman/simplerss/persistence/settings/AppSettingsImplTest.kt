@@ -2,11 +2,10 @@ package com.lelloman.simplerss.persistence.settings
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_APP_THEME
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.DEFAULT_USE_METERED_NETWORK
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.KEY_APP_THEME
 import com.lelloman.common.settings.BaseApplicationSettings.Companion.KEY_USE_METERED_NETWORK
-import com.lelloman.common.settings.BaseSettingsModule
+import com.lelloman.common.settings.BaseSettingsModuleFactory
 import com.lelloman.common.view.AppTheme
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_ARTICLES_LIST_IMAGES
 import com.lelloman.simplerss.persistence.settings.AppSettings.Companion.DEFAULT_MIN_SOURCE_REFRESH_INTERVAL
@@ -50,7 +49,7 @@ class AppSettingsImplTest {
         on { getBoolean(KEY_SHOULD_SHOW_WALKTHROUGH, DEFAULT_SHOULD_SHOW_WALKTHROUGH) }
             .thenAnswer { _ -> prefShouldShowWalkthrough }
 
-        on { getString(KEY_APP_THEME, DEFAULT_APP_THEME.name) }
+        on { getString(KEY_APP_THEME, AppTheme.DEFAULT.name) }
             .thenAnswer { _ -> prefAppTheme.name }
 
         on { edit() }.thenReturn(sharedPrefsEditor)
@@ -158,5 +157,9 @@ class AppSettingsImplTest {
         tester.assertValues(AppTheme.DARCULA, AppTheme.LIGHT)
     }
 
-    private fun createAppSettingsImpl() = AppSettingsImpl(context, BaseSettingsModule().provideBaseApplicationSettings(context))
+    private fun createAppSettingsImpl() =
+        AppSettingsImpl(
+            context,
+            BaseSettingsModuleFactory().provideBaseApplicationSettings(context, AppTheme.DEFAULT)
+        )
 }

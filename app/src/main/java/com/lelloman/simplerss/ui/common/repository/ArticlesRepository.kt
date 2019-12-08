@@ -6,11 +6,8 @@ import com.lelloman.simplerss.persistence.db.model.Article
 import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import io.reactivex.Observable
 import io.reactivex.Single
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-class ArticlesRepository @Inject constructor(
+class ArticlesRepository(
     private val articlesDao: ArticlesDao,
     private val feedRefresher: FeedRefresher
 ) {

@@ -5,8 +5,8 @@ import android.view.View
 import androidx.test.espresso.UiController
 import androidx.test.espresso.ViewAction
 import com.lelloman.common.androidtestutils.rotateNatural
-import com.lelloman.common.di.BaseApplicationModule
-import com.lelloman.common.http.HttpModule
+import com.lelloman.common.di.BaseApplicationModuleFactory
+import com.lelloman.common.http.HttpModuleFactory
 import com.lelloman.common.view.MeteredConnectionChecker
 import com.lelloman.simplerss.widget.ToggleSettingItemView
 import okhttp3.CookieJar
@@ -32,11 +32,11 @@ fun setUpTestAppWithMockedHttpStack(
 ) {
     rotateNatural()
     TestApp.dependenciesUpdate {
-        it.httpModule = object : HttpModule() {
+        it.httpModuleFactory = object : HttpModuleFactory() {
             override fun provideOkHttpClient(cookieJar: CookieJar) = MockHttpClient()
         }
 
-        it.baseApplicationModule = object : BaseApplicationModule(it) {
+        it.baseApplicationModuleFactory = object : BaseApplicationModuleFactory() {
             override fun provideMeteredConnectionChecker(context: Context): MeteredConnectionChecker {
                 return object : MeteredConnectionChecker {
                     override fun isNetworkMetered() = isMeteredNetworkValueProvider.invoke()

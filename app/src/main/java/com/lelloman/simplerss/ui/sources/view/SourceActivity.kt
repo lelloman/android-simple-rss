@@ -7,12 +7,13 @@ import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivitySourceBinding
 import com.lelloman.simplerss.ui.sources.viewmodel.SourceViewModel
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class SourceActivity : BaseActivity<SourceViewModel, ActivitySourceBinding>() {
 
     override val layoutResId = R.layout.activity_source
 
-    override fun getViewModelClass() = SourceViewModel::class.java
+    override val viewModel by viewModel<SourceViewModel>()
 
     override fun setViewModel(binding: ActivitySourceBinding, viewModel: SourceViewModel) {
         binding.viewModel = viewModel
