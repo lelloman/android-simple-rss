@@ -15,6 +15,7 @@ import com.lelloman.simplerss.SimpleRssApplication
 import com.lelloman.simplerss.SimpleRssApplication.Companion.getPicassoWrap
 import com.lelloman.simplerss.widget.SourceImageView
 
+@Deprecated("use from common when available")
 interface OnKeyboardActionDoneListener {
     fun onKeyboardActionDone()
 }
@@ -81,6 +82,7 @@ object BindingAdapters {
         editText.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, resId, 0)
     }
 
+    @Deprecated("use from common when available")
     @JvmStatic
     @BindingAdapter("onKeyboardActionDoneListener")
     fun setOnKeyboardActionDoneListener(view: TextView, listener: OnKeyboardActionDoneListener?) {
@@ -92,6 +94,5 @@ object BindingAdapters {
                     .also { if (it) listener.onKeyboardActionDone() }
             }
         }
-
     }
 }
