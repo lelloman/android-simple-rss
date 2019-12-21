@@ -9,7 +9,7 @@ import com.lelloman.common.androidtestutils.rotateRight
 import com.lelloman.common.androidtestutils.wait
 import com.lelloman.common.androidtestutils.whenever
 import com.lelloman.common.view.AppTheme
-import com.lelloman.common.view.actionevent.ViewActionEvent
+import com.lelloman.common.viewmodel.command.Command
 import com.lelloman.simplerss.di.MockViewModelModuleFactory
 import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import com.lelloman.simplerss.testutils.TestApp
@@ -36,7 +36,7 @@ class ArticlesListActivityTest {
 
     private lateinit var articlesLiveData: MutableLiveData<List<SourceArticle>>
     private lateinit var isLoadingLiveData: MutableLiveData<Boolean>
-    private lateinit var viewActionEvents: Subject<ViewActionEvent>
+    private lateinit var commands: Subject<Command>
     private lateinit var themeChangedEvents: Subject<AppTheme>
 
     private lateinit var screen: ArticlesListScreen
@@ -61,7 +61,7 @@ class ArticlesListActivityTest {
         rotateNatural()
         articlesLiveData = MutableLiveData()
         isLoadingLiveData = MutableLiveData()
-        viewActionEvents = PublishSubject.create()
+        commands = PublishSubject.create()
         themeChangedEvents = PublishSubject.create()
 
         TestApp.resetPersistence()
@@ -69,7 +69,7 @@ class ArticlesListActivityTest {
         viewModel = viewModelModule.articlesListViewModel
         whenever(viewModel.articles).thenReturn(articlesLiveData)
         whenever(viewModel.isLoading).thenReturn(isLoadingLiveData)
-        whenever(viewModel.viewActionEvents).thenReturn(viewActionEvents)
+        whenever(viewModel.commands).thenReturn(commands)
         whenever(viewModel.themeChangedEvents).thenReturn(themeChangedEvents)
 
         activityTestRule.launchActivity(null)

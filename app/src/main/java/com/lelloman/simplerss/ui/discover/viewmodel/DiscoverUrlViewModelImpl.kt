@@ -2,11 +2,9 @@ package com.lelloman.simplerss.ui.discover.viewmodel
 
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
-import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
+import com.lelloman.simplerss.ui.OpenFoundFeedListScreenCommand
 import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 
 class DiscoverUrlViewModelImpl(
@@ -30,10 +28,7 @@ class DiscoverUrlViewModelImpl(
         urlValidator.maybePrependProtocol(discoverUrl.get())?.let { urlWithProtocol ->
             discoverUrl.set(urlWithProtocol)
             discoverRepository.findFeeds(urlWithProtocol)
-            navigate(
-                DeepLink(SimpleRssNavigationScreen.FOUND_FEED_LIST)
-                    .putString(ARG_URL, urlWithProtocol)
-            )
+            emitCommand(OpenFoundFeedListScreenCommand(urlWithProtocol))
         }
     }
 

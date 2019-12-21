@@ -7,10 +7,10 @@ import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.view.AppTheme
 import com.lelloman.common.view.FileProvider
 import com.lelloman.common.view.SemanticTimeProvider
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
 import com.lelloman.simplerss.persistence.db.AppDatabase
 import com.lelloman.simplerss.persistence.settings.AppSettings
 import com.lelloman.simplerss.persistence.settings.SourceRefreshInterval
+import com.lelloman.simplerss.ui.OpenClearDataConfirmationScreenCommand
 import io.reactivex.Completable
 
 class SettingsViewModelImpl(
@@ -117,7 +117,7 @@ class SettingsViewModelImpl(
     override fun onOpenArticlesInAppChanged(isActive: Boolean) =
         appSettings.setOpenArticlesInApp(isActive)
 
-    override fun onClearDataClicked() = navigate(SimpleRssNavigationScreen.CLEAR_DATA_CONFIRMATION)
+    override fun onClearDataClicked() = emitCommand(OpenClearDataConfirmationScreenCommand)
 
     override fun onClearDataConfirmed() {
         Completable

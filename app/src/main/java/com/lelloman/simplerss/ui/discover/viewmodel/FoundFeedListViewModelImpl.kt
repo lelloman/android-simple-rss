@@ -1,16 +1,13 @@
 package com.lelloman.simplerss.ui.discover.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.feed.finder.FoundFeed
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_FOUND_FEEDS
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_SOURCE_NAME
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_SOURCE_URL
 import com.lelloman.simplerss.persistence.db.SourcesDao
 import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.ui.OpenAddFoundFeedsConfirmationScreenCommand
+import com.lelloman.simplerss.ui.OpenAddSourceScreenCommand
 import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 import io.reactivex.Observable
 import io.reactivex.functions.BiFunction
@@ -64,9 +61,11 @@ class FoundFeedListViewModelImpl(
                     foundFeedsCount.onNext(it.size)
                 }
                 .filter { it.isEmpty() }
-                .withLatestFrom(discoverRepository.isFindingFeeds, BiFunction<List<FoundFeed>, Boolean, Boolean> { feeds, isLoading ->
-                    feeds.isEmpty() && !isLoading
-                })
+                .withLatestFrom(
+                    discoverRepository.isFindingFeeds,
+                    BiFunction<List<FoundFeed>, Boolean, Boolean> { feeds, isLoading ->
+                        feeds.isEmpty() && !isLoading
+                    })
                 .filter { it }
                 .subscribe {
                     navigateBack()
@@ -75,10 +74,11 @@ class FoundFeedListViewModelImpl(
     }
 
     override fun onFoundFeedClicked(foundFeed: FoundFeed) {
-        navigate(
-            DeepLink(SimpleRssNavigationScreen.ADD_SOURCE)
-                .putString(ARG_SOURCE_NAME, foundFeed.name ?: foundFeed.url)
-                .putString(ARG_SOURCE_URL, foundFeed.url)
+        emitCommand(
+            OpenAddSourceScreenCommand(
+                name = foundFeed.name ?: foundFeed.url,
+                url = foundFeed.url
+            )
         )
     }
 
@@ -87,10 +87,7 @@ class FoundFeedListViewModelImpl(
             .value
             ?.let { foundFeedsList ->
                 val foundFeeds = foundFeedsList as? ArrayList ?: ArrayList(foundFeedsList)
-                navigate(
-                    DeepLink(SimpleRssNavigationScreen.ADD_FOUND_FEEDS_CONFIRMATION)
-                        .putSerializableArrayList(ARG_FOUND_FEEDS, foundFeeds)
-                )
+                emitCommand(OpenAddFoundFeedsConfirmationScreenCommand(foundFeeds))
             }
     }
 

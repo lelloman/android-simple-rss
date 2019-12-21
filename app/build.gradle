@@ -45,7 +45,7 @@ android {
 }
 
 dependencies {
-    // ./gradlew core:assDeb http:assDeb && cp core/build/outputs/aar/core-debug.aar ../android-simple-rss/app/libs/core.aar && cp http/build/outputs/aar/http-debug.aar ../android-simple-rss/app/libs/http.aar && cp webview/build/outputs/aar/webview-debug.aar ../android-simple-rss/app/libs/webview.aar
+    // cp core/build/outputs/aar/core-debug.aar ../android-simple-rss/app/libs/core.aar && cp http/build/outputs/aar/http-debug.aar ../android-simple-rss/app/libs/http.aar && cp webview/build/outputs/aar/webview-debug.aar ../android-simple-rss/app/libs/webview.aar
 //    implementation(name:"core", ext:"aar")
 //    implementation(name:"http", ext:"aar")
 //    implementation(name:"webview", ext:"aar")

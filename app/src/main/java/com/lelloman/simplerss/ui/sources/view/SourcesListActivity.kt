@@ -1,29 +1,22 @@
 package com.lelloman.simplerss.ui.sources.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lelloman.common.di.qualifiers.UiScheduler
-import com.lelloman.common.logger.LoggerFactory
-import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.common.utils.ItemSwipeListener
-import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivitySourcesListBinding
+import com.lelloman.simplerss.ui.SimpleRssActivity
 import com.lelloman.simplerss.ui.sources.viewmodel.SourcesListViewModel
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.disposables.Disposable
-import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 
 class SourcesListActivity
-    : BaseActivity<SourcesListViewModel, ActivitySourcesListBinding>() {
+    : SimpleRssActivity<SourcesListViewModel, ActivitySourcesListBinding>() {
 
     private lateinit var adapter: SourcesAdapter
 
@@ -78,16 +71,8 @@ class SourcesListActivity
     }
 
     companion object {
-        var deepLinkStartable = object : DeepLinkStartable {
-            override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, SourcesListActivity::class.java)
-                if (context !is Activity) {
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(intent)
-            }
+        fun start(activity: Activity) {
+            activity.startActivity(Intent(activity, SourcesListActivity::class.java))
         }
-            internal set
     }
-
 }

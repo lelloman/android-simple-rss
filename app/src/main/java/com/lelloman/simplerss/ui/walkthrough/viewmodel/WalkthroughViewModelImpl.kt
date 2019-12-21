@@ -4,15 +4,16 @@ import android.os.Bundle
 import androidx.databinding.ObservableField
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.lelloman.common.navigation.DeepLink
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.common.utils.UrlValidator
 import com.lelloman.common.view.AppTheme
-import com.lelloman.common.view.actionevent.SwipePageActionEvent
+import com.lelloman.common.viewmodel.command.CloseScreenCommand
+import com.lelloman.common.viewmodel.command.SwipePageCommand
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.html.HtmlSpanner
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
 import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.ui.OpenArticlesListScreenCommand
+import com.lelloman.simplerss.ui.OpenFoundFeedListScreenCommand
 import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 import com.lelloman.simplerss.ui.walkthrough.ThemeListItem
 
@@ -86,7 +87,8 @@ class WalkthroughViewModelImpl(
 
     override fun onCloseClicked() {
         appSettings.setShouldShowWalkthtough(false)
-        navigateAndClose(SimpleRssNavigationScreen.ARTICLES_LIST)
+        emitCommand(OpenArticlesListScreenCommand)
+        emitCommand(CloseScreenCommand)
     }
 
     override fun onKeyboardActionDone() {
@@ -97,27 +99,26 @@ class WalkthroughViewModelImpl(
         urlValidator.maybePrependProtocol(discoverUrl.get())?.let { urlWithProtocol ->
             discoverUrl.set(urlWithProtocol)
             discoveryRepository.findFeeds(urlWithProtocol)
-            navigate(
-                DeepLink(SimpleRssNavigationScreen.FOUND_FEED_LIST)
-                    .putString(ARG_URL, urlWithProtocol)
-            )
+            emitCommand(OpenFoundFeedListScreenCommand(urlWithProtocol))
         }
     }
 
     override fun onMeteredConnectionNoClicked() {
-        navigateAndClose(SimpleRssNavigationScreen.ARTICLES_LIST)
+        emitCommand(OpenArticlesListScreenCommand)
+        emitCommand(CloseScreenCommand)
         appSettings.setUseMeteredNetwork(false)
         appSettings.setShouldShowWalkthtough(false)
     }
 
     override fun onMeteredConnectionYesClicked() {
-        navigateAndClose(SimpleRssNavigationScreen.ARTICLES_LIST)
+        emitCommand(OpenArticlesListScreenCommand)
+        emitCommand(CloseScreenCommand)
         appSettings.setUseMeteredNetwork(true)
         appSettings.setShouldShowWalkthtough(false)
     }
 
     override fun onNextButtonClicked() {
-        emitViewActionEvent(SwipePageActionEvent(SwipePageActionEvent.Direction.RIGHT))
+        emitCommand(SwipePageCommand(SwipePageCommand.Direction.RIGHT))
     }
 
     override fun onPageSelected(pageIndex: Int) {

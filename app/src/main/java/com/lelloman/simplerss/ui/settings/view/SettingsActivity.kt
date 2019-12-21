@@ -1,18 +1,15 @@
 package com.lelloman.simplerss.ui.settings.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.navigation.DeepLinkStartable
-import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivitySettingsBinding
+import com.lelloman.simplerss.ui.SimpleRssActivity
 import com.lelloman.simplerss.ui.settings.viewmodel.SettingsViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class SettingsActivity :
-    BaseActivity<SettingsViewModel, ActivitySettingsBinding>(),
+    SimpleRssActivity<SettingsViewModel, ActivitySettingsBinding>(),
     ClearDataConfirmationDialogFragment.Listener {
 
     override val layoutResId = R.layout.activity_settings
@@ -30,16 +27,8 @@ class SettingsActivity :
     }
 
     companion object {
-
-        var deepLinkStartable = object : DeepLinkStartable {
-            override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, SettingsActivity::class.java)
-                if (context !is Activity) {
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(intent)
-            }
+        fun start(activity: Activity) {
+            activity.startActivity(Intent(activity, SettingsActivity::class.java))
         }
-            internal set
     }
 }

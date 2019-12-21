@@ -1,25 +1,22 @@
 package com.lelloman.simplerss.ui.articles.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.navigation.DeepLinkStartable
-import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.BuildConfig
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityArticlesListBinding
 import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.ui.SimpleRssActivity
 import com.lelloman.simplerss.ui.articles.viewmodel.ArticlesListViewModel
 import org.koin.android.ext.android.inject
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ArticlesListActivity :
-    BaseActivity<ArticlesListViewModel, ActivityArticlesListBinding>() {
+    SimpleRssActivity<ArticlesListViewModel, ActivityArticlesListBinding>() {
 
     private lateinit var adapter: ArticlesAdapter
 
@@ -89,16 +86,8 @@ class ArticlesListActivity :
     }
 
     companion object {
-
-        var deepLinkStartable = object : DeepLinkStartable {
-            override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, ArticlesListActivity::class.java)
-                if (context !is Activity) {
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(intent)
-            }
+        fun start(activity: Activity) {
+            activity.startActivity(Intent(activity, ArticlesListActivity::class.java))
         }
-            internal set
     }
 }

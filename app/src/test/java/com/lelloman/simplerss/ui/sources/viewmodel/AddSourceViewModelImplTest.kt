@@ -4,27 +4,15 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.jvmtestutils.AndroidArchTest
 import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.jvmtestutils.MockResourceProvider
-import com.lelloman.common.navigation.CloseScreenViewActionEvent
 import com.lelloman.common.utils.UrlValidator
-import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.command.CloseScreenCommand
+import com.lelloman.common.viewmodel.command.ShowToastCommand
 import com.lelloman.simplerss.R
-import com.lelloman.simplerss.feed.fetcher.EmptySource
-import com.lelloman.simplerss.feed.fetcher.FeedFetcher
-import com.lelloman.simplerss.feed.fetcher.HttpError
-import com.lelloman.simplerss.feed.fetcher.Success
-import com.lelloman.simplerss.feed.fetcher.TestResult
-import com.lelloman.simplerss.feed.fetcher.UnknownError
-import com.lelloman.simplerss.feed.fetcher.XmlError
+import com.lelloman.simplerss.feed.fetcher.*
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.anyOrNull
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.reset
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers.trampoline
 import io.reactivex.subjects.SingleSubject
@@ -98,13 +86,13 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `if feed fetcher throws an error shows toast`() {
-        val actionEventsObserver = tested.viewActionEvents.test()
+        val actionEventsObserver = tested.commands.test()
         whenever(feedFetcher.testUrl(any())).thenReturn(Single.error<TestResult>(Exception()))
         givenHasValidUrlSet()
 
         tested.onTestUrlClicked()
 
-        actionEventsObserver.assertValues(ToastEvent("${R.string.something_went_wrong}"))
+        actionEventsObserver.assertValues(ShowToastCommand("${R.string.something_went_wrong}"))
         assertThat(tested.testingUrl.value).isFalse()
     }
 
@@ -180,11 +168,11 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `navigates back when click close`() {
-        val viewActionEventObserver = tested.viewActionEvents.test()
+        val viewActionEventObserver = tested.commands.test()
 
         tested.onCloseClicked()
 
-        viewActionEventObserver.assertValues(CloseScreenViewActionEvent)
+        viewActionEventObserver.assertValues(CloseScreenCommand)
     }
 
     @Test
@@ -228,7 +216,7 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `insert source into repository and navigates back when click on save and both name and url are valid`() {
-        val viewActionEventObserver = tested.viewActionEvents.test()
+        val viewActionEventObserver = tested.commands.test()
         val originalUrl = "not the url to be saved"
         val url = "the url to be saved"
         val name = "the name of the source"
@@ -238,12 +226,14 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
         tested.onSaveClicked()
 
-        verify(sourcesRepository).insertSource(Source(
-            name = name,
-            url = url,
-            isActive = true
-        ))
-        viewActionEventObserver.assertValues(CloseScreenViewActionEvent)
+        verify(sourcesRepository).insertSource(
+            Source(
+                name = name,
+                url = url,
+                isActive = true
+            )
+        )
+        viewActionEventObserver.assertValues(CloseScreenCommand)
         tested.apply {
             assertThat(sourceNameError.value).isEmpty()
             assertThat(sourceUrlError.value).isEmpty()
@@ -267,14 +257,14 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `does not navigate back and shows toast if insert source fails`() {
-        val viewActionEventObserver = tested.viewActionEvents.test()
+        val viewActionEventObserver = tested.commands.test()
         tested.sourceName.set("the name")
         givenHasValidUrlSet()
         whenever(sourcesRepository.insertSource(any())).thenReturn(Single.error(Exception()))
 
         tested.onSaveClicked()
 
-        viewActionEventObserver.assertValues(ToastEvent("${R.string.something_went_wrong}"))
+        viewActionEventObserver.assertValues(ShowToastCommand("${R.string.something_went_wrong}"))
 
     }
 
@@ -282,7 +272,10 @@ class AddSourceViewModelImplTest : AndroidArchTest() {
         whenever(sourcesRepository.insertSource(any())).thenReturn(Single.just(0))
     }
 
-    private fun givenHasValidUrlSet(originalUrl: String = "original url", urlWithProtocol: String = "url with protocol") {
+    private fun givenHasValidUrlSet(
+        originalUrl: String = "original url",
+        urlWithProtocol: String = "url with protocol"
+    ) {
         whenever(urlValidator.maybePrependProtocol(originalUrl)).thenReturn(urlWithProtocol)
         tested.sourceUrl.set(originalUrl)
         givenUrlIsValid()

@@ -1,22 +1,17 @@
 package com.lelloman.simplerss.ui.sources.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.navigation.DeepLinkStartable
-import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityAddSourceBinding
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_SOURCE_NAME
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_SOURCE_URL
+import com.lelloman.simplerss.ui.SimpleRssActivity
 import com.lelloman.simplerss.ui.sources.viewmodel.AddSourceViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBinding>() {
+class AddSourceActivity : SimpleRssActivity<AddSourceViewModel, ActivityAddSourceBinding>() {
 
     override val layoutResId = R.layout.activity_add_source
 
@@ -62,23 +57,15 @@ class AddSourceActivity : BaseActivity<AddSourceViewModel, ActivityAddSourceBind
 
     companion object {
 
-        var deepLinkStartable = object : DeepLinkStartable {
-            override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, AddSourceActivity::class.java)
-                if (context !is Activity) {
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
+        private const val ARG_SOURCE_NAME = "SourceName"
+        private const val ARG_SOURCE_URL = "SourceUrl"
 
-                deepLink.getString(ARG_SOURCE_URL)?.let {
-                    intent.putExtra(ARG_SOURCE_URL, it)
-                }
-                deepLink.getString(ARG_SOURCE_NAME)?.let {
-                    intent.putExtra(ARG_SOURCE_NAME, it)
-                }
+        fun start(activity: Activity, sourceName: String?, sourceUrl: String?) {
+            val intent = Intent(activity, AddSourceActivity::class.java)
+                .putExtra(ARG_SOURCE_URL, sourceUrl)
+                .putExtra(ARG_SOURCE_NAME, sourceName)
 
-                context.startActivity(intent)
-            }
+            activity.startActivity(intent)
         }
-            internal set
     }
 }
