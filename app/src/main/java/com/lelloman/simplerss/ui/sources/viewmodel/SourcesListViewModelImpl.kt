@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.lelloman.common.utils.LazyLiveData
 import com.lelloman.simplerss.R
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
 import com.lelloman.simplerss.persistence.db.model.Source
+import com.lelloman.simplerss.ui.OpenAddSourceScreenCommand
 import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
 import com.lelloman.simplerss.ui.common.repository.DeletedSource
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
@@ -54,8 +54,7 @@ class SourcesListViewModelImpl(
         }
     }
 
-    override fun onFabClicked(view: View) =
-        navigate(SimpleRssNavigationScreen.ADD_SOURCE)
+    override fun onFabClicked(view: View) = emitCommand(OpenAddSourceScreenCommand())
 
     override fun onSourceClicked(source: Source) {
         sourcesRepository

@@ -5,25 +5,20 @@ import com.google.common.truth.Truth.assertThat
 import com.lelloman.common.jvmtestutils.AndroidArchTest
 import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.jvmtestutils.MockResourceProvider
-import com.lelloman.common.navigation.DeepLinkNavigationEvent
 import com.lelloman.common.utils.ActionTokenProvider
-import com.lelloman.common.view.actionevent.SnackEvent
-import com.lelloman.common.view.actionevent.ToastEvent
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.command.ShowSnackCommand
+import com.lelloman.common.viewmodel.command.ShowToastCommand
 import com.lelloman.simplerss.R
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
 import com.lelloman.simplerss.persistence.db.model.Article
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.persistence.settings.clear
 import com.lelloman.simplerss.testutils.dummySource
+import com.lelloman.simplerss.ui.OpenAddSourceScreenCommand
 import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
 import com.lelloman.simplerss.ui.common.repository.DeletedSource
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import com.nhaarman.mockitokotlin2.whenever
+import com.nhaarman.mockitokotlin2.*
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Observable
@@ -80,20 +75,27 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `navigates to add source when click on fab`() {
-        val tester = tested.viewActionEvents.test()
+        val tester = tested.commands.test()
 
         tested.onFabClicked(View(null))
 
         tester.assertValueCount(1)
-        tester.assertValueAt(0) {
-            it is DeepLinkNavigationEvent && it.deepLink.screen == SimpleRssNavigationScreen.ADD_SOURCE
-        }
+        tester.assertValueAt(0) { it == OpenAddSourceScreenCommand() }
     }
 
     @Test
     fun `disable source when click and is active`() {
-        whenever(sourcesRepository.getSource(ACTIVE_SOURCE.id)).thenReturn(Flowable.just(ACTIVE_SOURCE))
-        whenever(sourcesRepository.setSourceIsActive(any(), any())).thenReturn(Completable.complete())
+        whenever(sourcesRepository.getSource(ACTIVE_SOURCE.id)).thenReturn(
+            Flowable.just(
+                ACTIVE_SOURCE
+            )
+        )
+        whenever(
+            sourcesRepository.setSourceIsActive(
+                any(),
+                any()
+            )
+        ).thenReturn(Completable.complete())
 
         tested.onSourceClicked(ACTIVE_SOURCE)
 
@@ -102,8 +104,17 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `enable source when click and is not active`() {
-        whenever(sourcesRepository.getSource(INACTIVE_SOURCE.id)).thenReturn(Flowable.just(INACTIVE_SOURCE))
-        whenever(sourcesRepository.setSourceIsActive(any(), any())).thenReturn(Completable.complete())
+        whenever(sourcesRepository.getSource(INACTIVE_SOURCE.id)).thenReturn(
+            Flowable.just(
+                INACTIVE_SOURCE
+            )
+        )
+        whenever(
+            sourcesRepository.setSourceIsActive(
+                any(),
+                any()
+            )
+        ).thenReturn(Completable.complete())
 
         tested.onSourceClicked(INACTIVE_SOURCE)
 
@@ -113,7 +124,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
     @Test
     fun `deletes source and shows snack from repository on source swiped`() {
         val source = SOURCES[0]
-        val viewActions = tested.viewActionEvents.test()
+        val viewActions = tested.commands.test()
         whenever(sourcesRepository.deleteSource(any())).thenReturn(Single.just(mock()))
         val token = "poppopopopopopop"
         givenNextActionToken(token)
@@ -121,21 +132,23 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         tested.onSourceSwiped(source)
 
         verify(sourcesRepository).deleteSource(source)
-        viewActions.assertValues(SnackEvent(
-            message = "${R.string.source_deleted}:${source.name}",
-            actionLabel = "${R.string.undo}",
-            actionToken = token
-        ))
+        viewActions.assertValues(
+            ShowSnackCommand(
+                message = "${R.string.source_deleted}:${source.name}",
+                actionLabel = "${R.string.undo}",
+                actionToken = token
+            )
+        )
     }
 
     @Test
     fun `shows toast if source deletion fails`() {
         whenever(sourcesRepository.deleteSource(any())).thenReturn(Single.error(Exception()))
-        val viewActions = tested.viewActionEvents.test()
+        val viewActions = tested.commands.test()
 
         tested.onSourceSwiped(dummySource())
 
-        viewActions.assertValues(ToastEvent(message = "${R.string.something_went_wrong}"))
+        viewActions.assertValues(ShowToastCommand(message = "${R.string.something_went_wrong}"))
     }
 
     @Test
@@ -191,7 +204,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `shows toast if insert source fails`() {
-        val tester = tested.viewActionEvents.test()
+        val tester = tested.commands.test()
         val token = "asdomar"
         val source = SOURCES[0]
         givenCanDeleteSource(DeletedSource(source = source, articles = emptyList()))
@@ -204,12 +217,12 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         tested.onTokenAction(token)
 
         tester.awaitCount(2)
-        assertThat(tester.values()).contains(ToastEvent("${R.string.something_went_wrong}"))
+        assertThat(tester.values()).contains(ShowToastCommand("${R.string.something_went_wrong}"))
     }
 
     @Test
     fun `shows toast if insert articles failes`() {
-        val tester = tested.viewActionEvents.test()
+        val tester = tested.commands.test()
         val token = "asdomar"
         val source = SOURCES[0]
         givenCanDeleteSource(DeletedSource(source = source, articles = emptyList()))
@@ -221,7 +234,7 @@ class SourcesListViewModelImplTest : AndroidArchTest() {
         tested.onTokenAction(token)
 
         tester.awaitCount(2)
-        assertThat(tester.values()).contains(ToastEvent("${R.string.something_went_wrong}"))
+        assertThat(tester.values()).contains(ShowToastCommand("${R.string.something_went_wrong}"))
     }
 
     private fun givenCanInsertArticles() {

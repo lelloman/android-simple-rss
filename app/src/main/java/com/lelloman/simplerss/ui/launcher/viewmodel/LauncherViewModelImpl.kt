@@ -1,7 +1,9 @@
 package com.lelloman.simplerss.ui.launcher.viewmodel
 
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
+import com.lelloman.common.viewmodel.command.CloseScreenCommand
 import com.lelloman.simplerss.persistence.settings.AppSettings
+import com.lelloman.simplerss.ui.OpenArticlesListScreenCommand
+import com.lelloman.simplerss.ui.OpenWalkthroughScreenCommand
 
 class LauncherViewModelImpl(
     private val appSettings: AppSettings,
@@ -10,9 +12,10 @@ class LauncherViewModelImpl(
 
     override fun onViewLoaded() {
         if (appSettings.shouldShowWalkthrough.blockingFirst()) {
-            navigateAndClose(SimpleRssNavigationScreen.WALKTHROUGH)
+            emitCommand(OpenWalkthroughScreenCommand)
         } else {
-            navigateAndClose(SimpleRssNavigationScreen.ARTICLES_LIST)
+            emitCommand(OpenArticlesListScreenCommand)
         }
+        emitCommand(CloseScreenCommand)
     }
 }

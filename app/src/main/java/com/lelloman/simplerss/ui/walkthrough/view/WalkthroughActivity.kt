@@ -1,20 +1,17 @@
 package com.lelloman.simplerss.ui.walkthrough.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.viewpager.widget.ViewPager
-import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.navigation.DeepLinkStartable
-import com.lelloman.common.view.BaseActivity
-import com.lelloman.common.view.actionevent.SwipePageActionEvent
+import com.lelloman.common.viewmodel.command.SwipePageCommand
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityWalkthroughBinding
+import com.lelloman.simplerss.ui.SimpleRssActivity
 import com.lelloman.simplerss.ui.walkthrough.viewmodel.WalkthroughViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthroughBinding>() {
+class WalkthroughActivity : SimpleRssActivity<WalkthroughViewModel, ActivityWalkthroughBinding>() {
 
     private lateinit var viewPagerAdapter: WalkthroughPagerAdapter
 
@@ -56,26 +53,18 @@ class WalkthroughActivity : BaseActivity<WalkthroughViewModel, ActivityWalkthrou
         binding.pagerIndicator.viewPager = binding.viewPager
     }
 
-    override fun onSwipePageActionEvent(swipePageActionEvent: SwipePageActionEvent) {
-        when (swipePageActionEvent.direction) {
-            SwipePageActionEvent.Direction.LEFT -> binding.viewPager.currentItem =
+    override fun onSwipePageCommand(swipePageCommand: SwipePageCommand) {
+        when (swipePageCommand.direction) {
+            SwipePageCommand.Direction.LEFT -> binding.viewPager.currentItem =
                 binding.viewPager.currentItem - 1
-            SwipePageActionEvent.Direction.RIGHT -> binding.viewPager.currentItem =
+            SwipePageCommand.Direction.RIGHT -> binding.viewPager.currentItem =
                 binding.viewPager.currentItem + 1
         }
     }
 
     companion object {
-
-        var deepLinkStartable = object : DeepLinkStartable {
-            override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, WalkthroughActivity::class.java)
-                if (context !is Activity) {
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(intent)
-            }
+        fun start(activity: Activity) {
+            activity.startActivity(Intent(activity, WalkthroughActivity::class.java))
         }
-            internal set
     }
 }

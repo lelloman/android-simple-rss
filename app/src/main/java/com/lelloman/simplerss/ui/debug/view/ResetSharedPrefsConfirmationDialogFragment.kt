@@ -5,9 +5,6 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentActivity
-import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.navigation.DeepLinkStartable
 import com.lelloman.simplerss.R
 
 @Deprecated(message = "Move this to a generic confirmation dialog fragment in common")
@@ -34,19 +31,6 @@ class ResetSharedPrefsConfirmationDialogFragment : DialogFragment() {
                 listener?.onResetSharedPrefsConfirmed()
             }
             .create()
-    }
-
-    companion object {
-        var deepLinkStartable = object : DeepLinkStartable {
-            override fun start(context: Context, deepLink: DeepLink) {
-                if (context is FragmentActivity) {
-                    val fragment = ResetSharedPrefsConfirmationDialogFragment()
-                    fragment.show(context.supportFragmentManager, ResetSharedPrefsConfirmationDialogFragment::class.java.simpleName)
-                } else {
-                    throw IllegalArgumentException("Context argument must be a FragmentActivity")
-                }
-            }
-        }
     }
 
     interface Listener {

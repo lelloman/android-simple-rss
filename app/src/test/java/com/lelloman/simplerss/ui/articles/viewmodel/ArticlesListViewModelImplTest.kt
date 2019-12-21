@@ -4,16 +4,14 @@ import com.lelloman.common.jvmtestutils.AndroidArchTest
 import com.lelloman.common.jvmtestutils.MockLoggerFactory
 import com.lelloman.common.jvmtestutils.MockResourceProvider
 import com.lelloman.common.jvmtestutils.test
-import com.lelloman.common.navigation.DeepLinkNavigationEvent
-import com.lelloman.common.navigation.ViewIntentNavigationEvent
 import com.lelloman.common.viewmodel.BaseViewModel
+import com.lelloman.common.viewmodel.command.ViewIntentNavigationEvent
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.mock.MockAppSettings
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.persistence.db.model.SourceArticle
 import com.lelloman.simplerss.testutils.dummySourceArticle
+import com.lelloman.simplerss.ui.*
 import com.lelloman.simplerss.ui.common.repository.ArticlesRepository
 import com.lelloman.simplerss.ui.common.repository.DiscoverRepository
 import com.lelloman.simplerss.ui.common.repository.SourcesRepository
@@ -62,41 +60,32 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `navigates to sources list when click on sources button`() {
-        val tester = tested.viewActionEvents.test()
+        val tester = tested.commands.test()
 
         tested.onSourcesClicked()
 
         tester.assertValueCount(1)
-        tester.assertValueAt(0) {
-            it is DeepLinkNavigationEvent
-                && it.deepLink.parametersCount == 0
-                && it.deepLink.screen == SimpleRssNavigationScreen.SOURCES_LIST
-        }
+        tester.assertValueAt(0) { it == OpenSourcesListScreenCommand }
     }
 
     @Test
     fun `navigates to article screen when article is clicked and open in app setting is true`() {
         givenOpenArticleInAppSettingEnabled()
-        val tester = tested.viewActionEvents.test()
+        val tester = tested.commands.test()
         val link = "www.meow.com"
         val article = dummySourceArticle().copy(link = link)
 
         tested.onArticleClicked(article)
 
         tester.assertValueCount(1)
-        tester.assertValueAt(0) {
-            it is DeepLinkNavigationEvent
-                && it.deepLink.parametersCount == 1
-                && it.deepLink.getString(ARG_URL) == link
-                && it.deepLink.screen == SimpleRssNavigationScreen.ARTICLE
-        }
+        tester.assertValueAt(0) { it == OpenArticleScreenCommand(link) }
     }
 
     @Test
     fun `navigates to view intent when article is clicked and open in app setting is false`() {
         val link = "asdasd"
         givenOpenArticleInAppSettingDisabled()
-        val viewActions = tested.viewActionEvents.test()
+        val viewActions = tested.commands.test()
         val article = dummySourceArticle().copy(link = link)
 
         tested.onArticleClicked(article)
@@ -106,16 +95,12 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `navigates to settings screen when settings button is clicked`() {
-        val tester = tested.viewActionEvents.test()
+        val tester = tested.commands.test()
 
         tested.onSettingsClicked()
 
         tester.assertValueCount(1)
-        tester.assertValueAt(0) {
-            it is DeepLinkNavigationEvent
-                && it.deepLink.parametersCount == 0
-                && it.deepLink.screen == SimpleRssNavigationScreen.SETTINGS
-        }
+        tester.assertValueAt(0) { it == OpenSettingsScreenCommand }
     }
 
     @Test
@@ -155,7 +140,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         val emptyViewTester = tested.emptyViewVisible.test()
         val emptyTextTester = tested.emptyViewDescriptionText.test()
         val emptyButtonTester = tested.emptyViewButtonText.test()
-        val viewActionsTester = tested.viewActionEvents.test()
+        val viewActionsTester = tested.commands.test()
 
         val articlesTester = tested.articles.test()
         tested.onEmptyViewButtonClicked()
@@ -165,11 +150,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         emptyTextTester.assertValues("${R.string.empty_articles_no_source}")
         emptyButtonTester.assertValues("${R.string.add_source}")
         viewActionsTester.assertValueCount(1)
-        viewActionsTester.assertValueAt(0) {
-            it is DeepLinkNavigationEvent
-                && it.deepLink.parametersCount == 0
-                && it.deepLink.screen == SimpleRssNavigationScreen.ADD_SOURCE
-        }
+        viewActionsTester.assertValueAt(0) { it == OpenAddSourceScreenCommand() }
     }
 
     @Test
@@ -179,7 +160,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         val emptyViewTester = tested.emptyViewVisible.test()
         val emptyTextTester = tested.emptyViewDescriptionText.test()
         val emptyButtonTester = tested.emptyViewButtonText.test()
-        val viewActionsTester = tested.viewActionEvents.test()
+        val viewActionsTester = tested.commands.test()
 
         val articlesTester = tested.articles.test()
         tested.onEmptyViewButtonClicked()
@@ -189,11 +170,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         emptyTextTester.assertValues("${R.string.empty_articles_sources_disabled}")
         emptyButtonTester.assertValues("${R.string.enable_sources}")
         viewActionsTester.assertValueCount(1)
-        viewActionsTester.assertValueAt(0) {
-            it is DeepLinkNavigationEvent
-                && it.deepLink.parametersCount == 0
-                && it.deepLink.screen == SimpleRssNavigationScreen.SOURCES_LIST
-        }
+        viewActionsTester.assertValueAt(0) { it == OpenSourcesListScreenCommand }
     }
 
     @Test
@@ -203,7 +180,7 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
         val emptyViewTester = tested.emptyViewVisible.test()
         val emptyTextTester = tested.emptyViewDescriptionText.test()
         val emptyButtonTester = tested.emptyViewButtonText.test()
-        val viewActionsTester = tested.viewActionEvents.test()
+        val viewActionsTester = tested.commands.test()
 
         val articlesTester = tested.articles.test()
         verify(articlesRepository, never()).refresh()
@@ -219,13 +196,11 @@ class ArticlesListViewModelImplTest : AndroidArchTest() {
 
     @Test
     fun `navigates to debug screen`() {
-        val tester = tested.viewActionEvents.test()
+        val tester = tested.commands.test()
 
         tested.onDebugClicked()
 
-        tester.assertValue {
-            it is DeepLinkNavigationEvent && it.deepLink.screen == SimpleRssNavigationScreen.DEBUG
-        }
+        tester.assertValue { it is OpenDebugScreenCommand }
     }
 
     private fun givenActiveSources() {

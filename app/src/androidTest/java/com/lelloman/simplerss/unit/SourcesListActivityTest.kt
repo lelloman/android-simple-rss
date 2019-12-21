@@ -5,7 +5,7 @@ import androidx.test.rule.ActivityTestRule
 import com.lelloman.common.androidtestutils.rotateNatural
 import com.lelloman.common.androidtestutils.whenever
 import com.lelloman.common.view.AppTheme
-import com.lelloman.common.view.actionevent.ViewActionEvent
+import com.lelloman.common.viewmodel.command.Command
 import com.lelloman.simplerss.di.MockViewModelModuleFactory
 import com.lelloman.simplerss.persistence.db.model.Source
 import com.lelloman.simplerss.testutils.TestApp
@@ -27,7 +27,7 @@ class SourcesListActivityTest {
     private lateinit var viewModel: SourcesListViewModel
 
     private lateinit var sources: MutableLiveData<List<Source>>
-    private lateinit var viewActionEvents: Subject<ViewActionEvent>
+    private lateinit var viewActionEvents: Subject<Command>
     private lateinit var emptyViewVisible: MutableLiveData<Boolean>
 
     @Before
@@ -41,7 +41,7 @@ class SourcesListActivityTest {
         viewModel = viewModelModule.sourcesListViewModel
         whenever(viewModel.themeChangedEvents).thenReturn(PublishSubject.create<AppTheme>().hide())
         whenever(viewModel.sources).thenReturn(sources)
-        whenever(viewModel.viewActionEvents).thenReturn(viewActionEvents.hide())
+        whenever(viewModel.commands).thenReturn(viewActionEvents.hide())
         whenever(viewModel.emptyViewVisible).thenReturn(emptyViewVisible)
 
         TestApp.resetPersistence()

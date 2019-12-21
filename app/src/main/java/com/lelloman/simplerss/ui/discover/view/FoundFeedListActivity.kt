@@ -1,25 +1,21 @@
 package com.lelloman.simplerss.ui.discover.view
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.lelloman.common.navigation.DeepLink
-import com.lelloman.common.navigation.DeepLinkStartable
-import com.lelloman.common.view.BaseActivity
 import com.lelloman.simplerss.R
 import com.lelloman.simplerss.databinding.ActivityFoundFeedListBinding
 import com.lelloman.simplerss.feed.finder.FoundFeed
-import com.lelloman.simplerss.navigation.SimpleRssNavigationScreen.Companion.ARG_URL
+import com.lelloman.simplerss.ui.SimpleRssActivity
 import com.lelloman.simplerss.ui.discover.viewmodel.FoundFeedListViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class FoundFeedListActivity
-    : BaseActivity<FoundFeedListViewModel, ActivityFoundFeedListBinding>(),
+    : SimpleRssActivity<FoundFeedListViewModel, ActivityFoundFeedListBinding>(),
     AddFoundFeedsConfirmationDialogFragment.Listener {
 
     private lateinit var adapter: FoundFeedsAdapter
@@ -83,16 +79,11 @@ class FoundFeedListActivity
 
     companion object {
 
-        var deepLinkStartable = object : DeepLinkStartable {
-            override fun start(context: Context, deepLink: DeepLink) {
-                val intent = Intent(context, FoundFeedListActivity::class.java)
-                    .putExtra(ARG_URL, deepLink.getString(ARG_URL))
-                if (context !is Activity) {
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }
-                context.startActivity(intent)
-            }
+        private const val ARG_URL = "Url"
+        fun start(activity: Activity, url: String) {
+            val intent = Intent(activity, FoundFeedListActivity::class.java)
+                .putExtra(ARG_URL, url)
+            activity.startActivity(intent)
         }
-            internal set
     }
 }
