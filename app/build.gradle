@@ -1,0 +1,16 @@
+plugins {
+    id 'androidx.navigation.safeargs.kotlin'
+}
+
+android {
+    defaultConfig {
+        applicationId "com.lelloman.simplerss"
+    }
+}
+
+dependencies {
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+//    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+}

@@ -1,0 +1,126 @@
+buildscript {
+    ext {
+        androidx_core_version = "1.3.2"
+        appcompat_version = "1.2.0"
+        arch_core_testing_version = "1.1.1"
+        assertj_version = "3.19.0"
+        constraint_layout_version = "2.0.4"
+        fragment_ktx_version = "1.3.2"
+        gson_version = "2.8.6"
+        hilt_version = "2.33-beta"
+        junit_version = "4.13.2"
+        kotlin_version = "1.4.32"
+        leak_canary_version = "2.7"
+        material_version = "1.3.0"
+        mockito_version = "3.1.0"
+        mockito_inline_version = "3.3.3"
+        nav_version = "2.3.5"
+        retrofit_version = "2.9.0"
+        room_version = "2.3.0-rc01" // rc because of rxjava3
+        rxandroid_version = "3.0.0"
+        timber_version = "4.7.1"
+    }
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.1.3"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_version"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+subprojects { Project project ->
+
+    boolean isApplication = project.getProperties()["isApplication"]
+    if (isApplication) {
+        apply plugin: 'com.android.application'
+    } else {
+        apply plugin: 'com.android.library'
+    }
+
+    boolean isUiModule = project.getProperties()["isUiModule"]
+
+    apply plugin: 'kotlin-android'
+    apply plugin: 'kotlin-kapt'
+    apply plugin: 'dagger.hilt.android.plugin'
+
+    android {
+        compileSdkVersion 30
+        buildToolsVersion "30.0.3"
+
+        defaultConfig {
+            minSdkVersion 21
+            targetSdkVersion 30
+            versionCode 1
+            versionName "1.0"
+
+            testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        }
+
+        buildTypes {
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+        }
+
+        if(isUiModule) {
+            buildFeatures {
+                dataBinding true
+            }
+        }
+
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
+
+        dependencies {
+            implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+            implementation "com.jakewharton.timber:timber:$timber_version"
+
+            implementation "io.reactivex.rxjava3:rxandroid:$rxandroid_version"
+
+            implementation "com.google.dagger:hilt-android:$hilt_version"
+            kapt "com.google.dagger:hilt-compiler:$hilt_version"
+
+            if (isUiModule) {
+                implementation "androidx.appcompat:appcompat:$appcompat_version"
+                implementation "androidx.core:core-ktx:$androidx_core_version"
+                implementation "com.google.android.material:material:$material_version"
+                implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+
+                implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
+            }
+
+            testImplementation "junit:junit:$junit_version"
+            testImplementation "org.mockito.kotlin:mockito-kotlin:$mockito_version"
+            testImplementation "org.mockito:mockito-inline:$mockito_inline_version"
+            testImplementation "org.assertj:assertj-core:$assertj_version"
+
+
+            androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+            androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+        }
+    }
+}
