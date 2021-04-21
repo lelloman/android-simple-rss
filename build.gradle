@@ -18,6 +18,7 @@ buildscript {
         retrofit_version = "2.9.0"
         room_version = "2.3.0-rc01" // rc because of rxjava3
         rxandroid_version = "3.0.0"
+        rxbinding_version = "4.0.0"
         timber_version = "4.7.1"
     }
 
@@ -46,14 +47,14 @@ task clean(type: Delete) {
 
 subprojects { Project project ->
 
-    boolean isApplication = project.getProperties()["isApplication"]
+    boolean isApplication = project.name == "app"
+    boolean isUiModule = project.name.startsWith("ui_") || isApplication
+
     if (isApplication) {
         apply plugin: 'com.android.application'
     } else {
         apply plugin: 'com.android.library'
     }
-
-    boolean isUiModule = project.getProperties()["isUiModule"]
 
     apply plugin: 'kotlin-android'
     apply plugin: 'kotlin-kapt'
@@ -79,9 +80,9 @@ subprojects { Project project ->
             }
         }
 
-        if(isUiModule) {
+        if (isUiModule) {
             buildFeatures {
-                dataBinding true
+                viewBinding true
             }
         }
 
@@ -111,6 +112,7 @@ subprojects { Project project ->
                 implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
 
                 implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
+                implementation "com.jakewharton.rxbinding4:rxbinding:$rxbinding_version"
             }
 
             testImplementation "junit:junit:$junit_version"

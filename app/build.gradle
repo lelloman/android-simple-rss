@@ -12,5 +12,12 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    implementation project(':ui_base')
+
+    implementation project(':ui_about')
+    implementation project(':ui_feed')
+    implementation project(':ui_settings')
+    implementation project(':ui_source')
+
 //    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
 }

@@ -1,0 +1,59 @@
+package com.lelloman.simplerss.ui_base
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlin.reflect.KClass
+
+abstract class BaseViewModel<VMS : BaseViewModel.State, VME : BaseViewModel.Event, VMA : BaseViewModel.Action> :
+    ViewModel() {
+
+    protected abstract val defaultState: VMS
+
+    private val mutableState by lazy { MutableLiveData(defaultState) }
+    protected val state get() = mutableState.value!!
+    val stateLiveData: LiveData<VMS> get() = mutableState
+
+    private val actionsSubject = PublishSubject.create<VMA>()
+    private val actionsSource: Observable<VMA>
+        get() = actionsSubject
+            .publish()
+            .autoConnect()
+
+    val events: Observable<VME> by lazy { buildActionsMapper(actionsSource) }
+
+    protected fun stateUpdate(action: (VMS) -> VMS) {
+        mutableState.value = action(mutableState.value!!)
+    }
+
+    fun processAction(action: VMA) {
+        actionsSubject.onNext(action)
+    }
+
+    private fun buildActionsMapper(actionsSource: Observable<VMA>): Observable<VME> {
+        return Observable.merge(createActionsMappers(actionsSource))
+            .onErrorResumeNext { buildActionsMapper(actionsSource) }
+    }
+
+    protected abstract fun createActionsMappers(actionsSource: Observable<VMA>) : List<Observable<VME>>
+
+    protected fun <T : VMA> Observable<T>.noEvent(): Observable<VME> = flatMap { Observable.empty() }
+
+    protected fun <T : VMA> Observable<VMA>.eventlessIgnoredImmediate(
+        kclass: KClass<T>,
+        action: () -> Unit
+    ): Observable<VME> = ofType(kclass.java)
+        .doOnNext { action() }
+        .noEvent()
+
+    protected fun <T : VMA> Observable<T>.updateStateOnNext(updateAction: (VMS) -> VMS): Observable<T> =
+        doOnNext { this@BaseViewModel.stateUpdate(updateAction) }
+
+    interface State
+
+    interface Event
+
+    interface Action
+}

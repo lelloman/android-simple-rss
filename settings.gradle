@@ -1,2 +1,7 @@
+include ':ui_base'
+include ':ui_source'
+include ':ui_settings'
+include ':ui_about'
+include ':ui_feed'
 include ':app'
 rootProject.name = "SimpleRss"
