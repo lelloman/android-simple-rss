@@ -1,6 +1,7 @@
 package com.lelloman.simplerss.ui_feed.view
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -39,8 +40,19 @@ class FeedAdapter(private val onItemClickListener: (FeedViewModel.FeedListItem) 
         fun bind(item: FeedViewModel.FeedListItem) {
             with(binding) {
                 root.setOnClickListener { onItemClickListener(item) }
-                titleTextView.text = item.title
-                bodyTextView.text = item.body
+
+                // image.loadImageUrl(item.imageUrl)
+                image.visibility = if (item.imageUrl.isNullOrBlank()) View.GONE else View.VISIBLE
+
+                textViewTitle.text = item.title
+
+                // imageViewFavicon.loadFavicon(item.faviconId)
+                imageViewFavicon.visibility = if (item.faviconId == null) View.GONE else View.VISIBLE
+
+                textViewDetails.text = "{semanticTimeProvider.getDateTimeString(item.time)} - ${item.sourceName}"
+
+                textViewSubtitle.visibility = if (item.subtitle.isBlank()) View.GONE else View.VISIBLE
+                textViewSubtitle.text = item.subtitle
             }
         }
     }

@@ -34,39 +34,30 @@ class FeedViewModel @Inject constructor(
         firstLoadedSubject.onNext(Unit)
     }
 
-    private fun Observable<Action>.pullToRefresh(): Observable<Event> = Observable.merge(
-        ofType(Action.FeedPulledToRefresh::class.java),
-        ofType(Action.RefreshButtonClicked::class.java)
-    )
-        .filter { !state.isLoadingFeed && !state.isRefreshing }
-        .updateStateOnNext { it.copy(isRefreshing = true) }
-        .flatMapSingle {
-            interactor.refreshFeed()
-                .subscribeOn(ioScheduler)
-                .onErrorComplete()
-                .toSingle { }
-        }
-        .observeOn(uiScheduler)
-        .updateStateOnNext { it.copy(isRefreshing = false) }
-        .noEvent()
+    private fun Observable<Action>.pullToRefresh(): Observable<Event> = Observable
+        .merge(ofType(Action.FeedPulledToRefresh::class.java), ofType(Action.RefreshButtonClicked::class.java))
+        .loadFeed { copy(isRefreshing = it) }
 
-    private fun firstLoad(): Observable<Event> = firstLoadedSubject
-        .updateStateOnNext { it.copy(isLoadingFeed = true) }
-        .flatMapSingle {
-            interactor.loadFeed()
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
-        }
-        .doOnNext { items ->
-            stateUpdate {
-                it.copy(isLoadingFeed = false, feedItems = items.map(::FeedListItem))
+    private fun firstLoad(): Observable<Event> = firstLoadedSubject.loadFeed { copy(isLoadingFeed = it) }
+
+    private fun <T> Observable<T>.loadFeed(loadingSetter: State.(Boolean) -> State): Observable<Event> =
+        filter { !state.isLoadingFeed && !state.isRefreshing }
+            .updateStateOnNext { it.loadingSetter(true) }
+            .flatMapSingle {
+                interactor.loadFeed()
+                    .subscribeOn(ioScheduler)
             }
-        }
-        .updateStateOnError {
-            it.copy(isLoadingFeed = false)
-        }
-        .onErrorComplete()
-        .noEvent()
+            .observeOn(uiScheduler)
+            .doOnNext { items ->
+                stateUpdate {
+                    it.loadingSetter(false).copy(feedItems = items.map(::FeedListItem))
+                }
+            }
+            .updateStateOnError {
+                it.loadingSetter(false)
+            }
+            .onErrorComplete()
+            .noEvent()
 
     data class State(
         val isLoadingFeed: Boolean = false,

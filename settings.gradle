@@ -1,3 +1,5 @@
+include ':domain_feed'
+include ':domain_sources'
 include ':ui_base'
 include ':ui_source'
 include ':ui_settings'

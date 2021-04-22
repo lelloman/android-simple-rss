@@ -12,6 +12,9 @@ dependencies {
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
+    implementation project(':domain_feed')
+    implementation project(':domain_sources')
+
     implementation project(':ui_base')
 
     implementation project(':ui_about')

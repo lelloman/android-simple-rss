@@ -1,6 +1,9 @@
 package com.lelloman.simplerss.feed
 
-import com.lelloman.simplerss.R
+import com.lelloman.simplerss.domain_feed.FeedItem
+import com.lelloman.simplerss.domain_feed.FeedRepository
+import com.lelloman.simplerss.domain_feed.FeedSource
+import com.lelloman.simplerss.domain_feed.FeedSourceOperationProducer
 import com.lelloman.simplerss.navigation.NavigationEventProcessor
 import com.lelloman.simplerss.ui_feed.model.FeedInteractor
 import dagger.Module
@@ -8,43 +11,53 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
-import java.util.concurrent.TimeUnit
+import dagger.hilt.components.SingletonComponent
+import dagger.multibindings.IntoSet
+import io.reactivex.rxjava3.core.Observable
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object FeedModule {
+object UiFeedModule {
 
     @Provides
     @ViewModelScoped
-    fun provideFeedInteractor(navigationEventProcessor: NavigationEventProcessor): FeedInteractor {
-        return object : FeedInteractor {
-            override fun loadFeed(): Single<List<FeedInteractor.FeedItem>> {
-                return Single.timer(2, TimeUnit.SECONDS)
-                    .map {
-                        Array(50) {
-                            object : FeedInteractor.FeedItem {
-                                override val id: String = "id $it"
-                                override val title: String = "title $it"
-                                override val body: String = "body $it"
-                                override val url: String = "url $it"
-                            }
-                        }.toList()
-                    }
-            }
+    fun provideFeedInteractor(
+        navigationEventProcessor: NavigationEventProcessor,
+        feedRepository: FeedRepository
+    ): FeedInteractor = FeedInteractorImpl(navigationEventProcessor, feedRepository)
+}
 
-            override fun refreshFeed(): Completable {
-                return Completable.timer(2, TimeUnit.SECONDS)
-            }
+@Module
+@InstallIn(SingletonComponent::class)
+object DomainFeedModule {
 
-            override fun goToAbout() = navigationEventProcessor {
-                it.navigate(R.id.action_feedFragment_to_aboutFragment)
-            }
+    @Provides
+    @IntoSet
+    fun providesStaticFeedSourceOperationProducer(): FeedSourceOperationProducer {
+        return FeedSourceOperationProducer { Observable.just(FeedSource.Operation.Add(FakeFeedSource())) }
+    }
 
-            override fun goToSettings() = navigationEventProcessor {
-                it.navigate(R.id.action_feedFragment_to_settingsFragment)
-            }
+    class FakeFeedSource : FeedSource {
+        override val id: String = "fake source"
+
+        override fun observeItems(): Observable<List<FeedItem>> {
+            return Observable.just(Array(50) { FakeFeedItem(it, id) }.toList())
+        }
+
+        class FakeFeedItem(
+            it: Int,
+            sourceId: String
+        ) : FeedItem {
+            override val id: Long = it.toLong()
+            override val title: String = "title $it"
+            override val subtitle: String = "subtitle $it"
+            override val content: String = "content $it"
+            override val link: String = "link $it"
+            override val imageUrl: String? = ""
+            override val time: Long = 0
+            override val sourceName: String = "source $it"
+            override val faviconId: String? = null
+            override val sourceId: String = sourceId
         }
     }
 }
