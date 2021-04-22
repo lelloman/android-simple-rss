@@ -1,10 +1,13 @@
-package com.lelloman.simplerss.ui_feed
+package com.lelloman.simplerss.ui_feed.model
 
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 interface FeedInteractor {
 
-    fun loadFeed() : Single<List<FeedItem>>
+    fun loadFeed(): Single<List<FeedItem>>
+
+    fun refreshFeed(): Completable
 
     fun goToAbout()
 

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/feedFragment"
-        android:name="com.lelloman.simplerss.ui_feed.FeedFragment"
+        android:name="com.lelloman.simplerss.ui_feed.view.FeedFragment"
         android:label="FeedFragment" >
         <action
             android:id="@+id/action_feedFragment_to_aboutFragment"

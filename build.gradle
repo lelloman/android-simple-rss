@@ -19,6 +19,7 @@ buildscript {
         room_version = "2.3.0-rc01" // rc because of rxjava3
         rxandroid_version = "3.0.0"
         rxbinding_version = "4.0.0"
+        swiperefreshlayout_version = "1.0.0"
         timber_version = "4.7.1"
     }
 
@@ -110,9 +111,12 @@ subprojects { Project project ->
                 implementation "androidx.core:core-ktx:$androidx_core_version"
                 implementation "com.google.android.material:material:$material_version"
                 implementation "androidx.constraintlayout:constraintlayout:$constraint_layout_version"
+                implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
 
                 implementation "androidx.fragment:fragment-ktx:$fragment_ktx_version"
                 implementation "com.jakewharton.rxbinding4:rxbinding:$rxbinding_version"
+                implementation "com.jakewharton.rxbinding4:rxbinding-swiperefreshlayout:$rxbinding_version"
+                implementation "com.jakewharton.rxbinding4:rxbinding-appcompat:$rxbinding_version"
             }
 
             testImplementation "junit:junit:$junit_version"
