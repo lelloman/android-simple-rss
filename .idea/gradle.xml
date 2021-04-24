@@ -12,6 +12,14 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/domain_feed" />
+            <option value="$PROJECT_DIR$/domain_local_sources" />
+            <option value="$PROJECT_DIR$/domain_remote_sources" />
+            <option value="$PROJECT_DIR$/domain_rss_discover" />
+            <option value="$PROJECT_DIR$/domain_settings" />
+            <option value="$PROJECT_DIR$/domain_sources" />
+            <option value="$PROJECT_DIR$/http" />
+            <option value="$PROJECT_DIR$/rss" />
             <option value="$PROJECT_DIR$/ui_about" />
             <option value="$PROJECT_DIR$/ui_base" />
             <option value="$PROJECT_DIR$/ui_feed" />

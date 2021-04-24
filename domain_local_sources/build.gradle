@@ -1,0 +1,5 @@
+dependencies {
+    implementation project(":http")
+    implementation project(":rss")
+    implementation project(":domain_sources")
+}

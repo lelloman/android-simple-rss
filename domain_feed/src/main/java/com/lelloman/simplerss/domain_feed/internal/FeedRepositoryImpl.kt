@@ -3,7 +3,7 @@ package com.lelloman.simplerss.domain_feed.internal
 import com.lelloman.simplerss.domain_feed.FeedItem
 import com.lelloman.simplerss.domain_feed.FeedRepository
 import com.lelloman.simplerss.domain_feed.FeedSource
-import com.lelloman.simplerss.domain_feed.FeedSourceOperationProducer
+import com.lelloman.simplerss.domain_feed.FeedSourceOperationsProducer
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -15,7 +15,7 @@ import io.reactivex.rxjava3.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 
 class FeedRepositoryImpl(
-    feedSourcesOperationProducers: Set<FeedSourceOperationProducer>,
+    feedSourcesOperationsProducers: Set<FeedSourceOperationsProducer>,
     private val ioScheduler: Scheduler = Schedulers.io()
 ) : FeedRepository {
 
@@ -26,12 +26,12 @@ class FeedRepositoryImpl(
     private val feedSubject = BehaviorSubject.createDefault(emptyList<FeedItem>())
 
     init {
-        feedSourcesOperationProducers.forEach { feedSourceOperationProducer ->
+        feedSourcesOperationsProducers.forEach { feedSourceOperationProducer ->
             feedSourceOperationProducer.produceFeedSourceOperations()
                 .subscribeOn(ioScheduler)
                 .observeOn(ioScheduler)
                 .onErrorComplete()
-                .subscribe(::handleFeedSourceOperation)
+                .subscribe(::handleFeedSourceOperations)
                 .let(operationProducersSubscriptions::add)
         }
     }
@@ -51,15 +51,17 @@ class FeedRepositoryImpl(
         operationProducersSubscriptions.dispose()
     }
 
-    private fun handleFeedSourceOperation(operation: FeedSource.Operation) = when (operation) {
-        is FeedSource.Operation.Add -> addSource(operation.source)
-        is FeedSource.Operation.Remove -> removeSource(operation.sourceId)
+    private fun handleFeedSourceOperations(operations: List<FeedSource.Operation>) = operations.forEach { operation ->
+        when (operation) {
+            is FeedSource.Operation.Add -> addSource(operation.source)
+            is FeedSource.Operation.Remove -> removeSource(operation.sourceId)
+        }
     }
 
     private fun addSource(source: FeedSource) {
         if (sourcesSubscriptions.containsKey(source.id)) {
             // TODO warning?
-            return
+            sourcesSubscriptions[source.id]?.dispose()
         }
 
         sourcesSubscriptions[source.id] = source.observeItems()
@@ -75,6 +77,7 @@ class FeedRepositoryImpl(
     }
 
     private fun onNewFeedItems(source: FeedSource, items: List<FeedItem>) {
+        // TODO use Map<FeedSource, List<FeedItem>> instead
         val currentFeedItems = feedSubject.value ?: emptyList()
         val newFeed = ArrayList<FeedItem>(currentFeedItems.size * 2)
         currentFeedItems.forEach { currentFeedItem ->

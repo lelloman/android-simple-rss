@@ -9,6 +9,5 @@ interface FeedRepository {
 
     fun refreshFeed(): Completable
 
-    @Suppress("unused") // being an app-singleton will never actually be disposed
     fun dispose()
 }

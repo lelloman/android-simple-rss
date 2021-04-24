@@ -3,7 +3,7 @@ package com.lelloman.simplerss.feed
 import com.lelloman.simplerss.domain_feed.FeedItem
 import com.lelloman.simplerss.domain_feed.FeedRepository
 import com.lelloman.simplerss.domain_feed.FeedSource
-import com.lelloman.simplerss.domain_feed.FeedSourceOperationProducer
+import com.lelloman.simplerss.domain_feed.FeedSourceOperationsProducer
 import com.lelloman.simplerss.navigation.NavigationEventProcessor
 import com.lelloman.simplerss.ui_feed.model.FeedInteractor
 import dagger.Module
@@ -13,7 +13,9 @@ import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.IntoSet
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Observable
+import java.util.concurrent.TimeUnit
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -33,8 +35,8 @@ object DomainFeedModule {
 
     @Provides
     @IntoSet
-    fun providesStaticFeedSourceOperationProducer(): FeedSourceOperationProducer {
-        return FeedSourceOperationProducer { Observable.just(FeedSource.Operation.Add(FakeFeedSource())) }
+    fun providesStaticFeedSourceOperationProducer(): FeedSourceOperationsProducer {
+        return FeedSourceOperationsProducer { Observable.just(listOf(FeedSource.Operation.Add(FakeFeedSource()))) }
     }
 
     class FakeFeedSource : FeedSource {
@@ -42,6 +44,10 @@ object DomainFeedModule {
 
         override fun observeItems(): Observable<List<FeedItem>> {
             return Observable.just(Array(50) { FakeFeedItem(it, id) }.toList())
+        }
+
+        override fun refresh(): Completable {
+            return Completable.timer(2, TimeUnit.SECONDS)
         }
 
         class FakeFeedItem(

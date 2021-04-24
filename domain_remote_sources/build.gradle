@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":http")
+    implementation project(":domain_sources")
+}

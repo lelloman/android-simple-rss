@@ -13,6 +13,10 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     implementation project(':domain_feed')
+    implementation project(':domain_local_sources')
+    implementation project(':domain_remote_sources')
+    implementation project(':domain_rss_discover')
+    implementation project(':domain_settings')
     implementation project(':domain_sources')
 
     implementation project(':ui_base')
