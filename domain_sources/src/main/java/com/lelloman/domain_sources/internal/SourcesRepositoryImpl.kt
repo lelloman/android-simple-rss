@@ -69,5 +69,8 @@ class SourcesRepositoryImpl(
         override fun refresh(): Completable = source.refresh()
     }
 
-    private class FeedItemImpl(sourceItem: SourceItem) : SourceItem by sourceItem, FeedItem
+    private class FeedItemImpl(sourceItem: SourceItem) : SourceItem by sourceItem, FeedItem {
+        override val id: String = ""
+
+    }
 }

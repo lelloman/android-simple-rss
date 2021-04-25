@@ -47,7 +47,7 @@ class FeedAdapter(private val onItemClickListener: (FeedViewModel.FeedListItem) 
                 textViewTitle.text = item.title
 
                 // imageViewFavicon.loadFavicon(item.faviconId)
-                imageViewFavicon.visibility = if (item.faviconId == null) View.GONE else View.VISIBLE
+                imageViewFavicon.visibility = if (item.icon == null) View.GONE else View.VISIBLE
 
                 textViewDetails.text = "{semanticTimeProvider.getDateTimeString(item.time)} - ${item.sourceName}"
 

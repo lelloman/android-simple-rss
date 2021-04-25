@@ -2,7 +2,7 @@ package com.lelloman.simplerss.domain_feed
 
 
 interface FeedItem {
-    val id: Long
+    val id: String
     val title: String
     val subtitle: String
     val content: String
@@ -11,5 +11,5 @@ interface FeedItem {
     val time: Long
     val sourceId: String
     val sourceName: String
-    val faviconId: String?
+    val icon: ByteArray?
 }

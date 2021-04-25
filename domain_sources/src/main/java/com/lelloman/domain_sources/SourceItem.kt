@@ -1,7 +1,7 @@
 package com.lelloman.domain_sources
 
 interface SourceItem {
-    val id: Long
+    val sourceItemId: String
     val title: String
     val subtitle: String
     val content: String
@@ -10,5 +10,5 @@ interface SourceItem {
     val time: Long
     val sourceId: String
     val sourceName: String
-    val faviconId: String?
+    val icon: ByteArray?
 }

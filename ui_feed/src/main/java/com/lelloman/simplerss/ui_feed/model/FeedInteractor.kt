@@ -11,7 +11,7 @@ interface FeedInteractor {
     fun goToSettings()
 
     interface FeedItem {
-        val id: Long
+        val id: String
         val title: String
         val subtitle: String
         val content: String
@@ -19,6 +19,6 @@ interface FeedInteractor {
         val imageUrl: String?
         val time: Long
         val sourceName: String
-        val faviconId: String?
+        val icon: ByteArray?
     }
 }

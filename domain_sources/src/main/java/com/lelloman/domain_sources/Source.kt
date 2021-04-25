@@ -26,6 +26,6 @@ interface Source {
     }
 
     interface Type {
-        val name: String
+        val nameStringId: Int
     }
 }

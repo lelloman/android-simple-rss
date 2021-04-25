@@ -6,5 +6,7 @@ interface SourceOperationsProducer {
 
     val id: String
 
+    val type: Source.Type
+
     fun produceSourceOperations(): Observable<List<Source.Operation>>
 }

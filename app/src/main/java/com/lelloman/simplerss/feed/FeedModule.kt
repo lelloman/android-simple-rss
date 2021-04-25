@@ -52,9 +52,9 @@ object DomainFeedModule {
 
         class FakeFeedItem(
             it: Int,
-            sourceId: String
+            override val sourceId: String
         ) : FeedItem {
-            override val id: Long = it.toLong()
+            override val id: String = "$it"
             override val title: String = "title $it"
             override val subtitle: String = "subtitle $it"
             override val content: String = "content $it"
@@ -62,8 +62,7 @@ object DomainFeedModule {
             override val imageUrl: String? = ""
             override val time: Long = 0
             override val sourceName: String = "source $it"
-            override val faviconId: String? = null
-            override val sourceId: String = sourceId
+            override val icon: ByteArray? = null
         }
     }
 }
