@@ -4,8 +4,6 @@ import com.lelloman.simplerss.ui_base.BaseViewModel
 import com.lelloman.simplerss.ui_base.IoScheduler
 import com.lelloman.simplerss.ui_base.UiScheduler
 import com.lelloman.simplerss.ui_feed.model.FeedInteractor
-import com.lelloman.simplerss.ui_feed.viewmodel.FeedViewModel.Action.AboutButtonClicked
-import com.lelloman.simplerss.ui_feed.viewmodel.FeedViewModel.Action.SettingsButtonClicked
 import dagger.hilt.android.lifecycle.HiltViewModel
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.core.Scheduler
@@ -24,8 +22,9 @@ class FeedViewModel @Inject constructor(
     private val firstLoadedSubject = PublishSubject.create<Unit>()
 
     override fun createActionsMappers(actionsSource: Observable<Action>) = listOf(
-        actionsSource.eventlessIgnoredImmediate(AboutButtonClicked::class, interactor::goToAbout),
-        actionsSource.eventlessIgnoredImmediate(SettingsButtonClicked::class, interactor::goToSettings),
+        actionsSource.eventlessIgnoredImmediate(Action.AboutButtonClicked::class, interactor::goToAbout),
+        actionsSource.eventlessIgnoredImmediate(Action.SettingsButtonClicked::class, interactor::goToSettings),
+        actionsSource.eventlessIgnoredImmediate(Action.SourcesButtonClicked::class, interactor::goToSources),
         actionsSource.pullToRefresh(),
         firstLoad()
     )

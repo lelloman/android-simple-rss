@@ -7,6 +7,8 @@ interface FeedSource {
 
     val id: String
 
+    val type: Type
+
     fun observeItems(): Observable<List<FeedItem>>
 
     fun refresh(): Completable
@@ -16,5 +18,9 @@ interface FeedSource {
         class Add(val source: FeedSource) : Operation()
 
         class Remove(val sourceId: String) : Operation()
+    }
+
+    interface Type {
+        val nameStringId: Int
     }
 }

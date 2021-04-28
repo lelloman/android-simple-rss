@@ -42,6 +42,8 @@ object DomainFeedModule {
     class FakeFeedSource : FeedSource {
         override val id: String = "fake source"
 
+        override val type: FeedSource.Type = FakeFeedSourceType
+
         override fun observeItems(): Observable<List<FeedItem>> {
             return Observable.just(Array(50) { FakeFeedItem(it, id) }.toList())
         }
@@ -54,7 +56,7 @@ object DomainFeedModule {
             it: Int,
             override val sourceId: String
         ) : FeedItem {
-            override val id: String = "$it"
+            override val feedItemId: String = "$it"
             override val title: String = "title $it"
             override val subtitle: String = "subtitle $it"
             override val content: String = "content $it"
@@ -64,5 +66,10 @@ object DomainFeedModule {
             override val sourceName: String = "source $it"
             override val icon: ByteArray? = null
         }
+    }
+
+    private object FakeFeedSourceType : FeedSource.Type {
+        override val nameStringId: Int
+            get() = TODO("Not yet implemented")
     }
 }

@@ -1,7 +1,7 @@
 package com.lelloman.simplerss.domain_local_sources.internal
 
-import com.lelloman.domain_sources.Source
-import com.lelloman.domain_sources.SourceOperationsProducer
+import com.lelloman.simplerss.domain_feed.FeedSource
+import com.lelloman.simplerss.domain_feed.FeedSourceOperationsProducer
 import com.lelloman.simplerss.domain_local_sources.LocalSource
 import com.lelloman.simplerss.domain_local_sources.LocalSourcesRepository
 import com.lelloman.simplerss.domain_local_sources.internal.db.LocalSourceEntity
@@ -16,15 +16,15 @@ internal class LocalSourcesRepositoryImpl(
     private val localSourcesDao: LocalSourcesDao,
     private val adapter: LocalSourceAdapter,
     private val writeScheduler: Scheduler = Schedulers.newThread()
-) : LocalSourcesRepository, SourceOperationsProducer {
+) : LocalSourcesRepository, FeedSourceOperationsProducer {
 
-    override val id: String = "LocalSources"
+    private val id: String = "LocalSources"
 
-    override val type: Source.Type = LocalSourceType
+    private val type: FeedSource.Type = LocalSourceType
 
-    private val sourcesOperationsSubject = PublishSubject.create<List<Source.Operation>>()
+    private val sourcesOperationsSubject = PublishSubject.create<List<FeedSource.Operation>>()
 
-    override fun produceSourceOperations(): Observable<List<Source.Operation>> {
+    override fun produceFeedSourceOperations(): Observable<List<FeedSource.Operation>> {
         return sourcesOperationsSubject.hide()
         // TODO .startWith()
     }
@@ -35,20 +35,22 @@ internal class LocalSourcesRepositoryImpl(
 
     override fun delete(localSourceId: Long): Completable = localSourcesDao.delete(localSourceId)
         .subscribeOn(writeScheduler)
-        .doOnComplete { emit(Source.Operation.Remove(adapter.localSourceIdToSourceId(localSourceId))) }
+        .doOnComplete { emit(FeedSource.Operation.Remove(adapter.localSourceIdToSourceId(localSourceId))) }
 
     override fun update(localSource: LocalSource): Completable = localSource.toEntity()
         .let(localSourcesDao::update)
         .subscribeOn(writeScheduler)
-        .doOnComplete { emit(Source.Operation.Update(adapter.fromLocalSource(localSource))) }
 
-    override fun add(localSource: LocalSource): Completable = localSource.toEntity()
-        .let(localSourcesDao::insert)
-        .subscribeOn(writeScheduler)
-        .doOnSuccess { emit(Source.Operation.Add(adapter.fromLocalSource(localSource, it))) }
-        .ignoreElement()
+    override fun add(name: String, url: String): Completable {
+        val localSource = makeSourceEntityToAdd(name = name, url = url)
+        return localSource
+            .let(localSourcesDao::insert)
+            .subscribeOn(writeScheduler)
+            .doOnSuccess { emit(FeedSource.Operation.Add(adapter.fromLocalSource(localSource, it))) }
+            .ignoreElement()
+    }
 
-    private fun emit(operation: Source.Operation) {
+    private fun emit(operation: FeedSource.Operation) {
         sourcesOperationsSubject.onNext(listOf(operation))
     }
 
@@ -59,6 +61,15 @@ internal class LocalSourcesRepositoryImpl(
         lastRefresh = lastRefresh,
         isActive = isActive,
         icon = icon
+    )
+
+    private fun makeSourceEntityToAdd(name: String, url: String) = LocalSourceEntity(
+        name = name,
+        url = url,
+        id = 0L,
+        lastRefresh = 0L,
+        isActive = true,
+        icon = null
     )
 
 }

@@ -10,8 +10,10 @@ interface FeedInteractor {
 
     fun goToSettings()
 
+    fun goToSources()
+
     interface FeedItem {
-        val id: String
+        val feedItemId: String
         val title: String
         val subtitle: String
         val content: String

@@ -5,4 +5,5 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_discover">Discover</string>
     <string name="menu_about">About</string>
+    <string name="feed_screen_name">Feed</string>
 </resources>

@@ -42,6 +42,11 @@ class FeedFragment : BaseFragment<FeedViewModel.State, FeedViewModel.Event, Feed
             binding.root
         }
 
+    override fun onStart() {
+        super.onStart()
+        setTitle(getString(R.string.feed_screen_name))
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.feed, menu)

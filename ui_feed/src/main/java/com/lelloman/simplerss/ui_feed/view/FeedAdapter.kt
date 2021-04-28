@@ -16,7 +16,7 @@ class FeedAdapter(private val onItemClickListener: (FeedViewModel.FeedListItem) 
         override fun areItemsTheSame(
             oldItem: FeedViewModel.FeedListItem,
             newItem: FeedViewModel.FeedListItem
-        ) = oldItem.id == newItem.id
+        ) = oldItem.feedItemId == newItem.feedItemId
 
         override fun areContentsTheSame(
             oldItem: FeedViewModel.FeedListItem,

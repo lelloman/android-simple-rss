@@ -1,7 +1,7 @@
 dependencies {
     implementation project(":http")
     implementation project(":rss")
-    implementation project(":domain_sources")
+    implementation project(":domain_feed")
 
     kapt "androidx.room:room-compiler:$room_version"
     api "androidx.room:room-runtime:$room_version"

@@ -2,7 +2,7 @@ package com.lelloman.simplerss.domain_local_sources.internal
 
 import android.content.Context
 import androidx.room.Room
-import com.lelloman.domain_sources.SourceOperationsProducer
+import com.lelloman.simplerss.domain_feed.FeedSourceOperationsProducer
 import com.lelloman.simplerss.domain_local_sources.LocalSourcesRepository
 import com.lelloman.simplerss.domain_local_sources.internal.db.LocalSourceItemsDao
 import com.lelloman.simplerss.domain_local_sources.internal.db.LocalSourcesDao
@@ -21,9 +21,11 @@ internal object LocalSourcesModule {
 
     @Provides
     fun provideLocalSourceRefresher(
-        localLocalSourcesDao: LocalSourcesDao
+        localLocalSourcesDao: LocalSourcesDao,
+        localSourceItemsDao: LocalSourceItemsDao
     ) = LocalSourceRefresher(
-        localSourcesDao = localLocalSourcesDao
+        localSourcesDao = localLocalSourcesDao,
+        localSourceItemsDao = localSourceItemsDao
     )
 
     @Provides
@@ -47,7 +49,8 @@ internal object LocalSourcesModule {
 
     @Provides
     @IntoSet
-    fun provideLocalSourcesSourcesOperationsProducer(impl: LocalSourcesRepositoryImpl): SourceOperationsProducer = impl
+    fun provideLocalSourcesSourcesOperationsProducer(impl: LocalSourcesRepositoryImpl): FeedSourceOperationsProducer =
+        impl
 
     @Provides
     @Singleton

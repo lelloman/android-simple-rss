@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="add_local_source_action" type="id" />
+    <item name="add_remote_source_action" type="id" />
+    <item name="discover_action" type="id" />
+</resources>

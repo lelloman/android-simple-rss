@@ -24,6 +24,10 @@ class FeedInteractorImpl(
         it.navigate(R.id.action_feedFragment_to_settingsFragment)
     }
 
+    override fun goToSources() = navigationEventProcessor {
+        it.navigate(R.id.action_feedFragment_to_sourcesFragment)
+    }
+
     private class FeedItemWrapper(private val feedItem: FeedRepositoryFeedItem) :
         FeedRepositoryFeedItem by feedItem,
         FeedInteractor.FeedItem

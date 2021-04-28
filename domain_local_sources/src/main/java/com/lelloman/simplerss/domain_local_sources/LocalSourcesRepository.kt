@@ -11,5 +11,5 @@ interface LocalSourcesRepository {
 
     fun update(localSource: LocalSource): Completable
 
-    fun add(localSource: LocalSource): Completable
+    fun add(name: String, url: String): Completable
 }

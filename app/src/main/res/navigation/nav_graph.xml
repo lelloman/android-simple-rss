@@ -2,18 +2,21 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/feedFragment">
+    app:startDestination="@id/sourcesFragment">
 
     <fragment
         android:id="@+id/feedFragment"
         android:name="com.lelloman.simplerss.ui_feed.view.FeedFragment"
-        android:label="FeedFragment" >
+        android:label="FeedFragment">
         <action
             android:id="@+id/action_feedFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
         <action
             android:id="@+id/action_feedFragment_to_settingsFragment"
             app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_sourcesFragment"
+            app:destination="@id/sourcesFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutFragment"
@@ -23,4 +26,23 @@
         android:id="@+id/settingsFragment"
         android:name="com.lelloman.simplerss.ui_settings.SettingsFragment"
         android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/sourcesFragment"
+        android:name="com.lelloman.simplerss.ui_source.list.SourcesFragment"
+        android:label="SourcesFragment">
+        <action
+            android:id="@+id/action_sourcesFragment_to_localSourceFragment"
+            app:destination="@id/localSourceFragment" />
+        <action
+            android:id="@+id/action_sourcesFragment_to_remoteSourceFragment"
+            app:destination="@id/remoteSourceFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/localSourceFragment"
+        android:name="com.lelloman.simplerss.ui_source.local.LocalSourceFragment"
+        android:label="LocalSourceFragment" />
+    <fragment
+        android:id="@+id/remoteSourceFragment"
+        android:name="com.lelloman.simplerss.ui_source.remote.RemoteSourceFragment"
+        android:label="RemoteSourceFragment" />
 </navigation>

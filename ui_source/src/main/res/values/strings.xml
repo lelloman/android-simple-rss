@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="source_list_screen_name">Sources</string>
+
+    <string name="add_local_source_menu_action">Local</string>
+    <string name="add_remote_source_menu_action">Remote</string>
+    <string name="discover_menu_action">Discover</string>
+</resources>

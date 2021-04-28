@@ -2,7 +2,7 @@ package com.lelloman.simplerss.domain_feed
 
 
 interface FeedItem {
-    val id: String
+    val feedItemId: String
     val title: String
     val subtitle: String
     val content: String
